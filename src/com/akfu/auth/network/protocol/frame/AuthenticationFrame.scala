@@ -12,14 +12,19 @@ import com.akfu.common.network.FrameHandler
 import com.akfu.common.network.protocol.message.WakfuClientMessage
 import com.akfu.common.network.security.ConnectionEncryptionManager
 import com.akfu.auth.network.protocol.message.OpCode
+import com.akfu.auth.network.protocol.message.clientToServer.ClientPublicKeyRequestMessage
 
 object AuthenticationFrame extends FrameBase[AuthClient, WakfuClientMessage] {  
   
   @FrameHandler(opCode = OpCode.CMSG_CLIENT_VERSION)
   def handleClientVersion(client: AuthClient, message: ClientVersionMessage) {
    println("client version = " + message.major + "." + message.minor + "." + message.revision)
-   client.self ! new ClientPublicKeyMessage(0, ConnectionEncryptionManager.getPublicKey)
   }  
+  
+  @FrameHandler(opCode = OpCode.CMSG_CLIENT_PUBLIC_KEY_REQUEST)
+  def handlePublicKeyRequest(client: AuthClient, message: ClientPublicKeyRequestMessage) {
+    client.self ! new ClientPublicKeyMessage(0, ConnectionEncryptionManager.getPublicKey)
+  }
   
   @FrameHandler(opCode = OpCode.CMSG_DISPATCH_AUTH)
   def handleClientAuthentication(client: AuthClient, message: ClientDispatchAuthenticationMessage) {

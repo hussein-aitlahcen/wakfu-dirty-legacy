@@ -9,6 +9,7 @@ import com.akfu.common.network.protocol.message.WakfuClientMessage
 import com.akfu.common.network.protocol.message.DisconnectClient
 import java.nio.ByteBuffer
 import com.akfu.common.network.protocol.MessageBuilder
+import akka.util.CompactByteString
   
 abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     connection: ActorRef, 
@@ -24,6 +25,7 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   private var typeId: Short = -1;
   
   private val in = ByteBufAllocator.DEFAULT.directBuffer()
+  private val out = ByteBufAllocator.DEFAULT.heapBuffer()
   
   def receive = {
     
@@ -45,9 +47,10 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   }
   
   def send(message: WakfuServerMessage) {
-    val out = ByteBufAllocator.DEFAULT.heapBuffer()
     message.serialize(out)
-    connection ! Write(ByteString(out.array))
+    // TODO: set cache 
+    connection ! Write(ByteString.fromArray(out.array(), 0, out.writerIndex))
+    out.resetWriterIndex()
   }
   
   def read() {
@@ -70,7 +73,6 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     }
     
     val architectureTarget = in readByte() // wut ?
-    println("msgArchi=" + architectureTarget)
     
     typeId = in readShort()
         

@@ -7,6 +7,7 @@ import com.akfu.auth.network.protocol.message.OpCode
 import com.akfu.auth.network.protocol.message.clientToServer.ClientVersionMessage
 import com.akfu.common.network.protocol.message.WakfuClientMessage
 import com.akfu.auth.network.protocol.message.clientToServer.ClientDispatchAuthenticationMessage
+import com.akfu.auth.network.protocol.message.clientToServer.ClientPublicKeyRequestMessage
 
 object AuthMessageBuilder extends MessageBuilder[WakfuClientMessage] {
   
@@ -20,6 +21,9 @@ object AuthMessageBuilder extends MessageBuilder[WakfuClientMessage] {
         
       case OpCode.CMSG_DISPATCH_AUTH =>
         message = new ClientDispatchAuthenticationMessage()
+        
+      case OpCode.CMSG_CLIENT_PUBLIC_KEY_REQUEST =>
+        message = new ClientPublicKeyRequestMessage()
         
       case _ =>
         message = null
