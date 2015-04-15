@@ -10,4 +10,5 @@ object OpCode {
   final val SMSG_DISPATCH_AUTH_RESULT = 1027
   final val SMSG_CLIENT_PUB_KEY = 1034
   final val SMSG_CLIENT_PROXIES_RESULT = 1036
+  final val SMSG_AUTH_TOKEN_RESULT = 1212
 }

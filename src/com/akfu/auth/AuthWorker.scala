@@ -17,6 +17,8 @@ import com.akfu.auth.network.protocol.message.serverToClient.ProxyInfo
 import com.akfu.common.network.RemoveFrame
 import com.akfu.auth.network.protocol.frame._
 import com.akfu.common.network.AddFrame
+import com.akfu.auth.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultMessage
+import com.akfu.auth.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultEnum
 
 sealed trait WorkerProcess
 final case class AuthConnected(client: AuthClient) extends WorkerProcess
@@ -40,11 +42,13 @@ final class AuthWorker extends Actor with ActorLogging {
   }
   
   def disconnected(client: AuthClient) {
-    log.info("client disconnected") 
+    log.info("client disconnected")     
   }
   
   def authTokenRequest(client: AuthClient, serverId: Int) {
     log.info(s"auth token request\n\t serverId=$serverId")
+    
+    client.self ! new WakfuAuthenticationTokenResultMessage("Smarken", WakfuAuthenticationTokenResultEnum.SUCCESS)
   }
   
   def proxiesRequest(client: AuthClient) {
