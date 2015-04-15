@@ -23,8 +23,7 @@ final class WorldInfo(id: Int, version: String, playerCount: Int, playerLimit: I
 final class ProxyInfo(id: Int, name: String, community: Int, address: String, ports: List[Int], order: Byte) {
   final def serialize(out: ByteBuf) {
     val nameBytes = name getBytes StandardCharsets.UTF_8
-    val addressBytes = address getBytes StandardCharsets.UTF_8
-    
+    val addressBytes = address getBytes StandardCharsets.UTF_8    
     out writeInt id
     out writeInt nameBytes.length
     out writeBytes nameBytes

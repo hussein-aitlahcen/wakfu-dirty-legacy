@@ -7,10 +7,14 @@ import scala.reflect.runtime.universe._
 import scala.reflect.runtime.{currentMirror => cm}
 import org.slf4j.Logger
 import java.lang.reflect.Method
+import org.slf4j.LoggerFactory
 
-abstract class FrameBase[TClient <: AnyRef, TMessage <: FrameMessage] {  
+abstract class FrameBase[TClient <: AnyRef, TMessage <: FrameMessage] { 
+  
+  final val log = LoggerFactory.getLogger(getClass.getName)
+  
   var handlers: Map[Int, Method] = Map()
-   
+  
   try {
     var methods = getClass().getDeclaredMethods()
     for (method <- methods) {

@@ -62,10 +62,11 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
       m_frameMgr ! ProcessMessage(new ClientDisconnected(disconnectReason))
                   
     case message: Any =>      
-      println("WakfuClient::receive unhandled message : " + message)
+      log.info("WakfuClient::receive unhandled message : " + message)
   }
   
   def disconnect() = {
+    log.info("kicked")
     disconnectReason = ClientDisconnected.REASON_KICKED
     self ! Abort
   }
@@ -100,7 +101,7 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     
     typeId = in readShort()
         
-    println("msgId=" + typeId + " size=" + size)
+    log.info("msgId=" + typeId + " size=" + size)
     
     in.markReaderIndex()
     

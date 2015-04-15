@@ -19,7 +19,7 @@ object AuthenticationFrame extends FrameBase[AuthClient, WakfuClientMessage] {
   
   @FrameHandler(opCode = OpCode.CMSG_CLIENT_VERSION)
   def handleClientVersion(client: AuthClient, message: ClientVersionMessage) {
-   println("client version = " + message.major + "." + message.minor + "." + message.revision)
+   log.info("client version = " + message.major + "." + message.minor + "." + message.revision)
   }  
   
   @FrameHandler(opCode = OpCode.CMSG_CLIENT_PUBLIC_KEY_REQUEST)

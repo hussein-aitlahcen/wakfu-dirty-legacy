@@ -28,6 +28,7 @@ object AuthService {
 }
 
 final class AuthListener(port: Int) extends Actor with ActorLogging {
+  
   override def preStart() = {    
     import context.system
     IO(Tcp) ! Bind(self, new InetSocketAddress("0.0.0.0", port))
@@ -35,7 +36,7 @@ final class AuthListener(port: Int) extends Actor with ActorLogging {
   
   override def receive = {
     case Bound(address) =>
-      println(s"AuthService bound on $address")
+      log.info(s"AuthService bound on $address")
       
     case Connected(remote, local) =>
       val connection = sender()

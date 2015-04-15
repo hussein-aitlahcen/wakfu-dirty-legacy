@@ -36,20 +36,20 @@ final class AuthWorker extends Actor with ActorLogging {
   }
   
   def connected(client: AuthClient) {
-    println("client connected")
+    log.info("client connected")
   }
   
   def disconnected(client: AuthClient) {
-   println("client disconnected") 
+    log.info("client disconnected") 
   }
   
   def authTokenRequest(client: AuthClient, serverId: Int) {
-    println("auth token request")
+    log.info(s"auth token request\n\t serverId=$serverId")
   }
   
   def proxiesRequest(client: AuthClient) {
-    println("proxies request")
-    
+    log.info("proxies request")
+
     val config = new SystemConfiguration()
     config changeProperty(SystemConfigurationType.SERVER_ID, "1")
     config changeProperty(SystemConfigurationType.COMMUNITY_CHECK_ENABLE, "true")
@@ -57,23 +57,29 @@ final class AuthWorker extends Actor with ActorLogging {
     config changeProperty(SystemConfigurationType.COMMUNITY_FORBIDDEN, "")
     config changeProperty(SystemConfigurationType.AUTHORIZED_PARTNERS, "default")    
     
-    val proxy = new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(5555), 0)
-    val world = new WorldInfo(1, "", 100, 100, false, config)
+    val proxies = List(
+        new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(5555), 0),
+        new ProxyInfo(2, "Test1", Community.FR.code, "127.0.0.1", List(5556), 1))
+        
+    val worlds = List(
+        new WorldInfo(1, "", 100, 100, false, config),
+        new WorldInfo(2, "", 100, 100, false, config))
     
-    client.self ! new ClientProxiesResultMessage(List(proxy), List(world))
+    client.self ! new ClientProxiesResultMessage(proxies, worlds)
   }
   
   def authentication(client: AuthClient, account: String, password: String) {
-    println(s"client auth account=$account password=$password")
+    log.info(s"auth checking\n\taccount=$account\n\tpassword=$password")
     
     client.self ! RemoveFrame(AuthenticationFrame)
     
     if(!AuthenticationManager.checkCredentials(account, password)) {
-      println("wrong credentials")
       sendAutenticationResult(client, AuthenticationResultEnum.WRONG_CREDENTIALS)
       return
     }
-
+    
+    log.info(s"auth success")
+    
     client.self ! AddFrame(ServerSelectionFrame)
     sendAutenticationResult(client, AuthenticationResultEnum.SUCCESS, new AccountInformation(Community.FR.code))    
   }
