@@ -4,5 +4,6 @@ import io.netty.buffer.ByteBuf
 
 abstract class WakfuClientMessage() extends WakfuMessage() {
   def getOpCode() : Int
-  def deserialize(in: ByteBuf)
+  def deserialize(in: ByteBuf) {    
+  }
 }

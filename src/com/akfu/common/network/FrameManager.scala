@@ -2,7 +2,6 @@ package com.akfu.common.network
 
 import scala.collection.mutable.ListBuffer
 import akka.actor._
-import com.akfu.common.network.protocol.message.DisconnectClient
 import com.akfu.common.network.protocol.message.WakfuClientMessage
 import com.akfu.common.network.protocol.message.FrameMessage
 
@@ -13,14 +12,15 @@ final case class ProcessMessage[TMessage <: FrameMessage](val message: TMessage)
 
 final class FrameManager[TClient <: AnyRef, TMessage <: FrameMessage](
     client: TClient,
-    startFrame: FrameBase[TClient, TMessage]) 
+    startFrames: List[FrameBase[TClient, TMessage]]) 
     extends Actor with ActorLogging {
     
-  private val m_frames:  ListBuffer[FrameBase[TClient, TMessage]] = ListBuffer(startFrame)
+  private val m_frames = ListBuffer[FrameBase[TClient, TMessage]]()
   
-  def receive = {
-    case DisconnectClient =>      
-         context stop context.parent   
+  for(frame <- startFrames)
+    m_frames += frame
+    
+  def receive = { 
          
     case add:AddFrame[TClient, TMessage] => 
       m_frames += add.frame

@@ -11,7 +11,7 @@ final class ClientVersionMessage(
   extends WakfuClientMessage {
   
   def getOpCode() = OpCode.CMSG_CLIENT_VERSION
-  def deserialize(in: ByteBuf) {
+  override def deserialize(in: ByteBuf) {
     major = in readByte()
     minor = in readShort()
     revision = in readByte()

@@ -8,7 +8,4 @@ final class ClientPublicKeyRequestMessage extends WakfuClientMessage {
   
   def getOpCode() = OpCode.CMSG_CLIENT_PUBLIC_KEY_REQUEST
   
-  def deserialize(in: ByteBuf) {
-    
-  }
 }

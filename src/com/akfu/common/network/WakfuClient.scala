@@ -6,23 +6,35 @@ import akka.util.ByteString
 import com.akfu.common.network.protocol.message.WakfuServerMessage
 import akka.io.Tcp._
 import com.akfu.common.network.protocol.message.WakfuClientMessage
-import com.akfu.common.network.protocol.message.DisconnectClient
 import java.nio.ByteBuffer
 import com.akfu.common.network.protocol.MessageBuilder
 import akka.util.CompactByteString
+import akka.actor.TypedActor.PreStart
+
+object ClientDisconnected {
+  final val OP_CODE = -1
+  final val REASON_DISCONNECTED = 0
+  final val REASON_KICKED = 1
+}
+
+final class ClientDisconnected(reason: Int) extends WakfuClientMessage {
+  def getOpCode() = -1
+}
   
 abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     connection: ActorRef, 
     builder: MessageBuilder[WakfuClientMessage], 
-    startFrame: FrameBase[TClient, WakfuClientMessage]) 
+    startFrames: List[FrameBase[TClient, WakfuClientMessage]]) 
     extends Actor with ActorLogging {
   
-  import akka.io.Tcp._
-  
-  private val m_frameMgr = context.actorOf(Props(classOf[FrameManager[TClient, WakfuClientMessage]], this, startFrame))    
+  // dead when connection closed
+  context watch connection
+    
+  private val m_frameMgr = context.actorOf(Props(classOf[FrameManager[TClient, WakfuClientMessage]], this, startFrames))    
   private val messageBuilder = builder  
   private var size: Short = -1;
   private var typeId: Short = -1;
+  private var disconnectReason: Int = 0
   
   private val in = ByteBufAllocator.DEFAULT.directBuffer()
   private val out = ByteBufAllocator.DEFAULT.heapBuffer()
@@ -37,19 +49,31 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
       send(message)
                   
     case message @ (ProcessMessage(_) | AddFrame(_) | RemoveFrame(_)) => 
+      println(message)
       m_frameMgr ! message
       
-    case message @ (Closed | PeerClosed | Aborted | ErrorClosed(_)) =>
-      m_frameMgr ! DisconnectClient
+    case Abort =>
+      connection ! Abort
       
+    case Terminated(watched) =>
+      // connection died, called before close or anthing
+      
+    case message @ (Closed | PeerClosed | Aborted | ErrorClosed(_)) =>
+      m_frameMgr ! ProcessMessage(new ClientDisconnected(disconnectReason))
+                  
     case message: Any =>      
-      println(message)
+      println("WakfuClient::receive unhandled message : " + message)
+  }
+  
+  def disconnect() = {
+    disconnectReason = ClientDisconnected.REASON_KICKED
+    self ! Abort
   }
   
   def send(message: WakfuServerMessage) {
     message.serialize(out)
     // TODO: set cache 
-    connection ! Write(ByteString.fromArray(out.array(), 0, out.writerIndex))
+    connection ! Write(ByteString.fromArray(out.array, 0, out.writerIndex))
     out.resetWriterIndex()
   }
   

@@ -3,6 +3,8 @@ package com.akfu.auth.network.protocol.message.serverToClient
 import com.akfu.common.network.protocol.message.WakfuServerMessage
 import com.akfu.auth.network.protocol.message.OpCode
 import java.nio.ByteBuffer
+import io.netty.buffer.ByteBuf
+import com.akfu.common.Community
 
 object AuthenticationResultEnum {
   final val SUCCESS: Byte = 0
@@ -14,16 +16,25 @@ object AuthenticationResultEnum {
   final val INVALID_PARTNER: Byte = 12
 }
 
-final class ClientDispatchAuthenticationResultMessage(result: Byte) extends WakfuServerMessage {
+final class AccountInformation(community: Int /*, adminInfos: xx */) {  
+  def serialize(out: ByteBuf) {
+    out writeInt community
+    out writeBoolean false // hasAdminInfos 
+    // TODO: admin informations
+  }
+}
+
+final class ClientDispatchAuthenticationResultMessage(result: Byte, infos: AccountInformation = null) extends WakfuServerMessage {
   
   def getOpCode() = OpCode.SMSG_DISPATCH_AUTH_RESULT
   
-  def internalSerialize() = {    
-    val out = ByteBuffer allocate(3)
-    out put result
-    out put byte2Byte(0)
-    out put byte2Byte(0)    
-    out.array
+  override def internalSerialize(out: ByteBuf) = {    
+    out writeByte result
+    out writeByte 0 // steamhint
+    out writeBoolean infos != null
+    if(infos != null) {
+      infos serialize out
+    }
   }  
   
 }

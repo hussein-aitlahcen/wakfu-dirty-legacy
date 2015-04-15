@@ -14,10 +14,8 @@ extends WakfuServerMessage {
   
   def getOpCode() = OpCode.SMSG_CLIENT_PUB_KEY
   
-  def internalSerialize() = {
-    val out = ByteBuffer allocate(8 + key.length)
-    out putLong salt
-    out put key   
-    out.array
+  override def internalSerialize(out: ByteBuf) = {
+    out writeLong salt
+    out writeBytes key
   }  
 }

@@ -10,7 +10,7 @@ final class ClientDispatchAuthenticationMessage(
 
   def getOpCode() = OpCode.CMSG_DISPATCH_AUTH
   
-  def deserialize(in: ByteBuf) {
+  override def deserialize(in: ByteBuf) {
     encryptedLoginAndPassword = Array.ofDim[Byte](in readInt)
     in.readBytes(encryptedLoginAndPassword)
   }
