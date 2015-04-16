@@ -1,6 +1,6 @@
-package com.akfu.auth.network.protocol.message.serverToClient
+package com.akfu.common.network.protocol.message.serverToClient
 
-import com.akfu.auth.network.protocol.message.OpCode
+import com.akfu.common.network.protocol.OpCode
 import io.netty.buffer.ByteBuf
 import com.akfu.common.network.protocol.message.WakfuServerMessage
 import java.nio.charset.StandardCharsets

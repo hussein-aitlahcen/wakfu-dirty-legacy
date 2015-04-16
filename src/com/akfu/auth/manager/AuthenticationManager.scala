@@ -8,5 +8,4 @@ object AuthenticationManager {
   
   def checkCredentials(account: String, password: String) : Boolean =
     account == "Smarken" && password == "test"
-    
 }

@@ -1,7 +1,7 @@
-package com.akfu.auth.network.protocol.message.clientToServer
+package com.akfu.common.network.protocol.message.clientToServer
 
 import com.akfu.common.network.protocol.message.WakfuClientMessage
-import com.akfu.auth.network.protocol.message.OpCode
+import com.akfu.common.network.protocol.OpCode
 
 final class ClientProxiesRequestMessage extends WakfuClientMessage {
   

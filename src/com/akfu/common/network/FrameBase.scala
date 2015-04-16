@@ -1,6 +1,5 @@
 package com.akfu.common.network
 
-import com.akfu.auth.network.protocol.message.OpCode
 import scala.annotation.StaticAnnotation
 import com.akfu.common.network.protocol.message.FrameMessage
 import scala.reflect.runtime.universe._

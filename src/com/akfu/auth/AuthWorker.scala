@@ -2,23 +2,22 @@ package com.akfu.auth
 
 import akka.actor.Actor
 import akka.actor.ActorLogging
-import com.akfu.auth.manager.AuthenticationManager
-import com.akfu.auth.network.protocol.message.serverToClient.ClientDispatchAuthenticationResultMessage
-import com.akfu.auth.network.protocol.message.serverToClient.AuthenticationResultEnum
-import com.akfu.auth.network.protocol.message.serverToClient.ClientPublicKeyMessage
-import com.akfu.common.network.security.ConnectionEncryptionManager
 import com.akfu.common.Community
-import com.akfu.auth.network.protocol.message.serverToClient.AccountInformation
-import com.akfu.auth.network.protocol.message.serverToClient.ClientProxiesResultMessage
-import com.akfu.auth.network.protocol.message.serverToClient.WorldInfo
+import com.akfu.common.network.protocol.message.serverToClient.ClientProxiesResultMessage
+import com.akfu.common.network.protocol.message.serverToClient.WorldInfo
 import com.akfu.common.configuration.SystemConfiguration
 import com.akfu.common.configuration.SystemConfigurationType
-import com.akfu.auth.network.protocol.message.serverToClient.ProxyInfo
+import com.akfu.common.network.protocol.message.serverToClient.ProxyInfo
 import com.akfu.common.network.RemoveFrame
 import com.akfu.auth.network.protocol.frame._
 import com.akfu.common.network.AddFrame
-import com.akfu.auth.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultMessage
-import com.akfu.auth.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultEnum
+import akka.actor.actorRef2Scala
+import com.akfu.common.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultMessage
+import com.akfu.common.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultEnum
+import com.akfu.auth.manager.AuthenticationManager
+import com.akfu.common.network.protocol.message.serverToClient.AuthenticationResultEnum
+import com.akfu.common.network.protocol.message.serverToClient.AccountInformation
+import com.akfu.common.network.protocol.message.serverToClient.ClientDispatchAuthenticationResultMessage
 
 sealed trait WorkerProcess
 final case class AuthConnected(client: AuthClient) extends WorkerProcess
@@ -38,11 +37,11 @@ final class AuthWorker extends Actor with ActorLogging {
   }
   
   def connected(client: AuthClient) {
-    log.info("client connected")
+    log.info("auth client connected")
   }
   
   def disconnected(client: AuthClient) {
-    log.info("client disconnected")     
+    log.info("auth client disconnected")     
   }
   
   def authTokenRequest(client: AuthClient, serverId: Int) {

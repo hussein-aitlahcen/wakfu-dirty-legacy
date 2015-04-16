@@ -18,26 +18,29 @@ object ClientDisconnected {
 }
 
 final class ClientDisconnected(reason: Int) extends WakfuClientMessage {
+  def this() = this(ClientDisconnected.REASON_DISCONNECTED)
   def getOpCode() = -1
 }
   
 abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     connection: ActorRef, 
-    builder: MessageBuilder[WakfuClientMessage], 
     startFrames: List[FrameBase[TClient, WakfuClientMessage]]) 
     extends Actor with ActorLogging {
-  
-  // dead when connection closed
-  context watch connection
-    
-  private val m_frameMgr = context.actorOf(Props(classOf[FrameManager[TClient, WakfuClientMessage]], this, startFrames))    
-  private val messageBuilder = builder  
+      
+  private val m_frameMgr = context.actorOf(Props(classOf[FrameManager[TClient, WakfuClientMessage]], this, startFrames))
   private var size: Short = -1;
   private var typeId: Short = -1;
-  private var disconnectReason: Int = 0
+  private var disconnectReason: Int = ClientDisconnected.REASON_DISCONNECTED
   
   private val in = ByteBufAllocator.DEFAULT.directBuffer()
   private val out = ByteBufAllocator.DEFAULT.heapBuffer()
+  private var currentWorker: ActorRef = null
+  
+  def setWorker(worker: ActorRef) = currentWorker = worker
+  def getWorker = currentWorker
+    
+  // dead when connection closed
+  context watch connection
   
   def receive = {
     
@@ -52,8 +55,8 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
       println(message)
       m_frameMgr ! message
       
-    case Abort =>
-      connection ! Abort
+    case Close =>
+      connection ! Close
       
     case Terminated(watched) =>
       // connection died, called before close or anthing
@@ -68,7 +71,7 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   def disconnect() = {
     log.info("kicked")
     disconnectReason = ClientDisconnected.REASON_KICKED
-    self ! Abort
+    self ! Close
   }
   
   def send(message: WakfuServerMessage) {
@@ -105,7 +108,7 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     
     in.markReaderIndex()
     
-    val message = builder build(typeId, in)
+    val message = MessageBuilder build(typeId, in)
     if(message != null)
       m_frameMgr ! ProcessMessage(message)
       

@@ -1,11 +1,11 @@
-package com.akfu.auth.network.protocol.message.serverToClient
+package com.akfu.common.network.protocol.message.serverToClient
 
 import com.akfu.common.network.protocol.message.WakfuServerMessage
 import akka.util._
 import akka.util.ByteString.ByteString1
 import io.netty.buffer.ByteBuf
 import java.nio.ByteBuffer
-import com.akfu.auth.network.protocol.message.OpCode
+import com.akfu.common.network.protocol.OpCode
 
 final class ClientPublicKeyMessage(
     val salt: Long, 

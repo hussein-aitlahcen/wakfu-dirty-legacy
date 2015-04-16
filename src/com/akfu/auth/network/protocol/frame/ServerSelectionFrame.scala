@@ -1,14 +1,14 @@
 package com.akfu.auth.network.protocol.frame
 
 import com.akfu.common.network.FrameHandler
-import com.akfu.auth.network.protocol.message.OpCode
+import com.akfu.common.network.protocol.OpCode
 import com.akfu.common.network.FrameBase
 import com.akfu.auth.AuthClient
 import com.akfu.common.network.protocol.message.WakfuClientMessage
-import com.akfu.auth.network.protocol.message.clientToServer.WakfuAuthenticationTokenRequestMessage
+import com.akfu.common.network.protocol.message.clientToServer.WakfuAuthenticationTokenRequestMessage
 import com.akfu.auth.AuthService
 import com.akfu.auth._
-import com.akfu.auth.network.protocol.message.clientToServer._
+import com.akfu.common.network.protocol.message.clientToServer.ClientProxiesRequestMessage
 
 object ServerSelectionFrame extends FrameBase[AuthClient, WakfuClientMessage] {  
   

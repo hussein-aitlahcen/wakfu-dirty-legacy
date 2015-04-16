@@ -10,7 +10,7 @@ import com.akfu.auth.AuthDisconnected
 
 object DisconnectionFrame extends FrameBase[AuthClient, WakfuClientMessage] {    
   @FrameHandler(opCode = ClientDisconnected.OP_CODE)
-  def handleClientVersion(client: AuthClient, message: ClientDisconnected) {
-    AuthService.getWorker ! AuthDisconnected(client)
+  def handleClientVersion(client: AuthClient, message: ClientDisconnected) {    
+    client.getWorker ! AuthDisconnected(client)
   }    
 }
