@@ -3,9 +3,11 @@ package com.akfu.common.network.protocol.message.serverToClient
 import com.akfu.common.network.protocol.message.WakfuServerMessage
 import com.akfu.common.network.protocol.OpCode
 import io.netty.buffer.ByteBuf
+import com.akfu.common.account.AccountInformations
 
 final class ClientAuthenticationResultsMessage(
     result: Byte = AuthenticationResultEnum.SUCCESS,
+    informations: AccountInformations = null,
     banDuration: Int = 0)
     extends WakfuServerMessage {
   
@@ -18,10 +20,11 @@ final class ClientAuthenticationResultsMessage(
         out writeInt banDuration
       
       case AuthenticationResultEnum.SUCCESS =>
-        // accountLocalInformation serialize out
-      
+        val data = informations.serializeForClient
+        out writeShort data.length
+        out writeBytes data
+        
       case _ =>
-        None
     }
   }
 }

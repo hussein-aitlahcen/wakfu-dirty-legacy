@@ -12,12 +12,14 @@ sealed trait WorkerProcess
 final case class WorldConnected(client: WorldClient) extends WorkerProcess
 final case class WorldDisconnected(client: WorldClient) extends WorkerProcess
 final case class Authenticate(client: WorldClient, token: String) extends WorkerProcess
+final case class AddToken(token: String) extends WorkerProcess
 
 final class WorldWorker extends Actor with ActorLogging {  
   def receive = {
     case WorldConnected(client) =>                         connected(client)
     case WorldDisconnected(client) =>                      disconnected(client)
     case Authenticate(client, token) =>                    authenticate(client, token)
+    case AddToken(token) =>                                AuthenticationManager addToken token
   }  
     
   def connected(client: WorldClient) {
@@ -29,25 +31,6 @@ final class WorldWorker extends Actor with ActorLogging {
   }  
   
   def authenticate(client: WorldClient, token: String) {
-    log.info(s"world auth checking\n\ttoken=$token")
-    
-    client.self ! RemoveFrame(AuthenticationFrame)
-    
-    if(!AuthenticationManager.checkToken(token)) {
-      sendAuthenticationResult(client, AuthenticationResultEnum.INVALID_TOKEN)
-      return
-    }
-    
-    
-  }
-  
-  def sendAuthenticationResult(client: WorldClient, result: Byte, banDuration: Int = 0) {
-    client.self ! new ClientAuthenticationResultsMessage(result, banDuration)
-    
-    result match {
-      case result if result != AuthenticationResultEnum.SUCCESS =>
-        client disconnect
-      case _ => // NOTHING
-    }
+    AuthenticationManager login(client, token)
   }
 }

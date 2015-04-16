@@ -10,6 +10,7 @@ import java.nio.ByteBuffer
 import com.akfu.common.network.protocol.MessageBuilder
 import akka.util.CompactByteString
 import akka.actor.TypedActor.PreStart
+import com.akfu.common.database.Account
 
 object ClientDisconnected {
   final val OP_CODE = -1
@@ -34,11 +35,16 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   
   private val in = ByteBufAllocator.DEFAULT.directBuffer()
   private val out = ByteBufAllocator.DEFAULT.heapBuffer()
-  private var currentWorker: ActorRef = null
   
+  private var currentWorker: ActorRef = null
+  private var currentAccount: Account = null
+   
   def setWorker(worker: ActorRef) = currentWorker = worker
   def getWorker = currentWorker
-    
+  
+  def setAccount(account: Account) = currentAccount = account
+  def getAccount = currentAccount
+  
   // dead when connection closed
   context watch connection
   

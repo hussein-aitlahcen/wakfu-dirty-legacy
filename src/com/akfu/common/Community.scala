@@ -1,8 +1,32 @@
 package com.akfu.common
 
-sealed abstract class Community(val code: Int, val value: String)
+sealed abstract class Community(val code: Int, val value: String) 
 
 object Community {
+  
+  val values = List(
+      FR, 
+      UK, 
+      INT, 
+      DE, 
+      ES, 
+      RU, 
+      PT,
+      NL, 
+      JP, 
+      IT, 
+      NA, 
+      CN, 
+      ASIA, 
+      TW)
+  
+  def getById(id: Int): Community = {
+    for(community <- values)
+      if(community.code == id)
+        return community
+    return null
+  }
+  
   object FR extends Community(0, "fr") 
   object UK  extends Community(1, "en") 
   object INT extends Community(2, "int")

@@ -12,8 +12,8 @@ final class WorldInfo(id: Int, version: String, playerCount: Int, playerLimit: I
     val versionData = version.getBytes
     out writeInt versionData.length
     out writeBytes versionData
-    out writeInt config.getDispatchData.length
-    out writeBytes config.getDispatchData
+    out writeInt config.serializeForDispatch.length
+    out writeBytes config.serializeForDispatch
     out writeInt playerCount
     out writeInt playerLimit
     out writeBoolean locked

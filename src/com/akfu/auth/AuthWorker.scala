@@ -14,10 +14,12 @@ import com.akfu.common.network.AddFrame
 import akka.actor.actorRef2Scala
 import com.akfu.common.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultMessage
 import com.akfu.common.network.protocol.message.serverToClient.WakfuAuthenticationTokenResultEnum
-import com.akfu.auth.manager.AuthenticationManager
 import com.akfu.common.network.protocol.message.serverToClient.AuthenticationResultEnum
 import com.akfu.common.network.protocol.message.serverToClient.AccountInformation
 import com.akfu.common.network.protocol.message.serverToClient.ClientDispatchAuthenticationResultMessage
+import com.akfu.auth.manager.AuthenticationManager
+import com.akfu.world.WorldService
+import com.akfu.world.AddToken
 
 sealed trait WorkerProcess
 final case class AuthConnected(client: AuthClient) extends WorkerProcess
@@ -31,7 +33,7 @@ final class AuthWorker extends Actor with ActorLogging {
   def receive = {
     case AuthConnected(client) =>                         connected(client)
     case AuthDisconnected(client) =>                      disconnected(client)
-    case Authentication(client, account, password) =>     authentication(client, account, password)      
+    case Authentication(client, account, password) =>     AuthenticationManager login(client, account, password)
     case ProxiesRequest(client) =>                        proxiesRequest(client) 
     case AuthTokenRequest(client, serverId) =>            authTokenRequest(client, serverId)
   }
@@ -47,7 +49,10 @@ final class AuthWorker extends Actor with ActorLogging {
   def authTokenRequest(client: AuthClient, serverId: Int) {
     log.info(s"auth token request\n\t serverId=$serverId")
     
-    client.self ! new WakfuAuthenticationTokenResultMessage("Smarken", WakfuAuthenticationTokenResultEnum.SUCCESS)
+    // add the token on server side 
+    WorldService.getWorker ! AddToken(client.getAccount pseudo)
+    
+    client.self ! new WakfuAuthenticationTokenResultMessage(client.getAccount pseudo, WakfuAuthenticationTokenResultEnum SUCCESS)
   }
   
   def proxiesRequest(client: AuthClient) {
@@ -61,38 +66,15 @@ final class AuthWorker extends Actor with ActorLogging {
     config changeProperty(SystemConfigurationType.AUTHORIZED_PARTNERS, "default")    
     
     val proxies = List(
-        new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(5555), 0),
-        new ProxyInfo(2, "Test1", Community.FR.code, "127.0.0.1", List(5556), 1))
+        new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(5555), 0))
         
     val worlds = List(
-        new WorldInfo(1, "", 100, 100, false, config),
-        new WorldInfo(2, "", 100, 100, false, config))
+        new WorldInfo(1, "", 100, 100, false, config))
     
     client.self ! new ClientProxiesResultMessage(proxies, worlds)
   }
   
-  def authentication(client: AuthClient, account: String, password: String) {
-    log.info(s"auth checking\n\taccount=$account\n\tpassword=$password")
-    
-    client.self ! RemoveFrame(AuthenticationFrame)
-    
-    if(!AuthenticationManager.checkCredentials(account, password)) {
-      sendAutenticationResult(client, AuthenticationResultEnum.WRONG_CREDENTIALS)
-      return
-    }
-    
-    log.info(s"auth success")
-    
-    client.self ! AddFrame(ServerSelectionFrame)
-    sendAutenticationResult(client, AuthenticationResultEnum.SUCCESS, new AccountInformation(Community.FR.code))    
+  def authentication(client: AuthClient, accountName: String, password: String) {
+    AuthenticationManager.login(client, accountName, password) 
   }
-  
-  def sendAutenticationResult(client: AuthClient, result: Byte, infos: AccountInformation = null) {
-    client.self ! new ClientDispatchAuthenticationResultMessage(result, infos)
-    result match {
-      case result if result != AuthenticationResultEnum.SUCCESS =>
-        client disconnect
-      case _ => // NOTHING
-    }
-  }  
 }
