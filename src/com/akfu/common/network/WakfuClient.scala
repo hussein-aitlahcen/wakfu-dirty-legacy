@@ -27,7 +27,7 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     connection: ActorRef, 
     startFrames: List[FrameBase[TClient, WakfuClientMessage]]) 
     extends Actor with ActorLogging {
-      
+     
   private val m_frameMgr = context.actorOf(Props(classOf[FrameManager[TClient, WakfuClientMessage]], this, startFrames))
   private var size: Short = -1;
   private var typeId: Short = -1;
@@ -44,7 +44,7 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   
   def setAccount(account: Account) = currentAccount = account
   def getAccount = currentAccount
-  
+    
   // dead when connection closed
   context watch connection
   

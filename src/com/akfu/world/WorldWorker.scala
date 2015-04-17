@@ -13,24 +13,36 @@ final case class WorldConnected(client: WorldClient) extends WorkerProcess
 final case class WorldDisconnected(client: WorldClient) extends WorkerProcess
 final case class Authenticate(client: WorldClient, token: String) extends WorkerProcess
 final case class AddToken(token: String) extends WorkerProcess
+final case class GameTokenRequest(client: WorldClient) extends WorkerProcess
 
 final class WorldWorker extends Actor with ActorLogging {  
   def receive = {
     case WorldConnected(client) =>                         connected(client)
     case WorldDisconnected(client) =>                      disconnected(client)
     case Authenticate(client, token) =>                    authenticate(client, token)
-    case AddToken(token) =>                                AuthenticationManager addToken token
+    case AddToken(token) =>                                addToken(token)
+    case GameTokenRequest(client) =>                       gameTokenRequest(client)
   }  
     
   def connected(client: WorldClient) {
-    log.info("world client connected")
+    log info "world client connected"
   }
   
   def disconnected(client: WorldClient) {
-    log.info("world client disconnected")     
+    log info "world client disconnected"     
   }  
   
   def authenticate(client: WorldClient, token: String) {
     AuthenticationManager login(client, token)
+  }
+  
+  def addToken(token: String) {
+    log info "auth token received"
+    AuthenticationManager addToken token
+  }
+  
+  def gameTokenRequest(client: WorldClient) {
+    log info "game token requested"
+    AuthenticationManager generateGameToken client 
   }
 }

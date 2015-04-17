@@ -8,6 +8,7 @@ import java.net.InetSocketAddress
 import akka.actor.Props
 import akka.actor.ActorSystem
 import akka.actor.ActorRef
+import com.akfu.world.soap.SOAPServer
 
 object WorldService {
   
@@ -23,6 +24,7 @@ object WorldService {
     system = ActorSystem.create("world-system")
     listener = system.actorOf(Props(classOf[WorldListener], 5555), "listener")
     worker = system.actorOf(Props(classOf[WorldWorker]), "worker")
+    SOAPServer.initialize
   }
   
 }

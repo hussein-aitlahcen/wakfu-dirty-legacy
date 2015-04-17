@@ -12,22 +12,11 @@ import com.akfu.common.network.security.ConnectionEncryptionManager
 import com.akfu.common.network.protocol.message.clientToServer.ClientAuthenticationTokenMessage
 import com.akfu.world.Authenticate
 import com.akfu.common.network.protocol.message.auth.clientToServer.AuthentificationTokenRequestMessage
+import com.akfu.world.GameTokenRequest
 
-
-object AuthenticationFrame extends FrameBase[WorldClient, WakfuClientMessage] {  
-
-  @FrameHandler(opCode = OpCode.CMSG_CLIENT_VERSION)
-  def handleClientVersion(client: WorldClient, message: ClientVersionMessage) {
-   log.info("client version = " + message.major + "." + message.minor + "." + message.revision)
-  }  
-  
-  @FrameHandler(opCode = OpCode.CMSG_CLIENT_PUBLIC_KEY_REQUEST)
-  def handlePublicKeyRequest(client: WorldClient, message: ClientPublicKeyRequestMessage) {
-    client.self ! new ClientPublicKeyMessage(0, ConnectionEncryptionManager.getPublicKey)
-  }
-  
-  @FrameHandler(opCode = OpCode.CMSG_AUTH_TOKEN)
-  def handleClientAuthenticationToken(client: WorldClient, message: ClientAuthenticationTokenMessage) {
-    client.getWorker ! Authenticate(client, message token)
+object GameAuthenticationFrame extends FrameBase[WorldClient, WakfuClientMessage] {  
+  @FrameHandler(opCode = OpCode.CMSG_GAME_AUTH_TOKEN_REQUEST)
+  def handleClientGameTokenRequest(client: WorldClient, message: AuthentificationTokenRequestMessage) {
+    client.getWorker ! GameTokenRequest(client)
   }
 }

@@ -68,18 +68,26 @@ public class SystemConfiguration
     
     private void buildClientSerialization() {
         final ByteArray bb = new ByteArray();        
-        bb.putInt(SystemConfigurationType.NUM_SHARED_PROPERTIES);
-        for (final SystemConfigurationType type : SystemConfigurationType.values()) {
-            if (type.isShareWithClient()) {
-                String value = this.m_properties.get(type);
-                if(value == null)
-                	value = type.getDefaultValue();
-	            bb.putShort(type.getId());
-	            final byte[] bytes = value.getBytes(Charsets.UTF_8);
-	            bb.putInt(bytes.length);
-	            bb.put(bytes);
-            }
+        bb.putInt(m_properties.size());
+        for(final SystemConfigurationType property : m_properties.keySet()) {
+        	final String value = m_properties.get(property);
+        	bb.putShort(property.getId());
+            final byte[] bytes = value.getBytes(Charsets.UTF_8);
+            bb.putInt(bytes.length);
+            bb.put(bytes);
         }
+//        bb.putInt(SystemConfigurationType.NUM_SHARED_PROPERTIES);
+//        for (final SystemConfigurationType type : SystemConfigurationType.values()) {
+//            if (type.isShareWithClient()) {
+//                String value = this.m_properties.get(type);
+//                if(value == null)
+//                	value = type.getDefaultValue();
+//	            bb.putShort(type.getId());
+//	            final byte[] bytes = value.getBytes(Charsets.UTF_8);
+//	            bb.putInt(bytes.length);
+//	            bb.put(bytes);
+//            }
+//        }        
         this.m_clientData = bb.toArray();
     }
     
