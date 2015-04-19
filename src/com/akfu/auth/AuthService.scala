@@ -11,6 +11,8 @@ import akka.actor.ActorRef
 
 object AuthService {
   
+  final val BIND_PORT = 5558
+  
   private var system: ActorSystem = null
   private var listener: ActorRef = null
   private var worker: ActorRef = null
@@ -19,9 +21,9 @@ object AuthService {
   def getListener = listener
   def getSystem = system
   
-  def initialize { 
+  def initialize() { 
     system = ActorSystem.create("auth-system")
-    listener = system.actorOf(Props(classOf[AuthListener], 80), "listener")
+    listener = system.actorOf(Props(classOf[AuthListener], BIND_PORT), "listener")
     worker = system.actorOf(Props(classOf[AuthWorker]), "worker")
   }
   

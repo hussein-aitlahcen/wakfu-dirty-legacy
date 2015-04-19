@@ -65,7 +65,8 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
       connection ! Close
       
     case Terminated(watched) =>
-      // connection died, called before close or anthing
+      in release()
+      out release()
       
     case message @ (Closed | PeerClosed | Aborted | ErrorClosed(_)) =>
       m_frameMgr ! ProcessMessage(new ClientDisconnected(disconnectReason))

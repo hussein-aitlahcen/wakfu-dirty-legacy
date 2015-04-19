@@ -29,7 +29,13 @@
   </pluginRepositories>
 -->
   <dependencies>
-
+	  <dependency>
+	    <groupId>com</groupId>
+	    <artifactId>wakfu.common</artifactId>
+	    <version>1.0</version>
+	    <scope>system</scope>
+	    <systemPath>${basedir}/res/wakfu.common.jar</systemPath>
+	  </dependency>
     <!-- Test -->
     <dependency>
     	<groupId>mysql</groupId>
@@ -70,16 +76,6 @@
     	<groupId>net.sf.trove4j</groupId>
     	<artifactId>trove4j</artifactId>
     	<version>3.0.3</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.scalatra</groupId>
-    	<artifactId>scalatra-jetty_2.11</artifactId>
-    	<version>2.4.0.M3</version>
-    </dependency>
-    <dependency>
-    	<groupId>org.eclipse.jetty</groupId>
-    	<artifactId>jetty-webapp</artifactId>
-    	<version>9.2.10.v20150310</version>
     </dependency>
   </dependencies>
 

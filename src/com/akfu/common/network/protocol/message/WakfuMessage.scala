@@ -27,6 +27,18 @@ class ExtendedByteBuf(val buffer: ByteBuf) {
     buffer writeInt data.length
     buffer writeBytes data
   }
+  
+   def readByteString(): String = {
+    val data = Array.ofDim[Byte](buffer readByte)
+    buffer readBytes data
+    new String(data)
+  }
+  
+  def writeByteString(value: String) {
+    val data = value getBytes()
+    buffer writeByte data.length
+    buffer writeBytes data
+  }
 }
 
 abstract case class WakfuMessage() extends FrameMessage {

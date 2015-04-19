@@ -135,7 +135,6 @@ public enum AdminRightsEnum implements AdminRight
             this.m_command = command;
         }
         
-        @Override
         public boolean execute(final short value) {
             return this.m_command != value;
         }

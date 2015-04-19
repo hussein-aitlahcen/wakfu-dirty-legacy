@@ -8,9 +8,12 @@ import java.net.InetSocketAddress
 import akka.actor.Props
 import akka.actor.ActorSystem
 import akka.actor.ActorRef
-import com.akfu.world.soap.SOAPServer
+import com.ankamagames.wakfu.common.datas.Breed.AvatarBreedConstants
 
 object WorldService {
+  
+  final val BIND_PORT = 5555
+  final val SOAP_AUTH_URL = "http://127.0.0.1/authentification.php"
   
   private var system: ActorSystem = null
   private var listener: ActorRef = null
@@ -21,10 +24,12 @@ object WorldService {
   def getSystem = system
   
   def initialize { 
-    system = ActorSystem.create("world-system")
-    listener = system.actorOf(Props(classOf[WorldListener], 5555), "listener")
-    worker = system.actorOf(Props(classOf[WorldWorker]), "worker")
-    SOAPServer.initialize
+    
+    AvatarBreedConstants initBreeds
+    
+    system = ActorSystem create("world-system")
+    listener = system actorOf(Props(classOf[WorldListener], BIND_PORT), "listener")
+    worker = system actorOf(Props(classOf[WorldWorker]), "worker")
   }
   
 }

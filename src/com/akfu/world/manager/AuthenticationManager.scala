@@ -31,6 +31,8 @@ object AuthenticationManager {
   def addToken(token: String) = tokens(token) = new Token(token)
   
   def generateGameToken(client: WorldClient) {
+    client.self ! RemoveFrame(GameAuthenticationFrame)
+    client.self ! AddFrame(CharacterSelectionFrame)
     client.self ! new AuthentificationTokenResultMessage("salut")
   }
     
@@ -63,9 +65,11 @@ object AuthenticationManager {
     
     client.self ! new ClientIpMessage("127.0.0.1")
     
-    CalendarManager sendCalendarSynchronization client
+    //CalendarManager sendCalendarSynchronization client
     SystemConfigurationManager sendClientSystemConfiguration client
+    CompanionManager sendCompanionList client
     CompanionManager sendFreeCompanionId client    
+    CharacterManager sendAdditionalSlots client
     CharacterManager sendCharactersList client
   }
   

@@ -66,7 +66,7 @@ final class AuthWorker extends Actor with ActorLogging {
     config changeProperty(SystemConfigurationType.AUTHORIZED_PARTNERS, "default")    
     
     val proxies = List(
-        new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(5555), 0))
+        new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(WorldService BIND_PORT), 0))
         
     val worlds = List(
         new WorldInfo(1, "", 100, 100, false, config))

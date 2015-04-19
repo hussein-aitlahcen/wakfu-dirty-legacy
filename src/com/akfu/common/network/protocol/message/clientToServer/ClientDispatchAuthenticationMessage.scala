@@ -4,8 +4,7 @@ import com.akfu.common.network.protocol.OpCode
 import io.netty.buffer.ByteBuf
 import com.akfu.common.network.protocol.message.WakfuClientMessage
 
-final class ClientDispatchAuthenticationMessage
-    extends WakfuClientMessage {
+final class ClientDispatchAuthenticationMessage extends WakfuClientMessage {
 
   def getOpCode() = OpCode.CMSG_DISPATCH_AUTH
   

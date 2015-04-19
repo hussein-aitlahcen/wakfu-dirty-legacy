@@ -16,8 +16,12 @@ object MessageBuilder {
   private val method = classOf[WakfuClientMessage].getMethod("getOpCode")
   for(message <- messages) {
     val clazz = Class.forName(message.name)
-    val instance = clazz.newInstance.asInstanceOf[WakfuClientMessage]
-    messageByOpCode += (method.invoke(instance).asInstanceOf[Int] -> (() => clazz.newInstance().asInstanceOf[WakfuClientMessage]))
+    try {
+      val instance = clazz.newInstance.asInstanceOf[WakfuClientMessage]
+      messageByOpCode += (method.invoke(instance).asInstanceOf[Int] -> (() => clazz.newInstance().asInstanceOf[WakfuClientMessage]))
+    } catch {
+      case _: Throwable =>
+    }
   }
   
   

@@ -7,6 +7,9 @@ import net.fwbrasil.activate.entity.Entity
 import java.util.Date
 import net.fwbrasil.activate.entity.EntityWithCustomID
 import com.akfu.common.account.AccountInformations
+import net.fwbrasil.activate.entity.id.SequencedIdGenerator
+import net.fwbrasil.activate.sequence.LongSequenceEntity
+import net.fwbrasil.activate.sequence.Sequence
 
 object mysqlContext extends ActivateContext {
     val storage = new PooledJdbcRelationalStorage {
@@ -42,10 +45,89 @@ sealed class Account(
   def setBannedDuration(until: Date) = transactional { banned_until = until }
 }
 
+@Alias("player")
+sealed class CharacterInfo(
+    val accountId: Long,
+    val name: String,
+    val breed: Int,
+    val sex: Int,
+    val skinColor: Int,
+    val hairColor: Int,
+    val pupilColor: Int,
+    val skinFactor: Int,
+    val hairFactor: Int,
+    val clothIndex: Int,
+    val faceIndex: Int,
+    val level: Int,
+    val experience: Long,
+    val title: Int,
+    val instanceX: Int,
+    val instanceY: Int,
+    val instanceZ: Int,
+    val direction: Int,
+    val instanceId: Int) extends EntityWithGeneratedID[Long] { 
+}
+
+class CharacterIdGenerator 
+extends SequencedIdGenerator[CharacterInfo](LongSequenceEntity("characterSequence", 1))
+ 
 object DatabaseManager {
     
-  def getAccount(id: Long) = transactional { byId[Account](id) }.headOption
-  def getAccount(name: String) = transactional { select[Account].where(_.name :== name) }.headOption
-  def getAccountByNick(nick: String) = transactional { select[Account].where(_.pseudo :== nick).headOption }
+  def main(args: Array[String]): Unit = {
+    transactional {
+      new CharacterInfo(0, "Smarken", 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+    }
+  }
   
+  def getAccount(id: Long) = transactional { byId[Account](id) }
+  def getAccount(name: String) = transactional { select[Account] where(_.name :== name) headOption } 
+  def getAccountByNick(nick: String) = transactional { select[Account] where(_.pseudo :== nick) headOption }
+  
+  def getCharacters(accountId: Long) = transactional { select[CharacterInfo] where(_.accountId :== accountId) }
+  def getCharacter(id: Long) = transactional { byId[CharacterInfo](id) }
+  def getCharacter(name: String) = transactional { select[CharacterInfo] where(_.name :== name) headOption } 
+  
+  def createCharacter(
+    accountId: Long,
+    name: String,
+    breed: Int,
+    sex: Int,
+    skinColor: Int,
+    hairColor: Int,
+    pupilColor: Int,
+    skinFactor: Int,
+    hairFactor: Int,
+    clothIndex: Int,
+    faceIndex: Int,
+    level: Int,
+    experience: Long,
+    title: Int,
+    instanceX: Int,
+    instanceY: Int,
+    instanceZ: Int,
+    direction: Int,
+    instanceId: Int) = {    
+    transactional {
+      new CharacterInfo(
+          accountId, 
+          name, 
+          breed, 
+          sex, 
+          skinColor, 
+          hairColor, 
+          pupilColor, 
+          skinFactor, 
+          hairFactor, 
+          clothIndex, 
+          faceIndex, 
+          level, 
+          experience, 
+          title, 
+          instanceX, 
+          instanceY, 
+          instanceZ, 
+          direction, 
+          instanceId)
+    }
+  }
 }
