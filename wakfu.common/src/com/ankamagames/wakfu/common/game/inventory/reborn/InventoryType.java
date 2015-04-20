@@ -8,7 +8,7 @@ public enum InventoryType
     BAG((SimpleObjectFactory<? extends Inventory>)new BagFactory()), 
     QUEST((SimpleObjectFactory<? extends Inventory>)new QuestItemFactory()), 
     EQUIPMENT((SimpleObjectFactory<? extends Inventory>)new EquipmentFactory()), 
-    TEMPORARY_INVENTORY((SimpleObjectFactory<? extends Inventory>)new TemporaryInventoryFactory()), 
+//    TEMPORARY_INVENTORY((SimpleObjectFactory<? extends Inventory>)new TemporaryInventoryFactory()), 
     COSMETICS((SimpleObjectFactory<? extends Inventory>)new CosmeticsInventoryFactory()), 
     PET_COSMETICS((SimpleObjectFactory<? extends Inventory>)new CosmeticsInventoryFactory());
     
@@ -22,13 +22,13 @@ public enum InventoryType
         return (Inventory)this.factory.createNew();
     }
     
-    private static class TemporaryInventoryFactory implements SimpleObjectFactory<TemporaryInventoryModel>
-    {
-        @Override
-        public TemporaryInventoryModel createNew() {
-            return new TemporaryInventoryModel();
-        }
-    }
+//    private static class TemporaryInventoryFactory implements SimpleObjectFactory<TemporaryInventoryModel>
+//    {
+//        @Override
+//        public TemporaryInventoryModel createNew() {
+//            return new TemporaryInventoryModel();
+//        }
+//    }
     
     private static class CosmeticsInventoryFactory implements SimpleObjectFactory<CosmeticsInventoryModel>
     {

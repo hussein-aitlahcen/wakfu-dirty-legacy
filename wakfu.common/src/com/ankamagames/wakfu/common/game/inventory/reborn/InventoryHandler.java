@@ -6,7 +6,7 @@ import com.ankamagames.wakfu.common.game.inventory.reborn.exception.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.wakfu.common.game.inventory.reborn.definition.quest.*;
-import com.ankamagames.wakfu.common.game.inventory.reborn.definition.temporary.*;
+//import com.ankamagames.wakfu.common.game.inventory.reborn.definition.temporary.*;
 import com.ankamagames.wakfu.common.game.inventory.reborn.definition.cosmetics.*;
 
 public class InventoryHandler
@@ -37,9 +37,9 @@ public class InventoryHandler
         final QuestInventoryModel questInventory = (QuestInventoryModel) this.m_inventories.get(InventoryType.QUEST);
         final QuestInventorySerializer questSerializer = new QuestInventorySerializer(questInventory, raw.questInventory, ReferenceItemManager.getInstance());
         questSerializer.toRaw();
-        final TemporaryInventoryModel temporaryInventory = (TemporaryInventoryModel) this.m_inventories.get(InventoryType.TEMPORARY_INVENTORY);
-        final TemporaryInventorySerializer tempInvSerializer = new TemporaryInventorySerializer(temporaryInventory, raw.temporaryInventory);
-        tempInvSerializer.toRaw();
+//        final TemporaryInventoryModel temporaryInventory = (TemporaryInventoryModel) this.m_inventories.get(InventoryType.TEMPORARY_INVENTORY);
+//        final TemporaryInventorySerializer tempInvSerializer = new TemporaryInventorySerializer(temporaryInventory, raw.temporaryInventory);
+//        tempInvSerializer.toRaw();
         final CosmeticsInventoryModel cosmeticsInventory = (CosmeticsInventoryModel) this.m_inventories.get(InventoryType.COSMETICS);
         final CosmeticsInventorySerializer cosmeticsInventorySerializer = new CosmeticsInventorySerializer(cosmeticsInventory, raw.cosmeticsInventory, ReferenceItemManager.getInstance());
         cosmeticsInventorySerializer.toRaw();
@@ -52,9 +52,9 @@ public class InventoryHandler
         final QuestInventoryModel questInventory = (QuestInventoryModel) this.m_inventories.get(InventoryType.QUEST);
         final QuestInventorySerializer serializer = new QuestInventorySerializer(questInventory, raw.questInventory, ReferenceItemManager.getInstance());
         serializer.fromRaw();
-        final TemporaryInventoryModel temporaryInventory = (TemporaryInventoryModel) this.m_inventories.get(InventoryType.TEMPORARY_INVENTORY);
-        final TemporaryInventorySerializer tempInvSerializer = new TemporaryInventorySerializer(temporaryInventory, raw.temporaryInventory);
-        tempInvSerializer.fromRaw();
+//        final TemporaryInventoryModel temporaryInventory = (TemporaryInventoryModel) this.m_inventories.get(InventoryType.TEMPORARY_INVENTORY);
+//        final TemporaryInventorySerializer tempInvSerializer = new TemporaryInventorySerializer(temporaryInventory, raw.temporaryInventory);
+//        tempInvSerializer.fromRaw();
         final CosmeticsInventoryModel cosmeticsInventory = (CosmeticsInventoryModel) this.m_inventories.get(InventoryType.COSMETICS);
         final CosmeticsInventorySerializer cosmeticsInventorySerializer = new CosmeticsInventorySerializer(cosmeticsInventory, raw.cosmeticsInventory, ReferenceItemManager.getInstance());
         cosmeticsInventorySerializer.fromRaw();
@@ -66,8 +66,8 @@ public class InventoryHandler
     public void clear() {
         final QuestInventoryModel questInventory = (QuestInventoryModel) this.m_inventories.get(InventoryType.QUEST);
         questInventory.clear();
-        final TemporaryInventoryModel temporaryInventory = (TemporaryInventoryModel) this.m_inventories.get(InventoryType.TEMPORARY_INVENTORY);
-        temporaryInventory.clear();
+//        final TemporaryInventoryModel temporaryInventory = (TemporaryInventoryModel) this.m_inventories.get(InventoryType.TEMPORARY_INVENTORY);
+//        temporaryInventory.clear();
         final CosmeticsInventoryModel cosmeticsInventory = (CosmeticsInventoryModel) this.m_inventories.get(InventoryType.COSMETICS);
         cosmeticsInventory.clear();
         final CosmeticsInventoryModel petCosmeticsInventory = (CosmeticsInventoryModel) this.m_inventories.get(InventoryType.PET_COSMETICS);

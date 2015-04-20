@@ -1,14 +1,20 @@
 package com.ankamagames.wakfu.common.game.eventsCalendar.serialisation;
 
 import org.apache.log4j.*;
+
 import com.ankamagames.wakfu.common.game.eventsCalendar.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
 import com.ankamagames.wakfu.common.constants.*;
+import com.ankamagames.wakfu.common.constants.Version;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import gnu.trove.*;
 
 public class WakfuCalendarEventSerializer extends BinarSerial implements Poolable

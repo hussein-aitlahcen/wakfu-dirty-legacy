@@ -86,6 +86,7 @@ public class CharacterSerializedAccountInformation extends CharacterSerializedPa
             buffer.putShort((short)0);
         }
         buffer.putInt(this.subscriptionLevel);
+        buffer.putInt(0); // TODO: heroes subsciptionLevel
         buffer.putInt(this.forcedSubscriptionLevel);
         buffer.putInt(this.antiAddictionLevel);
         buffer.putLong(this.sessionStartTime);
@@ -103,6 +104,7 @@ public class CharacterSerializedAccountInformation extends CharacterSerializedPa
         }
         buffer.put(this.additionalSlots);
         buffer.put(this.vaultUpgrades);
+        buffer.put((byte)0); // TODO: ACCOUNT_SECURITY_TYPE
         return true;
     }
     
@@ -171,9 +173,11 @@ public class CharacterSerializedAccountInformation extends CharacterSerializedPa
         size += 4;
         size += 4;
         size += 4;
+        size += 4;
         size += 8;
         size += 2;
         size += ((this.additionalRights != null) ? (this.additionalRights.length * 4) : 0);
+        ++size;
         ++size;
         return ++size;
     }
