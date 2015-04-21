@@ -63,7 +63,7 @@ public enum AvatarBreed implements Breed
                 return breed;
             }
         }
-        AvatarBreed.m_logger.warn((Object)("breed inconnue " + upperName));
+        AvatarBreed.m_logger.warn("breed inconnue " + upperName);
         return AvatarBreed.NONE;
     }
     
@@ -189,6 +189,6 @@ public enum AvatarBreed implements Breed
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AvatarBreed.class);
+        m_logger = Logger.getLogger(AvatarBreed.class);
     }
 }

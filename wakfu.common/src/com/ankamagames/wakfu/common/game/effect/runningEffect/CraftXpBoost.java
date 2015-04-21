@@ -6,6 +6,7 @@ import com.ankamagames.wakfu.common.game.characteristics.skill.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class CraftXpBoost extends WakfuRunningEffect
@@ -25,7 +26,7 @@ public final class CraftXpBoost extends WakfuRunningEffect
         }
         catch (Exception e) {
             obj = new CraftXpBoost();
-            CraftXpBoost.m_logger.error((Object)("Erreur lors d'un checkOut sur un objet de type EcosystemSkillModification : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un objet de type EcosystemSkillModification : " + e.getMessage());
         }
         return obj;
     }
@@ -38,7 +39,7 @@ public final class CraftXpBoost extends WakfuRunningEffect
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                CraftXpBoost.m_logger.error((Object)"Exception lors du retour au pool", (Throwable)e);
+                RunningEffect.m_logger.error("Exception lors du retour au pool", e);
             }
         }
         else {
@@ -108,9 +109,9 @@ public final class CraftXpBoost extends WakfuRunningEffect
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            this.m_craftId = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 2) {
+            this.m_craftId = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

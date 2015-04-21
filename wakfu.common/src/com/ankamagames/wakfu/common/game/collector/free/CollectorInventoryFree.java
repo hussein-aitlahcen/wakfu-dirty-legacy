@@ -6,7 +6,9 @@ import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.wakfu.common.game.interactiveElements.param.*;
 import com.ankamagames.wakfu.common.game.collector.free.inventory.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 public abstract class CollectorInventoryFree extends CollectorInventory<CollectorInventoryCheckerFree, CollectorInventoryObserverFree>
@@ -15,12 +17,12 @@ public abstract class CollectorInventoryFree extends CollectorInventory<Collecto
     
     protected CollectorInventoryFree(final IECollectorParameter param) {
         super(new CollectorInventoryCheckerFree(param));
-        this.m_content = new ContiguousArrayInventory<Item, RawInventoryItem>(CollectorStackInventoryProvider.INSTANCE, (InventoryContentChecker<Item>)this.m_checker, param.getCapacity(), true);
+        this.m_content = new ContiguousArrayInventory<Item, RawInventoryItem>(CollectorStackInventoryProvider.INSTANCE, this.m_checker, param.getCapacity(), true);
     }
     
     public void notifyItemAdded(final Item item) {
         if (this.m_observer != null) {
-            ((CollectorInventoryObserverFree)this.m_observer).onItemAdded(item);
+            this.m_observer.onItemAdded(item);
         }
     }
     
@@ -32,7 +34,7 @@ public abstract class CollectorInventoryFree extends CollectorInventory<Collecto
             this.m_content.add(item);
         }
         catch (InventoryException e) {
-            CollectorInventoryFree.m_logger.error((Object)"Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", (Throwable)e);
+            CollectorInventory.m_logger.error("Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", e);
             return false;
         }
         this.notifyItemAdded(item);
@@ -85,18 +87,18 @@ public abstract class CollectorInventoryFree extends CollectorInventory<Collecto
     }
     
     public boolean canAdd(final Item item) {
-        return ((CollectorInventoryCheckerFree)this.m_checker).canAddItem(this.m_content, item) >= 0;
+        return this.m_checker.canAddItem(this.m_content, item) >= 0;
     }
     
     public boolean canRemove(final long itemUid, final short qty) {
-        return ((CollectorInventoryCheckerFree)this.m_checker).canRemoveItem((Inventory<Item>)this.m_content, itemUid, qty) >= 0;
+        return this.m_checker.canRemoveItem(this.m_content, itemUid, qty) >= 0;
     }
     
     public boolean canRemove(final Item item) {
-        return ((CollectorInventoryCheckerFree)this.m_checker).canRemoveItem(this.m_content, item) >= 0;
+        return this.m_checker.canRemoveItem(this.m_content, item) >= 0;
     }
     
     public boolean canAdd(final Item item, final byte position) {
-        return ((CollectorInventoryCheckerFree)this.m_checker).canAddItem(this.m_content, item, position) >= 0;
+        return this.m_checker.canAddItem(this.m_content, item, position) >= 0;
     }
 }

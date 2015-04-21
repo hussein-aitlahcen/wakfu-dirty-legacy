@@ -42,7 +42,7 @@ public class LockManager
     public boolean isLocked(final int lockId) {
         final LockDefinition lockDefinition = this.m_locks.get(lockId);
         if (lockDefinition == null) {
-            LockManager.m_logger.warn((Object)("[LOCK] On essaye de r\u00e9cup\u00e9rer l'\u00e9tat d'un verrou inexistant id=" + lockId), (Throwable)new Exception());
+            LockManager.m_logger.warn("[LOCK] On essaye de r\u00e9cup\u00e9rer l'\u00e9tat d'un verrou inexistant id=" + lockId, new Exception());
             return false;
         }
         if (lockDefinition.getUnlockDate().isNull()) {
@@ -55,7 +55,7 @@ public class LockManager
     public boolean isAvailableOnlyForCitizens(final int lockId) {
         final LockDefinition lockDefinition = this.m_locks.get(lockId);
         if (lockDefinition == null) {
-            LockManager.m_logger.warn((Object)("[LOCK] On essaye de r\u00e9cup\u00e9rer l'\u00e9tat d'un verrou inexistant id=" + lockId), (Throwable)new Exception());
+            LockManager.m_logger.warn("[LOCK] On essaye de r\u00e9cup\u00e9rer l'\u00e9tat d'un verrou inexistant id=" + lockId, new Exception());
             return false;
         }
         return lockDefinition.isAvailableToCitizensOnly();
@@ -74,7 +74,7 @@ public class LockManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LockManager.class);
+        m_logger = Logger.getLogger(LockManager.class);
         INSTANCE = new LockManager();
     }
 }

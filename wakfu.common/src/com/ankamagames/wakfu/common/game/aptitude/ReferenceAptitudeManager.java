@@ -45,7 +45,7 @@ public final class ReferenceAptitudeManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ReferenceAptitudeManager.class);
+        m_logger = Logger.getLogger(ReferenceAptitudeManager.class);
         m_instance = new ReferenceAptitudeManager();
     }
 }

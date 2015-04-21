@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.fight.protagonists;
 
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import java.io.*;
 
 public abstract class ProtagonistFilter
 {

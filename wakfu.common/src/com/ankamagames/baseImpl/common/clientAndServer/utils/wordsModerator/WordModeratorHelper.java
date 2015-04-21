@@ -4,7 +4,6 @@ import java.util.*;
 import com.ankamagames.framework.kernel.utils.*;
 import java.util.regex.*;
 import com.ankamagames.framework.kernel.core.maths.*;
-import java.io.*;
 import gnu.trove.*;
 
 public class WordModeratorHelper

@@ -3,7 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -44,7 +46,7 @@ public final class RunningEffectGroupLevelFunctionTriggeringSpell extends Runnin
             re = new RunningEffectGroupLevelFunctionTriggeringSpell();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupLevelFunctionTriggeringSpell.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionTriggeringSpell : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionTriggeringSpell : " + e.getMessage());
         }
         return re;
     }
@@ -55,16 +57,16 @@ public final class RunningEffectGroupLevelFunctionTriggeringSpell extends Runnin
             return;
         }
         super.effectiveComputeValue(triggerRE);
-        this.m_levelPerPA = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel());
-        this.m_levelPerPM = ((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel());
-        this.m_levelPerPW = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel());
+        this.m_levelPerPA = this.m_genericEffect.getParam(6, this.getContainerLevel());
+        this.m_levelPerPM = this.m_genericEffect.getParam(7, this.getContainerLevel());
+        this.m_levelPerPW = this.m_genericEffect.getParam(8, this.getContainerLevel());
     }
     
     @Override
     protected WakfuEffectExecutionParameters getExecutionParameters(final WakfuRunningEffect linkedRE, final boolean disableProbabilityComputation) {
         final WakfuEffectExecutionParameters params = super.getExecutionParameters(linkedRE, disableProbabilityComputation);
         if (linkedRE == null) {
-            RunningEffectGroupLevelFunctionTriggeringSpell.m_logger.error((Object)"Unable to execute a RunningEffectGroupLevelFunctionTriggeringSpell without triggering effect");
+            RunningEffect.m_logger.error("Unable to execute a RunningEffectGroupLevelFunctionTriggeringSpell without triggering effect");
             params.setForcedLevel(0);
             return params;
         }
@@ -74,12 +76,12 @@ public final class RunningEffectGroupLevelFunctionTriggeringSpell extends Runnin
         }
         final WakfuEffectContainer effectContainer = (linkedRE).getEffectContainer();
         if (effectContainer == null) {
-            RunningEffectGroupLevelFunctionTriggeringSpell.m_logger.error((Object)("Unable to execute a RunningEffectGroupLevelFunctionTriggeringSpell when the triggering effect has no container. Effect id : " + (linkedRE).getGenericEffect().getEffectId()));
+            RunningEffect.m_logger.error("Unable to execute a RunningEffectGroupLevelFunctionTriggeringSpell when the triggering effect has no container. Effect id : " + (linkedRE).getGenericEffect().getEffectId());
             params.setForcedLevel(0);
             return params;
         }
         if (effectContainer.getContainerType() != 11) {
-            RunningEffectGroupLevelFunctionTriggeringSpell.m_logger.error((Object)("Unable to execute a RunningEffectGroupLevelFunctionTriggeringSpell when the triggering effect container is not a spell.Effect id : " + (linkedRE).getGenericEffect().getEffectId() + " ContainerType : " + effectContainer.getContainerType() + " Container ID : " + effectContainer.getEffectContainerId()));
+            RunningEffect.m_logger.error("Unable to execute a RunningEffectGroupLevelFunctionTriggeringSpell when the triggering effect container is not a spell.Effect id : " + (linkedRE).getGenericEffect().getEffectId() + " ContainerType : " + effectContainer.getContainerType() + " Container ID : " + effectContainer.getEffectContainerId());
             params.setForcedLevel(0);
             return params;
         }

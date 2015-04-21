@@ -17,6 +17,6 @@ public class BuildMaxQuantityReached extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BuildMaxQuantityReached.class);
+        m_logger = Logger.getLogger(BuildMaxQuantityReached.class);
     }
 }

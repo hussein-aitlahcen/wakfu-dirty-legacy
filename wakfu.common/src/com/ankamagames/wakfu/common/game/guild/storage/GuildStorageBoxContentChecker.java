@@ -23,7 +23,7 @@ public class GuildStorageBoxContentChecker implements InventoryContentChecker<It
             return -4;
         }
         Item stack;
-        for (int i = 0; i < items.size() && qty > 0; qty -= (short)(stack.canStackWith(item) ? stack.getStackFreePlace() : 0), ++i) {
+        for (int i = 0; i < items.size() && qty > 0; qty -= stack.canStackWith(item) ? stack.getStackFreePlace() : 0, ++i) {
             stack = items.get(i);
         }
         return (qty <= 0 || !inventory.isFull()) ? 1 : -1;

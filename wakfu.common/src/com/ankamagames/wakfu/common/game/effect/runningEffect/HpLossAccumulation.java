@@ -1,12 +1,12 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fight.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -50,7 +50,7 @@ public final class HpLossAccumulation extends WakfuRunningEffect
         catch (Exception e) {
             re = new HpLossAccumulation();
             re.m_pool = null;
-            HpLossAccumulation.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossAccumulation : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossAccumulation : " + e.getMessage());
         }
         re.m_damageAbsorption = this.m_damageAbsorption;
         return re;
@@ -76,11 +76,11 @@ public final class HpLossAccumulation extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect.getParamsCount() == 0) {
             this.m_damageAbsorption = 100;
         }
         else {
-            this.m_damageAbsorption = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_damageAbsorption = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     
@@ -97,9 +97,9 @@ public final class HpLossAccumulation extends WakfuRunningEffect
                     return;
                 }
             }
-            final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(this.getEffectId());
+            final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.getEffectId());
             if (effectGroup == null || effectGroup.getEffectsCount() == 0) {
-                HpLossAccumulation.m_logger.error((Object)("Pas de sous effet pour l'accumulation de perte de pdv " + this.getEffectId()));
+                RunningEffect.m_logger.error("Pas de sous effet pour l'accumulation de perte de pdv " + this.getEffectId());
                 super.unapplyOverride();
                 return;
             }
@@ -110,7 +110,7 @@ public final class HpLossAccumulation extends WakfuRunningEffect
                 effect.execute(this.getEffectContainer(), this.m_caster, this.getContext(), RunningEffectConstants.getInstance(), this.m_target.getWorldCellX(), this.m_target.getWorldCellY(), this.m_target.getWorldCellAltitude(), this.m_target, params, false);
             }
             catch (Exception e) {
-                HpLossAccumulation.m_logger.error((Object)"Exception levee", (Throwable)e);
+                RunningEffect.m_logger.error("Exception levee", e);
             }
             params.release();
         }

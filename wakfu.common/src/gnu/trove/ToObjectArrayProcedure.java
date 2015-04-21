@@ -11,7 +11,8 @@ final class ToObjectArrayProcedure<T> implements TObjectProcedure<T>
         this.target = target;
     }
     
-    public final boolean execute(final T value) {
+    @Override
+	public final boolean execute(final T value) {
         this.target[this.pos++] = value;
         return true;
     }

@@ -7,7 +7,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.part.*;
@@ -457,7 +456,7 @@ public class FightTargetValidator implements TargetValidator<EffectUser>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightTargetValidator.class);
+        m_logger = Logger.getLogger(FightTargetValidator.class);
         NO_CONDITIONS = new long[0];
     }
 }

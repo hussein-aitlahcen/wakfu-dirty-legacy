@@ -22,12 +22,12 @@ public final class AptitudeProvider implements InventoryContentProvider<Aptitude
             aptitude.setWonLevel(rawItem.wonLevel);
             return aptitude;
         }
-        AptitudeProvider.m_logger.error((Object)("Aucune aptitude de referenceId=" + rawItem.referenceId));
+        AptitudeProvider.m_logger.error("Aucune aptitude de referenceId=" + rawItem.referenceId);
         return null;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AptitudeProvider.class);
+        m_logger = Logger.getLogger(AptitudeProvider.class);
         m_instance = new AptitudeProvider();
     }
 }

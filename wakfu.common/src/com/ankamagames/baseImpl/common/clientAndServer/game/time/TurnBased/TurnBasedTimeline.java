@@ -362,18 +362,18 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     
     public void fireTimeEvent(final TimeEvent te) {
         if (te == null) {
-            TurnBasedTimeline.m_logger.error((Object)"On ne peut pas envoyer un timeEvent null");
+            TurnBasedTimeline.m_logger.error("On ne peut pas envoyer un timeEvent null");
             return;
         }
         if (this.m_timeEventHandler == null) {
-            TurnBasedTimeline.m_logger.error((Object)"Pas de TimeEventHandler sur la timeline");
+            TurnBasedTimeline.m_logger.error("Pas de TimeEventHandler sur la timeline");
             return;
         }
         try {
             te.sendTo(this.m_timeEventHandler);
         }
         catch (Exception e) {
-            TurnBasedTimeline.m_logger.error((Object)"Exception levee", (Throwable)e);
+            TurnBasedTimeline.m_logger.error("Exception levee", e);
         }
     }
     
@@ -391,7 +391,7 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     
     private void processScheduledEvents(final Iterator<? extends DelayableTimeEvent> scheduledEvents) {
         while (this.isRunning() && scheduledEvents.hasNext()) {
-            final DelayableTimeEvent event = (DelayableTimeEvent)scheduledEvents.next();
+            final DelayableTimeEvent event = scheduledEvents.next();
             scheduledEvents.remove();
             this.fireTimeEvent(event);
         }
@@ -419,11 +419,11 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     
     private boolean checkForEndOfTableTurn() {
         if (this.m_state != TimelineState.BETWEEN_FIGHTER_TURNS) {
-            TurnBasedTimeline.m_logger.error((Object)this.withFightIdAndState("Etat de la timeline incorrect : " + this.m_state + ", attendu: " + TimelineState.BETWEEN_FIGHTER_TURNS + " at " + ExceptionFormatter.currentStackTrace(5)));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("Etat de la timeline incorrect : " + this.m_state + ", attendu: " + TimelineState.BETWEEN_FIGHTER_TURNS + " at " + ExceptionFormatter.currentStackTrace(5)));
             return false;
         }
         if (this.m_nodes.hasNextFighter()) {
-            TurnBasedTimeline.m_logger.error((Object)this.withFightIdAndState("Assertion incorrecte sur la timeline (demande de fin de tour alors que joueur suivant = " + (this.m_nodes.hasNextFighter() ? this.m_nodes.peekAtNextFighter() : "null") + ')').append(ExceptionFormatter.currentStackTrace(16)));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("Assertion incorrecte sur la timeline (demande de fin de tour alors que joueur suivant = " + (this.m_nodes.hasNextFighter() ? this.m_nodes.peekAtNextFighter() : "null") + ')').append(ExceptionFormatter.currentStackTrace(16)));
             return false;
         }
         return true;
@@ -431,11 +431,11 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     
     private boolean checkStartFighterTurn(final long fighterId) {
         if (this.m_state != TimelineState.BETWEEN_FIGHTER_TURNS) {
-            TurnBasedTimeline.m_logger.error((Object)this.withFightIdAndState("Etat de la timeline incorrect : " + this.m_state + ", attendu: " + TimelineState.BETWEEN_FIGHTER_TURNS + " at " + ExceptionFormatter.currentStackTrace(5)));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("Etat de la timeline incorrect : " + this.m_state + ", attendu: " + TimelineState.BETWEEN_FIGHTER_TURNS + " at " + ExceptionFormatter.currentStackTrace(5)));
             return false;
         }
         if (!this.m_nodes.canStartFighterTurn(fighterId)) {
-            TurnBasedTimeline.m_logger.error((Object)this.withFightIdAndState("Assertion incorrecte sur la timeline (joueur suivant = " + (this.m_nodes.hasNextFighter() ? this.m_nodes.peekAtNextFighter() : "null") + ", attendu = " + fighterId + ')').append(ExceptionFormatter.currentStackTrace(16)));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("Assertion incorrecte sur la timeline (joueur suivant = " + (this.m_nodes.hasNextFighter() ? this.m_nodes.peekAtNextFighter() : "null") + ", attendu = " + fighterId + ')').append(ExceptionFormatter.currentStackTrace(16)));
             return false;
         }
         return true;
@@ -443,12 +443,12 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     
     private boolean checkEndFighterTurn(final long fighterId) {
         if (this.m_state != TimelineState.ON_FIGHTER_TURN) {
-            TurnBasedTimeline.m_logger.error((Object)this.withFightIdAndState("Etat de la timeline incorrect : " + this.m_state + ", attendu: " + TimelineState.ON_FIGHTER_TURN));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("Etat de la timeline incorrect : " + this.m_state + ", attendu: " + TimelineState.ON_FIGHTER_TURN));
             return false;
         }
         if (!this.m_nodes.canEndFighterTurn(fighterId)) {
             final String id = this.hasCurrentFighter() ? String.valueOf(this.getCurrentFighterId()) : "NONE";
-            TurnBasedTimeline.m_logger.error((Object)this.withFightIdAndState("Assertion incorrecte sur la timeline (joueur courant = " + id + ", attendu = " + fighterId + ')').append(ExceptionFormatter.currentStackTrace(16)));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("Assertion incorrecte sur la timeline (joueur courant = " + id + ", attendu = " + fighterId + ')').append(ExceptionFormatter.currentStackTrace(16)));
             return false;
         }
         return true;
@@ -465,7 +465,7 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     }
     
     protected StringBuilder withFightIdAndState(final String message) {
-        return new StringBuilder().append("[_TL_] fightId=").append(this.m_fightId).append(" - ").append(message).append(" - ").append((CharSequence)this.stateRepr());
+        return new StringBuilder().append("[_TL_] fightId=").append(this.m_fightId).append(" - ").append(message).append(" - ").append(this.stateRepr());
     }
     
     public StringBuilder stateRepr() {
@@ -495,6 +495,6 @@ public abstract class TurnBasedTimeline implements BasicTimeline
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TurnBasedTimeline.class);
+        m_logger = Logger.getLogger(TurnBasedTimeline.class);
     }
 }

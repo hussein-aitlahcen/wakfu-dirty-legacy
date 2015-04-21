@@ -41,7 +41,7 @@ class ModifyMemberChange implements GuildChange
             controller.changeMemberNation(this.m_member.getId(), this.m_member.getNationId());
         }
         catch (GuildException e) {
-            ModifyMemberChange.m_logger.error((Object)"Impossible de modifier le membre", (Throwable)e);
+            ModifyMemberChange.m_logger.error("Impossible de modifier le membre", e);
         }
     }
     
@@ -56,6 +56,6 @@ class ModifyMemberChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ModifyMemberChange.class);
+        m_logger = Logger.getLogger(ModifyMemberChange.class);
     }
 }

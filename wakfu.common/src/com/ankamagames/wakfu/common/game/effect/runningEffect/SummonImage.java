@@ -1,8 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
@@ -10,9 +11,10 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -90,7 +92,7 @@ public class SummonImage extends WakfuRunningEffect
             re = new SummonImage();
             re.m_pool = null;
             re.m_isStatic = false;
-            SummonImage.m_logger.error((Object)("Erreur lors d'un checkOut sur un SummonImage : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SummonImage : " + e.getMessage());
         }
         return re;
     }
@@ -98,7 +100,7 @@ public class SummonImage extends WakfuRunningEffect
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         if (this.m_caster instanceof BasicCharacterInfo) {
-            SummonImage.m_logger.info((Object)("Instanciation d'une nouvelle invocation avec un id de " + this.m_newTargetId));
+            RunningEffect.m_logger.info("Instanciation d'une nouvelle invocation avec un id de " + this.m_newTargetId);
             final BasicCharacterInfo caster = (BasicCharacterInfo)this.m_caster;
             final BasicCharacterInfo monster = caster.summonMonster(this.m_newTargetId, this.m_targetCell, this.m_breedId, this.m_imageCharacteristics, false, null);
             if (this.isValueComputationEnabled()) {
@@ -120,14 +122,14 @@ public class SummonImage extends WakfuRunningEffect
         }
         final BasicCharacterInfo caster = (BasicCharacterInfo)this.m_caster;
         final short level = this.getContainerLevel();
-        this.m_breedId = (short)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_breedId = (short)this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.m_value <= 0) {
             this.m_value = caster.getLevel();
         }
         this.m_newTargetId = this.m_context.getEffectUserInformationProvider().getNextFreeEffectUserId((byte)1);
         final SpellInventory<AbstractSpellLevel> casterSpellInventory = (SpellInventory<AbstractSpellLevel>)caster.getSpellInventory();
-        final SpellInventory<AbstractSpellLevel> imageSpellInventory = new SpellInventory<AbstractSpellLevel>((short)0, (InventoryContentProvider<AbstractSpellLevel, RawSpellLevel>)casterSpellInventory.getContentProvider(), (InventoryContentChecker<AbstractSpellLevel>)casterSpellInventory.getContentChecker(), false, false, false);
+        final SpellInventory<AbstractSpellLevel> imageSpellInventory = new SpellInventory<AbstractSpellLevel>((short)0, casterSpellInventory.getContentProvider(), casterSpellInventory.getContentChecker(), false, false, false);
         this.m_imageCharacteristics = ImageCharacteristics.getDefaultInstance().newInstance(caster.getBreed().getBreedId(), caster.getName() + " clone", caster.getCharacteristicValue(FighterCharacteristicType.HP), (short)this.m_value, caster, imageSpellInventory);
     }
     

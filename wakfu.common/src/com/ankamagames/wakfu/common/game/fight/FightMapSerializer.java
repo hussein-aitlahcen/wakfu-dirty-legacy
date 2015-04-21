@@ -150,7 +150,7 @@ public final class FightMapSerializer
                         return TopologyMapManager.addTopologyMapInstance(worldId, x, y, instanceId);
                     }
                     catch (IOException e) {
-                        FightMapSerializer.m_logger.error((Object)("Unable to load map (" + x + "; " + y + ")"));
+                        FightMapSerializer.m_logger.error("Unable to load map (" + x + "; " + y + ")");
                         return null;
                     }
                 }
@@ -159,7 +159,7 @@ public final class FightMapSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightMapSerializer.class);
+        m_logger = Logger.getLogger(FightMapSerializer.class);
     }
     
     private static class TopologySerializer

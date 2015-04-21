@@ -206,7 +206,8 @@ public class TLongArrayList implements Externalizable, Cloneable
         this._data[j] = tmp;
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         TLongArrayList list = null;
         try {
             list = (TLongArrayList)super.clone();
@@ -253,7 +254,8 @@ public class TLongArrayList implements Externalizable, Cloneable
         System.arraycopy(this._data, offset, dest, 0, len);
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (other == this) {
             return true;
         }
@@ -273,7 +275,8 @@ public class TLongArrayList implements Externalizable, Cloneable
         return true;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         int h = 0;
         int i = this._pos;
         while (i-- > 0) {
@@ -427,7 +430,8 @@ public class TLongArrayList implements Externalizable, Cloneable
         return min;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         for (int i = 0, end = this._pos - 1; i < end; ++i) {
             buf.append(this._data[i]);
@@ -440,7 +444,8 @@ public class TLongArrayList implements Externalizable, Cloneable
         return buf.toString();
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(1);
         out.writeInt(this._pos);
         final int len = this._pos;
@@ -450,7 +455,8 @@ public class TLongArrayList implements Externalizable, Cloneable
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         this._pos = in.readInt();
         final int len = in.readInt();

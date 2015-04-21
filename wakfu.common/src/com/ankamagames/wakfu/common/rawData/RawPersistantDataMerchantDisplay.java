@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.rawData;
 
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import java.nio.*;
-import java.util.*;
 
 public class RawPersistantDataMerchantDisplay extends AbstractRawPersistantData implements VersionableObject
 {

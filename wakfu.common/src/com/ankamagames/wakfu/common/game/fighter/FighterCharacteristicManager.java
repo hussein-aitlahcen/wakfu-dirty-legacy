@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.fighter;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import gnu.trove.*;
-import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 public class FighterCharacteristicManager implements CharacteristicManager<FighterCharacteristic>
@@ -37,7 +36,7 @@ public class FighterCharacteristicManager implements CharacteristicManager<Fight
         this.m_characteristics.forEachValue(new TObjectProcedure<FighterCharacteristic>() {
             @Override
             public boolean execute(final FighterCharacteristic currentCharac) {
-                final FighterCharacteristic srcCharac = srcCharacteristic.getCharacteristic((CharacteristicType)currentCharac.getType());
+                final FighterCharacteristic srcCharac = srcCharacteristic.getCharacteristic(currentCharac.getType());
                 currentCharac.copyMinMaxAndValue(srcCharac);
                 return true;
             }
@@ -116,7 +115,7 @@ public class FighterCharacteristicManager implements CharacteristicManager<Fight
                 charac.set(rawChar.current);
             }
             else {
-                FighterCharacteristicManager.m_logger.error((Object)("Impossible de trouver la caract\u00e9ristique \u00e0 l'index " + rawChar.index));
+                FighterCharacteristicManager.m_logger.error("Impossible de trouver la caract\u00e9ristique \u00e0 l'index " + rawChar.index);
                 ok = false;
             }
         }
@@ -144,6 +143,6 @@ public class FighterCharacteristicManager implements CharacteristicManager<Fight
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FighterCharacteristicManager.class);
+        m_logger = Logger.getLogger(FighterCharacteristicManager.class);
     }
 }

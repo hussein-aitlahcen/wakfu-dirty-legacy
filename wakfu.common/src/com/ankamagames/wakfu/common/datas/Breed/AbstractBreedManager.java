@@ -24,11 +24,11 @@ public abstract class AbstractBreedManager<B extends Breed>
     
     public void addBreed(final B breed) {
         if (breed == null) {
-            AbstractBreedManager.m_logger.error((Object)"[esp\u00e8ce ignor\u00e9e] on tente d'ajouter une esp\u00e8ce null");
+            AbstractBreedManager.m_logger.error("[esp\u00e8ce ignor\u00e9e] on tente d'ajouter une esp\u00e8ce null");
             return;
         }
         if (this.m_breeds.containsKey(breed.getBreedId())) {
-            AbstractBreedManager.m_logger.error((Object)("[esp\u00e8ce ignor\u00e9e] on tente de rajouter une esp\u00e8ce dont l'id existe d\u00e9j\u00e0 pour une autre " + breed.getBreedId()));
+            AbstractBreedManager.m_logger.error("[esp\u00e8ce ignor\u00e9e] on tente de rajouter une esp\u00e8ce dont l'id existe d\u00e9j\u00e0 pour une autre " + breed.getBreedId());
             return;
         }
         this.m_breeds.put(breed.getBreedId(), breed);
@@ -53,6 +53,6 @@ public abstract class AbstractBreedManager<B extends Breed>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractBreedManager.class);
+        m_logger = Logger.getLogger(AbstractBreedManager.class);
     }
 }

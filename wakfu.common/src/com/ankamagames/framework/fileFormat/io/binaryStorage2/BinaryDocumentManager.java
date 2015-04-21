@@ -60,7 +60,7 @@ public class BinaryDocumentManager
     
     public <T extends BinaryData> void foreach(final T data, final LoadProcedure<T> reader) throws Exception {
         final BinaryDocument doc = this.open(data);
-        BinaryDocumentManager.m_logger.trace((Object)(data.getClass().getSimpleName() + ": " + doc.entryCount() + " entr\u00e9es"));
+        BinaryDocumentManager.m_logger.trace(data.getClass().getSimpleName() + ": " + doc.entryCount() + " entr\u00e9es");
         doc.foreach(data, reader);
         this.close(doc);
     }
@@ -75,7 +75,7 @@ public class BinaryDocumentManager
             reader.load(data);
             return true;
         }
-        BinaryDocumentManager.m_logger.error((Object)("Object inconnu d'id=" + id));
+        BinaryDocumentManager.m_logger.error("Object inconnu d'id=" + id);
         return false;
     }
     
@@ -89,7 +89,7 @@ public class BinaryDocumentManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinaryDocumentManager.class);
+        m_logger = Logger.getLogger(BinaryDocumentManager.class);
         m_instance = new BinaryDocumentManager();
     }
 }

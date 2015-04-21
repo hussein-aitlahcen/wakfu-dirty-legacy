@@ -37,7 +37,7 @@ public final class AchievementsModel
     public boolean registerCategory(final int id, final int parentId, final String name) {
         final Category parent = this.m_modelCategories.get(parentId);
         if (parent == null && parentId != 0) {
-            AchievementsModel.m_logger.error((Object)("Categorie parente non enregistr\u00e9e : " + parentId));
+            AchievementsModel.m_logger.error("Categorie parente non enregistr\u00e9e : " + parentId);
             return false;
         }
         final Category category = new Category(id, parent, name);
@@ -60,7 +60,7 @@ public final class AchievementsModel
             category.addAchievement(achievement);
             return true;
         }
-        AchievementsModel.m_logger.error((Object)("La cat\u00e9gorie sp\u00e9cifi\u00e9e n'est pas enregistr\u00e9e : " + categoryId));
+        AchievementsModel.m_logger.error("La cat\u00e9gorie sp\u00e9cifi\u00e9e n'est pas enregistr\u00e9e : " + categoryId);
         return false;
     }
     
@@ -73,7 +73,7 @@ public final class AchievementsModel
                 for (int i = 0; i < relatedVariables.length; ++i) {
                     variables[i] = this.m_modelVariables.get(relatedVariables[i]);
                     if (variables[i] == null) {
-                        AchievementsModel.m_logger.error((Object)("Une variable sp\u00e9cifi\u00e9e n'est pas enregistr\u00e9e : " + relatedVariables[i]));
+                        AchievementsModel.m_logger.error("Une variable sp\u00e9cifi\u00e9e n'est pas enregistr\u00e9e : " + relatedVariables[i]);
                         return false;
                     }
                 }
@@ -83,18 +83,18 @@ public final class AchievementsModel
             achievement.addObjective(objective);
             return true;
         }
-        AchievementsModel.m_logger.error((Object)("L'achievement sp\u00e9cifi\u00e9 n'est pas enregistr\u00e9 : " + achievementId));
+        AchievementsModel.m_logger.error("L'achievement sp\u00e9cifi\u00e9 n'est pas enregistr\u00e9 : " + achievementId);
         return false;
     }
     
     public boolean registerReward(final int id, final int achievementId, final RewardType type, final int[] params) {
         final Achievement achievement = this.m_modelAchievements.get(achievementId);
         if (achievement == null) {
-            AchievementsModel.m_logger.error((Object)("L'achievement sp\u00e9cifi\u00e9 n'est pas enregistr\u00e9 : " + achievementId));
+            AchievementsModel.m_logger.error("L'achievement sp\u00e9cifi\u00e9 n'est pas enregistr\u00e9 : " + achievementId);
             return false;
         }
         if (type == null) {
-            AchievementsModel.m_logger.error((Object)("Le type de reward sp\u00e9cifi\u00e9 n'existe pas : " + type));
+            AchievementsModel.m_logger.error("Le type de reward sp\u00e9cifi\u00e9 n'existe pas : " + type);
             return false;
         }
         final Reward reward = new Reward(id, achievement, type, params);
@@ -140,6 +140,6 @@ public final class AchievementsModel
     
     static {
         INSTANCE = new AchievementsModel();
-        m_logger = Logger.getLogger((Class)AchievementsModel.class);
+        m_logger = Logger.getLogger(AchievementsModel.class);
     }
 }

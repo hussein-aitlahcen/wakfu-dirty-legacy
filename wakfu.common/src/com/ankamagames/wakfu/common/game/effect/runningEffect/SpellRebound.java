@@ -2,10 +2,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -30,7 +31,7 @@ public class SpellRebound extends WakfuRunningEffect
             re = new SpellRebound();
             re.m_pool = null;
             re.m_isStatic = false;
-            SpellRebound.m_logger.error((Object)("Erreur lors d'un checkOut sur un SpellRebound : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SpellRebound : " + e.getMessage());
         }
         return re;
     }

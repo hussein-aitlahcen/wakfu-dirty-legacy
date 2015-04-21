@@ -1,7 +1,5 @@
 package com.ankamagames.wakfu.common.game.weather;
 
-import com.ankamagames.baseImpl.common.clientAndServer.world.climate.*;
-
 public final class WeatherUtil
 {
     public static final float STORM_WIND = 0.9f;

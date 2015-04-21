@@ -23,7 +23,7 @@ public class WorldMapFileHelper
                 }
                 final String[] pair = StringUtils.split(line, '=');
                 if (pair.length != 2) {
-                    WorldMapFileHelper.m_logger.warn((Object)("Erreur avec la ligne " + line + " (" + fileIndexersPath + ")"));
+                    WorldMapFileHelper.m_logger.warn("Erreur avec la ligne " + line + " (" + fileIndexersPath + ")");
                 }
                 else {
                     WorldMapFileHelper.m_worldsSuffix.put(PrimitiveConverter.getInteger(pair[0]), pair[1].intern());
@@ -33,7 +33,7 @@ public class WorldMapFileHelper
             istream.close();
         }
         catch (IOException e) {
-            WorldMapFileHelper.m_logger.error((Object)"", (Throwable)e);
+            WorldMapFileHelper.m_logger.error("", e);
             return false;
         }
         WorldMapFileHelper.m_worldsSuffix.setAutoCompactionFactor(0.0f);
@@ -68,13 +68,13 @@ public class WorldMapFileHelper
             return filename.replace(extension, suffix + extension);
         }
         catch (Exception e) {
-            WorldMapFileHelper.m_logger.error((Object)"", (Throwable)e);
+            WorldMapFileHelper.m_logger.error("", e);
             return name;
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WorldMapFileHelper.class);
+        m_logger = Logger.getLogger(WorldMapFileHelper.class);
         m_worldsSuffix = new TIntObjectHashMap<String>(20, 1.0f);
     }
 }

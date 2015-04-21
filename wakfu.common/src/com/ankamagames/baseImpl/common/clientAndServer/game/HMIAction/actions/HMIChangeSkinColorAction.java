@@ -20,7 +20,7 @@ public class HMIChangeSkinColorAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || (array.length != 4 && array.length != 5)) {
-                HMIChangeSkinColorAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 5 : R;G;B;A;partName (couleur entre [0-1]) : " + parameters));
+                HMIChangeSkinColorAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 5 : R;G;B;A;partName (couleur entre [0-1]) : " + parameters);
                 return false;
             }
             this.m_partName = array[0];
@@ -32,7 +32,7 @@ public class HMIChangeSkinColorAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMIChangeSkinColorAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMIChangeSkinColorAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -51,6 +51,6 @@ public class HMIChangeSkinColorAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

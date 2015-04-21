@@ -35,7 +35,7 @@ public final class ReduceZoneEffect extends WakfuRunningEffect
             re = new ReduceZoneEffect();
             re.m_pool = null;
             re.m_isStatic = false;
-            ReduceZoneEffect.m_logger.error((Object)("Erreur lors d'un checkOut sur un ReduceZoneEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ReduceZoneEffect : " + e.getMessage());
         }
         return re;
     }
@@ -46,7 +46,7 @@ public final class ReduceZoneEffect extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override

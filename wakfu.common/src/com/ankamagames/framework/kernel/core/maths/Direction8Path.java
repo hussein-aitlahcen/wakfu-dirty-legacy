@@ -15,7 +15,7 @@ public final class Direction8Path
     
     public static Direction8Path fromPathFindResult(final PathFindResult pathFind) {
         if (!pathFind.isPathFound() || pathFind.getPathLength() <= 1) {
-            Direction8Path.m_logger.error((Object)"Impossible de convertir un PathFindResult sans r\u00e9sultat en Direction8Path");
+            Direction8Path.m_logger.error("Impossible de convertir un PathFindResult sans r\u00e9sultat en Direction8Path");
             return null;
         }
         final Direction8Path dirPath = new Direction8Path(pathFind.getPathLength() - 1);
@@ -24,7 +24,7 @@ public final class Direction8Path
             final Direction8 dir = pathFind.getDirectionToStep(i);
             final int heightDiff = pathFind.getPathStep(i)[2] - pathFind.getPathStep(i - 1)[2];
             if (dir == null) {
-                Direction8Path.m_logger.error((Object)"Impossible de convertir le d\u00e9placement en Direction8 : le PathFindResult n'est pas continu ?");
+                Direction8Path.m_logger.error("Impossible de convertir le d\u00e9placement en Direction8 : le PathFindResult n'est pas continu ?");
                 return null;
             }
             dirPath.addStep(dir, heightDiff);
@@ -39,7 +39,7 @@ public final class Direction8Path
         this.m_endingPosition = null;
         this.m_steps = steps;
         if (steps == null || steps.size() == 0) {
-            Direction8Path.m_logger.error((Object)"Liste de cellules vide");
+            Direction8Path.m_logger.error("Liste de cellules vide");
             return;
         }
         this.setStartingPosition(startingPosition);
@@ -47,7 +47,7 @@ public final class Direction8Path
     
     public static Direction8Path decodeFromBuffer(final ByteBuffer buffer) {
         if (buffer.remaining() < 11) {
-            Direction8Path.m_logger.error((Object)("Impossible de d\u00e9coder un Direction8Path dans un buffer de " + buffer.remaining() + " < " + 11));
+            Direction8Path.m_logger.error("Impossible de d\u00e9coder un Direction8Path dans un buffer de " + buffer.remaining() + " < " + 11);
             return null;
         }
         buffer.mark();
@@ -59,7 +59,7 @@ public final class Direction8Path
         final Point3 pos = new Point3(startX, startY, startZ);
         dirPath.setStartingPosition(pos);
         if (buffer.remaining() < dirPath.contentSize()) {
-            Direction8Path.m_logger.error((Object)("La taille du buffer ne correspond pas : attendu=" + dirPath.contentSize() + " > courant=" + buffer.remaining()));
+            Direction8Path.m_logger.error("La taille du buffer ne correspond pas : attendu=" + dirPath.contentSize() + " > courant=" + buffer.remaining());
             buffer.reset();
             return null;
         }
@@ -290,7 +290,7 @@ public final class Direction8Path
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Direction8Path.class);
+        m_logger = Logger.getLogger(Direction8Path.class);
     }
     
     public static class Step

@@ -54,7 +54,7 @@ public class MultiPakIndexer
             return path;
         }
         if (ContentFileHelper.FORCE_TUTORIAL && value.equals("_full")) {
-            MultiPakIndexer.m_logger.error((Object)("     **** TUTO ****  manque key=" + key + " path=" + path + " !!!!!"));
+            MultiPakIndexer.m_logger.error("     **** TUTO ****  manque key=" + key + " path=" + path + " !!!!!");
             return "@not_found:" + key;
         }
         return transformPath(path, value, fileExt);
@@ -77,7 +77,7 @@ public class MultiPakIndexer
             return path;
         }
         if (ContentFileHelper.FORCE_TUTORIAL && value.equals("_full")) {
-            MultiPakIndexer.m_logger.error((Object)("     **** TUTO ****  manque key=" + key + " path=" + path + " !!!!!"));
+            MultiPakIndexer.m_logger.error("     **** TUTO ****  manque key=" + key + " path=" + path + " !!!!!");
             return "@not_found:" + key;
         }
         return transformPath(path, value, fileExt);
@@ -101,7 +101,7 @@ public class MultiPakIndexer
         ds.setCaseSensitive(true);
         ds.scan();
         for (final String file : ds.getIncludedFiles()) {
-            MultiPakIndexer.m_logger.info((Object)("lecture de l'index " + file));
+            MultiPakIndexer.m_logger.info("lecture de l'index " + file);
             this.readFromFile(new File(baseDir, file));
         }
         this.m_files.compact();
@@ -115,12 +115,12 @@ public class MultiPakIndexer
             while ((line = reader.readLine()) != null) {
                 final String[] pair = StringUtils.split(line, '=');
                 if (pair.length != 2) {
-                    MultiPakIndexer.m_logger.warn((Object)("Erreur avec la ligne " + line + " (" + file + ")"));
+                    MultiPakIndexer.m_logger.warn("Erreur avec la ligne " + line + " (" + file + ")");
                 }
                 else {
                     final String key = getKey(file.getName(), pair[0]);
                     if (this.m_files.contains(key)) {
-                        MultiPakIndexer.m_logger.warn((Object)("Erreur avec la ligne " + line + " (" + file + ") cl\u00e9e d\u00e9j\u00e0 existante value=" + this.m_files.get(key)));
+                        MultiPakIndexer.m_logger.warn("Erreur avec la ligne " + line + " (" + file + ") cl\u00e9e d\u00e9j\u00e0 existante value=" + this.m_files.get(key));
                     }
                     else {
                         this.m_files.put(key, pair[1].intern());
@@ -131,7 +131,7 @@ public class MultiPakIndexer
             istream.close();
         }
         catch (IOException e) {
-            MultiPakIndexer.m_logger.error((Object)"", (Throwable)e);
+            MultiPakIndexer.m_logger.error("", e);
         }
     }
     
@@ -177,12 +177,12 @@ public class MultiPakIndexer
             task.readFrom("../contents/**/*.index");
         }
         catch (IOException e) {
-            MultiPakIndexer.m_logger.error((Object)"", (Throwable)e);
+            MultiPakIndexer.m_logger.error("", e);
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MultiPakIndexer.class);
+        m_logger = Logger.getLogger(MultiPakIndexer.class);
         COMPRESS_HEADER = new byte[] { 109, 105, 99 };
     }
 }

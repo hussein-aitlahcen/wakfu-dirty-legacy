@@ -61,6 +61,6 @@ public final class ZoneBuffInstance implements Comparable<ZoneBuffInstance>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ZoneBuffInstance.class);
+        m_logger = Logger.getLogger(ZoneBuffInstance.class);
     }
 }

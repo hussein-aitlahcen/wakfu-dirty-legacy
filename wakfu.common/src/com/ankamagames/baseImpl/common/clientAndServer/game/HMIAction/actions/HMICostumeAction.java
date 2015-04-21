@@ -55,7 +55,7 @@ public class HMICostumeAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMICostumeAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMICostumeAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -80,7 +80,7 @@ public class HMICostumeAction extends HMIAction
     static {
         PATTERN = Pattern.compile("([a-zA-Z]+)=([^;]+);?");
         EMPTY_STRINGS = new String[0];
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
     
     public static class Appearance

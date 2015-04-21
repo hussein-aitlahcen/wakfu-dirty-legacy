@@ -1,7 +1,5 @@
 package com.ankamagames.framework.kernel.core.common.collections;
 
-import java.io.*;
-
 public class PrimitiveArrays
 {
     public static final boolean[] EMPTY_BOOLEAN_ARRAY;

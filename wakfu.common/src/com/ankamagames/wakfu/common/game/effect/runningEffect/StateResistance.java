@@ -1,11 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -62,7 +66,7 @@ public final class StateResistance extends WakfuRunningEffect
             re = new StateResistance();
             re.m_pool = null;
             re.m_isStatic = false;
-            StateResistance.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage());
         }
         re.m_stateId = this.m_stateId;
         return re;
@@ -92,13 +96,13 @@ public final class StateResistance extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() != 2) {
-            StateResistance.m_logger.error((Object)"Pas le bon nombre de param\u00e8tres !!");
+        if (this.m_genericEffect.getParamsCount() != 2) {
+            RunningEffect.m_logger.error("Pas le bon nombre de param\u00e8tres !!");
             return;
         }
         final short containerLevel = this.getContainerLevel();
-        this.m_stateId = (short)((WakfuEffect)this.m_genericEffect).getParam(0, containerLevel, RoundingMethod.RANDOM);
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(1, containerLevel, RoundingMethod.RANDOM);
+        this.m_stateId = (short)this.m_genericEffect.getParam(0, containerLevel, RoundingMethod.RANDOM);
+        this.m_value = this.m_genericEffect.getParam(1, containerLevel, RoundingMethod.RANDOM);
     }
     
     @Override

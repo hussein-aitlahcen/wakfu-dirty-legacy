@@ -18,7 +18,7 @@ public class TByteObjectIterator<V> extends TPrimitiveIterator
     }
     
     public V value() {
-        return (V)this._map._values[this._index];
+        return this._map._values[this._index];
     }
     
     public V setValue(final V val) {

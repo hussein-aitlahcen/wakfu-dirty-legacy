@@ -320,6 +320,6 @@ public class Point3
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Point3.class);
+        m_logger = Logger.getLogger(Point3.class);
     }
 }

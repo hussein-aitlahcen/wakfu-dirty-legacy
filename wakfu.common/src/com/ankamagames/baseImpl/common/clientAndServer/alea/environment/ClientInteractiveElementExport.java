@@ -23,7 +23,7 @@ public class ClientInteractiveElementExport extends InteractiveElementExport
                 }
                 final int nActions = ClientInteractiveElementExport.this.m_actions.size();
                 if (nActions > 127) {
-                    m_logger.error((Object)("Nombre d'actions " + nActions + " > 255"));
+                    m_logger.error("Nombre d'actions " + nActions + " > 255");
                     return;
                 }
                 buffer.put((byte)nActions);

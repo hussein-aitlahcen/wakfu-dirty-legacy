@@ -5,7 +5,6 @@ import com.ankamagames.wakfu.common.rawData.*;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
-import java.util.*;
 import com.ankamagames.framework.kernel.core.common.*;
 import org.apache.commons.pool.*;
 import gnu.trove.*;
@@ -30,7 +29,7 @@ public class BonusPointCharacteristics implements Poolable, RawConvertible<RawBo
             BonusPointCharacteristics.m_staticPool.returnObject(this);
         }
         catch (Exception e) {
-            BonusPointCharacteristics.m_logger.error((Object)"Exception lors du returnObject d'un BonusPointCharacteristics. Impossible d'apr\u00e8s les javadoc des apache Pools");
+            BonusPointCharacteristics.m_logger.error("Exception lors du returnObject d'un BonusPointCharacteristics. Impossible d'apr\u00e8s les javadoc des apache Pools");
         }
     }
     
@@ -203,7 +202,7 @@ public class BonusPointCharacteristics implements Poolable, RawConvertible<RawBo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BonusPointCharacteristics.class);
+        m_logger = Logger.getLogger(BonusPointCharacteristics.class);
         m_staticPool = new MonitoredPool(new ObjectFactory<BonusPointCharacteristics>() {
             @Override
             public BonusPointCharacteristics makeObject() {

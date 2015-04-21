@@ -14,7 +14,8 @@ public interface CriterionUser extends Target
     
     Point3 getPosition();
     
-    long getId();
+    @Override
+	long getId();
     
     long getOriginalControllerId();
     

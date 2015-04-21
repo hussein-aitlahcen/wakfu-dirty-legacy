@@ -180,6 +180,6 @@ public class ItemCharacteristic extends AbstractCharacteristic
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemCharacteristic.class);
+        m_logger = Logger.getLogger(ItemCharacteristic.class);
     }
 }

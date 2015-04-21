@@ -2,10 +2,8 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.framework.kernel.core.common.serialization.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.external.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class SpellsWithPropertyRangeGain extends SpellsWithPropertyModification
@@ -28,7 +26,7 @@ public final class SpellsWithPropertyRangeGain extends SpellsWithPropertyModific
             re = new SpellsWithPropertyRangeGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            SpellsWithPropertyRangeGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un SpellsWithPropertyRangeGain : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un SpellsWithPropertyRangeGain : " + e.getMessage());
         }
         return re;
     }

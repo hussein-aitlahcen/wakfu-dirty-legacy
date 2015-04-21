@@ -1,9 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
-import com.ankamagames.wakfu.common.game.ai.antlrcriteria.system.*;
 import com.ankamagames.wakfu.common.game.item.bind.*;
 import com.ankamagames.wakfu.common.game.chaos.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
@@ -11,7 +8,6 @@ import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import com.ankamagames.wakfu.common.game.travel.infos.*;
 import com.ankamagames.wakfu.common.game.personalSpace.impl.*;
-import com.ankamagames.wakfu.client.core.game.interactiveElement.param.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.common.game.interactiveElements.param.*;
 import com.ankamagames.wakfu.client.core.*;
@@ -27,7 +23,7 @@ public class IEParametersLoader implements ContentInitializer
     }
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         loadCraftTables();
         loadDecorations();
         loadDimensionalBagBackgroundDisplay();
@@ -54,7 +50,6 @@ public class IEParametersLoader implements ContentInitializer
         loadKrosmozGameBoard();
         loadKrosmozGameCollection();
         loadDoor();
-        clientInstance.fireContentInitializerDone(this);
     }
     
     private static void loadExchanges() throws Exception {
@@ -78,12 +73,12 @@ public class IEParametersLoader implements ContentInitializer
                     final String criteria = bsExchange.getCriteria();
                     final ExchangeInteractiveElementParamBinaryData.Consumable[] bsConsumables = bsExchange.getConsumables();
                     final ExchangeInteractiveElementParamBinaryData.Resulting[] bsResultings = bsExchange.getResultings();
-                    SimpleCriterion criterion;
+                    SimpleCriterion criterion = null;
                     try {
-                        criterion = CriteriaCompiler.compileBoolean(criteria);
+                        //criterion = CriteriaCompiler.compileBoolean(criteria);
                     }
                     catch (Exception e) {
-                        IEParametersLoader.m_logger.error((Object)("Impossible de compiler le crit\u00e8re de l'\u00e9change " + exchangeId), (Throwable)e);
+                        IEParametersLoader.m_logger.error("Impossible de compiler le crit\u00e8re de l'\u00e9change " + exchangeId, e);
                         continue;
                     }
                     final IEExchangeParameter.Exchange exchange = new IEExchangeParameter.Exchange(exchangeId, consumableKama, resultingKama, criterion, consumablePvpMoney, i);
@@ -177,10 +172,10 @@ public class IEParametersLoader implements ContentInitializer
                     final Direction8 direction = Direction8.getDirectionFromIndex(dest.getDirection());
                     SimpleCriterion simpleCriterion = null;
                     try {
-                        simpleCriterion = CriteriaCompiler.compileBoolean(dest.getCriteria());
+                        //simpleCriterion = CriteriaCompiler.compileBoolean(dest.getCriteria());
                     }
                     catch (Exception e) {
-                        IEParametersLoader.m_logger.warn((Object)("TP id=" + tp.getId() + "  " + e.getMessage() + " (criteria='" + dest.getCriteria() + "')"));
+                        IEParametersLoader.m_logger.warn("TP id=" + tp.getId() + "  " + e.getMessage() + " (criteria='" + dest.getCriteria() + "')");
                     }
                     if (simpleCriterion == null) {
                         simpleCriterion = ConstantBooleanCriterion.TRUE;
@@ -229,10 +224,10 @@ public class IEParametersLoader implements ContentInitializer
                 final int itemQuantityCost = bs.getItemQuantityCost();
                 SimpleCriterion ieCriterion = null;
                 try {
-                    ieCriterion = CriteriaCompiler.compileBoolean(bs.getCriteria());
+                    //ieCriterion = CriteriaCompiler.compileBoolean(bs.getCriteria());
                 }
                 catch (Exception e) {
-                    IEParametersLoader.m_logger.error((Object)("coffre de loot " + id + "  " + e.getMessage() + " (criteria='" + bs.getCriteria() + "')"));
+                    IEParametersLoader.m_logger.error("coffre de loot " + id + "  " + e.getMessage() + " (criteria='" + bs.getCriteria() + "')");
                     return;
                 }
                 final ChaosParamBinaryData chaosParams = bs.getChaosParams();
@@ -343,7 +338,7 @@ public class IEParametersLoader implements ContentInitializer
                         gemTypes[i] = gemType;
                     }
                     else {
-                        IEParametersLoader.m_logger.error((Object)("L'id de gemme id=" + havreGemTypes[i] + " pour le param\u00e8trage de d\u00e9coration id=" + id + " ne correspond pas \u00e0 une gemme valide"));
+                        IEParametersLoader.m_logger.error("L'id de gemme id=" + havreGemTypes[i] + " pour le param\u00e8trage de d\u00e9coration id=" + id + " ne correspond pas \u00e0 une gemme valide");
                     }
                 }
                 IEParametersManager.INSTANCE.addDimensionalBagBackgroundDisplayParam(new IEDimensionalBagBackgroundDisplayParameter(id, gemTypes, backgroundDisplayId));
@@ -364,7 +359,7 @@ public class IEParametersLoader implements ContentInitializer
                         gemTypes[i] = gemType;
                     }
                     else {
-                        IEParametersLoader.m_logger.error((Object)("L'id de gemme id=" + havreGemTypes[i] + " pour le param\u00e8trage de d\u00e9coration id=" + id + " ne correspond pas \u00e0 une gemme valide"));
+                        IEParametersLoader.m_logger.error("L'id de gemme id=" + havreGemTypes[i] + " pour le param\u00e8trage de d\u00e9coration id=" + id + " ne correspond pas \u00e0 une gemme valide");
                     }
                 }
                 IEParametersManager.INSTANCE.addDecorationParam(new IEDecorationParameter(id, gemTypes));
@@ -382,7 +377,7 @@ public class IEParametersLoader implements ContentInitializer
                 final int craftId = bs.getSkillId();
                 final int[] allowedRecipes = bs.getAllowedRecipes();
                 final ChaosParamBinaryData chaosParams = bs.getChaosParams();
-                IEParametersManager.INSTANCE.addCraftParam(new ClientIECraftParameter(id, visualId, craftId, allowedRecipes, apsId, IEParametersLoader.getChaosCategory(chaosParams), IEParametersLoader.getChaosCollectorParamId(chaosParams)));
+                //IEParametersManager.INSTANCE.addCraftParam(new ClientIECraftParameter(id, visualId, craftId, allowedRecipes, apsId, IEParametersLoader.getChaosCategory(chaosParams), IEParametersLoader.getChaosCollectorParamId(chaosParams)));
             }
         });
     }
@@ -394,11 +389,11 @@ public class IEParametersLoader implements ContentInitializer
                 final int id = bs.getId();
                 final ChaosParamBinaryData chaosParams = bs.getChaosParams();
                 try {
-                    final SimpleCriterion criterion = CriteriaCompiler.compileBoolean(bs.getCriterion());
+                    final SimpleCriterion criterion = null; // CriteriaCompiler.compileBoolean(bs.getCriterion());
                     IEParametersManager.INSTANCE.addStoolParam(new IEStoolParameter(id, criterion, bs.getVisualId(), IEParametersLoader.getChaosCategory(chaosParams), IEParametersLoader.getChaosCollectorParamId(chaosParams)));
                 }
                 catch (Exception e) {
-                    IEParametersLoader.m_logger.error((Object)"", (Throwable)e);
+                    IEParametersLoader.m_logger.error("", e);
                 }
             }
         });
@@ -510,10 +505,10 @@ public class IEParametersLoader implements ContentInitializer
                 final ChaosParamBinaryData chaosParams = null;
                 SimpleCriterion criterion;
                 try {
-                    criterion = CriteriaCompiler.compileBoolean(bs.getCriterion());
+                    criterion = null; //CriteriaCompiler.compileBoolean(bs.getCriterion());
                 }
                 catch (Exception e) {
-                    IEParametersLoader.m_logger.error((Object)("Impossible de compiler le crit\u00e8re de la porte " + bs.getId()), (Throwable)e);
+                    IEParametersLoader.m_logger.error("Impossible de compiler le crit\u00e8re de la porte " + bs.getId(), e);
                     return;
                 }
                 IEParametersManager.INSTANCE.addDoorParam(new IEDoorParameter(bs.getId(), bs.getVisualId(), bs.isConsumeItem(), bs.getItemNeeded(), bs.getKamaCost(), criterion, IEParametersLoader.getChaosCategory(chaosParams), IEParametersLoader.getChaosCollectorParamId(chaosParams)));
@@ -541,7 +536,7 @@ public class IEParametersLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)IEParametersLoader.class);
+        m_logger = Logger.getLogger(IEParametersLoader.class);
         m_instance = new IEParametersLoader();
     }
 }

@@ -7,5 +7,6 @@ public interface CollectorInventoryObserverLimited extends CollectorInventoryObs
 {
     void onItemAdded(int p0, int p1);
     
-    void onWalletUpdated(Wallet p0, int p1);
+    @Override
+	void onWalletUpdated(Wallet p0, int p1);
 }

@@ -67,7 +67,7 @@ public class FightMap extends TopologyMapInstanceSet
     public boolean isMovementBlocked(final int x, final int y, final short z) {
         final int cellIndex = this.getCellIndexFromCoords(x, y);
         if (cellIndex < 0 || cellIndex >= this.m_numCells) {
-            FightMap.m_logger.info((Object)"trying to get information in a fightmap on a out of bounds cell");
+            FightMap.m_logger.info("trying to get information in a fightmap on a out of bounds cell");
             return true;
         }
         final short cellValue = this.m_cells[cellIndex];
@@ -98,7 +98,7 @@ public class FightMap extends TopologyMapInstanceSet
     public boolean isSightBlocked(final int x, final int y, final short z) {
         final int cellIndex = this.getCellIndexFromCoords(x, y);
         if (cellIndex < 0 || cellIndex >= this.m_numCells) {
-            FightMap.m_logger.info((Object)"trying to get information in a fightmap on a out of bounds cell");
+            FightMap.m_logger.info("trying to get information in a fightmap on a out of bounds cell");
             return true;
         }
         final short cellValue = this.m_cells[cellIndex];
@@ -359,21 +359,21 @@ public class FightMap extends TopologyMapInstanceSet
     
     private void setObstacleAt(final FightObstacle obstacle, final int x, final int y) {
         if (obstacle == null) {
-            FightMap.m_logger.error((Object)"On passe un obstacle null");
+            FightMap.m_logger.error("On passe un obstacle null");
             return;
         }
         if (!this.checkObstacleId(obstacle.getObstacleId())) {
-            FightMap.m_logger.error((Object)(" l'id de l'obstacle est invalide : " + obstacle.getObstacleId() + " : " + obstacle));
+            FightMap.m_logger.error(" l'id de l'obstacle est invalide : " + obstacle.getObstacleId() + " : " + obstacle);
             return;
         }
         final byte obstacleId = obstacle.getObstacleId();
         if (this.m_obstacles[obstacleId] != null && this.m_obstacles[obstacleId] != obstacle) {
-            FightMap.m_logger.error((Object)("ATTENTION !!! On veut placer un obstacle dans la FightMap mais il existe deja un obstacle avec le meme ID " + obstacleId));
+            FightMap.m_logger.error("ATTENTION !!! On veut placer un obstacle dans la FightMap mais il existe deja un obstacle avec le meme ID " + obstacleId);
             return;
         }
         final byte obstacleRadius = obstacle.getPhysicalRadius();
         if (obstacleRadius <= 0 && !this.isInMap(x, y)) {
-            FightMap.m_logger.error((Object)"Les coordonn\u00e9es doivent etre dans la FightMap");
+            FightMap.m_logger.error("Les coordonn\u00e9es doivent etre dans la FightMap");
             return;
         }
         if (this.m_obstacles[obstacleId] == null) {
@@ -447,7 +447,7 @@ public class FightMap extends TopologyMapInstanceSet
         for (int x = this.m_minX; x < this.m_minX + this.m_width; ++x) {
             for (int y = this.m_minY; y < this.m_minY + this.m_height; ++y) {
                 if (this.isInsideOrBorder(x, y)) {
-                    final TopologyMapInstance topologyMapInstance = TopologyMapManager.getMapFromCell(this.m_worldId, x, y, (short)(useInstanceId ? this.m_instanceId : 0));
+                    final TopologyMapInstance topologyMapInstance = TopologyMapManager.getMapFromCell(this.m_worldId, x, y, useInstanceId ? this.m_instanceId : 0);
                     if (topologyMapInstance != null) {
                         topologyMapInstance.setUsedInFight(x, y, usedInFight);
                     }
@@ -815,7 +815,7 @@ public class FightMap extends TopologyMapInstanceSet
                         }
                     }
                     catch (IOException e) {
-                        FightMap.m_logger.error((Object)("Unable to load map (" + (short)x + "; " + (short)y + ')'));
+                        FightMap.m_logger.error("Unable to load map (" + (short)x + "; " + (short)y + ')');
                     }
                 }
             }
@@ -931,7 +931,7 @@ public class FightMap extends TopologyMapInstanceSet
     static {
         m_debugLogger = Logger.getLogger("debug");
         m_sourceCellPathData = new CellPathData[32];
-        m_logger = Logger.getLogger((Class)FightMap.class);
+        m_logger = Logger.getLogger(FightMap.class);
         for (int i = 0; i < FightMap.m_sourceCellPathData.length; ++i) {
             FightMap.m_sourceCellPathData[i] = new CellPathData();
         }

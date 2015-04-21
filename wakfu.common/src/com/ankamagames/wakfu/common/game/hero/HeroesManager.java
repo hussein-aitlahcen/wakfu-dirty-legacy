@@ -144,7 +144,7 @@ public class HeroesManager
                 stopProcedure = !procedure.execute((T)hero);
             }
             catch (Exception e) {
-                HeroesManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                HeroesManager.m_logger.error("Exception levee", e);
                 return false;
             }
             if (stopProcedure) {
@@ -182,7 +182,7 @@ public class HeroesManager
                 listeners.get(i).heroAdded(info);
             }
             catch (Exception e) {
-                HeroesManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                HeroesManager.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -194,7 +194,7 @@ public class HeroesManager
                 listeners.get(i).heroAddedToParty(this.getHero(characterId));
             }
             catch (Exception e) {
-                HeroesManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                HeroesManager.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -206,7 +206,7 @@ public class HeroesManager
                 listeners.get(i).heroRemoved(info);
             }
             catch (Exception e) {
-                HeroesManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                HeroesManager.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -218,7 +218,7 @@ public class HeroesManager
                 listeners.get(i).heroRemovedFromParty(this.getHero(characterId));
             }
             catch (Exception e) {
-                HeroesManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                HeroesManager.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -235,7 +235,7 @@ public class HeroesManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HeroesManager.class);
+        m_logger = Logger.getLogger(HeroesManager.class);
         INSTANCE = new HeroesManager();
     }
 }

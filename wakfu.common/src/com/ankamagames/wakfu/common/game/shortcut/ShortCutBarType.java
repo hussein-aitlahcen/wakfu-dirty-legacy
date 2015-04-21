@@ -4,9 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 public enum ShortCutBarType
 {
-    WORLD((InventoryContentChecker)new NoSpellShortcutInventoryContentChecker(), (short)10, (byte)4, true), 
-    FIGHT((InventoryContentChecker)new SpellOrItemShortcutInventoryContentChecker(), (short)8, (byte)4, true), 
-    SYMBIOT_BAR((InventoryContentChecker)new SpellOrItemShortcutInventoryContentChecker(), (short)10, (byte)1, false);
+    WORLD(new NoSpellShortcutInventoryContentChecker(), (short)10, (byte)4, true), 
+    FIGHT(new SpellOrItemShortcutInventoryContentChecker(), (short)8, (byte)4, true), 
+    SYMBIOT_BAR(new SpellOrItemShortcutInventoryContentChecker(), (short)10, (byte)1, false);
     
     private static int TOTAL_COUNT;
     private static int SERIALIZED_TOTAL_COUNT;

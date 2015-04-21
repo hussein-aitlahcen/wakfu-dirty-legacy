@@ -88,7 +88,7 @@ public final class DataFactory
             return new IntData(Integer.parseInt(value));
         }
         catch (NumberFormatException e) {
-            DataFactory.m_logger.warn((Object)("Probl\u00e8me au parse de la valeur : " + value + ". " + e.getMessage()));
+            DataFactory.m_logger.warn("Probl\u00e8me au parse de la valeur : " + value + ". " + e.getMessage());
             return null;
         }
     }
@@ -112,7 +112,7 @@ public final class DataFactory
             return new LongData(Long.parseLong(value));
         }
         catch (NumberFormatException e) {
-            DataFactory.m_logger.warn((Object)("Probl\u00e8me au parse de la valeur : " + value + ". " + e.getMessage()));
+            DataFactory.m_logger.warn("Probl\u00e8me au parse de la valeur : " + value + ". " + e.getMessage());
             return null;
         }
     }
@@ -136,7 +136,7 @@ public final class DataFactory
             return new FloatData(Float.parseFloat(value));
         }
         catch (NumberFormatException e) {
-            DataFactory.m_logger.warn((Object)("Probl\u00e8me au parse de la valeur : " + value + ". " + e.getMessage()));
+            DataFactory.m_logger.warn("Probl\u00e8me au parse de la valeur : " + value + ". " + e.getMessage());
             return null;
         }
     }
@@ -158,7 +158,7 @@ public final class DataFactory
         final MapData mapData = new MapData();
         final ArrayList<? extends DocumentEntry> children = node.getChildren();
         for (int i = 0, size = children.size(); i < size; ++i) {
-            final DocumentEntry child = (DocumentEntry)children.get(i);
+            final DocumentEntry child = children.get(i);
             if ("item".equalsIgnoreCase(child.getName())) {
                 parseItem(child, mapData);
             }
@@ -182,7 +182,7 @@ public final class DataFactory
         final ArrayData arrayData = new ArrayData();
         final ArrayList<? extends DocumentEntry> children = node.getChildren();
         for (int i = 0, size = children.size(); i < size; ++i) {
-            final DocumentEntry child = (DocumentEntry)children.get(i);
+            final DocumentEntry child = children.get(i);
             if ("item".equalsIgnoreCase(child.getName())) {
                 parseItem(child, arrayData);
             }
@@ -198,6 +198,6 @@ public final class DataFactory
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DataFactory.class);
+        m_logger = Logger.getLogger(DataFactory.class);
     }
 }

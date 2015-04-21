@@ -145,7 +145,7 @@ public class FighterCharacteristic extends AbstractCharacteristic
     
     public void set(final FighterCharacteristic characToCopy) {
         if (characToCopy.m_type != this.m_type) {
-            FighterCharacteristic.m_logger.error((Object)("Trying to assign a " + characToCopy.m_type + " charac to a " + this.m_type + " one."));
+            FighterCharacteristic.m_logger.error("Trying to assign a " + characToCopy.m_type + " charac to a " + this.m_type + " one.");
             return;
         }
         this.setLowerBound(characToCopy.getLowerBound());
@@ -296,6 +296,6 @@ public class FighterCharacteristic extends AbstractCharacteristic
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FighterCharacteristic.class);
+        m_logger = Logger.getLogger(FighterCharacteristic.class);
     }
 }

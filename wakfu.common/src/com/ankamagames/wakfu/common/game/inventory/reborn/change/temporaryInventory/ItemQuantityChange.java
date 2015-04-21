@@ -58,7 +58,7 @@ class ItemQuantityChange implements TemporaryInventoryChange
             }
         }
         catch (TemporaryInventoryException e) {
-            ItemQuantityChange.m_logger.error((Object)("Impossible de modifier la quantit\u00e9. " + e.getMessage()));
+            ItemQuantityChange.m_logger.error("Impossible de modifier la quantit\u00e9. " + e.getMessage());
         }
     }
     
@@ -73,6 +73,6 @@ class ItemQuantityChange implements TemporaryInventoryChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemQuantityChange.class);
+        m_logger = Logger.getLogger(ItemQuantityChange.class);
     }
 }

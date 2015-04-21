@@ -6,7 +6,6 @@ import org.jetbrains.annotations.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.HMIAction.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.fight.*;
@@ -32,7 +31,7 @@ public class EffectManager extends BaseEffectManager
                     }
                 }
                 catch (Exception e) {
-                    EffectManager.m_logger.error((Object)("erreur lors du chargement de l'effet " + effectId), (Throwable)e);
+                    EffectManager.m_logger.error("erreur lors du chargement de l'effet " + effectId, e);
                 }
                 return null;
             }
@@ -104,7 +103,7 @@ public class EffectManager extends BaseEffectManager
         for (final String hmi : arr$) {
             final String[] params = hmi.split("\\|", -1);
             if (params.length % 2 != 0) {
-                EffectManager.m_logger.error((Object)("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: 8 [" + bs.getHmiAction() + "]"));
+                EffectManager.m_logger.error("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: 8 [" + bs.getHmiAction() + "]");
             }
             else {
                 Byte hmiStart = 0;
@@ -147,7 +146,7 @@ public class EffectManager extends BaseEffectManager
                             break;
                         }
                         default: {
-                            EffectManager.m_logger.error((Object)("Impossible d'enregistrer le d\u00e9but d'une HMIAction pour l'effet " + effectId + " : type de d\u00e9but non connu : " + hmiStart));
+                            EffectManager.m_logger.error("Impossible d'enregistrer le d\u00e9but d'une HMIAction pour l'effet " + effectId + " : type de d\u00e9but non connu : " + hmiStart);
                             break;
                         }
                     }
@@ -165,13 +164,13 @@ public class EffectManager extends BaseEffectManager
                             break;
                         }
                         default: {
-                            EffectManager.m_logger.error((Object)("Impossible d'enregistrer la fin d'une HMIAction pour l'effet " + effectId + " : type de fin non connu : " + hmiEnd));
+                            EffectManager.m_logger.error("Impossible d'enregistrer la fin d'une HMIAction pour l'effet " + effectId + " : type de fin non connu : " + hmiEnd);
                             break;
                         }
                     }
                 }
                 else {
-                    EffectManager.m_logger.error((Object)("Erreur lors du chargement de l'HMIAction de type " + hmiType + " sur l'effet " + effectId));
+                    EffectManager.m_logger.error("Erreur lors du chargement de l'HMIAction de type " + hmiType + " sur l'effet " + effectId);
                 }
             }
         }
@@ -207,7 +206,7 @@ public class EffectManager extends BaseEffectManager
             area = AreaOfEffectEnum.newInstance(bs.getAreaShape(), bs.getAreaSize(), bs.getAreaOrderingMethod());
         }
         catch (IllegalArgumentException e) {
-            EffectManager.m_logger.error((Object)("Illegal Argument exception pour l'AOE de l'effect d'id : " + bs.getEffectId()));
+            EffectManager.m_logger.error("Illegal Argument exception pour l'AOE de l'effect d'id : " + bs.getEffectId());
         }
         return area;
     }
@@ -228,7 +227,7 @@ public class EffectManager extends BaseEffectManager
             //crit = CriteriaCompiler.compileBoolean(bs.getEffectCriterion());
         }
         catch (Exception e) {
-            EffectManager.m_logger.error((Object)("Erreur lors de la compilation du crit\u00e8re de l'effet " + bs.getEffectId() + " de l'item " + bs.getParentId() + " de type " + bs.getEffectParentType()), (Throwable)e);
+            EffectManager.m_logger.error("Erreur lors de la compilation du crit\u00e8re de l'effet " + bs.getEffectId() + " de l'item " + bs.getParentId() + " de type " + bs.getEffectParentType(), e);
         }
         return crit;
     }
@@ -244,13 +243,13 @@ public class EffectManager extends BaseEffectManager
             }
         }
         catch (IllegalArgumentException e) {
-            EffectManager.m_logger.error((Object)("zone d'effet vide incorrecte pour l'effet d'id : " + bs.getEffectId()));
+            EffectManager.m_logger.error("zone d'effet vide incorrecte pour l'effet d'id : " + bs.getEffectId());
         }
         return emptyCells;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EffectManager.class);
+        m_logger = Logger.getLogger(EffectManager.class);
         INSTANCE = new EffectManager();
     }
 }

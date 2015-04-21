@@ -2,7 +2,6 @@ package com.ankamagames.framework.kernel.core.controllers;
 
 import java.util.*;
 
-import javax.swing.*;
 import javax.swing.Timer;
 
 import java.awt.event.*;
@@ -51,7 +50,7 @@ public class RepeatingReleasedEventsFixer implements AWTEventListener
         }
         else {
             if (keyEvent.getID() != 401) {
-                throw new AssertionError((Object)"All IDs should be covered.");
+                throw new AssertionError("All IDs should be covered.");
             }
             final ReleasedAction action2 = this._map.remove(keyEvent.getKeyCode());
             if (action2 != null) {
@@ -62,7 +61,7 @@ public class RepeatingReleasedEventsFixer implements AWTEventListener
     
     private static boolean assertEDT() {
         if (!EventQueue.isDispatchThread()) {
-            throw new AssertionError((Object)("Not EDT, but [" + Thread.currentThread() + "]."));
+            throw new AssertionError("Not EDT, but [" + Thread.currentThread() + "].");
         }
         return true;
     }

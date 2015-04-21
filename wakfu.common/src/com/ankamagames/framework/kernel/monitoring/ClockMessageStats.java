@@ -72,7 +72,7 @@ public class ClockMessageStats
             }
         }
         catch (Exception e) {
-            ClockMessageStats.m_logger.error((Object)"Exception", (Throwable)e);
+            ClockMessageStats.m_logger.error("Exception", e);
         }
         finally {
             ClockMessageStats.m_rLock.unlock();
@@ -99,7 +99,7 @@ public class ClockMessageStats
             stats = ClockMessageStats.CLOCK_MESSAGE_STATS.get(handlerName);
         }
         catch (Exception e) {
-            ClockMessageStats.m_logger.error((Object)"Exception", (Throwable)e);
+            ClockMessageStats.m_logger.error("Exception", e);
         }
         finally {
             ClockMessageStats.m_rLock.unlock();
@@ -111,7 +111,7 @@ public class ClockMessageStats
                 ClockMessageStats.CLOCK_MESSAGE_STATS.put(handlerName, stats);
             }
             catch (Exception e) {
-                ClockMessageStats.m_logger.error((Object)"Exception", (Throwable)e);
+                ClockMessageStats.m_logger.error("Exception", e);
             }
             finally {
                 ClockMessageStats.m_wLock.unlock();
@@ -122,7 +122,7 @@ public class ClockMessageStats
     
     static {
         CLOCK_MESSAGE_STATS = new THashMap<String, ClockMessageStats>();
-        m_logger = Logger.getLogger((Class)ClockMessageStats.class);
+        m_logger = Logger.getLogger(ClockMessageStats.class);
         m_rwLock = new ReentrantReadWriteLock();
         m_rLock = ClockMessageStats.m_rwLock.readLock();
         m_wLock = ClockMessageStats.m_rwLock.writeLock();

@@ -32,7 +32,7 @@ public abstract class IOStreamWrapper implements Poolable
             iow.setPool(pool);
         }
         catch (Exception e) {
-            IOStreamWrapper.m_logger.error((Object)"Exception", (Throwable)e);
+            IOStreamWrapper.m_logger.error("Exception", e);
         }
         return iow;
     }
@@ -47,12 +47,12 @@ public abstract class IOStreamWrapper implements Poolable
             this.m_pool = null;
         }
         catch (Exception e) {
-            IOStreamWrapper.m_logger.error((Object)"Exception", (Throwable)e);
+            IOStreamWrapper.m_logger.error("Exception", e);
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)IOStreamWrapper.class);
+        m_logger = Logger.getLogger(IOStreamWrapper.class);
         PLAIN = new MonitoredPool(new ObjectFactory<IOStreamWrapper>() {
             @Override
             public IOStreamWrapper makeObject() {

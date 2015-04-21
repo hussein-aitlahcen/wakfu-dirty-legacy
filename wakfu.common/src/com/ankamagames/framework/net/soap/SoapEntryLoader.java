@@ -28,9 +28,9 @@ public class SoapEntryLoader<T extends SOAPRequestProvider, U extends SOAPAnswer
     
     public void sendRequest(final T provider) {
         synchronized (this.m_mutex) {
-            SoapEntryLoader.m_logger.info((Object)("[" + this.getClass().getSimpleName() + "] Envoi de requ\u00eate : " + provider.toString()));
+            SoapEntryLoader.m_logger.info("[" + this.getClass().getSimpleName() + "] Envoi de requ\u00eate : " + provider.toString());
             if (this.m_runningRequests.contains(provider)) {
-                SoapEntryLoader.m_logger.info((Object)("[" + this.getClass().getSimpleName() + "] Requ\u00eate d\u00e9j\u00e0 en cours, on arr\u00eate :" + provider.toString()));
+                SoapEntryLoader.m_logger.info("[" + this.getClass().getSimpleName() + "] Requ\u00eate d\u00e9j\u00e0 en cours, on arr\u00eate :" + provider.toString());
                 this.m_answerProcessor.onError(provider);
                 return;
             }
@@ -50,11 +50,11 @@ public class SoapEntryLoader<T extends SOAPRequestProvider, U extends SOAPAnswer
             request.sendRequest();
         }
         catch (MalformedURLException e) {
-            SoapEntryLoader.m_logger.warn((Object)("Erreur : " + e.getMessage()));
+            SoapEntryLoader.m_logger.warn("Erreur : " + e.getMessage());
             this.removeAndNextRequest();
         }
         catch (IOException e2) {
-            SoapEntryLoader.m_logger.warn((Object)("Erreur : " + e2.getMessage()));
+            SoapEntryLoader.m_logger.warn("Erreur : " + e2.getMessage());
             this.removeAndNextRequest();
         }
     }
@@ -79,7 +79,7 @@ public class SoapEntryLoader<T extends SOAPRequestProvider, U extends SOAPAnswer
     
     @Override
     public void onError(final String errorMsg) {
-        SoapEntryLoader.m_logger.warn((Object)errorMsg);
+        SoapEntryLoader.m_logger.warn(errorMsg);
         synchronized (this.m_mutex) {
             this.m_answerProcessor.onError(this.m_runningRequests.get(0));
             this.removeAndNextRequest();
@@ -92,6 +92,6 @@ public class SoapEntryLoader<T extends SOAPRequestProvider, U extends SOAPAnswer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SoapEntryLoader.class);
+        m_logger = Logger.getLogger(SoapEntryLoader.class);
     }
 }

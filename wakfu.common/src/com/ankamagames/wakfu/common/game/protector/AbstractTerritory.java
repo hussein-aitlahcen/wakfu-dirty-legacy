@@ -49,7 +49,7 @@ public class AbstractTerritory<TCH extends TerritoryChaosHandler>
             this.m_territoryEventListeners.add(listener);
         }
         else {
-            AbstractTerritory.m_logger.warn((Object)("on essaye d'ajouter 2 fois le listener=" + listener + " sur le territoire d'id=" + this.m_id));
+            AbstractTerritory.m_logger.warn("on essaye d'ajouter 2 fois le listener=" + listener + " sur le territoire d'id=" + this.m_id);
         }
     }
     
@@ -63,7 +63,7 @@ public class AbstractTerritory<TCH extends TerritoryChaosHandler>
                 this.m_territoryEventListeners.get(i).onPlayerEnterTerritory(characterInfo, this);
             }
             catch (Exception e) {
-                AbstractTerritory.m_logger.error((Object)"Exception levee", (Throwable)e);
+                AbstractTerritory.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -74,17 +74,17 @@ public class AbstractTerritory<TCH extends TerritoryChaosHandler>
                 this.m_territoryEventListeners.get(i).onPlayerLeaveTerritory(characterInfo, this);
             }
             catch (Exception e) {
-                AbstractTerritory.m_logger.error((Object)"Exception levee", (Throwable)e);
+                AbstractTerritory.m_logger.error("Exception levee", e);
             }
         }
     }
     
     @Override
     public String toString() {
-        return "AbstractTerritory {" + "id=" + this.m_id + ", protector=" + (Object)((this.m_protector != null) ? this.m_protector.getId() : null) + '}';
+        return "AbstractTerritory {" + "id=" + this.m_id + ", protector=" + ((this.m_protector != null) ? this.m_protector.getId() : null) + '}';
     }
     
     static {
-        AbstractTerritory.m_logger = Logger.getLogger((Class)AbstractTerritory.class);
+        AbstractTerritory.m_logger = Logger.getLogger(AbstractTerritory.class);
     }
 }

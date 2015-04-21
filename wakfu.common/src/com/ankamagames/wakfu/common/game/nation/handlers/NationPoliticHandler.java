@@ -1,22 +1,28 @@
 package com.ankamagames.wakfu.common.game.nation.handlers;
 
 import org.apache.log4j.*;
+
 import com.ankamagames.wakfu.common.game.nation.diplomacy.*;
 import com.ankamagames.wakfu.common.game.nation.election.*;
+
 import java.util.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.nation.actionRequest.impl.*;
 import com.ankamagames.wakfu.common.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.nation.survey.*;
 import com.ankamagames.wakfu.common.game.nation.*;
 import com.ankamagames.wakfu.common.game.nation.event.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.nation.government.*;
 import com.ankamagames.wakfu.common.game.nation.data.*;
 import com.ankamagames.wakfu.common.game.nation.protector.*;
-import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import com.ankamagames.wakfu.common.rawData.*;
+
 import gnu.trove.*;
 
 public abstract class NationPoliticHandler extends NationHandler<NationPoliticEventHandler> implements NationProtectorEventHandler, NationPoliticEventHandler
@@ -58,8 +64,8 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
         this.m_bVoteRunning = false;
         this.m_voteStartDate = GameDate.getNullDate();
         this.m_voteEndDate = GameDate.getNullDate();
-        this.m_voteDuration = new GameInterval(GameInterval.EMPTY_INTERVAL);
-        this.m_voteFrequency = new GameInterval(GameInterval.EMPTY_INTERVAL);
+        this.m_voteDuration = new GameInterval(GameIntervalConst.EMPTY_INTERVAL);
+        this.m_voteFrequency = new GameInterval(GameIntervalConst.EMPTY_INTERVAL);
         this.m_candidates = new TLongObjectHashMap<CandidateInfo>();
         this.m_politicEventHandlers = new ArrayList<NationPoliticEventHandler>();
         this.m_voteUpdatePart = null;
@@ -205,13 +211,13 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
             return true;
         }
         if (voteStartDate.isNull()) {
-            NationPoliticHandler.m_logger.info((Object)("[NATION] La date de d\u00e9but de vote pour la nation " + this.getNation() + " est d\u00e9finie \u00e0 null. Un nouveau vote va commencer d\u00e8s que possible."));
+            NationPoliticHandler.m_logger.info("[NATION] La date de d\u00e9but de vote pour la nation " + this.getNation() + " est d\u00e9finie \u00e0 null. Un nouveau vote va commencer d\u00e8s que possible.");
             voteStartDate = WakfuGameCalendar.getInstance().getDate();
         }
         this.m_voteStartDate.set(voteStartDate);
         this.m_voteEndDate.set(voteStartDate);
         this.m_voteEndDate.add(this.m_voteDuration);
-        NationPoliticHandler.m_logger.debug((Object)("[NATION_DEBUG] Vote fix\u00e9e pour la nation " + this.getNation() + " du " + this.m_voteStartDate + " au " + this.m_voteEndDate));
+        NationPoliticHandler.m_logger.debug("[NATION_DEBUG] Vote fix\u00e9e pour la nation " + this.getNation() + " du " + this.m_voteStartDate + " au " + this.m_voteEndDate);
         return !this.m_voteStartDate.isNull();
     }
     
@@ -235,9 +241,9 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
     }
     
     public final void registerCandidate(final long characterId, final CandidateInfo infos) {
-        NationPoliticHandler.m_logger.info((Object)("[NATION] Enregistrement du character " + characterId + " (" + infos + ") en tant que candidat pour la nation " + this.getNation()));
+        NationPoliticHandler.m_logger.info("[NATION] Enregistrement du character " + characterId + " (" + infos + ") en tant que candidat pour la nation " + this.getNation());
         if (infos == null) {
-            NationPoliticHandler.m_logger.error((Object)("[NATION] Tentative d'enregistrement d'un candidat null en tant que candidat. CharacterId : " + characterId + " Nation : " + this.getNation()), (Throwable)new IllegalArgumentException());
+            NationPoliticHandler.m_logger.error("[NATION] Tentative d'enregistrement d'un candidat null en tant que candidat. CharacterId : " + characterId + " Nation : " + this.getNation(), new IllegalArgumentException());
             return;
         }
         this.m_candidates.put(characterId, infos);
@@ -250,7 +256,7 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
     public final boolean desistCandidate(final long citizenId) {
         final CandidateInfo info = this.m_candidates.get(citizenId);
         if (info == null) {
-            NationPoliticHandler.m_logger.info((Object)("[NATION] On demande le d\u00e9sistement du candidat " + citizenId + " mais il n'est pas enregistr\u00e9 dans la nation " + this.getNation()));
+            NationPoliticHandler.m_logger.info("[NATION] On demande le d\u00e9sistement du candidat " + citizenId + " mais il n'est pas enregistr\u00e9 dans la nation " + this.getNation());
             return false;
         }
         info.setWitDraw(true);
@@ -264,7 +270,7 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
     public final boolean revalidateCandidate(final long citizenId) {
         final CandidateInfo info = this.m_candidates.get(citizenId);
         if (info == null) {
-            NationPoliticHandler.m_logger.info((Object)("[NATION] On demande la r\u00e9\u00e9ligibilit\u00e9 du candidat " + citizenId + " mais il n'est pas enregistr\u00e9 dans la nation " + this.getNation()));
+            NationPoliticHandler.m_logger.info("[NATION] On demande la r\u00e9\u00e9ligibilit\u00e9 du candidat " + citizenId + " mais il n'est pas enregistr\u00e9 dans la nation " + this.getNation());
             return false;
         }
         info.setWitDraw(false);
@@ -395,7 +401,7 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationPoliticHandler.class);
+        m_logger = Logger.getLogger(NationPoliticHandler.class);
         EMPTY_CANDIDATE_ITERATOR = new TLongObjectHashMap<CandidateInfo>().iterator();
         EMPTY_ELECTION_HISTORY = new NationElectionHistory();
     }
@@ -422,8 +428,8 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
         
         @Override
         public void serialize(final ByteBuffer buffer) {
-            buffer.putLong((NationPoliticHandler.this.m_voteDuration != null) ? NationPoliticHandler.this.m_voteDuration.toSeconds() : GameInterval.EMPTY_INTERVAL.toSeconds());
-            buffer.putLong((NationPoliticHandler.this.m_voteFrequency != null) ? NationPoliticHandler.this.m_voteFrequency.toSeconds() : GameInterval.EMPTY_INTERVAL.toSeconds());
+            buffer.putLong((NationPoliticHandler.this.m_voteDuration != null) ? NationPoliticHandler.this.m_voteDuration.toSeconds() : GameIntervalConst.EMPTY_INTERVAL.toSeconds());
+            buffer.putLong((NationPoliticHandler.this.m_voteFrequency != null) ? NationPoliticHandler.this.m_voteFrequency.toSeconds() : GameIntervalConst.EMPTY_INTERVAL.toSeconds());
             buffer.putLong((NationPoliticHandler.this.m_voteStartDate != null) ? NationPoliticHandler.this.m_voteStartDate.toLong() : 0L);
             buffer.put((byte)(NationPoliticHandler.this.m_bVoteRunning ? 1 : 0));
         }
@@ -438,7 +444,7 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
                 this.onDataChanged();
             }
             catch (Exception e) {
-                NationPoliticHandler.m_logger.error((Object)"Exception", (Throwable)e);
+                NationPoliticHandler.m_logger.error("Exception", e);
             }
         }
         
@@ -476,7 +482,7 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
         public void unSerialize(final ByteBuffer buffer, final int version) {
             NationPoliticHandler.this.m_candidates.clear();
             int size = buffer.getInt();
-            NationPoliticHandler.m_logger.info((Object)("S\u00e9rialisation de " + NationPoliticHandler.this.m_candidates.size() + " candidats (avec le nombre de votes) pour la nation " + NationPoliticHandler.this.getNation()));
+            NationPoliticHandler.m_logger.info("S\u00e9rialisation de " + NationPoliticHandler.this.m_candidates.size() + " candidats (avec le nombre de votes) pour la nation " + NationPoliticHandler.this.getNation());
             while (size-- > 0) {
                 final CandidateInfo info = CandidateInfo.fromBuild(buffer);
                 NationPoliticHandler.this.m_candidates.put(info.getId(), info);
@@ -485,7 +491,7 @@ public abstract class NationPoliticHandler extends NationHandler<NationPoliticEv
         
         @Override
         public void serialize(final ByteBuffer buffer) {
-            NationPoliticHandler.m_logger.info((Object)("S\u00e9rialisation des " + NationPoliticHandler.this.m_candidates.size() + " candidats (avec le nombre de votes) de la nation " + NationPoliticHandler.this.getNation()));
+            NationPoliticHandler.m_logger.info("S\u00e9rialisation des " + NationPoliticHandler.this.m_candidates.size() + " candidats (avec le nombre de votes) de la nation " + NationPoliticHandler.this.getNation());
             buffer.putInt(NationPoliticHandler.this.m_candidates.size());
             final TLongObjectIterator<CandidateInfo> it = NationPoliticHandler.this.m_candidates.iterator();
             while (it.hasNext()) {

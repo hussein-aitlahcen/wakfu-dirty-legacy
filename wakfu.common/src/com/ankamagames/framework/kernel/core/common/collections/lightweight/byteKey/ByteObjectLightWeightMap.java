@@ -22,7 +22,7 @@ public class ByteObjectLightWeightMap<T> extends AbstractByteKeyLightWeightMap i
         if (!super.ensureCapacity(newCapacity)) {
             return false;
         }
-        final T[] values = (T[])this.m_values;
+        final T[] values = this.m_values;
         System.arraycopy(values, 0, this.m_values = (T[]) new Object[newCapacity], 0, oldCapacity);
         return true;
     }
@@ -48,7 +48,7 @@ public class ByteObjectLightWeightMap<T> extends AbstractByteKeyLightWeightMap i
         if (index < 0) {
             return null;
         }
-        final T removed = (T)this.m_values[index];
+        final T removed = this.m_values[index];
         if (index < this.m_size - 1) {
             this.m_indexes[index] = this.m_indexes[this.m_size - 1];
             this.m_values[index] = this.m_values[this.m_size - 1];
@@ -76,15 +76,15 @@ public class ByteObjectLightWeightMap<T> extends AbstractByteKeyLightWeightMap i
         if (index < 0) {
             return null;
         }
-        return (T)this.m_values[index];
+        return this.m_values[index];
     }
     
     public final T getQuickValue(final int index) {
-        return (T)this.m_values[index];
+        return this.m_values[index];
     }
     
     @Override
     public final Iterator<T> iterator() {
-        return new ArrayIterator<T>((T[])this.m_values, false);
+        return new ArrayIterator<T>(this.m_values, false);
     }
 }

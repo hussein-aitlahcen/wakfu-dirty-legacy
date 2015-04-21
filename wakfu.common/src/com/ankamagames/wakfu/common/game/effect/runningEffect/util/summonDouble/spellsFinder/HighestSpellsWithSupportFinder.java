@@ -4,9 +4,10 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.xp.*;
-import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.*;
 
@@ -38,8 +39,8 @@ public class HighestSpellsWithSupportFinder extends DoubleSpellsFinder
         }
         Collections.sort(doubleSpells, LevelableComparator.getInstance());
         Collections.sort(supportSpells, LevelableComparator.getInstance());
-        final SpellInventory<AbstractSpellLevel> doubleSpellInventory = new SpellInventory<AbstractSpellLevel>(params.getMaxSpellsCount(), (InventoryContentProvider<AbstractSpellLevel, RawSpellLevel>)casterSpellInventory.getContentProvider(), (InventoryContentChecker<AbstractSpellLevel>)casterSpellInventory.getContentChecker(), false, false, false);
-        final List<AbstractSpellLevel> supportSpellsSubList = (List<AbstractSpellLevel>)supportSpells.subList(0, Math.min(supportSpells.size(), params.getMaxSupportSpellsCount()));
+        final SpellInventory<AbstractSpellLevel> doubleSpellInventory = new SpellInventory<AbstractSpellLevel>(params.getMaxSpellsCount(), casterSpellInventory.getContentProvider(), casterSpellInventory.getContentChecker(), false, false, false);
+        final List<AbstractSpellLevel> supportSpellsSubList = supportSpells.subList(0, Math.min(supportSpells.size(), params.getMaxSupportSpellsCount()));
         addToInventory(supportSpellsSubList, doubleSpellInventory, params.getMaxSpellsCount());
         addToInventory(doubleSpells, doubleSpellInventory, params.getMaxSpellsCount());
         return doubleSpellInventory;
@@ -52,10 +53,10 @@ public class HighestSpellsWithSupportFinder extends DoubleSpellsFinder
                 doubleSpellInventory.add(abstractSpellLevel);
             }
             catch (InventoryCapacityReachedException e) {
-                HighestSpellsWithSupportFinder.m_logger.error((Object)"Exception", (Throwable)e);
+                DoubleSpellsFinder.m_logger.error("Exception", e);
             }
             catch (ContentAlreadyPresentException e2) {
-                HighestSpellsWithSupportFinder.m_logger.error((Object)"Exception", (Throwable)e2);
+                DoubleSpellsFinder.m_logger.error("Exception", e2);
             }
         }
     }

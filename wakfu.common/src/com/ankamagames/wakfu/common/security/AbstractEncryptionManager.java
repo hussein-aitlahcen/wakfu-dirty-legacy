@@ -20,10 +20,10 @@ public abstract class AbstractEncryptionManager
             this.m_cipher = Cipher.getInstance(this.m_algorithm);
         }
         catch (NoSuchAlgorithmException e) {
-            AbstractEncryptionManager.m_logger.fatal((Object)("Algorithme non support\u00e9 : " + this.m_algorithm), (Throwable)e);
+            AbstractEncryptionManager.m_logger.fatal("Algorithme non support\u00e9 : " + this.m_algorithm, e);
         }
         catch (NoSuchPaddingException e2) {
-            AbstractEncryptionManager.m_logger.fatal((Object)("Padding non support\u00e9 pour " + this.m_algorithm), (Throwable)e2);
+            AbstractEncryptionManager.m_logger.fatal("Padding non support\u00e9 pour " + this.m_algorithm, e2);
         }
     }
     
@@ -40,6 +40,6 @@ public abstract class AbstractEncryptionManager
     public abstract byte[] decrypt(final byte[] p0);
     
     static {
-        AbstractEncryptionManager.m_logger = Logger.getLogger((Class)AbstractEncryptionManager.class);
+        AbstractEncryptionManager.m_logger = Logger.getLogger(AbstractEncryptionManager.class);
     }
 }

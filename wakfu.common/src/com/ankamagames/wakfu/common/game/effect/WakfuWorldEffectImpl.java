@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.effect;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
 
 public class WakfuWorldEffectImpl extends WakfuStandardEffect implements WakfuWorldEffect

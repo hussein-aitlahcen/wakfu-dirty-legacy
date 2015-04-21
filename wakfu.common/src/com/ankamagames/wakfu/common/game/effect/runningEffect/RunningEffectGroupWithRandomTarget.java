@@ -1,12 +1,14 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +41,7 @@ public final class RunningEffectGroupWithRandomTarget extends RunningEffectGroup
             re = new RunningEffectGroupWithRandomTarget();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupWithRandomTarget.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         re.m_maxTargetCount = this.m_maxTargetCount;
         re.m_shuffleTargets = this.m_shuffleTargets;
@@ -72,7 +74,7 @@ public final class RunningEffectGroupWithRandomTarget extends RunningEffectGroup
             this.executeEffectGroup(effects, params, target);
         }
         catch (Exception e) {
-            RunningEffectGroupWithRandomTarget.m_logger.error((Object)("Exception levee lors de l'execution d'un groupe d'effets id " + ((WakfuEffect)this.m_genericEffect).getEffectId()), (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee lors de l'execution d'un groupe d'effets id " + this.m_genericEffect.getEffectId(), e);
         }
         finally {
             params.release();
@@ -93,16 +95,16 @@ public final class RunningEffectGroupWithRandomTarget extends RunningEffectGroup
         }
         this.m_checkCriterionOnTargets = false;
         this.m_shuffleTargets = true;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_maxTargetCount = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_maxTargetCount = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_checkCriterionOnTargets = (((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_checkCriterionOnTargets = (this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_shuffleTargets = (((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_shuffleTargets = (this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup != null) {
             this.m_effectGroup = effectGroup.instanceAnother(this.getContainerLevel());
         }
@@ -110,7 +112,7 @@ public final class RunningEffectGroupWithRandomTarget extends RunningEffectGroup
     
     @Override
     boolean checkConditions(final RunningEffect linkedRE) {
-        return (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2 && ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1) || super.checkConditions(linkedRE);
+        return (this.m_genericEffect.getParamsCount() >= 2 && this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1) || super.checkConditions(linkedRE);
     }
     
     @Override

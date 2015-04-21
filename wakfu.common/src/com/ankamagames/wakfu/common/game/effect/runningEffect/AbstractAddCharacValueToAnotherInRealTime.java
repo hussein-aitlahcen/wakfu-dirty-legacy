@@ -15,13 +15,13 @@ abstract class AbstractAddCharacValueToAnotherInRealTime extends WakfuRunningEff
         final FighterCharacteristicType srcCharacType = FighterCharacteristicType.getCharacteristicTypeFromId((byte)this.m_value);
         if (srcCharacType == null) {
             this.setNotified();
-            AbstractAddCharacValueToAnotherInRealTime.m_logger.error((Object)("Erreur de saisie, charac inexistante " + this.m_value));
+            RunningEffect.m_logger.error("Erreur de saisie, charac inexistante " + this.m_value);
             return;
         }
         final FighterCharacteristicType destCharacType = FighterCharacteristicType.getCharacteristicTypeFromId((byte)this.m_destCharacId);
         if (srcCharacType == null) {
             this.setNotified();
-            AbstractAddCharacValueToAnotherInRealTime.m_logger.error((Object)("Erreur de saisie, charac inexistante " + this.m_value));
+            RunningEffect.m_logger.error("Erreur de saisie, charac inexistante " + this.m_value);
             return;
         }
         final FighterCharacteristic srcCharac = (FighterCharacteristic)(this.m_targetCopyCaster ? this.m_caster.getCharacteristic(srcCharacType) : this.m_target.getCharacteristic(srcCharacType));

@@ -9,10 +9,10 @@ public final class AptitudeBonusModificationLogger implements AptitudeBonusInven
     
     @Override
     public void onLevelChanged(final int bonusId, final short level) {
-        AptitudeBonusModificationLogger.m_logger.info((Object)("Changement de niveau pour le bonus " + bonusId + ", nouveau level = " + level));
+        AptitudeBonusModificationLogger.m_logger.info("Changement de niveau pour le bonus " + bonusId + ", nouveau level = " + level);
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AptitudeBonusModificationLogger.class);
+        m_logger = Logger.getLogger(AptitudeBonusModificationLogger.class);
     }
 }

@@ -13,7 +13,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public TShortObjectHashMap() {
         super();
         this.PUT_ALL_PROC = new TShortObjectProcedure<V>() {
-            public boolean execute(final short key, final V value) {
+            @Override
+			public boolean execute(final short key, final V value) {
                 TShortObjectHashMap.this.put(key, value);
                 return true;
             }
@@ -23,7 +24,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public TShortObjectHashMap(final int initialCapacity) {
         super(initialCapacity);
         this.PUT_ALL_PROC = new TShortObjectProcedure<V>() {
-            public boolean execute(final short key, final V value) {
+            @Override
+			public boolean execute(final short key, final V value) {
                 TShortObjectHashMap.this.put(key, value);
                 return true;
             }
@@ -33,7 +35,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public TShortObjectHashMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
         this.PUT_ALL_PROC = new TShortObjectProcedure<V>() {
-            public boolean execute(final short key, final V value) {
+            @Override
+			public boolean execute(final short key, final V value) {
                 TShortObjectHashMap.this.put(key, value);
                 return true;
             }
@@ -43,7 +46,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public TShortObjectHashMap(final TShortHashingStrategy strategy) {
         super(strategy);
         this.PUT_ALL_PROC = new TShortObjectProcedure<V>() {
-            public boolean execute(final short key, final V value) {
+            @Override
+			public boolean execute(final short key, final V value) {
                 TShortObjectHashMap.this.put(key, value);
                 return true;
             }
@@ -53,7 +57,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public TShortObjectHashMap(final int initialCapacity, final TShortHashingStrategy strategy) {
         super(initialCapacity, strategy);
         this.PUT_ALL_PROC = new TShortObjectProcedure<V>() {
-            public boolean execute(final short key, final V value) {
+            @Override
+			public boolean execute(final short key, final V value) {
                 TShortObjectHashMap.this.put(key, value);
                 return true;
             }
@@ -63,14 +68,16 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public TShortObjectHashMap(final int initialCapacity, final float loadFactor, final TShortHashingStrategy strategy) {
         super(initialCapacity, loadFactor, strategy);
         this.PUT_ALL_PROC = new TShortObjectProcedure<V>() {
-            public boolean execute(final short key, final V value) {
+            @Override
+			public boolean execute(final short key, final V value) {
                 TShortObjectHashMap.this.put(key, value);
                 return true;
             }
         };
     }
     
-    public TShortObjectHashMap<V> clone() {
+    @Override
+	public TShortObjectHashMap<V> clone() {
         final TShortObjectHashMap<V> m = (TShortObjectHashMap<V>)super.clone();
         m._values = this._values.clone();
         return m;
@@ -80,7 +87,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         return new TShortObjectIterator<V>(this);
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._values = (V[]) new Object[capacity];
         return capacity;
@@ -94,7 +102,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public V putIfAbsent(final short key, final V value) {
         final int index = this.insertionIndex(key);
         if (index < 0) {
-            return (V)this._values[-index - 1];
+            return this._values[-index - 1];
         }
         return this.doPut(key, value, index);
     }
@@ -104,7 +112,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         boolean isNewMapping = true;
         if (index < 0) {
             index = -index - 1;
-            previous = (V)this._values[index];
+            previous = this._values[index];
             isNewMapping = false;
         }
         final byte previousState = this._states[index];
@@ -121,10 +129,11 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         map.forEachEntry(this.PUT_ALL_PROC);
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final short[] oldKeys = this._set;
-        final V[] oldVals = (V[])this._values;
+        final V[] oldVals = this._values;
         final byte[] oldStates = this._states;
         this._set = new short[newCapacity];
         this._values = (V[]) new Object[newCapacity];
@@ -143,10 +152,11 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     
     public V get(final short key) {
         final int index = this.index(key);
-        return (V)((index < 0) ? null : this._values[index]);
+        return (index < 0) ? null : this._values[index];
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final short[] keys = this._set;
         final Object[] vals = this._values;
@@ -160,13 +170,14 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         V prev = null;
         final int index = this.index(key);
         if (index >= 0) {
-            prev = (V)this._values[index];
+            prev = this._values[index];
             this.removeAt(index);
         }
         return prev;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TShortObjectHashMap)) {
             return false;
         }
@@ -174,20 +185,22 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         return that.size() == this.size() && this.forEachEntry(new EqProcedure(that));
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEachEntry(p);
         return p.getHashCode();
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._values[index] = null;
         super.removeAt(index);
     }
     
     public Object[] getValues() {
         final Object[] vals = new Object[this.size()];
-        final V[] v = (V[])this._values;
+        final V[] v = this._values;
         final byte[] states = this._states;
         int i = v.length;
         int j = 0;
@@ -203,7 +216,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         if (a.length < this._size) {
             a = (T[])Array.newInstance(a.getClass().getComponentType(), this._size);
         }
-        final V[] v = (V[])this._values;
+        final V[] v = this._values;
         final byte[] states = this._states;
         int i = v.length;
         int j = 0;
@@ -248,7 +261,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     
     public boolean containsValue(final V val) {
         final byte[] states = this._states;
-        final V[] vals = (V[])this._values;
+        final V[] vals = this._values;
         if (null == val) {
             int i = vals.length;
             while (i-- > 0) {
@@ -278,7 +291,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     
     public boolean forEachValue(final TObjectProcedure<V> procedure) {
         final byte[] states = this._states;
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         int i = values.length;
         while (i-- > 0) {
             if (states[i] == 1 && !procedure.execute(values[i])) {
@@ -291,7 +304,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     public boolean forEachEntry(final TShortObjectProcedure<V> procedure) {
         final byte[] states = this._states;
         final short[] keys = this._set;
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         int i = keys.length;
         while (i-- > 0) {
             if (states[i] == 1 && !procedure.execute(keys[i], values[i])) {
@@ -305,7 +318,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         boolean modified = false;
         final byte[] states = this._states;
         final short[] keys = this._set;
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         this.tempDisableAutoCompaction();
         try {
             int i = keys.length;
@@ -324,7 +337,7 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
     
     public void transformValues(final TObjectFunction<V, V> function) {
         final byte[] states = this._states;
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         int i = values.length;
         while (i-- > 0) {
             if (states[i] == 1) {
@@ -333,7 +346,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         }
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -342,7 +356,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -353,12 +368,14 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         this.forEachEntry(new TShortObjectProcedure<V>() {
             private boolean first = true;
             
-            public boolean execute(final short key, final Object value) {
+            @Override
+			public boolean execute(final short key, final Object value) {
                 if (this.first) {
                     this.first = false;
                 }
@@ -388,7 +405,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
             return this.h;
         }
         
-        public final boolean execute(final short key, final Object value) {
+        @Override
+		public final boolean execute(final short key, final Object value) {
             this.h += (TShortObjectHashMap.this._hashingStrategy.computeHashCode(key) ^ HashFunctions.hash(value));
             return true;
         }
@@ -403,7 +421,8 @@ public class TShortObjectHashMap<V> extends TShortHash implements Externalizable
             this._otherMap = otherMap;
         }
         
-        public final boolean execute(final short key, final Object value) {
+        @Override
+		public final boolean execute(final short key, final Object value) {
             final int index = this._otherMap.index(key);
             return index >= 0 && this.eq(value, this._otherMap.get(key));
         }

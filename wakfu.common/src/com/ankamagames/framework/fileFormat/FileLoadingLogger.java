@@ -8,7 +8,7 @@ public final class FileLoadingLogger
     private static final boolean ACTIVATED = true;
     
     public static void logUsageOf(final String path) {
-        FileLoadingLogger.m_loadingLogger.info((Object)path);
+        FileLoadingLogger.m_loadingLogger.info(path);
     }
     
     static {

@@ -4,17 +4,17 @@ import com.ankamagames.framework.external.*;
 
 public enum GenericActionConstants implements ExportableEnum, Parameterized
 {
-    PLAY_SCRIPT(1, (ParameterListSet)GenericActionParameters.PLAY_LUA, "Permet de jouer un Script"), 
-    APPLY_STATE(2, (ParameterListSet)GenericActionParameters.APPLY_STATE, "Applique un \u00e9tat sur le joueur"), 
-    TELEPORT(3, (ParameterListSet)GenericActionParameters.TELEPORT, "T\u00e9l\u00e9porte le joueur"), 
-    GIVE_ITEM(4, (ParameterListSet)GenericActionParameters.GIVE_RANDOM_ITEM_IN_LIST, "Donne un item au joueur"), 
-    GIVE_KAMA(5, (ParameterListSet)GenericActionParameters.GIVE_KAMAS, "Donne des kamas au joueur"), 
-    RESET_ACHIEVEMENT(6, (ParameterListSet)GenericActionParameters.RESET_ACHIEVEMENT, "Active un achievement/qu\u00eate"), 
-    GIVE_EMOTE(7, (ParameterListSet)GenericActionParameters.GIVE_EMOTE, "Donne une emote au joueur"), 
-    KROSMOZ_GAME_PLAY(8, (ParameterListSet)GenericActionParameters.KROSMOZ_GAME_PLAY, "Lance une application Krosmoz"), 
-    RECUSTOM_CHARACTER(9, (ParameterListSet)GenericActionParameters.RECUSTOM_CHARACTER, "Lance une recustom de perso"), 
-    LAUNCH_SCENARIO(10, (ParameterListSet)GenericActionParameters.LAUNCH_SCENARIO, "Lance un sc\u00e9nario"), 
-    OPEN_MERCENARY_DIALOG(11, (ParameterListSet)GenericActionParameters.MERCENARY_DIALOG, "Ouvre le comptoir de mercenaire");
+    PLAY_SCRIPT(1, GenericActionParameters.PLAY_LUA, "Permet de jouer un Script"), 
+    APPLY_STATE(2, GenericActionParameters.APPLY_STATE, "Applique un \u00e9tat sur le joueur"), 
+    TELEPORT(3, GenericActionParameters.TELEPORT, "T\u00e9l\u00e9porte le joueur"), 
+    GIVE_ITEM(4, GenericActionParameters.GIVE_RANDOM_ITEM_IN_LIST, "Donne un item au joueur"), 
+    GIVE_KAMA(5, GenericActionParameters.GIVE_KAMAS, "Donne des kamas au joueur"), 
+    RESET_ACHIEVEMENT(6, GenericActionParameters.RESET_ACHIEVEMENT, "Active un achievement/qu\u00eate"), 
+    GIVE_EMOTE(7, GenericActionParameters.GIVE_EMOTE, "Donne une emote au joueur"), 
+    KROSMOZ_GAME_PLAY(8, GenericActionParameters.KROSMOZ_GAME_PLAY, "Lance une application Krosmoz"), 
+    RECUSTOM_CHARACTER(9, GenericActionParameters.RECUSTOM_CHARACTER, "Lance une recustom de perso"), 
+    LAUNCH_SCENARIO(10, GenericActionParameters.LAUNCH_SCENARIO, "Lance un sc\u00e9nario"), 
+    OPEN_MERCENARY_DIALOG(11, GenericActionParameters.MERCENARY_DIALOG, "Ouvre le comptoir de mercenaire");
     
     private final byte m_id;
     private final String m_label;

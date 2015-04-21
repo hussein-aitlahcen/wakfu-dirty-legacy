@@ -8,15 +8,18 @@ public abstract class AbstractDistribution extends PersistentObject implements D
 {
     protected RandomEngine randomGenerator;
     
-    public double apply(final double n) {
+    @Override
+	public double apply(final double n) {
         return this.nextDouble();
     }
     
-    public int apply(final int n) {
+    @Override
+	public int apply(final int n) {
         return this.nextInt();
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final AbstractDistribution abstractDistribution = (AbstractDistribution)super.clone();
         if (this.randomGenerator != null) {
             abstractDistribution.randomGenerator = (RandomEngine)this.randomGenerator.clone();

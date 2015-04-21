@@ -53,12 +53,12 @@ public abstract class BinarSerialPart
     }
     
     protected void markAsError(final String errorMsg) {
-        BinarSerialPart.m_logger.error((Object)errorMsg);
+        BinarSerialPart.m_logger.error(errorMsg);
         this.m_error = true;
     }
     
     protected void markAsError(final String errorMsg, final Exception e) {
-        BinarSerialPart.m_logger.error((Object)errorMsg, (Throwable)e);
+        BinarSerialPart.m_logger.error(errorMsg, e);
         this.m_error = true;
     }
     
@@ -79,7 +79,7 @@ public abstract class BinarSerialPart
     public abstract void unserialize(final ByteBuffer p0, final int p1);
     
     static {
-        m_logger = Logger.getLogger((Class)BinarSerialPart.class);
+        m_logger = Logger.getLogger(BinarSerialPart.class);
         EMPTY = new BinarSerialPart() {
             @Override
             public void setDataSource(final BinarSerialDataSource dataSource) {

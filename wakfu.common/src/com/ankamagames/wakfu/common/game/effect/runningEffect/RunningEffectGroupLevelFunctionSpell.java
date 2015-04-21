@@ -4,9 +4,11 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -43,7 +45,7 @@ public final class RunningEffectGroupLevelFunctionSpell extends RunningEffectGro
             re = new RunningEffectGroupLevelFunctionSpell();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupLevelFunctionSpell.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionSpell : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionSpell : " + e.getMessage());
         }
         return re;
     }
@@ -55,24 +57,24 @@ public final class RunningEffectGroupLevelFunctionSpell extends RunningEffectGro
         }
         super.effectiveComputeValue(triggerRE);
         this.m_checkOnCaster = true;
-        this.m_spellId = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 8) {
-            this.m_checkOnCaster = (((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_spellId = this.m_genericEffect.getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 8) {
+            this.m_checkOnCaster = (this.m_genericEffect.getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 9) {
-            this.m_spellLevelFactor = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel());
+        if (this.m_genericEffect.getParamsCount() >= 9) {
+            this.m_spellLevelFactor = this.m_genericEffect.getParam(8, this.getContainerLevel());
         }
         else {
             this.m_spellLevelFactor = 1.0f;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 10) {
-            final boolean inverseFactor = ((WakfuEffect)this.m_genericEffect).getParam(9, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        if (this.m_genericEffect.getParamsCount() >= 10) {
+            final boolean inverseFactor = this.m_genericEffect.getParam(9, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
             if (inverseFactor) {
                 this.m_spellLevelFactor = 1.0f / this.m_spellLevelFactor;
             }
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 11) {
-            this.m_usePermanentInventory = (((WakfuEffect)this.m_genericEffect).getParam(10, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 11) {
+            this.m_usePermanentInventory = (this.m_genericEffect.getParam(10, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     
@@ -97,7 +99,7 @@ public final class RunningEffectGroupLevelFunctionSpell extends RunningEffectGro
             spellInventory = ((BasicCharacterInfo)spellOwner).getPermanentSpellInventory();
         }
         else {
-            spellInventory = (Iterable<? extends AbstractSpellLevel>)((BasicCharacterInfo)spellOwner).getSpellInventory();
+            spellInventory = ((BasicCharacterInfo)spellOwner).getSpellInventory();
         }
         if (spellInventory == null) {
             return params;

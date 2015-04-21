@@ -59,18 +59,18 @@ public final class AddSpellToInventory extends WakfuRunningEffect
             re = new AddSpellToInventory();
             re.m_pool = null;
             re.m_isStatic = false;
-            AddSpellToInventory.m_logger.error((Object)("Erreur lors d'un checkOut sur un AddSpellToInventory : " + e.getMessage()));
+            AddSpellToInventory.m_logger.error("Erreur lors d'un checkOut sur un AddSpellToInventory : " + e.getMessage());
         }
         return re;
     }
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_spellId = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_spellId = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_spellLevel = (short)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_spellLevel = (short)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         else {
             this.m_spellLevel = this.getContainerLevel();
@@ -87,7 +87,7 @@ public final class AddSpellToInventory extends WakfuRunningEffect
         }
         this.m_spellLevelToAdd = AbstractSpellManager.getInstance().getDefaultSpellLevel(this.m_spellId, this.m_spellLevel);
         if (this.m_spellLevelToAdd == null) {
-            AddSpellToInventory.m_logger.error((Object)("Impossible de cr\u00e9er le sort d'id " + this.m_spellId + " pour le level " + this.m_spellLevel));
+            AddSpellToInventory.m_logger.error("Impossible de cr\u00e9er le sort d'id " + this.m_spellId + " pour le level " + this.m_spellLevel);
             return;
         }
         final BasicCharacterInfo target = (BasicCharacterInfo)this.m_target;
@@ -98,7 +98,7 @@ public final class AddSpellToInventory extends WakfuRunningEffect
             }
         }
         catch (Exception e) {
-            AddSpellToInventory.m_logger.error((Object)"Exception levee", (Throwable)e);
+            AddSpellToInventory.m_logger.error("Exception levee", e);
             this.m_spellLevelToAdd.release();
             this.m_spellLevelToAdd = null;
         }
@@ -148,7 +148,7 @@ public final class AddSpellToInventory extends WakfuRunningEffect
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AddSpellToInventory.class);
+        m_logger = Logger.getLogger(AddSpellToInventory.class);
         m_staticPool = new MonitoredPool(new ObjectFactory<AddSpellToInventory>() {
             @Override
             public AddSpellToInventory makeObject() {

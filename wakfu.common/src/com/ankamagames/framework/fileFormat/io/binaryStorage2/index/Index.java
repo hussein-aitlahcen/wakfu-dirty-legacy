@@ -48,17 +48,17 @@ public abstract class Index<Hash extends TLongHash>
         
         @Override
         protected void readEntry(final long idx, final RandomByteBufferReader buffer) {
-            ((TLongIntHashMap)this.m_indexes).put(idx, buffer.getInt());
+            this.m_indexes.put(idx, buffer.getInt());
         }
         
         @Override
         public int getEntryCount(final long id) {
-            return ((TLongIntHashMap)this.m_indexes).contains(id) ? 1 : 0;
+            return this.m_indexes.contains(id) ? 1 : 0;
         }
         
         @Override
         public int getEntryCursor(final long id, final int i) {
-            return ((TLongIntHashMap)this.m_indexes).get(id);
+            return this.m_indexes.get(id);
         }
     }
     

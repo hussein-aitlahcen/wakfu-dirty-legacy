@@ -15,7 +15,7 @@ public class HMIVisibilitySkinPartAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length < 2) {
-                HMIVisibilitySkinPartAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut au moins 2 : visibility[true|false];parts....) : " + parameters));
+                HMIVisibilitySkinPartAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut au moins 2 : visibility[true|false];parts....) : " + parameters);
                 return false;
             }
             this.m_visibility = Boolean.parseBoolean(array[0]);
@@ -23,7 +23,7 @@ public class HMIVisibilitySkinPartAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMIVisibilitySkinPartAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMIVisibilitySkinPartAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -42,6 +42,6 @@ public class HMIVisibilitySkinPartAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

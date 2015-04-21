@@ -68,7 +68,7 @@ public abstract class AbstractItemType<ItemType extends AbstractItemType>
         if (this == itemType) {
             return true;
         }
-        for (AbstractItemType<ItemType> parent = (AbstractItemType<ItemType>)this.m_parentType; parent != null; parent = (AbstractItemType<ItemType>)parent.getParentType()) {
+        for (AbstractItemType<ItemType> parent = this.m_parentType; parent != null; parent = parent.getParentType()) {
             if (parent == itemType) {
                 return true;
             }

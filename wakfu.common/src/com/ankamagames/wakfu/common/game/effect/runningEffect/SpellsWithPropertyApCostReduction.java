@@ -2,10 +2,8 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.framework.kernel.core.common.serialization.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.external.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class SpellsWithPropertyApCostReduction extends SpellsWithPropertyModification
@@ -28,7 +26,7 @@ public final class SpellsWithPropertyApCostReduction extends SpellsWithPropertyM
             re = new SpellsWithPropertyApCostReduction();
             re.m_pool = null;
             re.m_isStatic = false;
-            SpellsWithPropertyApCostReduction.m_logger.error((Object)("Erreur lors d'un checkOut sur un SpellsWithPropertyApCostReduction : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un SpellsWithPropertyApCostReduction : " + e.getMessage());
         }
         return re;
     }

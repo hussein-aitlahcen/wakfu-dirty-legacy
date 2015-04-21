@@ -45,7 +45,7 @@ public class WakfuEffectExecutionParameters extends EffectExecutionParameters
         }
         catch (Exception e) {
             params = new WakfuEffectExecutionParameters();
-            WakfuEffectExecutionParameters.m_logger.error((Object)("Erreur lors d'un newInstance sur un ActionCost : " + e.getMessage()));
+            WakfuEffectExecutionParameters.m_logger.error("Erreur lors d'un newInstance sur un ActionCost : " + e.getMessage());
         }
         params.m_disableProbabilityComputation = disableProbabilityComputation;
         params.m_disableCriterionCheck = disableCriterionCheck;
@@ -97,7 +97,7 @@ public class WakfuEffectExecutionParameters extends EffectExecutionParameters
     
     public void setForcedValue(final int forcedValue, final ForcedValueType type) {
         if (type == ForcedValueType.NONE) {
-            WakfuEffectExecutionParameters.m_logger.error((Object)"On ne peut pas forcer une valeur avec le type NONE");
+            WakfuEffectExecutionParameters.m_logger.error("On ne peut pas forcer une valeur avec le type NONE");
             return;
         }
         this.m_valueForcedType = type;
@@ -166,14 +166,14 @@ public class WakfuEffectExecutionParameters extends EffectExecutionParameters
     @Override
     public void release() {
         if (!this.m_checkedOut) {
-            WakfuEffectExecutionParameters.m_logger.error((Object)("Tentative de remettre un WakfuEffectExecutionParameters qui n'est pas checkout\u00e9 dans le pool " + ExceptionFormatter.currentStackTrace()));
+            WakfuEffectExecutionParameters.m_logger.error("Tentative de remettre un WakfuEffectExecutionParameters qui n'est pas checkout\u00e9 dans le pool " + ExceptionFormatter.currentStackTrace());
             return;
         }
         try {
             WakfuEffectExecutionParameters.m_pool.returnObject(this);
         }
         catch (Exception e) {
-            WakfuEffectExecutionParameters.m_logger.error((Object)("Exception dans le release de " + this.getClass().toString() + " normalement impossible"));
+            WakfuEffectExecutionParameters.m_logger.error("Exception dans le release de " + this.getClass().toString() + " normalement impossible");
         }
     }
     
@@ -193,7 +193,7 @@ public class WakfuEffectExecutionParameters extends EffectExecutionParameters
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuEffectExecutionParameters.class);
+        m_logger = Logger.getLogger(WakfuEffectExecutionParameters.class);
         m_pool = new MonitoredPool(new ObjectFactory<WakfuEffectExecutionParameters>() {
             @Override
             public WakfuEffectExecutionParameters makeObject() {

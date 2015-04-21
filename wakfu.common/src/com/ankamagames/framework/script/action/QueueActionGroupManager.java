@@ -55,7 +55,7 @@ public class QueueActionGroupManager implements ActionGroupEventListener
                 this.m_executingActionGroups.get(i).kill();
             }
             catch (Exception e) {
-                QueueActionGroupManager.m_logger.error((Object)"", (Throwable)e);
+                QueueActionGroupManager.m_logger.error("", e);
             }
         }
         this.m_executingActionGroups.clear();
@@ -98,23 +98,23 @@ public class QueueActionGroupManager implements ActionGroupEventListener
     }
     
     public void traceActionContent() {
-        QueueActionGroupManager.m_logger.info((Object)("Action In Execution : " + this.m_actionInExecution));
+        QueueActionGroupManager.m_logger.info("Action In Execution : " + this.m_actionInExecution);
         if (!this.m_executingActionGroups.isEmpty()) {
             for (final ActionGroup group : this.m_executingActionGroups) {
-                QueueActionGroupManager.m_logger.info((Object)("Executing Action Group (" + group.getActions().size() + " actions)"));
+                QueueActionGroupManager.m_logger.info("Executing Action Group (" + group.getActions().size() + " actions)");
                 for (final Action action : group.getActions()) {
-                    QueueActionGroupManager.m_logger.info((Object)(" * " + action.getClass().getSimpleName()));
+                    QueueActionGroupManager.m_logger.info(" * " + action.getClass().getSimpleName());
                 }
             }
         }
         if (this.m_pendingActionGroup != null) {
-            QueueActionGroupManager.m_logger.info((Object)("Pending Action Group (" + this.m_pendingActionGroup.getActions().size() + " groupes)"));
+            QueueActionGroupManager.m_logger.info("Pending Action Group (" + this.m_pendingActionGroup.getActions().size() + " groupes)");
             for (final Action action2 : this.m_pendingActionGroup.getActions()) {
-                QueueActionGroupManager.m_logger.info((Object)(" - " + action2.getClass().getSimpleName()));
+                QueueActionGroupManager.m_logger.info(" - " + action2.getClass().getSimpleName());
             }
         }
         else {
-            QueueActionGroupManager.m_logger.info((Object)"Pending Action Group is null");
+            QueueActionGroupManager.m_logger.info("Pending Action Group is null");
         }
     }
     
@@ -132,7 +132,7 @@ public class QueueActionGroupManager implements ActionGroupEventListener
     }
     
     static {
-        m_logger = Logger.getLogger((Class)QueueActionGroupManager.class);
+        m_logger = Logger.getLogger(QueueActionGroupManager.class);
         m_instance = new QueueActionGroupManager();
     }
 }

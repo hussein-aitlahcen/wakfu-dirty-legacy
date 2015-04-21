@@ -2,8 +2,8 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class VariableElementDamageGain extends AbstractVariableElementCharacModification
@@ -20,7 +20,7 @@ public class VariableElementDamageGain extends AbstractVariableElementCharacModi
         catch (Exception e) {
             re = new VariableElementDamageGain();
             re.m_pool = null;
-            VariableElementDamageGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un VariableElementDamageGain : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un VariableElementDamageGain : " + e.getMessage());
         }
         return re;
     }

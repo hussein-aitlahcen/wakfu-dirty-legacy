@@ -29,6 +29,6 @@ public class MissingBuilding extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MissingBuilding.class);
+        m_logger = Logger.getLogger(MissingBuilding.class);
     }
 }

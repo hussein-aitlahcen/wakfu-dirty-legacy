@@ -2,7 +2,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
@@ -10,9 +12,10 @@ import com.ankamagames.wakfu.common.game.fight.time.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -136,7 +139,7 @@ public class PropertyApply extends WakfuRunningEffect
             re = new PropertyApply();
             re.m_pool = null;
             re.m_isStatic = false;
-            PropertyApply.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage());
         }
         re.m_property = this.m_property;
         re.m_worldPropertyAlreadyApplied = this.m_worldPropertyAlreadyApplied;
@@ -235,7 +238,7 @@ public class PropertyApply extends WakfuRunningEffect
         if (this.m_property == FightPropertyType.STASIS_3 && this.m_target.hasCharacteristic(FighterCharacteristicType.WP)) {
             final AbstractCharacteristic wp = this.m_target.getCharacteristic(FighterCharacteristicType.WP);
             if (wp == null) {
-                PropertyApply.m_logger.error((Object)("charac nulle alors hasCharac renvoie true " + this.m_target + ", " + this.m_target.getClass().getSimpleName()));
+                RunningEffect.m_logger.error("charac nulle alors hasCharac renvoie true " + this.m_target + ", " + this.m_target.getClass().getSimpleName());
             }
             else {
                 wp.dispatchUpdate();
@@ -258,11 +261,11 @@ public class PropertyApply extends WakfuRunningEffect
             return -1;
         }
         final short level = this.getContainerLevel();
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
-            return (byte)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() > 1) {
+            return (byte)this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 1) {
-            return (byte)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() == 1) {
+            return (byte)this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
         }
         return -1;
     }
@@ -274,8 +277,8 @@ public class PropertyApply extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             this.m_nbProperties = -1;
         }
-        else if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 1) {
-            this.m_nbProperties = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+        else if (this.m_genericEffect.getParamsCount() == 1) {
+            this.m_nbProperties = (byte)this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
         }
         else {
             this.m_nbProperties = -1;
@@ -311,7 +314,7 @@ public class PropertyApply extends WakfuRunningEffect
                     fightMap.removeIgnoredSightObstacle((FightObstacle)this.m_target);
                 }
                 else {
-                    PropertyApply.m_logger.error((Object)("pas de combat associ\u00e9 \u00e0 la target " + this.m_target.toString()));
+                    RunningEffect.m_logger.error("pas de combat associ\u00e9 \u00e0 la target " + this.m_target.toString());
                 }
             }
         }

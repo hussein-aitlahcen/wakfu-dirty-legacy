@@ -26,7 +26,7 @@ public abstract class AbstractLocalPartitionManager<P extends AbstractPartition<
         currentPartition.setPartition(4, currentPartition);
         this.initializeAdjacentPartitions(currentPartition, centerPartitionX, centerPartitionY);
         this.m_currentPartition = currentPartition;
-        AbstractLocalPartitionManager.m_logger.info((Object)(this.getClass().getSimpleName() + " initialis\u00e9, centr\u00e9 sur " + this.m_currentPartition));
+        AbstractLocalPartitionManager.m_logger.info(this.getClass().getSimpleName() + " initialis\u00e9, centr\u00e9 sur " + this.m_currentPartition);
     }
     
     private void initializeAdjacentPartitions(final AbstractPartition<P> currentPartition, final int centerPartitionX, final int centerPartitionY) {
@@ -83,6 +83,6 @@ public abstract class AbstractLocalPartitionManager<P extends AbstractPartition<
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractLocalPartitionManager.class);
+        m_logger = Logger.getLogger(AbstractLocalPartitionManager.class);
     }
 }

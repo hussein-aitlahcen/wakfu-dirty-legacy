@@ -101,14 +101,14 @@ public abstract class Action
             this.onActionFinished();
         }
         catch (Exception e) {
-            Action.m_logger.error((Object)"Exception levee", (Throwable)e);
+            Action.m_logger.error("Exception levee", e);
         }
         for (final ActionEventListener listener : this.m_listeners.toArray(new ActionEventListener[this.m_listeners.size()])) {
             try {
                 listener.onActionFinished(this);
             }
             catch (Exception e2) {
-                Action.m_logger.error((Object)"Exception levee", (Throwable)e2);
+                Action.m_logger.error("Exception levee", e2);
             }
         }
     }
@@ -133,6 +133,6 @@ public abstract class Action
     }
     
     static {
-        Action.m_logger = Logger.getLogger((Class)Action.class);
+        Action.m_logger = Logger.getLogger(Action.class);
     }
 }

@@ -38,7 +38,7 @@ class NationChange implements GuildChange
             controller.changeNation(this.m_nationId);
         }
         catch (GuildException e) {
-            NationChange.m_logger.error((Object)"Impossible de changer le message", (Throwable)e);
+            NationChange.m_logger.error("Impossible de changer le message", e);
         }
     }
     
@@ -53,6 +53,6 @@ class NationChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationChange.class);
+        m_logger = Logger.getLogger(NationChange.class);
     }
 }

@@ -41,11 +41,11 @@ public class ProcessScheduler
     
     public void scheduleOnTimeEvent(final Runnable runnable, final TimeInterval intervalUnit, final long intervalCount, final int repeatCount) {
         if (runnable == null) {
-            ProcessScheduler.m_logger.error((Object)"Tentative d'insertion d'un Runnable null");
+            ProcessScheduler.m_logger.error("Tentative d'insertion d'un Runnable null");
             return;
         }
         if (repeatCount == 0) {
-            ProcessScheduler.m_logger.warn((Object)"On schedule un runnable pour \u00eatre execut\u00e9 0 fois, WTF ? (Gros blaireau)");
+            ProcessScheduler.m_logger.warn("On schedule un runnable pour \u00eatre execut\u00e9 0 fois, WTF ? (Gros blaireau)");
             return;
         }
         final ScheduledProcess scheduledProcess = new ScheduledProcessOnFixedEvent(runnable, intervalUnit.toMillis(intervalCount));
@@ -55,11 +55,11 @@ public class ProcessScheduler
     
     public void schedule(final Runnable runnable, final long delay, final int repeatCount) {
         if (runnable == null) {
-            ProcessScheduler.m_logger.error((Object)"Tentative d'insertion d'un Runnable null");
+            ProcessScheduler.m_logger.error("Tentative d'insertion d'un Runnable null");
             return;
         }
         if (repeatCount == 0) {
-            ProcessScheduler.m_logger.warn((Object)"On schedule un runnable pour \u00eatre execut\u00e9 0 fois, WTF ? (Gros blaireau)");
+            ProcessScheduler.m_logger.warn("On schedule un runnable pour \u00eatre execut\u00e9 0 fois, WTF ? (Gros blaireau)");
             return;
         }
         final ScheduledProcess scheduledProcess = new ScheduledProcessOnFixedInterval(runnable, delay);
@@ -80,7 +80,7 @@ public class ProcessScheduler
             Worker.getInstance().wakeUp();
         }
         else {
-            ProcessScheduler.m_logger.error((Object)"Worker is not running, unable to wakeUp!");
+            ProcessScheduler.m_logger.error("Worker is not running, unable to wakeUp!");
         }
     }
     
@@ -147,7 +147,7 @@ public class ProcessScheduler
                     break;
                 }
                 default: {
-                    ProcessScheduler.m_logger.error((Object)("Undefined operation ! : " + op.getOp()));
+                    ProcessScheduler.m_logger.error("Undefined operation ! : " + op.getOp());
                     break;
                 }
             }
@@ -183,11 +183,11 @@ public class ProcessScheduler
                         process.run();
                     }
                     else {
-                        ProcessScheduler.m_logger.error((Object)"(Paranoia) Process null ?!");
+                        ProcessScheduler.m_logger.error("(Paranoia) Process null ?!");
                     }
                 }
                 catch (Throwable e) {
-                    ProcessScheduler.m_logger.error((Object)((process != null) ? ("ProcessScheduler exception (" + process.getClass().getName() + "): ") : "ProcessScheduler exception (null process): "), e);
+                    ProcessScheduler.m_logger.error((process != null) ? ("ProcessScheduler exception (" + process.getClass().getName() + "): ") : "ProcessScheduler exception (null process): ", e);
                 }
                 if (countsLeft == 0) {
                     continue;
@@ -206,7 +206,7 @@ public class ProcessScheduler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ProcessScheduler.class);
+        m_logger = Logger.getLogger(ProcessScheduler.class);
         m_instance = new ProcessScheduler();
     }
 }

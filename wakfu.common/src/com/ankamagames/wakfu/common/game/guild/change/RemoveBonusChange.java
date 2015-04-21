@@ -38,7 +38,7 @@ class RemoveBonusChange implements GuildChange
             controller.removeBonus(this.m_bonusId);
         }
         catch (GuildException e) {
-            RemoveBonusChange.m_logger.error((Object)"Impossible de retirer le bonus", (Throwable)e);
+            RemoveBonusChange.m_logger.error("Impossible de retirer le bonus", e);
         }
     }
     
@@ -53,6 +53,6 @@ class RemoveBonusChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RemoveBonusChange.class);
+        m_logger = Logger.getLogger(RemoveBonusChange.class);
     }
 }

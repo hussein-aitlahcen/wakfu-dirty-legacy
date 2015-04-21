@@ -22,7 +22,7 @@ public final class BonusDistributionTableLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BonusDistributionTableLoader.class);
+        m_logger = Logger.getLogger(BonusDistributionTableLoader.class);
         m_instance = new BonusDistributionTableLoader();
     }
 }

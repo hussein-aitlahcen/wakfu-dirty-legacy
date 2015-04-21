@@ -91,7 +91,7 @@ public class MultiElementsInfo
                     final ArrayList<Elements> elementsList = new ArrayList<Elements>(MultiElementsInfo.ELEMENTS_LIST);
                     final int nbElements = (int)wakfuEffect.getParam(1);
                     if (nbElements > elementsList.size()) {
-                        MultiElementsInfo.m_logger.error((Object)("[GD-SAISIE] un effet \u00e0 \u00e9l\u00e9ments variables demande un nombre d'\u00e9l\u00e9ments trop important : " + wakfuEffect));
+                        MultiElementsInfo.m_logger.error("[GD-SAISIE] un effet \u00e0 \u00e9l\u00e9ments variables demande un nombre d'\u00e9l\u00e9ments trop important : " + wakfuEffect);
                     }
                     else {
                         while (nbElements > elementsToAddList.size()) {
@@ -141,7 +141,7 @@ public class MultiElementsInfo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MultiElementsInfo.class);
+        m_logger = Logger.getLogger(MultiElementsInfo.class);
         ELEMENTS_LIST = Arrays.asList(Elements.AIR, Elements.EARTH, Elements.FIRE, Elements.WATER);
     }
 }

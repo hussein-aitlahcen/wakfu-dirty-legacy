@@ -79,6 +79,6 @@ public class TargetFinder
     
     static {
         m_instance = new TargetFinder();
-        m_logger = Logger.getLogger((Class)TargetFinder.class);
+        m_logger = Logger.getLogger(TargetFinder.class);
     }
 }

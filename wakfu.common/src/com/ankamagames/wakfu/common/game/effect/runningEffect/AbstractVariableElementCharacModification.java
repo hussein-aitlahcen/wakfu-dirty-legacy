@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.item.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.external.*;
@@ -40,7 +39,7 @@ public abstract class AbstractVariableElementCharacModification extends WakfuRun
             characGain.setTarget(this.m_target);
             characGain.setCaster(this.m_caster);
             characGain.setNotified(true);
-            (characGain).setGenericEffect((WakfuEffect)this.m_genericEffect);
+            (characGain).setGenericEffect(this.m_genericEffect);
             characGain.executeOverride(linkedRE, trigger);
             characGain.m_executed = true;
             this.m_characGains.add(characGain);
@@ -58,7 +57,7 @@ public abstract class AbstractVariableElementCharacModification extends WakfuRun
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override

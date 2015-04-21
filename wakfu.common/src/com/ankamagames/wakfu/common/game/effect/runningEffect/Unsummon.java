@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -34,7 +35,7 @@ public class Unsummon extends WakfuRunningEffect
             re = new Unsummon();
             re.m_isStatic = false;
             re.m_pool = null;
-            Unsummon.m_logger.error((Object)("Erreur lors d'un checkOut sur un RE:Unsummon : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RE:Unsummon : " + e.getMessage());
         }
         this.m_maxExecutionCount = 1;
         return re;

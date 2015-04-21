@@ -72,6 +72,6 @@ public class LinkedToItemIterator implements Iterator<RunningEffect>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LinkedToItemIterator.class);
+        m_logger = Logger.getLogger(LinkedToItemIterator.class);
     }
 }

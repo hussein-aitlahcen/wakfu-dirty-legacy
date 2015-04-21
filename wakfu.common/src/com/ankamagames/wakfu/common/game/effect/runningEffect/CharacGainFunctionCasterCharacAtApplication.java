@@ -3,7 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -40,7 +42,7 @@ public final class CharacGainFunctionCasterCharacAtApplication extends CharacGai
             re = new CharacGainFunctionCasterCharacAtApplication();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacGainFunctionCasterCharacAtApplication.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGainFunctionCasterCharacAtApplication : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGainFunctionCasterCharacAtApplication : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_sourceCharacs = this.m_sourceCharacs;
@@ -56,8 +58,8 @@ public final class CharacGainFunctionCasterCharacAtApplication extends CharacGai
                     this.m_value += this.m_caster.getCharacteristicValue(sourceCharac);
                 }
             }
-            if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-                final int ratio = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() > 0) {
+                final int ratio = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
                 this.m_value = this.m_value * ratio / 100;
             }
         }

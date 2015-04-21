@@ -78,7 +78,7 @@ public final class LuaValue
                 break;
             }
             case INTEGER: {
-                luaState.pushNumber((double)(int)this.getValue());
+                luaState.pushNumber((int)this.getValue());
                 break;
             }
             case BOOLEAN: {

@@ -79,7 +79,7 @@ public class PathFinder implements Releasable
             return (PathFinder)PathFinder.m_staticPool.borrowObject();
         }
         catch (Exception e) {
-            PathFinder.m_logger.error((Object)"Exception", (Throwable)e);
+            PathFinder.m_logger.error("Exception", e);
             return null;
         }
     }
@@ -90,7 +90,7 @@ public class PathFinder implements Releasable
             PathFinder.m_staticPool.returnObject(this);
         }
         catch (Exception e) {
-            PathFinder.m_logger.error((Object)"Exception", (Throwable)e);
+            PathFinder.m_logger.error("Exception", e);
         }
     }
     
@@ -202,7 +202,7 @@ public class PathFinder implements Releasable
         assert !this.m_startCellsHashcodes.isEmpty() : "start cells not defined";
         assert this.m_parameters.m_searchLimit > 0 : "search limit not defined in the path find parameters";
         if (!this.m_parameters.m_includeEndCell && this.m_parameters.m_stopBeforeEndCell) {
-            throw new AssertionError((Object)"stopping before the end and asking for the end cell to be removed assumes the last cell of the path will be known");
+            throw new AssertionError("stopping before the end and asking for the end cell to be removed assumes the last cell of the path will be known");
         }
         this.m_nodesHashToIndex.clear();
         this.m_lastNodeIndex = 0;
@@ -239,7 +239,7 @@ public class PathFinder implements Releasable
             }
             final PathFinderNode startNode = this.getNode(hashCode);
             if (startNode == null) {
-                PathFinder.m_logger.info((Object)("Invalid start cell for pathfind search : doesn't exist. HASHCODE : " + hashCode));
+                PathFinder.m_logger.info("Invalid start cell for pathfind search : doesn't exist. HASHCODE : " + hashCode);
             }
             else {
                 final int startCellX = getXFrom3DHashCode(hashCode);
@@ -253,7 +253,7 @@ public class PathFinder implements Releasable
                 }
                 if (!TopologyChecker.checkHeightIndexValidity(startNode.m_firstElementIndex + startNode.m_nodeElementIndex, startNode.m_firstElementIndex, startNode.m_cellElementsCount, this.m_cellPathData, this.m_moverHeight)) {
                     if (!this.m_parameters.m_permissiveStartCellAltitude) {
-                        PathFinder.m_logger.info((Object)("Invalid start cell (" + startCellX + ", " + startCellY + ", " + startCellZ + ") for pathfind search : not a suitable position for the mover. "));
+                        PathFinder.m_logger.info("Invalid start cell (" + startCellX + ", " + startCellY + ", " + startCellZ + ") for pathfind search : not a suitable position for the mover. ");
                         continue;
                     }
                     startCellZ = TopologyChecker.getHighestWalkableZ(startNode.m_firstElementIndex, startNode.m_cellElementsCount, this.m_cellPathData, (short)(startCellZ + this.m_moverJumpCapacity), this.m_moverHeight);
@@ -291,7 +291,7 @@ public class PathFinder implements Releasable
     
     public boolean checkMovementOnNextCell(final Point3 from, final Point3 to) {
         if (from.getDistance(to) != 1) {
-            PathFinder.m_logger.error((Object)("Unable to checkMovementOnNextCell if cells are not adjacent :" + from + ", " + to));
+            PathFinder.m_logger.error("Unable to checkMovementOnNextCell if cells are not adjacent :" + from + ", " + to);
             return false;
         }
         final int thisX = from.getX();
@@ -834,7 +834,7 @@ public class PathFinder implements Releasable
             return this.m_nodes[index];
         }
         if (this.m_lastNodeIndex >= PathFinder.MAX_NODES - 1) {
-            PathFinder.m_logger.error((Object)"No more free nodes. Ceel can't be added to open nodes. Think about increasing PathFinder.MAX_NODES");
+            PathFinder.m_logger.error("No more free nodes. Ceel can't be added to open nodes. Think about increasing PathFinder.MAX_NODES");
             return null;
         }
         final int indexAndCount = this.retrieveCellPathData(x, y);
@@ -872,7 +872,7 @@ public class PathFinder implements Releasable
             return 0;
         }
         if (!map.isInMap(x, y)) {
-            PathFinder.m_logger.error((Object)"Map pas pr\u00e9sente pour ces coordonn\u00e9es... Probl\u00e8me de topologyMapInstanceSet mal charg\u00e9/initialis\u00e9 ?");
+            PathFinder.m_logger.error("Map pas pr\u00e9sente pour ces coordonn\u00e9es... Probl\u00e8me de topologyMapInstanceSet mal charg\u00e9/initialis\u00e9 ?");
             return 0;
         }
         final int cellElementsCount = map.getPathData(x, y, this.m_cellPathData, this.m_nextCellPathDataIndex);
@@ -921,14 +921,14 @@ public class PathFinder implements Releasable
     
     public boolean isStraightMovePossible(final Point3 startCell, final Point3 endCell) {
         if (startCell == null || endCell == null) {
-            PathFinder.m_logger.error((Object)("IMpossible de savoir si un chemin en ligne droite existe: " + startCell + "/" + endCell));
+            PathFinder.m_logger.error("IMpossible de savoir si un chemin en ligne droite existe: " + startCell + "/" + endCell);
             return false;
         }
         if (endCell.equals(startCell)) {
             return true;
         }
         if (startCell.getX() != endCell.getX() && startCell.getY() != endCell.getY()) {
-            PathFinder.m_logger.info((Object)"Cellules non align\u00e9es : impossible d'avoir un chemin en ligne droite");
+            PathFinder.m_logger.info("Cellules non align\u00e9es : impossible d'avoir un chemin en ligne droite");
             return false;
         }
         final int startX = startCell.getX();
@@ -952,14 +952,14 @@ public class PathFinder implements Releasable
         int currentY = startY;
         final int currentHash = this.retrieveCellPathData(currentX, currentY);
         if (currentHash == 0) {
-            PathFinder.m_logger.info((Object)("IMpossible de r\u00e9cup\u00e9rer les informations de la cellule " + currentX + ", " + currentY));
+            PathFinder.m_logger.info("IMpossible de r\u00e9cup\u00e9rer les informations de la cellule " + currentX + ", " + currentY);
             return false;
         }
         int currentDataIndex = getIndexFromIndexAndCountHashCode(currentHash);
         int currentDataCount = getCountFromIndexAndCountHashCode(currentHash);
         int currentZIndex = TopologyChecker.getIndexFromZ(currentDataIndex, currentDataCount, this.m_cellPathData, startCell.getZ());
         if (currentZIndex == -32768) {
-            PathFinder.m_logger.error((Object)("Position en z non valide pour cette cellule : " + startCell));
+            PathFinder.m_logger.error("Position en z non valide pour cette cellule : " + startCell);
             return false;
         }
         try {
@@ -968,14 +968,14 @@ public class PathFinder implements Releasable
                 final int nextY = currentY + yInc;
                 final int nextHashcode = this.retrieveCellPathData(nextX, nextY);
                 if (nextHashcode == 0) {
-                    PathFinder.m_logger.debug((Object)("Une cellule du mouvement en ligne droite n'existe pas : " + nextX + ", " + nextY));
+                    PathFinder.m_logger.debug("Une cellule du mouvement en ligne droite n'existe pas : " + nextX + ", " + nextY);
                     return false;
                 }
                 final int nextDataIndex = getIndexFromIndexAndCountHashCode(nextHashcode);
                 final int nextDataCount = getCountFromIndexAndCountHashCode(nextHashcode);
                 final int validIndexes = this.m_pathChecker.getValidIndexesOnNextCell(currentZIndex + currentDataIndex, currentDataIndex, currentDataCount, this.m_cellPathData, nextDataIndex, nextDataCount, this.m_cellPathData);
                 if (validIndexes == 0) {
-                    PathFinder.m_logger.debug((Object)("Cellule " + nextX + ", " + nextY + " emp\u00eache le mouvement"));
+                    PathFinder.m_logger.debug("Cellule " + nextX + ", " + nextY + " emp\u00eache le mouvement");
                     return false;
                 }
                 currentX = nextX;
@@ -986,14 +986,14 @@ public class PathFinder implements Releasable
             }
         }
         catch (Throwable t) {
-            PathFinder.m_logger.error((Object)"Exception pendant le check pour savoir s'il y a un chemin en ligne droite : ", t);
+            PathFinder.m_logger.error("Exception pendant le check pour savoir s'il y a un chemin en ligne droite : ", t);
             return false;
         }
         return true;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PathFinder.class);
+        m_logger = Logger.getLogger(PathFinder.class);
         m_debugLogger = Logger.getLogger("debug");
         PathFinder.MAX_NODES = 1024;
         PathFinder.MAX_CELL_PATH_DATA = PathFinder.MAX_NODES * 3;

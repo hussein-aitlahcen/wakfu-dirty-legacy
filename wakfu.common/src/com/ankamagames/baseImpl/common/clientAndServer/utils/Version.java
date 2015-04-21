@@ -16,7 +16,7 @@ public abstract class Version
         if (Version.m_uniqueVersionChecker != null) {
             return Version.m_uniqueVersionChecker.implCheckVersion(datas);
         }
-        Version.m_logger.error((Object)"Le v\u00e9rificateur de version n'a pas \u00e9t\u00e9 d\u00e9finit");
+        Version.m_logger.error("Le v\u00e9rificateur de version n'a pas \u00e9t\u00e9 d\u00e9finit");
         return false;
     }
     
@@ -24,7 +24,7 @@ public abstract class Version
         if (Version.m_uniqueVersionChecker != null) {
             return Version.m_uniqueVersionChecker.implGetNeededVersion();
         }
-        Version.m_logger.error((Object)"Le v\u00e9rificateur de version n'a pas \u00e9t\u00e9 d\u00e9finit");
+        Version.m_logger.error("Le v\u00e9rificateur de version n'a pas \u00e9t\u00e9 d\u00e9finit");
         return new byte[0];
     }
     
@@ -33,6 +33,6 @@ public abstract class Version
     protected abstract byte[] implGetNeededVersion();
     
     static {
-        m_logger = Logger.getLogger((Class)Version.class);
+        m_logger = Logger.getLogger(Version.class);
     }
 }

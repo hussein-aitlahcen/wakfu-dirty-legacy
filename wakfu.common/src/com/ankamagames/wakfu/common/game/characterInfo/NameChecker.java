@@ -57,7 +57,7 @@ public class NameChecker
         DASHES_PATTERN = Pattern.compile("([-]+)");
         QUOTES_PATTERN = Pattern.compile("([']+)");
         DASH_SPLIT_PATTERN = Pattern.compile("[ \\-']");
-        m_logger = Logger.getLogger((Class)NameChecker.class);
+        m_logger = Logger.getLogger(NameChecker.class);
     }
     
     public enum NameResult

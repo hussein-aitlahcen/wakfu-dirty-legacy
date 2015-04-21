@@ -80,7 +80,8 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         this.setTime(inputFile.lastModified());
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final ZipEntry e = (ZipEntry)super.clone();
         e.setInternalAttributes(this.getInternalAttributes());
         e.setExternalAttributes(this.getExternalAttributes());
@@ -88,11 +89,13 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         return e;
     }
     
-    public int getMethod() {
+    @Override
+	public int getMethod() {
         return this.method;
     }
     
-    public void setMethod(final int method) {
+    @Override
+	public void setMethod(final int method) {
         if (method < 0) {
             throw new IllegalArgumentException("ZIP compression method can not be negative: " + method);
         }
@@ -224,7 +227,8 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         return this.unparseableExtra;
     }
     
-    public void setExtra(final byte[] extra) throws RuntimeException {
+    @Override
+	public void setExtra(final byte[] extra) throws RuntimeException {
         try {
             final ZipExtraField[] local = ExtraFieldUtils.parse(extra, true, ExtraFieldUtils.UnparseableExtraField.READ);
             this.mergeExtraFields(local, true);
@@ -261,11 +265,13 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         this.setCompressedSize(size);
     }
     
-    public String getName() {
+    @Override
+	public String getName() {
         return (this.name == null) ? super.getName() : this.name;
     }
     
-    public boolean isDirectory() {
+    @Override
+	public boolean isDirectory() {
         return this.getName().endsWith("/");
     }
     
@@ -276,11 +282,13 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         this.name = name;
     }
     
-    public long getSize() {
+    @Override
+	public long getSize() {
         return this.size;
     }
     
-    public void setSize(final long size) {
+    @Override
+	public void setSize(final long size) {
         if (size < 0L) {
             throw new IllegalArgumentException("invalid entry size");
         }
@@ -301,7 +309,8 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         return null;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.getName().hashCode();
     }
     
@@ -346,7 +355,8 @@ public class ZipEntry extends java.util.zip.ZipEntry implements Cloneable
         return new Date(this.getTime());
     }
     
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (this == obj) {
             return true;
         }

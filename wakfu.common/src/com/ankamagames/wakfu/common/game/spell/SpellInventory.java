@@ -21,7 +21,7 @@ public class SpellInventory<S extends AbstractSpellLevel> extends StackInventory
     @Override
     public boolean toRaw(final RawSpellLevelInventory raw) {
         if (this.m_serializeQuantity) {
-            SpellInventory.m_logger.warn((Object)"Impossible d'ajouter l'information de quantit\u00e9 \u00e0 un RawSpellLevelInventory qui n'est pas pr\u00e9vu pour");
+            SpellInventory.m_logger.warn("Impossible d'ajouter l'information de quantit\u00e9 \u00e0 un RawSpellLevelInventory qui n'est pas pr\u00e9vu pour");
         }
         raw.clear();
         for (final S spellLevel : this) {
@@ -40,19 +40,19 @@ public class SpellInventory<S extends AbstractSpellLevel> extends StackInventory
     public boolean fromRaw(final RawSpellLevelInventory raw) {
         this.destroyAll();
         if (this.m_serializeQuantity) {
-            SpellInventory.m_logger.warn((Object)"Impossible d'ajouter les quantit\u00e9s depuis un RawStackInventory qui ne connait pas cette information");
+            SpellInventory.m_logger.warn("Impossible d'ajouter les quantit\u00e9s depuis un RawStackInventory qui ne connait pas cette information");
         }
         boolean bOk = true;
         S spell = null;
         for (final RawSpellLevelInventory.Content content : raw.contents) {
             try {
-                spell = (S)this.m_contentProvider.unSerializeContent(content.spellLevel);
+                spell = this.m_contentProvider.unSerializeContent(content.spellLevel);
                 if (spell != null) {
                     if (this.add(spell)) {
                         continue;
                     }
                     bOk = false;
-                    SpellInventory.m_logger.error((Object)("Impossible d'ajouter un sort (" + spell.getReferenceId() + ") au SpellInventory"));
+                    SpellInventory.m_logger.error("Impossible d'ajouter un sort (" + spell.getReferenceId() + ") au SpellInventory");
                     spell.release();
                 }
                 else {
@@ -60,12 +60,12 @@ public class SpellInventory<S extends AbstractSpellLevel> extends StackInventory
                 }
             }
             catch (InventoryCapacityReachedException e) {
-                SpellInventory.m_logger.error((Object)ExceptionFormatter.toString(e));
+                SpellInventory.m_logger.error(ExceptionFormatter.toString(e));
                 bOk = false;
                 spell.release();
             }
             catch (ContentAlreadyPresentException e2) {
-                SpellInventory.m_logger.error((Object)ExceptionFormatter.toString(e2));
+                SpellInventory.m_logger.error(ExceptionFormatter.toString(e2));
                 bOk = false;
                 spell.release();
             }

@@ -1,18 +1,23 @@
 package com.ankamagames.wakfu.client.core;
 
 import com.ankamagames.baseImpl.common.clientAndServer.core.*;
+
 import org.apache.log4j.*;
+
 import com.ankamagames.framework.kernel.core.translator.*;
 import com.ankamagames.framework.fileFormat.properties.*;
-import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.wakfu.common.configuration.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
-import org.apache.commons.lang3.*;
+
 import java.util.regex.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.utils.wordsModerator.*;
 import com.ankamagames.wakfu.common.game.characterInfo.nameValidation.*;
+
 import java.util.*;
 
 public class WakfuTranslator extends GameContentTranslator
@@ -1873,7 +1878,7 @@ public class WakfuTranslator extends GameContentTranslator
             this.setPath(WakfuConfiguration.getInstance().getString("i18nPath"));
         }
         catch (PropertyException e) {
-            WakfuTranslator.m_logger.error((Object)"Erreur avec le fichier de traduction", (Throwable)e);
+            WakfuTranslator.m_logger.error("Erreur avec le fichier de traduction", e);
         }
         SystemConfiguration.INSTANCE.addListener(new SystemConfigurationListener() {
             @Override
@@ -1896,7 +1901,7 @@ public class WakfuTranslator extends GameContentTranslator
             return String.format(WakfuConfiguration.getInstance().getString("langIconsPath"), language.getActualLocale().getLanguage().toUpperCase());
         }
         catch (PropertyException e) {
-            WakfuTranslator.m_logger.warn((Object)e.getMessage());
+            WakfuTranslator.m_logger.warn(e.getMessage());
             return null;
         }
     }
@@ -1906,16 +1911,16 @@ public class WakfuTranslator extends GameContentTranslator
             return String.format(WakfuConfiguration.getInstance().getString("langIconsPath"), community.getName().toUpperCase());
         }
         catch (PropertyException e) {
-            WakfuTranslator.m_logger.warn((Object)e.getMessage());
+            WakfuTranslator.m_logger.warn(e.getMessage());
             return null;
         }
     }
     
     public static WakfuTranslator getInstance() {
-        if (WakfuTranslator.m_instance == null) {
-            WakfuTranslator.m_instance = new WakfuTranslator();
+        if (Translator.m_instance == null) {
+            Translator.m_instance = new WakfuTranslator();
         }
-        return (WakfuTranslator)WakfuTranslator.m_instance;
+        return (WakfuTranslator)Translator.m_instance;
     }
         
     public String formatDateFull(final GameDateConst gameDate) {
@@ -1962,6 +1967,6 @@ public class WakfuTranslator extends GameContentTranslator
     
     static {
         ICON_PATTERN = Pattern.compile("\\\\i([0-9]+)");
-        m_logger = Logger.getLogger((Class)WakfuTranslator.class);
+        m_logger = Logger.getLogger(WakfuTranslator.class);
     }    
 }

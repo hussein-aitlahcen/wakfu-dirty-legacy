@@ -2,13 +2,17 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import com.ankamagames.framework.kernel.core.maths.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -56,7 +60,7 @@ public class AIGiveOrderOnCell extends WakfuRunningEffect
             re = new AIGiveOrderOnCell();
             re.m_pool = null;
             re.m_isStatic = false;
-            AIGiveOrderOnCell.m_logger.error((Object)("Erreur lors d'un checkOut sur un OrderSummon : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un OrderSummon : " + e.getMessage());
         }
         re.m_cellForOrder = this.m_cellForOrder;
         return re;
@@ -87,12 +91,12 @@ public class AIGiveOrderOnCell extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            final int x = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            final int y = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            final int x = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            final int y = this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             short z = 0;
             if (this.m_target instanceof BasicCharacterInfo) {
                 final BasicCharacterInfo info = (BasicCharacterInfo)this.m_target;

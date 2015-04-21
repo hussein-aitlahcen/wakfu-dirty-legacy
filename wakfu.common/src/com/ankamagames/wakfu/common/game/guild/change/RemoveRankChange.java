@@ -38,7 +38,7 @@ class RemoveRankChange implements GuildChange
             controller.removeRank(this.m_rankId);
         }
         catch (GuildException e) {
-            RemoveRankChange.m_logger.error((Object)"Impossible d'ajouter le rang", (Throwable)e);
+            RemoveRankChange.m_logger.error("Impossible d'ajouter le rang", e);
         }
     }
     
@@ -53,6 +53,6 @@ class RemoveRankChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RemoveRankChange.class);
+        m_logger = Logger.getLogger(RemoveRankChange.class);
     }
 }

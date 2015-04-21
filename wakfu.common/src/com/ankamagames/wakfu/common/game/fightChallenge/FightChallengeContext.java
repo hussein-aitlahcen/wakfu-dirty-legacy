@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.fightChallenge;
 
 import com.ankamagames.framework.kernel.core.common.collections.lightweight.intKey.*;
 import org.jetbrains.annotations.*;
-import java.util.*;
 
 public class FightChallengeContext
 {

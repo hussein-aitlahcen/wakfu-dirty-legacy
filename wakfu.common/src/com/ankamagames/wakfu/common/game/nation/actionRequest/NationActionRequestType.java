@@ -28,7 +28,7 @@ public enum NationActionRequestType
     public static NationActionRequest createRequestFromOrdinal(final byte ordinal) {
         final NationActionRequestType[] actionRequestTypes = values();
         if (ordinal < 0 || ordinal > actionRequestTypes.length) {
-            NationActionRequestType.m_logger.error((Object)("Impossible de cr\u00e9er une requ\u00eate \u00e0 partir de son ordinal : rodinal en dehors des limites : " + values().length + " max, " + ordinal + " demand\u00e9"));
+            NationActionRequestType.m_logger.error("Impossible de cr\u00e9er une requ\u00eate \u00e0 partir de son ordinal : rodinal en dehors des limites : " + values().length + " max, " + ordinal + " demand\u00e9");
             return null;
         }
         final NationActionRequestType type = values()[ordinal];
@@ -39,6 +39,6 @@ public enum NationActionRequestType
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationActionRequestType.class);
+        m_logger = Logger.getLogger(NationActionRequestType.class);
     }
 }

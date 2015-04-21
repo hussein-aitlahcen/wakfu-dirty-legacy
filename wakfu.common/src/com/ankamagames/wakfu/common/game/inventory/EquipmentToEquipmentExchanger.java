@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.inventory;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 public class EquipmentToEquipmentExchanger extends AbstractInventoryContentExchanger<ItemEquipment, ItemEquipment>
 {

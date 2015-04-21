@@ -1,25 +1,23 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
+
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.core.*;
-import com.ankamagames.wakfu.client.core.game.treasure.*;
+import com.ankamagames.wakfu.client.core.game.treasure.Treasure;
 
 public class TreasureLoader implements ContentInitializer
 {
     private static final Logger m_logger;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         BinaryDocumentManager.getInstance().foreach(new TreasureBinaryData(), new LoadProcedure<TreasureBinaryData>() {
             @Override
             public void load(final TreasureBinaryData data) {
             }
         });
-        clientInstance.fireContentInitializerDone(this);
     }
     
     @Override
@@ -47,6 +45,6 @@ public class TreasureLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TreasureLoader.class);
+        m_logger = Logger.getLogger(TreasureLoader.class);
     }
 }

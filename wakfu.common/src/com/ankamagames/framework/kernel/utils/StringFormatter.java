@@ -90,7 +90,7 @@ public class StringFormatter
                             continue;
                         }
                         default: {
-                            StringFormatter.m_logger.error((Object)("Impossible de formatter l'expression : " + string));
+                            StringFormatter.m_logger.error("Impossible de formatter l'expression : " + string);
                             continue;
                         }
                     }
@@ -130,7 +130,7 @@ public class StringFormatter
             final String group3 = matcher2.group(1);
             final ContextInfo infoByName = ContextInfo.getInfoByName(group3);
             if (infoByName == null) {
-                StringFormatter.m_logger.error((Object)("Tag inconnu : " + group3));
+                StringFormatter.m_logger.error("Tag inconnu : " + group3);
             }
             else {
                 matcher2.appendReplacement(formattedString2, infoByName.getValue());
@@ -170,7 +170,7 @@ public class StringFormatter
                     matcher2.appendReplacement(formattedString2, StringFormatter.m_textImageProvider.getIconUrl(iconId, align));
                 }
                 catch (Exception e) {
-                    StringFormatter.m_logger.warn((Object)e.getMessage());
+                    StringFormatter.m_logger.warn(e.getMessage());
                 }
             }
             matcher2.appendTail(formattedString2);
@@ -180,7 +180,7 @@ public class StringFormatter
     
     protected static boolean isSex(final int conditionConst) {
         if (conditionConst > 127) {
-            StringFormatter.m_logger.error((Object)("Constante trop grande pour le test du sex de l'interlocuteur : " + conditionConst));
+            StringFormatter.m_logger.error("Constante trop grande pour le test du sex de l'interlocuteur : " + conditionConst);
             return false;
         }
         return (byte)conditionConst == StringFormatter.m_gender;
@@ -281,7 +281,7 @@ public class StringFormatter
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StringFormatter.class);
+        m_logger = Logger.getLogger(StringFormatter.class);
         CONDITION_GLOBAL_PATTERN = Pattern.compile("\\{((\\[[^\\[\\]\\{\\}?:]*\\])+)\\s*\\?([^\\{\\}]*):([^\\{\\}]*)\\}");
         CONDITION_LOCAL_PATTERN = Pattern.compile("\\[([^\\[\\]]*)([~\\*\\+\\-><!=])([^\\[\\]]*)\\]");
         REPLACE_BY_ARGS_PATTERN = Pattern.compile("\\[((,)*[\\£#])([0-9]+)(?:.([0-9]+))?\\]");

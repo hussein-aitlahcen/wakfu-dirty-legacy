@@ -1,12 +1,19 @@
 package com.ankamagames.framework.script;
 
 import com.ankamagames.framework.kernel.core.resource.*;
+
 import org.apache.log4j.*;
+
 import com.ankamagames.framework.kernel.core.common.message.scheduler.process.*;
+
 import org.jetbrains.annotations.*;
+
 import java.util.*;
+
 import gnu.trove.*;
+
 import org.keplerproject.luajava.*;
+
 import java.io.*;
 
 public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaScriptEventListener
@@ -89,7 +96,7 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
         if (!this.isUseCache()) {
             JavaFunctionLoader.INSTANCE.findUsage(fileName, fileAbsolutePath);
         }
-        s.registerLibraries((JavaFunctionsLibrary[])JavaFunctionLoader.INSTANCE.getLibs(fileName));
+        s.registerLibraries(JavaFunctionLoader.INSTANCE.getLibs(fileName));
         s.registerLibraries(libraries);
         try {
             s.loadBinary(fileName, this.getData(fileName));
@@ -97,7 +104,7 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
             s.setSilentError(silentError);
         }
         catch (Exception e) {
-            LuaManager.m_logger.error((Object)("Impossible de charger le fichier " + fileName), (Throwable)e);
+            FileHashCache.m_logger.error("Impossible de charger le fichier " + fileName, e);
             return null;
         }
         if (s.getState() != LuaScript.State.LOADED) {
@@ -117,14 +124,14 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
             s.start(variables);
         }
         else {
-            LuaManager.m_logger.error((Object)("Le Script de commande [" + command + "] n'existe pas"));
+            FileHashCache.m_logger.error("Le Script de commande [" + command + "] n'existe pas");
         }
         return s;
     }
     
     private LuaScript loadCommand(final String command, final JavaFunctionsLibrary[] libraries, final boolean silentError) {
         final LuaScript s = this.createScript(libraries);
-        s.registerLibraries((JavaFunctionsLibrary[])JavaFunctionLoader.INSTANCE.findUsage(command));
+        s.registerLibraries(JavaFunctionLoader.INSTANCE.findUsage(command));
         s.loadCommand(command);
         s.setSilentError(silentError);
         if (s.getState() != LuaScript.State.LOADED) {
@@ -199,7 +206,7 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
             s.start(variables);
         }
         else {
-            LuaManager.m_logger.error((Object)("Le Script de [" + fileName + "] n'existe pas"));
+            FileHashCache.m_logger.error("Le Script de [" + fileName + "] n'existe pas");
         }
         return s;
     }
@@ -238,7 +245,7 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
         final LuaScript script = new LuaScript(id, luaState, libraries);
         script.registerLibraries(libraries);
         script.addLuaScriptEventListener(this);
-        luaState.pushJavaObject((Object)script);
+        luaState.pushJavaObject(script);
         luaState.setGlobal("script");
         return script;
     }
@@ -262,9 +269,9 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
             this.m_listeners.get(i).onLuaScriptError(script, errorType, message);
         }
         if (!script.isSilentError()) {
-            LuaManager.SCRIPT_LOGGER.error((Object)("[LUA] " + errorType + " Fichier " + script.getSource() + ' ' + message));
+            LuaManager.SCRIPT_LOGGER.error("[LUA] " + errorType + " Fichier " + script.getSource() + ' ' + message);
         }
-        LuaManager.m_logger.error((Object)("Erreur dans un script (" + script.getSource() + " ) : erreur " + errorType + ' ' + message), (Throwable)new Exception("callStack"));
+        FileHashCache.m_logger.error("Erreur dans un script (" + script.getSource() + " ) : erreur " + errorType + ' ' + message, new Exception("callStack"));
     }
     
     @Override
@@ -317,7 +324,7 @@ public class LuaManager extends FileHashCache<byte[]> implements Runnable, LuaSc
         @Override
         public long estimatedSize() {
             try {
-                return ((byte[])(Object)this.m_data).length;
+                return ((byte[])this.m_data).length;
             }
             catch (NullPointerException ignored) {
                 return 0L;

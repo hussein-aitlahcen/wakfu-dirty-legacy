@@ -13,14 +13,16 @@ class NioZipEncoding implements ZipEncoding
         this.charset = charset;
     }
     
-    public boolean canEncode(final String name) {
+    @Override
+	public boolean canEncode(final String name) {
         final CharsetEncoder enc = this.charset.newEncoder();
         enc.onMalformedInput(CodingErrorAction.REPORT);
         enc.onUnmappableCharacter(CodingErrorAction.REPORT);
         return enc.canEncode(name);
     }
     
-    public ByteBuffer encode(final String name) {
+    @Override
+	public ByteBuffer encode(final String name) {
         final CharsetEncoder enc = this.charset.newEncoder();
         enc.onMalformedInput(CodingErrorAction.REPORT);
         enc.onUnmappableCharacter(CodingErrorAction.REPORT);
@@ -52,7 +54,8 @@ class NioZipEncoding implements ZipEncoding
         return out;
     }
     
-    public String decode(final byte[] data) throws IOException {
+    @Override
+	public String decode(final byte[] data) throws IOException {
         return this.charset.newDecoder().onMalformedInput(CodingErrorAction.REPORT).onUnmappableCharacter(CodingErrorAction.REPORT).decode(ByteBuffer.wrap(data)).toString();
     }
 }

@@ -14,14 +14,14 @@ public class HMIIncrementAltitudeAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 1) {
-                HMIIncrementAltitudeAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 1 : deltaAltitude) : " + parameters));
+                HMIIncrementAltitudeAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 1 : deltaAltitude) : " + parameters);
                 return false;
             }
             this.m_deltaAltitude = Float.parseFloat(array[0]);
             return true;
         }
         catch (Exception e) {
-            HMIIncrementAltitudeAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas valide"));
+            HMIIncrementAltitudeAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas valide");
             return false;
         }
     }
@@ -36,6 +36,6 @@ public class HMIIncrementAltitudeAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIIncrementAltitudeAction.class);
+        m_logger = Logger.getLogger(HMIIncrementAltitudeAction.class);
     }
 }

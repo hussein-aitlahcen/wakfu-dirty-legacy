@@ -26,15 +26,15 @@ public class ItemExchangerManager
     
     public boolean addExchanger(final ItemExchanger exchanger) {
         if (this.m_exchangers.containsKey(exchanger.getId())) {
-            ItemExchangerManager.m_logger.info((Object)("Impossible d'ajouter l'\u00e9change " + exchanger.getClass().getName() + " : un \u00e9change avec le m\u00eame ID (" + exchanger.getId() + ") existe d\u00e9j\u00e0."));
+            ItemExchangerManager.m_logger.info("Impossible d'ajouter l'\u00e9change " + exchanger.getClass().getName() + " : un \u00e9change avec le m\u00eame ID (" + exchanger.getId() + ") existe d\u00e9j\u00e0.");
             return false;
         }
         if (this.m_users.contains(exchanger.getRequesterId())) {
-            ItemExchangerManager.m_logger.info((Object)("Impossible d'ajouter l'\u00e9change " + exchanger.getId() + " : un des participants (" + exchanger.getRequesterId() + ") a d\u00e9j\u00e0 un \u00e9change en cours."));
+            ItemExchangerManager.m_logger.info("Impossible d'ajouter l'\u00e9change " + exchanger.getId() + " : un des participants (" + exchanger.getRequesterId() + ") a d\u00e9j\u00e0 un \u00e9change en cours.");
             return false;
         }
         if (this.m_users.contains(exchanger.getTargetId())) {
-            ItemExchangerManager.m_logger.info((Object)("Impossible d'ajouter l'\u00e9change " + exchanger.getId() + " : un des participants (" + exchanger.getTargetId() + ") a d\u00e9j\u00e0 un \u00e9change en cours."));
+            ItemExchangerManager.m_logger.info("Impossible d'ajouter l'\u00e9change " + exchanger.getId() + " : un des participants (" + exchanger.getTargetId() + ") a d\u00e9j\u00e0 un \u00e9change en cours.");
             return false;
         }
         this.m_exchangers.put(exchanger.getId(), exchanger);
@@ -50,7 +50,7 @@ public class ItemExchangerManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemExchangerManager.class);
+        m_logger = Logger.getLogger(ItemExchangerManager.class);
         m_uniqueInstance = new ItemExchangerManager();
     }
 }

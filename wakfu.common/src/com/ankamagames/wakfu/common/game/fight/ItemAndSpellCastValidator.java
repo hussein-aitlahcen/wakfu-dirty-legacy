@@ -5,8 +5,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
@@ -27,12 +25,12 @@ final class ItemAndSpellCastValidator
     
     public CastValidity getItemAndSpellCastValidity(final BasicCharacterInfo fighter, final Item item, final AbstractSpellLevel spelllevel, final Point3 targetCell) {
         if (item == null || !item.isUsable()) {
-            ItemAndSpellCastValidator.m_logger.error((Object)this.m_linkedFight.withFightId("utilisation d'un objet null, inutilisable ou cass\u00e9"));
+            ItemAndSpellCastValidator.m_logger.error(this.m_linkedFight.withFightId("utilisation d'un objet null, inutilisable ou cass\u00e9"));
             return CastValidity.INVALID_CONTAINER;
         }
         final AbstractReferenceItem refItem = item.getReferenceItem();
         if (spelllevel == null) {
-            ItemAndSpellCastValidator.m_logger.error((Object)this.m_linkedFight.withFightId("cast d'un spell null"));
+            ItemAndSpellCastValidator.m_logger.error(this.m_linkedFight.withFightId("cast d'un spell null"));
             return CastValidity.INVALID_CONTAINER;
         }
         final AbstractSpell spell = spelllevel.getSpell();
@@ -40,13 +38,13 @@ final class ItemAndSpellCastValidator
             return CastValidity.PASSIVE;
         }
         final SpellCost spellCost = spell.getSpellCost(spelllevel, fighter, targetCell, fighter.getEffectContext());
-        if (refItem.getActionPoints() + spellCost.getCharacCost(FighterCharacteristicType.AP) > fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).value()) {
+        if (refItem.getActionPoints() + spellCost.getCharacCost(FighterCharacteristicType.AP) > fighter.getCharacteristic(FighterCharacteristicType.AP).value()) {
             return CastValidity.NOT_ENOUGH_AP;
         }
-        if (refItem.getWakfuPoints() + spellCost.getCharacCost(FighterCharacteristicType.WP) > fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.WP).value()) {
+        if (refItem.getWakfuPoints() + spellCost.getCharacCost(FighterCharacteristicType.WP) > fighter.getCharacteristic(FighterCharacteristicType.WP).value()) {
             return CastValidity.NOT_ENOUGH_FP;
         }
-        if (refItem.getMovementPoints() + spellCost.getCharacCost(FighterCharacteristicType.MP) > fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).value()) {
+        if (refItem.getMovementPoints() + spellCost.getCharacCost(FighterCharacteristicType.MP) > fighter.getCharacteristic(FighterCharacteristicType.MP).value()) {
             return CastValidity.NOT_ENOUGH_MP;
         }
         if (targetCell == null) {
@@ -75,6 +73,6 @@ final class ItemAndSpellCastValidator
     }
     
     static {
-        ItemAndSpellCastValidator.m_logger = Logger.getLogger((Class)ItemAndSpellCastValidator.class);
+        ItemAndSpellCastValidator.m_logger = Logger.getLogger(ItemAndSpellCastValidator.class);
     }
 }

@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.havenWorld.procedure;
 import com.ankamagames.wakfu.common.game.world.havenWorld.validator.*;
 import com.ankamagames.wakfu.common.game.havenWorld.definition.*;
 import com.ankamagames.wakfu.common.game.havenWorld.definition.entry.*;
-import com.ankamagames.wakfu.common.game.havenWorld.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import gnu.trove.*;
 

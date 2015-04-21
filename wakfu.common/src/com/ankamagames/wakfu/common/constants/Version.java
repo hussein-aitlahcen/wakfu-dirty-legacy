@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.constants;
 
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import org.apache.log4j.*;
 import java.nio.*;
 import com.ankamagames.framework.kernel.utils.*;
@@ -25,7 +24,7 @@ public class Version extends com.ankamagames.baseImpl.common.clientAndServer.uti
     private static final String TEAMCITY_BUILD_VERSION = "0";
     
     public static void display() {
-        Version.m_logger.info((Object)Version.READABLE_DATED_VERSION);
+        Version.m_logger.info(Version.READABLE_DATED_VERSION);
     }
     
     public static String format(final byte[] datas) {
@@ -55,7 +54,7 @@ public class Version extends com.ankamagames.baseImpl.common.clientAndServer.uti
             buildVersion = Integer.parseInt(buildString);
         }
         catch (NumberFormatException e) {
-            Version.m_logger.error((Object)("Num\u00e9ro de build au format incorrect: " + buildString));
+            Version.m_logger.error("Num\u00e9ro de build au format incorrect: " + buildString);
         }
         if (buildVersion >= 0) {
             sb.append(" build ").append(buildString);
@@ -70,11 +69,11 @@ public class Version extends com.ankamagames.baseImpl.common.clientAndServer.uti
     @Override
     protected boolean implCheckVersion(final byte[] datas) {
         if (datas == null) {
-            Version.m_logger.error((Object)"[implCheckVersion] check null");
+            Version.m_logger.error("[implCheckVersion] check null");
             return false;
         }
         if (datas.length < 5) {
-            Version.m_logger.error((Object)("[implCheckVersion] wrong data length: " + datas.length));
+            Version.m_logger.error("[implCheckVersion] wrong data length: " + datas.length);
             return false;
         }
         final ByteBuffer bb = ByteBuffer.wrap(datas);
@@ -87,7 +86,7 @@ public class Version extends com.ankamagames.baseImpl.common.clientAndServer.uti
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Version.class);
+        m_logger = Logger.getLogger(Version.class);
         m_version = new Version();
         int version = -1;
         if ("0".length() > 0) {
@@ -95,7 +94,7 @@ public class Version extends com.ankamagames.baseImpl.common.clientAndServer.uti
                 version = Integer.parseInt("0");
             }
             catch (NumberFormatException e) {
-                Version.m_logger.error((Object)"TEAMCITY_BUILD_VERSION invalide : 0");
+                Version.m_logger.error("TEAMCITY_BUILD_VERSION invalide : 0");
             }
         }
         BUILD_VERSION = Integer.toString(version);
@@ -105,7 +104,7 @@ public class Version extends com.ankamagames.baseImpl.common.clientAndServer.uti
                 date = new SimpleDateFormat("yyyyMMdd", Locale.ENGLISH).parse("20141222");
             }
             catch (ParseException e2) {
-                Version.m_logger.error((Object)"TEAMCITY_BUILD_DATE invalide : 20141222");
+                Version.m_logger.error("TEAMCITY_BUILD_DATE invalide : 20141222");
             }
         }
         BUILD_DATE = date;

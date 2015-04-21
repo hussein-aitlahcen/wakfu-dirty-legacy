@@ -36,7 +36,7 @@ class AddMemberChange implements GuildChange
             controller.addMember(this.m_member);
         }
         catch (GuildException e) {
-            AddMemberChange.m_logger.error((Object)"Impossible d'ajouter le membre", (Throwable)e);
+            AddMemberChange.m_logger.error("Impossible d'ajouter le membre", e);
         }
     }
     
@@ -51,6 +51,6 @@ class AddMemberChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AddMemberChange.class);
+        m_logger = Logger.getLogger(AddMemberChange.class);
     }
 }

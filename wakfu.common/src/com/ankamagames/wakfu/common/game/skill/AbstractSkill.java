@@ -82,7 +82,7 @@ public abstract class AbstractSkill<ReferenceSkill extends AbstractReferenceSkil
                 this.m_pool = null;
             }
             catch (Exception e) {
-                AbstractSkill.m_logger.error((Object)("Exception dans le release de " + this.getClass().toString() + " normalement impossible"));
+                AbstractSkill.m_logger.error("Exception dans le release de " + this.getClass().toString() + " normalement impossible");
             }
         }
         else {
@@ -110,7 +110,7 @@ public abstract class AbstractSkill<ReferenceSkill extends AbstractReferenceSkil
     public boolean fromRaw(final RawSkill rawSkill) {
         final ReferenceSkill referenceSkill = this.getReferenceSkillManager().getReferenceSkill(rawSkill.referenceId);
         if (referenceSkill == null) {
-            AbstractSkill.m_logger.error((Object)("Impossible de d\u00e9s\u00e9rialiser un skill : skill reference d'id " + rawSkill.referenceId + " inconnu"));
+            AbstractSkill.m_logger.error("Impossible de d\u00e9s\u00e9rialiser un skill : skill reference d'id " + rawSkill.referenceId + " inconnu");
             return false;
         }
         this.initializeFromReferenceSkill(referenceSkill, rawSkill.level, rawSkill.xp);
@@ -222,7 +222,7 @@ public abstract class AbstractSkill<ReferenceSkill extends AbstractReferenceSkil
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractSkill.class);
+        m_logger = Logger.getLogger(AbstractSkill.class);
         RANKS_FLOOR_LEVELS = new short[] { 0, 10, 20, 40, 60, 80, 100, 125, 150, 175, 200, 225, 250, 275, 300 };
     }
 }

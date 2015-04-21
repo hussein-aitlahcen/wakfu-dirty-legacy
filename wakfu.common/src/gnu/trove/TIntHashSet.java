@@ -57,7 +57,8 @@ public class TIntHashSet extends TIntHash implements Externalizable
         return true;
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final int[] oldSet = this._set;
         final byte[] oldStates = this._states;
@@ -88,7 +89,8 @@ public class TIntHashSet extends TIntHash implements Externalizable
         return result;
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final int[] set = this._set;
         final byte[] states = this._states;
@@ -99,19 +101,22 @@ public class TIntHashSet extends TIntHash implements Externalizable
         }
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TIntHashSet)) {
             return false;
         }
         final TIntHashSet that = (TIntHashSet)other;
         return that.size() == this.size() && this.forEach(new TIntProcedure() {
-            public final boolean execute(final int value) {
+            @Override
+			public final boolean execute(final int value) {
                 return that.contains(value);
             }
         });
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEach(p);
         return p.getHashCode();
@@ -173,7 +178,8 @@ public class TIntHashSet extends TIntHash implements Externalizable
         return changed;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -182,7 +188,8 @@ public class TIntHashSet extends TIntHash implements Externalizable
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -205,7 +212,8 @@ public class TIntHashSet extends TIntHash implements Externalizable
             return this.h;
         }
         
-        public final boolean execute(final int key) {
+        @Override
+		public final boolean execute(final int key) {
             this.h += TIntHashSet.this._hashingStrategy.computeHashCode(key);
             return true;
         }

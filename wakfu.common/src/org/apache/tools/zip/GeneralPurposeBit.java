@@ -68,11 +68,13 @@ public final class GeneralPurposeBit
         return b;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return 3 * (7 * (13 * (17 * (this.encryptionFlag ? 1 : 0) + (this.strongEncryptionFlag ? 1 : 0)) + (this.languageEncodingFlag ? 1 : 0)) + (this.dataDescriptorFlag ? 1 : 0));
     }
     
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
         if (!(o instanceof GeneralPurposeBit)) {
             return false;
         }

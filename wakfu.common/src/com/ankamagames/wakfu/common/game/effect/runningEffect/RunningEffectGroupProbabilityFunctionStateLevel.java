@@ -3,10 +3,12 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import java.util.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -44,7 +46,7 @@ public final class RunningEffectGroupProbabilityFunctionStateLevel extends Runni
             re = new RunningEffectGroupProbabilityFunctionStateLevel();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupProbabilityFunctionStateLevel.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFuntionState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFuntionState : " + e.getMessage());
         }
         return re;
     }
@@ -55,10 +57,10 @@ public final class RunningEffectGroupProbabilityFunctionStateLevel extends Runni
             return;
         }
         super.effectiveComputeValue(triggerRE);
-        this.m_stateId = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_onCaster = (1 == ((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
-        this.m_probaBase = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel());
-        this.m_probaInc = ((WakfuEffect)this.m_genericEffect).getParam(9, this.getContainerLevel());
+        this.m_stateId = this.m_genericEffect.getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_onCaster = (1 == this.m_genericEffect.getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
+        this.m_probaBase = this.m_genericEffect.getParam(8, this.getContainerLevel());
+        this.m_probaInc = this.m_genericEffect.getParam(9, this.getContainerLevel());
     }
     
     @Override

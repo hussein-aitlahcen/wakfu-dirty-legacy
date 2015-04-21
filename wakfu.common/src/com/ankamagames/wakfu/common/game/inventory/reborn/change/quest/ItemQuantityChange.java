@@ -41,7 +41,7 @@ class ItemQuantityChange implements QuestInventoryChange
             controller.setItemQuantity(this.m_itemId, this.m_quantity);
         }
         catch (QuestInventoryException e) {
-            ItemQuantityChange.m_logger.error((Object)"Impossible d'ajouter l'item", (Throwable)e);
+            ItemQuantityChange.m_logger.error("Impossible d'ajouter l'item", e);
         }
     }
     
@@ -56,6 +56,6 @@ class ItemQuantityChange implements QuestInventoryChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemQuantityChange.class);
+        m_logger = Logger.getLogger(ItemQuantityChange.class);
     }
 }

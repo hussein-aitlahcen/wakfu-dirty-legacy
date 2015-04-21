@@ -38,7 +38,7 @@ public class FightFunctions
             res = hasLineOfSight(startX, startY, startZ, checker.getHeight(), targetX, targetY, targetZ, targetHeight, fightMap);
         }
         catch (Exception e) {
-            FightFunctions.m_logger.error((Object)"Exception levee", (Throwable)e);
+            FightFunctions.m_logger.error("Exception levee", e);
             res = false;
         }
         finally {
@@ -80,7 +80,7 @@ public class FightFunctions
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightFunctions.class);
+        m_logger = Logger.getLogger(FightFunctions.class);
         HEAD_POSITION = new Point3();
         HEAD_POSITION_2 = new Point3();
     }

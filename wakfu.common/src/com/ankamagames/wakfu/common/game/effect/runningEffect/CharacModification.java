@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
@@ -170,7 +172,7 @@ public abstract class CharacModification extends WakfuRunningEffect
                 break;
             }
             default: {
-                CharacModification.m_logger.warn((Object)("On veut appliquer une modification de charac sur autre chose qu'une fighterCharac " + this.m_charac));
+                RunningEffect.m_logger.warn("On veut appliquer une modification de charac sur autre chose qu'une fighterCharac " + this.m_charac);
                 break;
             }
         }
@@ -195,20 +197,20 @@ public abstract class CharacModification extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 4) {
-            this.m_value = DiceRoll.roll(((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+        if (this.m_genericEffect.getParamsCount() == 4) {
+            this.m_value = DiceRoll.roll(this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
         else {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
-                this.m_valuePerCentOfCurrentValue = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            if (this.m_genericEffect.getParamsCount() > 1) {
+                this.m_valuePerCentOfCurrentValue = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
             }
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 2) {
-                final int characId = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            if (this.m_genericEffect.getParamsCount() > 2) {
+                final int characId = this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
                 if (characId != -1 || this.m_charac == null) {
                     final FighterCharacteristicType fromId = FighterCharacteristicType.getCharacteristicTypeFromId((byte)characId);
                     if (fromId == null) {
-                        CharacModification.m_logger.error((Object)("Param\u00e9trage foireux d'un effet de modification de charac " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+                        RunningEffect.m_logger.error("Param\u00e9trage foireux d'un effet de modification de charac " + this.m_genericEffect.getEffectId());
                     }
                     else {
                         this.m_charac = fromId;
@@ -222,7 +224,7 @@ public abstract class CharacModification extends WakfuRunningEffect
                 trigger = ((WakfuEffectExecutionParameters)this.getParams()).getExternalTriggeringEffect();
             }
             if (trigger == null) {
-                CharacModification.m_logger.error((Object)"On ne peut pas copier la valeur de l'effet declencheur, celui-ci est inconnu");
+                RunningEffect.m_logger.error("On ne peut pas copier la valeur de l'effet declencheur, celui-ci est inconnu");
                 this.m_value = 0;
                 return;
             }

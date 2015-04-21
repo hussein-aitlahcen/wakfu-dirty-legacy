@@ -133,7 +133,7 @@ public class IEParametersManager
             this.m_params.put(type, params = new TIntObjectHashMap<IEParameter>());
         }
         if (params.put(param.getId(), param) != null) {
-            IEParametersManager.m_logger.error((Object)new IllegalArgumentException("on essaye d'enregistrer des param\u00e8tres d' IE " + type.toString() + " avec le meme id " + param.getId()));
+            IEParametersManager.m_logger.error(new IllegalArgumentException("on essaye d'enregistrer des param\u00e8tres d' IE " + type.toString() + " avec le meme id " + param.getId()));
         }
     }
     
@@ -143,7 +143,7 @@ public class IEParametersManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)IEParametersManager.class);
+        m_logger = Logger.getLogger(IEParametersManager.class);
         INSTANCE = new IEParametersManager();
     }
 }

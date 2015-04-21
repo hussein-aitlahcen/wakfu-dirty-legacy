@@ -1,9 +1,7 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.client.core.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.client.core.effect.manager.*;
 import com.ankamagames.wakfu.common.game.fight.time.buff.*;
@@ -20,7 +18,7 @@ public final class TimelineBuffListLoader implements ContentInitializer
     }
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) {
+    public void init() {
         try {
             BinaryDocumentManager.getInstance().foreach(new TimelineBuffListBinaryData(), new LoadProcedure<TimelineBuffListBinaryData>() {
                 @Override
@@ -30,7 +28,7 @@ public final class TimelineBuffListLoader implements ContentInitializer
                         final int effectId = effectIds[0];
                         final WakfuEffect effect = EffectManager.getInstance().loadAndAddEffect(effectId);
                         if (effect == null) {
-                            TimelineBuffListLoader.m_logger.error((Object)("Probl\u00e8me de chargmeent de Timelinebuff " + data.getId()));
+                            TimelineBuffListLoader.m_logger.error("Probl\u00e8me de chargmeent de Timelinebuff " + data.getId());
                         }
                         else {
                             TimelineBuffListManager.INSTANCE.addEffect(effect, data.getId());
@@ -45,12 +43,11 @@ public final class TimelineBuffListLoader implements ContentInitializer
             });
         }
         catch (Exception e) {
-            TimelineBuffListLoader.m_logger.error((Object)"", (Throwable)e);
+            TimelineBuffListLoader.m_logger.error("", e);
         }
-        clientInstance.fireContentInitializerDone(this);
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TimelineBuffListLoader.class);
+        m_logger = Logger.getLogger(TimelineBuffListLoader.class);
     }
 }

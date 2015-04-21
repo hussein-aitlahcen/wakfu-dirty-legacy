@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -78,7 +82,7 @@ public class CharacLeech extends CharacDebuff
             re = new CharacLeech();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacLeech.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacLeech : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacLeech : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -148,8 +152,8 @@ public class CharacLeech extends CharacDebuff
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         super.effectiveComputeValue(triggerRE);
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() == 4) {
-            this.m_buffInsteadOfGain = (0 == ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.RANDOM));
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() == 4) {
+            this.m_buffInsteadOfGain = (0 == this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.RANDOM));
         }
         else {
             this.m_buffInsteadOfGain = false;

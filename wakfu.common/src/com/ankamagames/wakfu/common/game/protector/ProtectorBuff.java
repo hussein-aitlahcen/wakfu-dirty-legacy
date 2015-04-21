@@ -12,7 +12,7 @@ public class ProtectorBuff implements WakfuEffectContainer
     private final BuffOrigin m_origin;
     private final ArrayList<WakfuEffect> m_effects;
     
-    protected ProtectorBuff(final int id, final SimpleCriterion criterion, final byte origin, final ArrayList<WakfuStandardEffect> effects) {
+    public ProtectorBuff(final int id, final SimpleCriterion criterion, final byte origin, final ArrayList<WakfuStandardEffect> effects) {
         super();
         this.m_effects = new ArrayList<WakfuEffect>();
         this.m_id = id;

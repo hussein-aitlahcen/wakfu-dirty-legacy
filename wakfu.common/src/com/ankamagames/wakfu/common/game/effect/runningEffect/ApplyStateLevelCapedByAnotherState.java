@@ -2,10 +2,12 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,26 +37,26 @@ public final class ApplyStateLevelCapedByAnotherState extends ApplyState
             re = new ApplyStateLevelCapedByAnotherState();
             re.m_pool = null;
             re.m_isStatic = false;
-            ApplyStateLevelCapedByAnotherState.m_logger.error((Object)("Erreur lors d'un checkOut sur un ApplyStateLevelCapedByAnotherState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ApplyStateLevelCapedByAnotherState : " + e.getMessage());
         }
         return re;
     }
     
     @Override
     protected int getApplyPercent() {
-        return ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        return this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
     protected void extractStateLevel(final short level) {
-        this.m_stateLevel = (short)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final boolean checkOnTarget = ((WakfuEffect)this.m_genericEffect).getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        this.m_stateLevel = (short)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final boolean checkOnTarget = this.m_genericEffect.getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
         final EffectUser userWithCapingState = checkOnTarget ? this.m_target : this.m_caster;
         if (!(userWithCapingState instanceof CriterionUser)) {
             this.m_stateLevel = 0;
             return;
         }
-        final int capingStateId = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int capingStateId = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final int capingStateLevel = ((CriterionUser)userWithCapingState).getStateLevel(capingStateId);
         if (capingStateLevel <= 0) {
             this.m_stateLevel = 0;

@@ -19,6 +19,6 @@ public abstract class CollectorInventoryChecker
     public abstract boolean canSubCash(final Wallet p0, final int p1);
     
     static {
-        m_logger = Logger.getLogger((Class)CollectorInventoryChecker.class);
+        m_logger = Logger.getLogger(CollectorInventoryChecker.class);
     }
 }

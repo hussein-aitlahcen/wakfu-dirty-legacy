@@ -6,7 +6,9 @@ import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -43,7 +45,7 @@ public final class CharacGainFunctionStateLevel extends CharacGain
             re = new CharacGainFunctionStateLevel();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacGainFunctionStateLevel.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGainFunctionStateLevel : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGainFunctionStateLevel : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_applyOnCaster = false;
@@ -61,32 +63,32 @@ public final class CharacGainFunctionStateLevel extends CharacGain
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() != 5) {
+        if (this.m_genericEffect.getParamsCount() != 5) {
             return;
         }
-        final boolean m_applyOnCaster = 0 != ((WakfuEffect)this.m_genericEffect).getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final boolean m_applyOnCaster = 0 != this.m_genericEffect.getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final EffectUser gainTarget = m_applyOnCaster ? this.m_caster : this.m_target;
         if (gainTarget == null) {
-            CharacGainFunctionStateLevel.m_logger.error((Object)("Unable to compute value for a null target for the gain ! applyOnCaster:" + m_applyOnCaster + " effect_id=" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Unable to compute value for a null target for the gain ! applyOnCaster:" + m_applyOnCaster + " effect_id=" + this.m_genericEffect.getEffectId());
             return;
         }
-        final float valuePerStateLevelIncrement = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel());
-        final float stateLevelIncrement = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel());
+        final float valuePerStateLevelIncrement = this.m_genericEffect.getParam(0, this.getContainerLevel());
+        final float stateLevelIncrement = this.m_genericEffect.getParam(1, this.getContainerLevel());
         if (stateLevelIncrement == 0.0f) {
-            CharacGainFunctionStateLevel.m_logger.error((Object)("Increment can't be 0 in CharacGainFucntionStateLevel ! effect_id=" + ((WakfuEffect)this.m_genericEffect).getEffectId()), (Throwable)new Exception());
+            RunningEffect.m_logger.error("Increment can't be 0 in CharacGainFucntionStateLevel ! effect_id=" + this.m_genericEffect.getEffectId(), new Exception());
             return;
         }
         final float valuePerStateLevel = valuePerStateLevelIncrement / stateLevelIncrement;
-        final boolean testOnTarget = 0 == ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final boolean testOnTarget = 0 == this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final EffectUser targetToTest = testOnTarget ? this.m_target : this.m_caster;
         if (targetToTest == null) {
-            CharacGainFunctionStateLevel.m_logger.error((Object)("Unable to compute value for a null target for the gain ! effect_id=" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Unable to compute value for a null target for the gain ! effect_id=" + this.m_genericEffect.getEffectId());
             return;
         }
-        final int stateId = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int stateId = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final RunningEffectManager rem = targetToTest.getRunningEffectManager();
         if (rem == null || !(rem instanceof TimedRunningEffectManager)) {
-            CharacGainFunctionStateLevel.m_logger.error((Object)("Unable to compute value for a target with an invalide REM. Target : " + this.m_target + " REM : " + rem + " effect_id:" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Unable to compute value for a target with an invalide REM. Target : " + this.m_target + " REM : " + rem + " effect_id:" + this.m_genericEffect.getEffectId());
             return;
         }
         final TimedRunningEffectManager runningEffectManager = (TimedRunningEffectManager)rem;

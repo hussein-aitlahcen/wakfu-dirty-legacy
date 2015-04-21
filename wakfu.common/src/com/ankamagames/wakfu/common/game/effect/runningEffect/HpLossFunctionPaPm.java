@@ -1,10 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.external.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class HpLossFunctionPaPm extends EffectValueFunctionPaPm
@@ -26,7 +25,7 @@ public final class HpLossFunctionPaPm extends EffectValueFunctionPaPm
         catch (Exception e) {
             re = new HpLossFunctionPaPm();
             re.m_pool = null;
-            HpLossFunctionPaPm.m_logger.error((Object)("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage());
         }
         re.m_element = this.m_element;
         return re;
@@ -34,12 +33,12 @@ public final class HpLossFunctionPaPm extends EffectValueFunctionPaPm
     
     @Override
     protected void computeElement(final short containerLevel) {
-        this.m_element = Elements.getElementFromId((byte)((WakfuEffect)this.m_genericEffect).getParam(0, containerLevel, RoundingMethod.RANDOM));
+        this.m_element = Elements.getElementFromId((byte)this.m_genericEffect.getParam(0, containerLevel, RoundingMethod.RANDOM));
     }
     
     @Override
     protected void executeSubEffect() {
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_element, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.m_element, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
         hpLoss.setCaster(this.m_caster);
         (hpLoss).setGenericEffect(this.m_genericEffect);
         hpLoss.trigger((byte)1);

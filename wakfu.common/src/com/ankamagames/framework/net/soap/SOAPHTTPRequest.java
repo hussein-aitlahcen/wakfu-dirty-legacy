@@ -82,7 +82,7 @@ public class SOAPHTTPRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SOAPHTTPRequest.class);
+        m_logger = Logger.getLogger(SOAPHTTPRequest.class);
         COOKIE_PATTERN = Pattern.compile("([^=;]+)=([^=;]+)[;$]");
     }
     

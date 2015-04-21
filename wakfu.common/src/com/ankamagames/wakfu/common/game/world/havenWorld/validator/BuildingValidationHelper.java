@@ -6,7 +6,6 @@ import com.ankamagames.wakfu.common.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.havenWorld.definition.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.havenWorld.*;
-import gnu.trove.*;
 import com.ankamagames.wakfu.common.game.havenWorld.definition.entry.*;
 import com.ankamagames.wakfu.common.game.havenWorld.procedure.*;
 

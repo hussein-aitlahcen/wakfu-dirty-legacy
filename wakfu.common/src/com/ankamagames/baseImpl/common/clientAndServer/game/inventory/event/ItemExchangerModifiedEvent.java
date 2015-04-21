@@ -20,7 +20,7 @@ public class ItemExchangerModifiedEvent extends ItemExchangerEvent implements Po
             event.m_pool = ItemExchangerModifiedEvent.m_staticPool;
         }
         catch (Exception e) {
-            ItemExchangerModifiedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage()));
+            ItemExchangerModifiedEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage());
             event = new ItemExchangerModifiedEvent();
         }
         event.init(itemExchanger, modification, userId, content, contentQuantity);
@@ -48,7 +48,7 @@ public class ItemExchangerModifiedEvent extends ItemExchangerEvent implements Po
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemExchangerModifiedEvent.class);
+        m_logger = Logger.getLogger(ItemExchangerModifiedEvent.class);
         m_staticPool = new MonitoredPool(new ObjectFactory<ItemExchangerModifiedEvent>() {
             @Override
             public ItemExchangerModifiedEvent makeObject() {

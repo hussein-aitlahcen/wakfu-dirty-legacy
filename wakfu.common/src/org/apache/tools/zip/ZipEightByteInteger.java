@@ -108,15 +108,18 @@ public final class ZipEightByteInteger
         return getValue(bytes, 0);
     }
     
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
         return o != null && o instanceof ZipEightByteInteger && this.value.equals(((ZipEightByteInteger)o).getValue());
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.value.hashCode();
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "ZipEightByteInteger value: " + this.value;
     }
     

@@ -21,22 +21,26 @@ public abstract class TPrimitiveHash extends THash
         this.setUp(HashFunctions.fastCeil(initialCapacity / loadFactor));
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final TPrimitiveHash h = (TPrimitiveHash)super.clone();
         h._states = this._states.clone();
         return h;
     }
     
-    protected int capacity() {
+    @Override
+	protected int capacity() {
         return this._states.length;
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._states[index] = 2;
         super.removeAt(index);
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._states = new byte[capacity];
         return capacity;

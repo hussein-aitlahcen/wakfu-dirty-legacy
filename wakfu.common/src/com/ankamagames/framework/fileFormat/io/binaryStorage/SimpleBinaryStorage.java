@@ -22,7 +22,7 @@ public final class SimpleBinaryStorage extends AbstractSimpleBinaryStorage
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SimpleBinaryStorage.class);
+        m_logger = Logger.getLogger(SimpleBinaryStorage.class);
         m_instance = new SimpleBinaryStorage();
     }
 }

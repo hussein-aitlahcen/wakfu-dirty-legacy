@@ -3,9 +3,7 @@ package com.ankamagames.wakfu.common.datas.Breed;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import gnu.trove.*;
-import java.util.*;
 
 public class MasteryCharacsCalculator
 {

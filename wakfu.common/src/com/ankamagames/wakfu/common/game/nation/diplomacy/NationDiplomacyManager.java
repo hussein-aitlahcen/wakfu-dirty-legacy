@@ -108,7 +108,7 @@ public class NationDiplomacyManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationDiplomacyManager.class);
+        m_logger = Logger.getLogger(NationDiplomacyManager.class);
     }
     
     private static class SharedAlignment

@@ -41,7 +41,7 @@ public class RSSDocumentReader
                     if (!ignoreErrors) {
                         throw new MalformedRSSException("tag title manquant dans channel");
                     }
-                    RSSDocumentReader.m_logger.warn((Object)"tag title manquant dans channel");
+                    RSSDocumentReader.m_logger.warn("tag title manquant dans channel");
                 }
                 else {
                     channelTitle = this.getTextValue(channelTitleNode);
@@ -52,7 +52,7 @@ public class RSSDocumentReader
                     if (!ignoreErrors) {
                         throw new MalformedRSSException("tag link manquant dans channel");
                     }
-                    RSSDocumentReader.m_logger.warn((Object)"tag link manquant dans channel");
+                    RSSDocumentReader.m_logger.warn("tag link manquant dans channel");
                 }
                 else {
                     channelLink = this.getTextValue(channelLinkNode).trim();
@@ -63,7 +63,7 @@ public class RSSDocumentReader
                     if (!ignoreErrors) {
                         throw new MalformedRSSException("tag description manquant dans channel");
                     }
-                    RSSDocumentReader.m_logger.warn((Object)"tag description manquant dans channel");
+                    RSSDocumentReader.m_logger.warn("tag description manquant dans channel");
                 }
                 else {
                     channelDescription = this.getTextValue(channelDescNode);
@@ -103,7 +103,7 @@ public class RSSDocumentReader
             if (!ignoreErrors) {
                 throw new MalformedRSSException("tag url manquant dans Image");
             }
-            RSSDocumentReader.m_logger.warn((Object)"tag url manquant dans Image");
+            RSSDocumentReader.m_logger.warn("tag url manquant dans Image");
             return null;
         }
         else {
@@ -113,7 +113,7 @@ public class RSSDocumentReader
                 if (!ignoreErrors) {
                     throw new MalformedRSSException("tag title manquant dans Image");
                 }
-                RSSDocumentReader.m_logger.warn((Object)"tag title manquant dans Image");
+                RSSDocumentReader.m_logger.warn("tag title manquant dans Image");
                 return null;
             }
             else {
@@ -126,7 +126,7 @@ public class RSSDocumentReader
                 if (!ignoreErrors) {
                     throw new MalformedRSSException("tag link manquant dans Image");
                 }
-                RSSDocumentReader.m_logger.warn((Object)"tag link manquant dans Image");
+                RSSDocumentReader.m_logger.warn("tag link manquant dans Image");
                 return null;
             }
         }
@@ -159,7 +159,7 @@ public class RSSDocumentReader
         if (!ignoreErrors) {
             throw new MalformedRSSException("tag title et description manquants dans item");
         }
-        RSSDocumentReader.m_logger.warn((Object)"tag title et description manquants dans item");
+        RSSDocumentReader.m_logger.warn("tag title et description manquants dans item");
         return null;
     }
     
@@ -200,6 +200,6 @@ public class RSSDocumentReader
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RSSDocumentReader.class);
+        m_logger = Logger.getLogger(RSSDocumentReader.class);
     }
 }

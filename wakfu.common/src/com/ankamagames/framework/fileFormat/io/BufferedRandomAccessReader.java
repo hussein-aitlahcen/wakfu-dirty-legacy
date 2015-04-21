@@ -132,6 +132,6 @@ public class BufferedRandomAccessReader implements Closeable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BufferedRandomAccessReader.class);
+        m_logger = Logger.getLogger(BufferedRandomAccessReader.class);
     }
 }

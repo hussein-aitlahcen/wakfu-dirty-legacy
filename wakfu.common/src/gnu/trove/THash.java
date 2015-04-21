@@ -31,7 +31,8 @@ public abstract class THash implements Cloneable, Externalizable
         this.setUp(HashFunctions.fastCeil(initialCapacity / loadFactor));
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         try {
             return super.clone();
         }
@@ -141,13 +142,15 @@ public abstract class THash implements Cloneable, Externalizable
         return this.capacity() << 1;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeFloat(this._loadFactor);
         out.writeFloat(this._autoCompactionFactor);
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         final float old_factor = this._loadFactor;
         this._loadFactor = in.readFloat();

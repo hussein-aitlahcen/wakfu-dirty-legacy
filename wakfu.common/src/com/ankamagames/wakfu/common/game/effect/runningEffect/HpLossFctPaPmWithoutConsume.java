@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -38,7 +39,7 @@ public final class HpLossFctPaPmWithoutConsume extends HPLoss
             re = new HpLossFctPaPmWithoutConsume();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossFctPaPmWithoutConsume.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossFctPaPmWithoutConsume : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossFctPaPmWithoutConsume : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -57,8 +58,8 @@ public final class HpLossFctPaPmWithoutConsume extends HPLoss
         if (remainingAP == 0 && remainingMP == 0) {
             return;
         }
-        final float dmgPerAP = ((WakfuEffect)this.m_genericEffect).getParam(0, containerLevel);
-        final float dmgPerMP = ((WakfuEffect)this.m_genericEffect).getParam(1, containerLevel);
+        final float dmgPerAP = this.m_genericEffect.getParam(0, containerLevel);
+        final float dmgPerMP = this.m_genericEffect.getParam(1, containerLevel);
         if (dmgPerAP == 0.0f) {
             remainingAP = 0;
         }

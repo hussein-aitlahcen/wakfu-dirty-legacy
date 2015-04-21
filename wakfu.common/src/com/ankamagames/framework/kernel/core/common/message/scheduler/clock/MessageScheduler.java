@@ -132,7 +132,7 @@ public class MessageScheduler extends Thread
             Worker.getInstance().pushMessage(message);
         }
         catch (Exception e) {
-            MessageScheduler.m_logger.error((Object)("Unable to push ClockMessage, exception raised : " + e.getMessage()));
+            MessageScheduler.m_logger.error("Unable to push ClockMessage, exception raised : " + e.getMessage());
         }
     }
     
@@ -187,7 +187,7 @@ public class MessageScheduler extends Thread
     @Override
     public void run() {
         final ArrayList<SchedulerListener> m_listenersToReschedule = new ArrayList<SchedulerListener>();
-        MessageScheduler.m_logger.info((Object)"MessageScheduler running");
+        MessageScheduler.m_logger.info("MessageScheduler running");
         while (this.m_running) {
             try {
                 try {
@@ -238,14 +238,14 @@ public class MessageScheduler extends Thread
                     }
                 }
                 catch (Exception e) {
-                    MessageScheduler.m_logger.error((Object)"Exception lev\u00e9e : ", (Throwable)e);
+                    MessageScheduler.m_logger.error("Exception lev\u00e9e : ", e);
                 }
             }
             catch (Exception ex) {
-                MessageScheduler.m_logger.error((Object)"Exception", (Throwable)ex);
+                MessageScheduler.m_logger.error("Exception", ex);
             }
         }
-        MessageScheduler.m_logger.info((Object)"Message Scheduler stopped");
+        MessageScheduler.m_logger.info("Message Scheduler stopped");
     }
     
     public final String getClocksSummary() {
@@ -265,7 +265,7 @@ public class MessageScheduler extends Thread
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MessageScheduler.class);
+        m_logger = Logger.getLogger(MessageScheduler.class);
         MessageScheduler.m_instance = new MessageScheduler();
     }
     

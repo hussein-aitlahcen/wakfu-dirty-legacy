@@ -2,8 +2,8 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class VariableElementResistanceGain extends AbstractVariableElementCharacModification
@@ -20,7 +20,7 @@ public class VariableElementResistanceGain extends AbstractVariableElementCharac
         catch (Exception e) {
             re = new VariableElementResistanceGain();
             re.m_pool = null;
-            VariableElementResistanceGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un VariableElementResistanceGain : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un VariableElementResistanceGain : " + e.getMessage());
         }
         return re;
     }

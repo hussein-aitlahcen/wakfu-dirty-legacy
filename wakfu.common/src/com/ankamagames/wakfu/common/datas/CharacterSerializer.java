@@ -348,12 +348,12 @@ public abstract class CharacterSerializer
                     characterPart.getBinarPart().grabDataFromSource();
                 }
                 catch (Exception e) {
-                    CharacterSerializer.m_logger.error((Object)("Exception lors du callback de s\u00e9rialisation de la part " + part + " : "), (Throwable)e);
+                    CharacterSerializer.m_logger.error("Exception lors du callback de s\u00e9rialisation de la part " + part + " : ", e);
                 }
                 totalSize += characterPart.serializedSize();
             }
             else {
-                CharacterSerializer.m_logger.error((Object)("Erreur lors de la r\u00e9cup\u00e9ration de la CharacterSerializedPart correspondant \u00e0 " + part + " de la forme " + serializationType));
+                CharacterSerializer.m_logger.error("Erreur lors de la r\u00e9cup\u00e9ration de la CharacterSerializedPart correspondant \u00e0 " + part + " de la forme " + serializationType);
             }
         }
         final ByteBuffer buffer = ByteBuffer.allocate(totalSize);
@@ -361,7 +361,7 @@ public abstract class CharacterSerializer
         for (final Part part2 : serializationType.getParts()) {
             final CharacterSerializedPart characterPart2 = this.getPart(part2);
             if (characterPart2 != null && !characterPart2.serialize(buffer)) {
-                CharacterSerializer.m_logger.error((Object)("Erreur lors de la s\u00e9rialisation de la part " + part2 + " de la forme " + serializationType));
+                CharacterSerializer.m_logger.error("Erreur lors de la s\u00e9rialisation de la part " + part2 + " de la forme " + serializationType);
             }
         }
         return buffer.array();
@@ -371,7 +371,7 @@ public abstract class CharacterSerializer
         final ByteBuffer buffer = ByteBuffer.wrap(data);
         final int serializationNumber = buffer.get() & 0xFF;
         if (serializationNumber < 0 || serializationNumber >= SerializationType.values().length) {
-            CharacterSerializer.m_logger.error((Object)("Num\u00e9ro de part invalide : " + serializationNumber));
+            CharacterSerializer.m_logger.error("Num\u00e9ro de part invalide : " + serializationNumber);
             return;
         }
         final SerializationType serializationType = SerializationType.values()[serializationNumber];
@@ -383,11 +383,11 @@ public abstract class CharacterSerializer
                     characterPart.getBinarPart().notifyListener();
                 }
                 catch (Exception e) {
-                    CharacterSerializer.m_logger.error((Object)("Exception lors du callback de d\u00e9s\u00e9rialisation de la part " + part + ": "), (Throwable)e);
+                    CharacterSerializer.m_logger.error("Exception lors du callback de d\u00e9s\u00e9rialisation de la part " + part + ": ", e);
                 }
             }
             else {
-                CharacterSerializer.m_logger.error((Object)("Impossible de trouver la CharacterPart correspondant \u00e0 " + part));
+                CharacterSerializer.m_logger.error("Impossible de trouver la CharacterPart correspondant \u00e0 " + part);
             }
         }
     }
@@ -396,7 +396,7 @@ public abstract class CharacterSerializer
         final ByteBuffer buffer = ByteBuffer.wrap(data);
         final int serializationNumber = buffer.get() & 0xFF;
         if (serializationNumber < 0 || serializationNumber >= SerializationType.values().length) {
-            CharacterSerializer.m_logger.error((Object)("Num\u00e9ro de part invalide : " + serializationNumber));
+            CharacterSerializer.m_logger.error("Num\u00e9ro de part invalide : " + serializationNumber);
             return;
         }
         final SerializationType serializationType = SerializationType.values()[serializationNumber];
@@ -412,24 +412,24 @@ public abstract class CharacterSerializer
                                 return;
                             }
                             catch (Exception e) {
-                                CharacterSerializer.m_logger.error((Object)("Exception lors du callback de d\u00e9s\u00e9rialisation de la part " + part), (Throwable)e);
+                                CharacterSerializer.m_logger.error("Exception lors du callback de d\u00e9s\u00e9rialisation de la part " + part, e);
                                 break Label_0210;
                             }
                         }
-                        characterPart = (CharacterSerializedPart)characterPart.getClass().newInstance();
+                        characterPart = characterPart.getClass().newInstance();
                         characterPart.unserialize(buffer);
                     }
                     else {
-                        CharacterSerializer.m_logger.error((Object)("Impossible de trouver la CharacterPart correspondant \u00e0 " + part));
+                        CharacterSerializer.m_logger.error("Impossible de trouver la CharacterPart correspondant \u00e0 " + part);
                     }
                 }
             }
         }
         catch (InstantiationException e2) {
-            CharacterSerializer.m_logger.error((Object)e2);
+            CharacterSerializer.m_logger.error(e2);
         }
         catch (IllegalAccessException e3) {
-            CharacterSerializer.m_logger.error((Object)e3);
+            CharacterSerializer.m_logger.error(e3);
         }
     }
     
@@ -437,7 +437,7 @@ public abstract class CharacterSerializer
         final ByteBuffer buffer = ByteBuffer.wrap(data);
         final int serializationNumber = buffer.get() & 0xFF;
         if (serializationNumber < 0 || serializationNumber >= SerializationType.values().length) {
-            CharacterSerializer.m_logger.error((Object)("Num\u00e9ro de part invalide : " + serializationNumber));
+            CharacterSerializer.m_logger.error("Num\u00e9ro de part invalide : " + serializationNumber);
             return;
         }
         final SerializationType serializationType = SerializationType.values()[serializationNumber];
@@ -454,24 +454,24 @@ public abstract class CharacterSerializer
                             }
                         }
                         catch (Exception e) {
-                            CharacterSerializer.m_logger.error((Object)("Exception lors du callback de d\u00e9s\u00e9rialisation de la part " + part), (Throwable)e);
+                            CharacterSerializer.m_logger.error("Exception lors du callback de d\u00e9s\u00e9rialisation de la part " + part, e);
                         }
                     }
                     else {
-                        characterPart = (CharacterSerializedPart)characterPart.getClass().newInstance();
+                        characterPart = characterPart.getClass().newInstance();
                         characterPart.unserialize(buffer);
                     }
                 }
                 else {
-                    CharacterSerializer.m_logger.error((Object)("Impossible de trouver la CharacterPart correspondant \u00e0 " + part));
+                    CharacterSerializer.m_logger.error("Impossible de trouver la CharacterPart correspondant \u00e0 " + part);
                 }
             }
         }
         catch (InstantiationException e2) {
-            CharacterSerializer.m_logger.error((Object)e2);
+            CharacterSerializer.m_logger.error(e2);
         }
         catch (IllegalAccessException e3) {
-            CharacterSerializer.m_logger.error((Object)e3);
+            CharacterSerializer.m_logger.error(e3);
         }
     }
     
@@ -882,7 +882,7 @@ public abstract class CharacterSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CharacterSerializer.class);
+        m_logger = Logger.getLogger(CharacterSerializer.class);
     }
     
     public enum SerializationType

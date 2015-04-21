@@ -30,7 +30,7 @@ public abstract class InventoryEvent implements Poolable, LoggableEntity
             this.m_pool = null;
         }
         else {
-            InventoryEvent.m_logger.error((Object)("Double release de " + this.getClass().toString()));
+            InventoryEvent.m_logger.error("Double release de " + this.getClass().toString());
             this.onCheckIn();
         }
     }
@@ -54,7 +54,7 @@ public abstract class InventoryEvent implements Poolable, LoggableEntity
     }
     
     static {
-        m_logger = Logger.getLogger((Class)InventoryEvent.class);
+        m_logger = Logger.getLogger(InventoryEvent.class);
     }
     
     public enum Action

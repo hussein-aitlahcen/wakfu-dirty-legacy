@@ -1,13 +1,19 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.spell.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -50,7 +56,7 @@ public final class ElementalSpellGain extends SeveralSpellsGain
             re = new ElementalSpellGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            ElementalSpellGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un ElementalSpellGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ElementalSpellGain : " + e.getMessage());
         }
         re.m_elementId = this.m_elementId;
         return re;
@@ -60,8 +66,8 @@ public final class ElementalSpellGain extends SeveralSpellsGain
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_elementId = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_elementId = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

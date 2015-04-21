@@ -45,6 +45,6 @@ public abstract class AbstractSpellManager<Spell extends AbstractSpell>
     
     static {
         AbstractSpellManager.m_instance = null;
-        m_logger = Logger.getLogger((Class)AbstractSpellManager.class);
+        m_logger = Logger.getLogger(AbstractSpellManager.class);
     }
 }

@@ -16,6 +16,6 @@ public final class AptitudeComposer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AptitudeComposer.class);
+        m_logger = Logger.getLogger(AptitudeComposer.class);
     }
 }

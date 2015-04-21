@@ -3,12 +3,14 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -38,7 +40,7 @@ public final class ReversiCheckForReversable extends WakfuRunningEffect
             re = new ReversiCheckForReversable();
             re.m_pool = null;
             re.m_isStatic = false;
-            ReversiCheckForReversable.m_logger.error((Object)("Erreur lors d'un checkOut sur un ReversiCheckForReversable : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ReversiCheckForReversable : " + e.getMessage());
         }
         return re;
     }
@@ -51,11 +53,11 @@ public final class ReversiCheckForReversable extends WakfuRunningEffect
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         this.setNotified();
         if (!(this.m_target instanceof BasicCharacterInfo)) {
-            ReversiCheckForReversable.m_logger.error((Object)"La cible doit \u00eatre un fighter");
+            RunningEffect.m_logger.error("La cible doit \u00eatre un fighter");
             return;
         }
         if (!(this.getContext() instanceof WakfuFightEffectContext)) {
-            ReversiCheckForReversable.m_logger.error((Object)"Cet effet ne peut \u00eatre utilis\u00e9 que dans un combat");
+            RunningEffect.m_logger.error("Cet effet ne peut \u00eatre utilis\u00e9 que dans un combat");
             return;
         }
         final BasicCharacterInfo lastPiecePlaced = (BasicCharacterInfo)this.m_target;

@@ -5,7 +5,9 @@ import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -36,7 +38,7 @@ public final class HpLossAfterMovement extends WakfuRunningEffect
             re = new HpLossAfterMovement();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossAfterMovement.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossAfterMovement : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossAfterMovement : " + e.getMessage());
         }
         return re;
     }
@@ -46,21 +48,21 @@ public final class HpLossAfterMovement extends WakfuRunningEffect
         this.m_value = 0;
         final RunningEffect trigger = (triggerRE != null) ? triggerRE : ((WakfuEffectExecutionParameters)this.getParams()).getExternalTriggeringEffect();
         if (trigger == null) {
-            HpLossAfterMovement.m_logger.error((Object)"Cet effet ne peut etre utilis\u00e9 que dans le cadre d'un declenchement");
+            RunningEffect.m_logger.error("Cet effet ne peut etre utilis\u00e9 que dans le cadre d'un declenchement");
             return;
         }
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 3) {
-            HpLossAfterMovement.m_logger.error((Object)"Pas le bon nombre de param");
+        if (this.m_genericEffect.getParamsCount() > 3) {
+            RunningEffect.m_logger.error("Pas le bon nombre de param");
             return;
         }
-        final int dmgPerCell = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int elemId = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int dmgPerCell = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int elemId = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         int maxCellsCount = Integer.MAX_VALUE;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
-            maxCellsCount = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 3) {
+            maxCellsCount = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         this.m_element = Elements.getElementFromId((byte)elemId);
         Point3 startCell = null;
@@ -119,7 +121,7 @@ public final class HpLossAfterMovement extends WakfuRunningEffect
             return;
         }
         this.notifyExecution(triggerRE, trigger);
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_element, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.m_element, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
         hpLoss.setCaster(this.m_caster);
         hpLoss.disableValueComputation();
         (hpLoss).setGenericEffect(DefaultFightInstantEffectWithChatNotif.getInstance());

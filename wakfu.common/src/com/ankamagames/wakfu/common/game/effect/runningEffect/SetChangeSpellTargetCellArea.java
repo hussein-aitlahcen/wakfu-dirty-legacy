@@ -4,8 +4,11 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class SetChangeSpellTargetCellArea extends SetEffectArea
@@ -29,13 +32,13 @@ public final class SetChangeSpellTargetCellArea extends SetEffectArea
         if (area != null && this.m_targetCell != null && this.m_caster != null) {
             this.createArea(area);
             if (this.m_context == null || this.m_context.getEffectAreaManager() == null) {
-                SetChangeSpellTargetCellArea.m_logger.warn((Object)"Impossible d'ajouter une zone d'effet au combat le contexte est null ou l'effectAreaManager est null");
+                RunningEffect.m_logger.warn("Impossible d'ajouter une zone d'effet au combat le contexte est null ou l'effectAreaManager est null");
                 return;
             }
             this.notifyExecution(linkedRE, trigger);
         }
         else {
-            SetChangeSpellTargetCellArea.m_logger.error((Object)("Impossible d'ajouter une zone inconnue " + this.m_value));
+            RunningEffect.m_logger.error("Impossible d'ajouter une zone inconnue " + this.m_value);
             this.setNotified(true);
         }
         BasicEffectArea tunnelExit = null;

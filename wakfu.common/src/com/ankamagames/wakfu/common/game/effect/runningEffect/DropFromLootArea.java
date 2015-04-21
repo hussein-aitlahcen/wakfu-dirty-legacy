@@ -6,7 +6,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.item.loot.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -37,7 +39,7 @@ public final class DropFromLootArea extends WakfuRunningEffect
             re = new DropFromLootArea();
             re.m_pool = null;
             re.m_isStatic = false;
-            DropFromLootArea.m_logger.error((Object)("Erreur lors d'un checkOut sur un DropFromLootArea : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un DropFromLootArea : " + e.getMessage());
         }
         return re;
     }
@@ -47,7 +49,7 @@ public final class DropFromLootArea extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_improvedDrop = (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1 && ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_improvedDrop = (this.m_genericEffect.getParamsCount() >= 1 && this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
     }
     
     @Override

@@ -53,6 +53,6 @@ public class AsynchronousDownloader
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AsynchronousDownloader.class);
+        m_logger = Logger.getLogger(AsynchronousDownloader.class);
     }
 }

@@ -66,7 +66,7 @@ public enum Language
         if (l != null || enableNulls) {
             return l;
         }
-        Language.m_logger.warn((Object)("code inconnu " + languageCode));
+        Language.m_logger.warn("code inconnu " + languageCode);
         return Language.EN;
     }
     
@@ -103,7 +103,7 @@ public enum Language
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Language.class);
+        m_logger = Logger.getLogger(Language.class);
         LANGS_BY_CODE = new LightWeightMap<String, Language>();
         for (final Language l : values()) {
             Language.LANGS_BY_CODE.put(l.m_code.toLowerCase(), l);

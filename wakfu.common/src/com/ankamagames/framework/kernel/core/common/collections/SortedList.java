@@ -21,7 +21,7 @@ public class SortedList<E> extends ArrayList<E>
     
     public SortedList(final int initialCapacity, final Comparator<E> comparator) {
         super(initialCapacity);
-        this.m_abstractSearchMethod = new DefaultSearchMethod<E>((Comparator)comparator);
+        this.m_abstractSearchMethod = new DefaultSearchMethod<E>(comparator);
     }
     
     public SortedList(final AbstractSearchMethod<E> abstractSearchMethod) {
@@ -47,7 +47,7 @@ public class SortedList<E> extends ArrayList<E>
     @Deprecated
     @Override
     public void add(final int index, final E element) {
-        SortedList.m_logger.warn((Object)"Impossible d'inserer un \u00e9l\u00e9ment \u00e0 un index donn\u00e9.");
+        SortedList.m_logger.warn("Impossible d'inserer un \u00e9l\u00e9ment \u00e0 un index donn\u00e9.");
         this.add(element);
     }
     
@@ -67,7 +67,7 @@ public class SortedList<E> extends ArrayList<E>
     @Deprecated
     @Override
     public boolean addAll(final int index, final Collection<? extends E> collection) {
-        SortedList.m_logger.warn((Object)"Impossible d'inserer des \u00e9l\u00e9ments \u00e0 un index donn\u00e9.");
+        SortedList.m_logger.warn("Impossible d'inserer des \u00e9l\u00e9ments \u00e0 un index donn\u00e9.");
         return this.addAll(collection);
     }
     
@@ -95,7 +95,7 @@ public class SortedList<E> extends ArrayList<E>
     @Override
     public Object clone() {
         final SortedList<E> sortedList = new SortedList<E>(this.size(), this.m_abstractSearchMethod);
-        sortedList.addAllQuick((Collection<? extends E>)this);
+        sortedList.addAllQuick(this);
         return sortedList;
     }
     
@@ -156,7 +156,7 @@ public class SortedList<E> extends ArrayList<E>
         final int size = this.size();
         do {
             --index;
-        } while (0 <= index && this.compare(this.get(index), (E) object) == 0);
+        } while (0 <= index && this.compare(this.get(index), object) == 0);
         while (++index < size && this.compare(this.get(index), object) == 0 && !this.get(index).equals(object)) {}
         return (index < size && this.compare(this.get(index), object) == 0 && this.get(index).equals(object)) ? index : -1;
     }
@@ -193,7 +193,7 @@ public class SortedList<E> extends ArrayList<E>
                 for (int index = 0; index < count; ++index) {
                     arrayList.add(index, element);
                 }
-                super.addAll(-(this.indexOf(element) + 1), (Collection<? extends E>)arrayList);
+                super.addAll(-(this.indexOf(element) + 1), arrayList);
             }
         }
         return elementChanged;
@@ -253,7 +253,7 @@ public class SortedList<E> extends ArrayList<E>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SortedList.class);
+        m_logger = Logger.getLogger(SortedList.class);
         LONG_COMPARATOR = new Comparator<Long>() {
             @Override
             public final int compare(final Long long1, final Long long2) {
@@ -305,7 +305,7 @@ public class SortedList<E> extends ArrayList<E>
     private final class DefaultSearchMethod<E> extends AbstractSearchMethod<E>
     {
         private DefaultSearchMethod(final Comparator<E> comparator) {
-            super((Comparator)comparator);
+            super(comparator);
         }
         
         @Override

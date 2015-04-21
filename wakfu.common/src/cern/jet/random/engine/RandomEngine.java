@@ -5,11 +5,13 @@ import cern.colt.function.*;
 
 public abstract class RandomEngine extends PersistentObject implements DoubleFunction, IntFunction
 {
-    public double apply(final double n) {
+    @Override
+	public double apply(final double n) {
         return this.raw();
     }
     
-    public int apply(final int n) {
+    @Override
+	public int apply(final int n) {
         return this.nextInt();
     }
     

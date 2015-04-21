@@ -17,18 +17,21 @@ class FallbackZipEncoding implements ZipEncoding
         this.charset = charset;
     }
     
-    public boolean canEncode(final String name) {
+    @Override
+	public boolean canEncode(final String name) {
         return true;
     }
     
-    public ByteBuffer encode(final String name) throws IOException {
+    @Override
+	public ByteBuffer encode(final String name) throws IOException {
         if (this.charset == null) {
             return ByteBuffer.wrap(name.getBytes());
         }
         return ByteBuffer.wrap(name.getBytes(this.charset));
     }
     
-    public String decode(final byte[] data) throws IOException {
+    @Override
+	public String decode(final byte[] data) throws IOException {
         if (this.charset == null) {
             return new String(data);
         }

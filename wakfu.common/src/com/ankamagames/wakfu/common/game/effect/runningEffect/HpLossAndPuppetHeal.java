@@ -3,12 +3,15 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -38,7 +41,7 @@ public final class HpLossAndPuppetHeal extends WakfuRunningEffect
             re = new HpLossAndPuppetHeal();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossAndPuppetHeal.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossAndPuppetHeal : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossAndPuppetHeal : " + e.getMessage());
         }
         return re;
     }
@@ -48,8 +51,8 @@ public final class HpLossAndPuppetHeal extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM);
         }
     }
     
@@ -63,10 +66,10 @@ public final class HpLossAndPuppetHeal extends WakfuRunningEffect
         if (element == null) {
             element = this.getSpellElement();
         }
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, element, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, element, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
         (hpLoss).setGenericEffect(DefaultEffect.getInstance());
         hpLoss.setCaster(this.m_caster);
-        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).checkFlags(1L), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
+        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && this.m_genericEffect.checkFlags(1L), this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
         final int hpLossValue = Math.min(this.m_target.getCharacteristicValue(FighterCharacteristicType.HP), hpLoss.getValue());
         hpLoss.askForExecution();
         final List<EffectUser> puppetsToApplyHpGain = this.getPuppetsToApplyHpGain();
@@ -75,7 +78,7 @@ public final class HpLossAndPuppetHeal extends WakfuRunningEffect
         }
         final int hpGainPerPuppet = hpLossValue / puppetsToApplyHpGain.size();
         for (final EffectUser puppet : puppetsToApplyHpGain) {
-            final HPGain hpGain = HPGain.checkOut((EffectContext<WakfuEffect>)this.m_context, element);
+            final HPGain hpGain = HPGain.checkOut(this.m_context, element);
             hpGain.setTarget(puppet);
             hpGain.forceValue(hpGainPerPuppet);
             hpGain.setParent(this);

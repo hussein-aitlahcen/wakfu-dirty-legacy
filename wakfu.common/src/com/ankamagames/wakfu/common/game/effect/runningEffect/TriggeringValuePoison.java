@@ -1,14 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.hpLoss.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -57,7 +60,7 @@ public class TriggeringValuePoison extends WakfuRunningEffect implements ArmorLo
             re = new TriggeringValuePoison();
             re.m_pool = null;
             re.m_isStatic = false;
-            TriggeringValuePoison.m_logger.error((Object)("Erreur lors d'un checkOut sur un TriggeringValuePoison  : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un TriggeringValuePoison  : " + e.getMessage());
         }
         re.m_armorLoss = this.m_armorLoss;
         re.m_barrierLoss = this.m_barrierLoss;
@@ -99,18 +102,18 @@ public class TriggeringValuePoison extends WakfuRunningEffect implements ArmorLo
         this.m_element = null;
         if (this.m_genericEffect != null) {
             byte elementId = 0;
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
-                final float nominator = ((WakfuEffect)this.m_genericEffect).getParam(0, level);
-                float unitySize = ((WakfuEffect)this.m_genericEffect).getParam(1, level);
+            if (this.m_genericEffect.getParamsCount() == 3) {
+                final float nominator = this.m_genericEffect.getParam(0, level);
+                float unitySize = this.m_genericEffect.getParam(1, level);
                 if (unitySize == 0.0f) {
                     unitySize = 1.0f;
                 }
                 this.m_floatValue = nominator / unitySize;
-                elementId = (byte)((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM);
+                elementId = (byte)this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM);
             }
-            else if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-                this.m_floatValue = ((WakfuEffect)this.m_genericEffect).getParam(0, level);
-                elementId = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+            else if (this.m_genericEffect.getParamsCount() == 2) {
+                this.m_floatValue = this.m_genericEffect.getParam(0, level);
+                elementId = (byte)this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
             }
             this.m_element = Elements.getElementFromId(elementId);
         }
@@ -121,9 +124,9 @@ public class TriggeringValuePoison extends WakfuRunningEffect implements ArmorLo
     }
     
     private void computeValueModifications(final RunningEffect triggerRE) {
-        final HpLossComputer computer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_element, (WakfuEffect)this.m_genericEffect);
+        final HpLossComputer computer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_element, this.m_genericEffect);
         computer.setValue(this.m_value);
-        computer.setAffectedByLocalisation(this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
+        computer.setAffectedByLocalisation(this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
         computer.setConditions(defaultCondition());
         computer.computeWithModificator();
         RunningEffectUtils.setTriggerForElement(computer.getElementForResistance(), this);
@@ -136,7 +139,7 @@ public class TriggeringValuePoison extends WakfuRunningEffect implements ArmorLo
         }
         else {
             this.m_value = 0;
-            TriggeringValuePoison.m_logger.error((Object)("Unable to compute damages for a " + this.getClass().getSimpleName() + " : no triggering effect"));
+            RunningEffect.m_logger.error("Unable to compute damages for a " + this.getClass().getSimpleName() + " : no triggering effect");
         }
     }
     

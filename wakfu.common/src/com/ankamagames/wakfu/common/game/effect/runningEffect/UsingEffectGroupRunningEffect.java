@@ -1,10 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effect.*;
-import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 
 abstract class UsingEffectGroupRunningEffect extends WakfuRunningEffect
@@ -31,9 +30,9 @@ abstract class UsingEffectGroupRunningEffect extends WakfuRunningEffect
         this.m_effectsExecuted = 0;
         this.m_effectsWithoutExecutions = 0;
         this.m_executionsCount = 0;
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null) {
-            UsingEffectGroupRunningEffect.m_logger.error((Object)("Groupe d'effet inconnu" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Groupe d'effet inconnu" + this.m_genericEffect.getEffectId());
             this.setNotified();
             return;
         }
@@ -50,7 +49,7 @@ abstract class UsingEffectGroupRunningEffect extends WakfuRunningEffect
                 result = effect.execute(this.getEffectContainer(), this.getCaster(), this.getContext(), RunningEffectConstants.getInstance(), this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), null, params, true);
             }
             else {
-                UsingEffectGroupRunningEffect.m_logger.error((Object)("Pas de type de cible d\u00e9fini, on n'execute pas le groupe d'effet " + this.getEffectId()));
+                RunningEffect.m_logger.error("Pas de type de cible d\u00e9fini, on n'execute pas le groupe d'effet " + this.getEffectId());
             }
             if (result != null) {
                 ++this.m_effectsExecuted;
@@ -70,9 +69,9 @@ abstract class UsingEffectGroupRunningEffect extends WakfuRunningEffect
         this.m_effectsExecuted = 0;
         this.m_effectsWithoutExecutions = 0;
         this.m_executionsCount = 0;
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null) {
-            UsingEffectGroupRunningEffect.m_logger.error((Object)("Groupe d'effet inconnu" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Groupe d'effet inconnu" + this.m_genericEffect.getEffectId());
             this.setNotified();
             return;
         }

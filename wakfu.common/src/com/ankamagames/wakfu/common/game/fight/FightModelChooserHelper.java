@@ -4,7 +4,6 @@ import com.ankamagames.wakfu.common.game.pvp.*;
 import org.jetbrains.annotations.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 public final class FightModelChooserHelper
 {

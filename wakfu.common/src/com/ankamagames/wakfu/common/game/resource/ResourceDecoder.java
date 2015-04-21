@@ -45,6 +45,6 @@ public final class ResourceDecoder
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ResourceDecoder.class);
+        m_logger = Logger.getLogger(ResourceDecoder.class);
     }
 }

@@ -2,13 +2,16 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.kernel.core.maths.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,18 +44,18 @@ public final class ExecuteTriggeringEffectInEffectZone extends WakfuRunningEffec
             re.m_pool = null;
             re.m_isStatic = false;
             re.m_cancelTriggeringEffect = this.m_cancelTriggeringEffect;
-            ExecuteTriggeringEffectInEffectZone.m_logger.error((Object)("Erreur lors d'un checkOut sur un ExecuteTriggeringEffectInEffectZone : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ExecuteTriggeringEffectInEffectZone : " + e.getMessage());
         }
         return re;
     }
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() < 1) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getParamsCount() < 1) {
             this.m_cancelTriggeringEffect = false;
         }
         else {
-            this.m_cancelTriggeringEffect = (1 == ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
+            this.m_cancelTriggeringEffect = (1 == this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
     }
     
@@ -61,7 +64,7 @@ public final class ExecuteTriggeringEffectInEffectZone extends WakfuRunningEffec
         this.setNotified();
         final RunningEffect triggeringEffect = this.getTriggeringEffect(triggerRE);
         if (triggeringEffect == null) {
-            ExecuteTriggeringEffectInEffectZone.m_logger.error((Object)("On ne peut pas executer un " + this.getClass().getSimpleName() + " sans effet declencheur, id = " + this.getEffectId()));
+            RunningEffect.m_logger.error("On ne peut pas executer un " + this.getClass().getSimpleName() + " sans effet declencheur, id = " + this.getEffectId());
             return;
         }
         this.executeTriggeringOnThisArea((WakfuRunningEffect)triggeringEffect);
@@ -76,14 +79,14 @@ public final class ExecuteTriggeringEffectInEffectZone extends WakfuRunningEffec
     }
     
     private void executeTriggeringOnThisArea(final WakfuRunningEffect triggeringEffect) {
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getAreaOfEffect() == null) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getAreaOfEffect() == null) {
             return;
         }
         final Effect triggeringGeneric = (triggeringEffect).getGenericEffect();
         if (triggeringGeneric == null) {
             return;
         }
-        final AreaOfEffect area = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect();
+        final AreaOfEffect area = this.m_genericEffect.getAreaOfEffect();
         final Iterable<EffectUser> targets = TargetFinder.getInstance().getTargets(this.m_target, this.m_context.getTargetInformationProvider(), area, this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ());
         final ArrayList<Point3> cells = new ArrayList<Point3>();
         for (final EffectUser effectUser : targets) {

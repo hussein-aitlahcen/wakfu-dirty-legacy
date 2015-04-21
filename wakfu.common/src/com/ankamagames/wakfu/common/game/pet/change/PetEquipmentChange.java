@@ -42,7 +42,7 @@ class PetEquipmentChange implements PetChange
             }
         }
         catch (PetControllerException e) {
-            PetEquipmentChange.m_logger.error((Object)"Impossible de changer le dernier repas du familier", (Throwable)e);
+            PetEquipmentChange.m_logger.error("Impossible de changer le dernier repas du familier", e);
         }
     }
     
@@ -57,6 +57,6 @@ class PetEquipmentChange implements PetChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PetEquipmentChange.class);
+        m_logger = Logger.getLogger(PetEquipmentChange.class);
     }
 }

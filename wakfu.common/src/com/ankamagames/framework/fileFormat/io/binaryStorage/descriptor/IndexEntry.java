@@ -49,7 +49,7 @@ public final class IndexEntry implements EntryDescriptor, Poolable
         }
         catch (Exception e) {
             entry = new IndexEntry();
-            IndexEntry.m_logger.error((Object)"Erreur lors d'un checkout d'un IndexEntry", (Throwable)e);
+            IndexEntry.m_logger.error("Erreur lors d'un checkout d'un IndexEntry", e);
         }
         entry.value = value;
         entry.idFile = id;
@@ -65,7 +65,7 @@ public final class IndexEntry implements EntryDescriptor, Poolable
         }
         catch (Exception e) {
             entry = new IndexEntry();
-            IndexEntry.m_logger.error((Object)"Erreur lors d'un checkout d'un IndexEntry", (Throwable)e);
+            IndexEntry.m_logger.error("Erreur lors d'un checkout d'un IndexEntry", e);
         }
         return entry;
     }
@@ -75,7 +75,7 @@ public final class IndexEntry implements EntryDescriptor, Poolable
             IndexEntry.m_pool.returnObject(this);
         }
         catch (Exception e) {
-            IndexEntry.m_logger.error((Object)"Erreur lors d'un release d'un IndexEntry", (Throwable)e);
+            IndexEntry.m_logger.error("Erreur lors d'un release d'un IndexEntry", e);
         }
     }
     
@@ -89,7 +89,7 @@ public final class IndexEntry implements EntryDescriptor, Poolable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)IndexEntry.class);
+        m_logger = Logger.getLogger(IndexEntry.class);
         m_pool = new MonitoredPool(new ObjectFactory<IndexEntry>() {
             @Override
             public IndexEntry makeObject() {

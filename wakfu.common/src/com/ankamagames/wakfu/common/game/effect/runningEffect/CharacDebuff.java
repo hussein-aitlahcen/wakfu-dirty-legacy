@@ -1,8 +1,11 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
@@ -10,7 +13,9 @@ import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -89,7 +94,7 @@ public class CharacDebuff extends WakfuRunningEffect
         catch (Exception e) {
             wre = new CharacDebuff();
             wre.m_pool = null;
-            CharacDebuff.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacDebuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacDebuff : " + e.getMessage());
         }
         wre.m_charac = this.m_charac;
         wre.m_raiseCurrentValueOnUnapplication = this.m_raiseCurrentValueOnUnapplication;
@@ -180,8 +185,8 @@ public class CharacDebuff extends WakfuRunningEffect
     
     private int getApplicationProbability() {
         int initialProbability;
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            initialProbability = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.RANDOM);
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() >= 2) {
+            initialProbability = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.RANDOM);
         }
         else {
             initialProbability = 100;
@@ -258,12 +263,12 @@ public class CharacDebuff extends WakfuRunningEffect
             return;
         }
         this.m_raiseCurrentValueOnUnapplication = true;
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 2) {
-            this.m_raiseCurrentValueOnUnapplication = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM) == 1);
+        this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() > 2) {
+            this.m_raiseCurrentValueOnUnapplication = (this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 3) {
-            this.m_decreaseCurrentValueOnApplication = (((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() > 3) {
+            this.m_decreaseCurrentValueOnApplication = (this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         if (this.m_value == -1 && triggerRE != null) {
             this.m_value = triggerRE.getValue();

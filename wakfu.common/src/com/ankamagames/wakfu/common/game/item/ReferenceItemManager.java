@@ -75,7 +75,7 @@ public class ReferenceItemManager<R extends AbstractReferenceItem> implements In
     }
     
     public List<AbstractReferenceItem> asList() {
-        return Arrays.asList((AbstractReferenceItem[])this.m_referenceItems.getValues(new AbstractReferenceItem[this.m_referenceItems.size()]));
+        return Arrays.asList(this.m_referenceItems.getValues(new AbstractReferenceItem[this.m_referenceItems.size()]));
     }
     
     public ItemRarity getItemRarity(final int refItemId) {
@@ -87,7 +87,7 @@ public class ReferenceItemManager<R extends AbstractReferenceItem> implements In
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ReferenceItemManager.class);
+        m_logger = Logger.getLogger(ReferenceItemManager.class);
         ReferenceItemManager.m_uniqueInstance = new ReferenceItemManager();
     }
 }

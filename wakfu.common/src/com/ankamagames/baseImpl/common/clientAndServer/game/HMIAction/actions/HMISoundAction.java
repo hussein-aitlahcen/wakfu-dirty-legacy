@@ -15,7 +15,7 @@ public class HMISoundAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMISoundAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas un id de son valide"));
+            HMISoundAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas un id de son valide");
             return false;
         }
     }
@@ -30,6 +30,6 @@ public class HMISoundAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMISoundAction.class);
+        m_logger = Logger.getLogger(HMISoundAction.class);
     }
 }

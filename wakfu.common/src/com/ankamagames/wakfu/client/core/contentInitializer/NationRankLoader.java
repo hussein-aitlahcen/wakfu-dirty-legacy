@@ -1,8 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.common.game.nation.government.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
@@ -18,13 +16,13 @@ public class NationRankLoader implements ContentInitializer
     }
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         BinaryDocumentManager.getInstance().foreach(new NationRankBinaryData(), new LoadProcedure<NationRankBinaryData>() {
             @Override
             public void load(final NationRankBinaryData bs) {
                 final NationRank rank = NationRank.getById(bs.getId());
                 if (rank == null) {
-                    NationRankLoader.m_logger.error((Object)("NationRank inconnu lors du chargement des binary storage : " + bs.getId()));
+                    NationRankLoader.m_logger.error("NationRank inconnu lors du chargement des binary storage : " + bs.getId());
                     return;
                 }
                 final float pdcLossFactor = bs.getCitizenPointLossFactor();
@@ -34,7 +32,6 @@ public class NationRankLoader implements ContentInitializer
                 rank.setCitizenScoreLine(citizenScoreLine);
             }
         });
-        clientInstance.fireContentInitializerDone(this);
     }
     
     @Override
@@ -43,7 +40,7 @@ public class NationRankLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationRankLoader.class);
+        m_logger = Logger.getLogger(NationRankLoader.class);
         m_instance = new NationRankLoader();
     }
 }

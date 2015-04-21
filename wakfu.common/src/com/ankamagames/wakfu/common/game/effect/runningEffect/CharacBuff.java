@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
@@ -9,7 +11,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -95,7 +99,7 @@ public class CharacBuff extends WakfuRunningEffect
             re = new CharacBuff();
             re.m_isStatic = false;
             re.m_pool = null;
-            CharacBuff.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -196,9 +200,9 @@ public class CharacBuff extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        this.m_addCurrentValue = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM) != 0);
-        this.m_substractCurrentValue = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM) != 0);
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_addCurrentValue = (this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM) != 0);
+        this.m_substractCurrentValue = (this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM) != 0);
+        this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.m_value == -2 && this.getParams() != null && ((WakfuEffectExecutionParameters)this.getParams()).getExternalTriggeringEffect() != null && ((WakfuEffectExecutionParameters)this.getParams()).getExternalTriggeringEffect().getValue() > 0) {
             this.m_value = ((WakfuEffectExecutionParameters)this.getParams()).getExternalTriggeringEffect().getValue() * 2;
         }

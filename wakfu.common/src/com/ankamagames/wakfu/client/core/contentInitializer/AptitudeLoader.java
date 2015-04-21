@@ -32,7 +32,7 @@ public class AptitudeLoader implements ContentInitializer
                         refAptitude.addEffect(effect);
                     }
                     else {
-                        AptitudeLoader.m_logger.error((Object)("Probl\u00e8me de chargmeent de ReferenceAptitude " + bs.getId()));
+                        AptitudeLoader.m_logger.error("Probl\u00e8me de chargmeent de ReferenceAptitude " + bs.getId());
                     }
                 }
             }
@@ -53,7 +53,7 @@ public class AptitudeLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AptitudeLoader.class);
+        m_logger = Logger.getLogger(AptitudeLoader.class);
         m_instance = new AptitudeLoader();
     }
 }

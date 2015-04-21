@@ -82,14 +82,14 @@ public class PreferenceStore
                 this.load(inputStream);
             }
             catch (Exception e) {
-                PreferenceStore.m_logger.info((Object)("Erreur dans le fichier de pr\u00e9f\u00e9rences " + this.m_fileName), (Throwable)e);
+                PreferenceStore.m_logger.info("Erreur dans le fichier de pr\u00e9f\u00e9rences " + this.m_fileName, e);
             }
             finally {
                 inputStream.close();
             }
         }
         catch (FileNotFoundException ex) {
-            PreferenceStore.m_logger.info((Object)("Fichier de pr\u00e9f\u00e9rences " + this.m_fileName + " inexistant, on le cr\u00e9e"));
+            PreferenceStore.m_logger.info("Fichier de pr\u00e9f\u00e9rences " + this.m_fileName + " inexistant, on le cr\u00e9e");
         }
     }
     
@@ -100,7 +100,7 @@ public class PreferenceStore
             this.notifyLoadListeners();
         }
         catch (IllegalArgumentException e) {
-            PreferenceStore.m_logger.info((Object)("Fichier de pr\u00e9f\u00e9rences " + this.m_fileName + " corrompu"), (Throwable)e);
+            PreferenceStore.m_logger.info("Fichier de pr\u00e9f\u00e9rences " + this.m_fileName + " corrompu", e);
         }
     }
     
@@ -164,7 +164,7 @@ public class PreferenceStore
             this.save();
         }
         catch (IOException e) {
-            PreferenceStore.m_logger.error((Object)"Exception", (Throwable)e);
+            PreferenceStore.m_logger.error("Exception", e);
         }
     }
     
@@ -519,6 +519,6 @@ public class PreferenceStore
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PreferenceStore.class);
+        m_logger = Logger.getLogger(PreferenceStore.class);
     }
 }

@@ -13,7 +13,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
     public TShortLongHashMap() {
         super();
         this.PUT_ALL_PROC = new TShortLongProcedure() {
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 TShortLongHashMap.this.put(key, value);
                 return true;
             }
@@ -23,7 +24,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
     public TShortLongHashMap(final int initialCapacity) {
         super(initialCapacity);
         this.PUT_ALL_PROC = new TShortLongProcedure() {
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 TShortLongHashMap.this.put(key, value);
                 return true;
             }
@@ -33,7 +35,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
     public TShortLongHashMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
         this.PUT_ALL_PROC = new TShortLongProcedure() {
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 TShortLongHashMap.this.put(key, value);
                 return true;
             }
@@ -43,7 +46,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
     public TShortLongHashMap(final TShortHashingStrategy strategy) {
         super(strategy);
         this.PUT_ALL_PROC = new TShortLongProcedure() {
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 TShortLongHashMap.this.put(key, value);
                 return true;
             }
@@ -53,7 +57,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
     public TShortLongHashMap(final int initialCapacity, final TShortHashingStrategy strategy) {
         super(initialCapacity, strategy);
         this.PUT_ALL_PROC = new TShortLongProcedure() {
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 TShortLongHashMap.this.put(key, value);
                 return true;
             }
@@ -63,14 +68,16 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
     public TShortLongHashMap(final int initialCapacity, final float loadFactor, final TShortHashingStrategy strategy) {
         super(initialCapacity, loadFactor, strategy);
         this.PUT_ALL_PROC = new TShortLongProcedure() {
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 TShortLongHashMap.this.put(key, value);
                 return true;
             }
         };
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final TShortLongHashMap m = (TShortLongHashMap)super.clone();
         m._values = this._values.clone();
         return m;
@@ -80,7 +87,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         return new TShortLongIterator(this);
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._values = new long[capacity];
         return capacity;
@@ -121,7 +129,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         map.forEachEntry(this.PUT_ALL_PROC);
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final short[] oldKeys = this._set;
         final long[] oldVals = this._values;
@@ -146,7 +155,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         return (index < 0) ? 0L : this._values[index];
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final short[] keys = this._set;
         final long[] vals = this._values;
@@ -166,7 +176,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         return prev;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TShortLongHashMap)) {
             return false;
         }
@@ -174,13 +185,15 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         return that.size() == this.size() && this.forEachEntry(new EqProcedure(that));
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEachEntry(p);
         return p.getHashCode();
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._values[index] = 0L;
         super.removeAt(index);
     }
@@ -349,7 +362,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         return newValue;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -358,7 +372,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -369,12 +384,14 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         this.forEachEntry(new TShortLongProcedure() {
             private boolean first = true;
             
-            public boolean execute(final short key, final long value) {
+            @Override
+			public boolean execute(final short key, final long value) {
                 if (this.first) {
                     this.first = false;
                 }
@@ -404,7 +421,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
             return this.h;
         }
         
-        public final boolean execute(final short key, final long value) {
+        @Override
+		public final boolean execute(final short key, final long value) {
             this.h += (TShortLongHashMap.this._hashingStrategy.computeHashCode(key) ^ HashFunctions.hash(value));
             return true;
         }
@@ -419,7 +437,8 @@ public class TShortLongHashMap extends TShortHash implements Externalizable
             this._otherMap = otherMap;
         }
         
-        public final boolean execute(final short key, final long value) {
+        @Override
+		public final boolean execute(final short key, final long value) {
             final int index = this._otherMap.index(key);
             return index >= 0 && this.eq(value, this._otherMap.get(key));
         }

@@ -23,7 +23,7 @@ public class ContentFileHelper
             return true;
         }
         catch (IOException e) {
-            ContentFileHelper.m_logger.error((Object)"", (Throwable)e);
+            ContentFileHelper.m_logger.error("", e);
             return false;
         }
     }
@@ -70,7 +70,7 @@ public class ContentFileHelper
     
     static {
         ContentFileHelper.FORCE_TUTORIAL = false;
-        m_logger = Logger.getLogger((Class)ContentFileHelper.class);
+        m_logger = Logger.getLogger(ContentFileHelper.class);
         m_multiJarIndex = new MultiPakIndexer();
     }
 }

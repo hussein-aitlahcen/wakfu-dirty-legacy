@@ -65,6 +65,6 @@ public abstract class AbstractProtectorEcosystemHandler
     }
     
     static {
-        AbstractProtectorEcosystemHandler.m_logger = Logger.getLogger((Class)AbstractProtectorEcosystemHandler.class);
+        AbstractProtectorEcosystemHandler.m_logger = Logger.getLogger(AbstractProtectorEcosystemHandler.class);
     }
 }

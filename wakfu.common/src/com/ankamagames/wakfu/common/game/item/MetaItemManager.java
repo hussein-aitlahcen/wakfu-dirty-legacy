@@ -18,7 +18,7 @@ public class MetaItemManager
     }
     
     public void setBinaryLoader(final BinaryLoaderFromFile loader) {
-        this.m_loader = (BinaryLoaderFromFile<BinaryData>)loader;
+        this.m_loader = loader;
     }
     
     public <I extends BinaryData> void setBinaryTransformer(final BinaryTransformer<BinaryData, AbstractReferenceItem> binaryTransformer) {

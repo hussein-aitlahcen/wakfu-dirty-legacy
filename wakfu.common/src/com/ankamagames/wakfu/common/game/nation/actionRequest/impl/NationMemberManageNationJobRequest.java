@@ -36,7 +36,7 @@ public class NationMemberManageNationJobRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationMemberManageNationJobRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationMemberManageNationJobRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         if (this.m_operation == NationMemberManageNationJobRequest.ADD) {
@@ -84,7 +84,7 @@ public class NationMemberManageNationJobRequest extends NationActionRequest
     static {
         NationMemberManageNationJobRequest.ADD = 1;
         NationMemberManageNationJobRequest.REMOVE = 2;
-        m_logger = Logger.getLogger((Class)NationMemberManageNationJobRequest.class);
+        m_logger = Logger.getLogger(NationMemberManageNationJobRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

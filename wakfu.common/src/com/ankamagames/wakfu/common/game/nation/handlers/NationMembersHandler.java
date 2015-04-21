@@ -75,11 +75,11 @@ public abstract class NationMembersHandler extends NationHandler<NationMembersEv
     public void registerCitizen(@NotNull final Citizen character) {
         final CitizenComportment comportment = character.getCitizenComportment();
         if (comportment.getNation() != this.getNation()) {
-            NationMembersHandler.m_logger.error((Object)("[NATION] On essaye d'enregister le character " + character + " \u00e0 la nation " + this.getNation() + " mais il est semble etre dans la nation " + comportment.getNation()));
+            NationMembersHandler.m_logger.error("[NATION] On essaye d'enregister le character " + character + " \u00e0 la nation " + this.getNation() + " mais il est semble etre dans la nation " + comportment.getNation());
             return;
         }
         if (this.m_members.containsKey(character.getId())) {
-            NationMembersHandler.m_logger.error((Object)("[NATION] On essaye d'enregistrer le character " + character + " \u00e0 la nation " + this.getNation().getNationId() + " mais il est d\u00e9j\u00e0 dedans"));
+            NationMembersHandler.m_logger.error("[NATION] On essaye d'enregistrer le character " + character + " \u00e0 la nation " + this.getNation().getNationId() + " mais il est d\u00e9j\u00e0 dedans");
             return;
         }
         this.m_members.put(character.getId(), character);
@@ -88,14 +88,14 @@ public abstract class NationMembersHandler extends NationHandler<NationMembersEv
     
     public boolean addCitizen(@NotNull final Citizen character) {
         if (this.m_members.containsKey(character.getId())) {
-            NationMembersHandler.m_logger.error((Object)("[NATION] On essaye d'ajouter le character " + character + " \u00e0 la nation " + this.getNation().getNationId() + " mais il est d\u00e9j\u00e0 dedans"));
+            NationMembersHandler.m_logger.error("[NATION] On essaye d'ajouter le character " + character + " \u00e0 la nation " + this.getNation().getNationId() + " mais il est d\u00e9j\u00e0 dedans");
         }
         final CitizenComportment comportment = character.getCitizenComportment();
         final Nation oldNation = comportment.getNation();
         if (oldNation != this.getNation()) {
             final boolean notRemoved = !oldNation.unregisterCitizen(character);
             if (notRemoved) {
-                NationMembersHandler.m_logger.error((Object)("[NATION] Impossible d'ajouter le joueur " + character + " \u00e0 la nation " + this.getNation() + " car on ne peut pas l'enlever \u00e0 sa nation courante (" + oldNation + ")"));
+                NationMembersHandler.m_logger.error("[NATION] Impossible d'ajouter le joueur " + character + " \u00e0 la nation " + this.getNation() + " car on ne peut pas l'enlever \u00e0 sa nation courante (" + oldNation + ")");
                 return false;
             }
         }
@@ -109,11 +109,11 @@ public abstract class NationMembersHandler extends NationHandler<NationMembersEv
         final Citizen citizenRemoved = this.m_members.remove(character.getId());
         if (this.getNation() != Nation.VOID_NATION) {
             if (citizenRemoved == null) {
-                NationMembersHandler.m_logger.error((Object)("[NATION] On essaye de supprimer le character " + character + " de la nation " + this.getNation() + " mais il n'est pas dans la liste des membres"));
+                NationMembersHandler.m_logger.error("[NATION] On essaye de supprimer le character " + character + " de la nation " + this.getNation() + " mais il n'est pas dans la liste des membres");
                 return false;
             }
             if (citizenRemoved != character) {
-                NationMembersHandler.m_logger.error((Object)("[NATION] On essaye de supprimer le character + " + character + " d'id " + character.getId() + " de la nation " + this.getNation() + " mais l'id donne le perso " + citizenRemoved + ". Conflit d'ID ?"));
+                NationMembersHandler.m_logger.error("[NATION] On essaye de supprimer le character + " + character + " d'id " + character.getId() + " de la nation " + this.getNation() + " mais l'id donne le perso " + citizenRemoved + ". Conflit d'ID ?");
                 return false;
             }
         }
@@ -128,7 +128,7 @@ public abstract class NationMembersHandler extends NationHandler<NationMembersEv
     public void onDisconnection(final long characterId) {
         final Citizen citizen = this.m_members.remove(characterId);
         if (citizen == null) {
-            NationMembersHandler.m_logger.error((Object)("[NATION] On essaye de retirer le character " + characterId + " \u00e0 la nation " + this.getNation() + " suite \u00e0 une d\u00e9co mais il n'en fait pas partie"));
+            NationMembersHandler.m_logger.error("[NATION] On essaye de retirer le character " + characterId + " \u00e0 la nation " + this.getNation() + " suite \u00e0 une d\u00e9co mais il n'en fait pas partie");
         }
     }
     
@@ -137,6 +137,6 @@ public abstract class NationMembersHandler extends NationHandler<NationMembersEv
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationMembersHandler.class);
+        m_logger = Logger.getLogger(NationMembersHandler.class);
     }
 }

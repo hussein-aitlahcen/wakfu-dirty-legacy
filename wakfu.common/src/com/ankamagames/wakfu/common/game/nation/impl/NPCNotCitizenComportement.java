@@ -242,7 +242,7 @@ public class NPCNotCitizenComportement implements CitizenComportment
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NPCNotCitizenComportement.class);
+        m_logger = Logger.getLogger(NPCNotCitizenComportement.class);
         EMPTY_RANKS = EnumSet.noneOf(NationRank.class);
     }
 }

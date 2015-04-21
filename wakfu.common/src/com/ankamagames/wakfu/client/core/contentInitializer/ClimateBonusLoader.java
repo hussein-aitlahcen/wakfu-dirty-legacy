@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.client.core.contentInitializer;
 
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.climate.*;
-import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.client.core.*;
@@ -32,7 +31,7 @@ public class ClimateBonusLoader implements ContentInitializer
                     ClimateBonusManager.INSTANCE.addBonus(id, temperature, wind, precipitations, /*criterion*/null, duration, price);
                 }
                 catch (Exception e) {
-                    ClimateBonusLoader.m_logger.error((Object)("Exception lev\u00e9e lors de l'interpr\u00e9tation du crit\u00e8re : " + criteria));
+                    ClimateBonusLoader.m_logger.error("Exception lev\u00e9e lors de l'interpr\u00e9tation du crit\u00e8re : " + criteria);
                 }
             }
         });

@@ -50,7 +50,6 @@ import com.ankamagames.wakfu.common.game.characteristics.skill.*;
 import com.ankamagames.wakfu.common.game.characteristics.craft.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.collections.lightweight.*;
-import com.ankamagames.framework.kernel.core.common.serialization.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
@@ -204,7 +203,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 this.m_characterFightListeners.get(i).onJoinFight(this);
             }
             catch (Exception e) {
-                BasicCharacterInfo.m_logger.error((Object)"Exception levee", (Throwable)e);
+                BasicCharacterInfo.m_logger.error("Exception levee", e);
             }
         }
         this.removeObsoleteFightListeners();
@@ -216,7 +215,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 this.m_characterFightListeners.get(i).onLeaveFight(this);
             }
             catch (Exception e) {
-                BasicCharacterInfo.m_logger.error((Object)"Exception levee", (Throwable)e);
+                BasicCharacterInfo.m_logger.error("Exception levee", e);
             }
         }
         this.removeObsoleteFightListeners();
@@ -228,7 +227,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 this.m_characterFightListeners.get(i).onWonFight(this);
             }
             catch (Exception e) {
-                BasicCharacterInfo.m_logger.error((Object)"Exception levee", (Throwable)e);
+                BasicCharacterInfo.m_logger.error("Exception levee", e);
             }
         }
         this.removeObsoleteFightListeners();
@@ -240,7 +239,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 this.m_characterFightListeners.get(i).onLoseFight(this);
             }
             catch (Exception e) {
-                BasicCharacterInfo.m_logger.error((Object)"Exception levee", (Throwable)e);
+                BasicCharacterInfo.m_logger.error("Exception levee", e);
             }
         }
         this.removeObsoleteFightListeners();
@@ -259,11 +258,11 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         final CharacteristicManager localManager = this.m_characteristics;
         if (localManager instanceof FighterCharacteristicManager) {
             final FighterCharacteristicManager characteristic = (FighterCharacteristicManager)localManager;
-            final FighterCharacteristic vitality = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.VITALITY);
+            final FighterCharacteristic vitality = characteristic.getCharacteristic(FighterCharacteristicType.VITALITY);
             if (vitality != null) {
                 vitality.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.HP, this.m_breed.getRatio(BreedRatios.VITALITY_TO_HP), 1));
             }
-            final FighterCharacteristic willPower = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.WILLPOWER);
+            final FighterCharacteristic willPower = characteristic.getCharacteristic(FighterCharacteristicType.WILLPOWER);
             if (willPower != null) {
                 willPower.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.AP_DEBUFF_POWER, 1.0f, 0));
                 willPower.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.AP_DEBUFF_RES, 1.0f, 0));
@@ -272,59 +271,59 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 willPower.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.STATE_APPLICATION_BONUS, 1.0f, 0));
                 willPower.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.STATE_RESISTANCE_BONUS, 1.0f, 0));
             }
-            final FighterCharacteristic airMastery = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.AIR_MASTERY);
+            final FighterCharacteristic airMastery = characteristic.getCharacteristic(FighterCharacteristicType.AIR_MASTERY);
             if (airMastery != null) {
                 airMastery.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_AIR_PERCENT, 1.0f, 0));
             }
-            final FighterCharacteristic earthMastery = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.EARTH_MASTERY);
+            final FighterCharacteristic earthMastery = characteristic.getCharacteristic(FighterCharacteristicType.EARTH_MASTERY);
             if (earthMastery != null) {
                 earthMastery.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_EARTH_PERCENT, 1.0f, 0));
             }
-            final FighterCharacteristic fireMastery = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.FIRE_MASTERY);
+            final FighterCharacteristic fireMastery = characteristic.getCharacteristic(FighterCharacteristicType.FIRE_MASTERY);
             if (fireMastery != null) {
                 fireMastery.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_FIRE_PERCENT, 1.0f, 0));
             }
-            final FighterCharacteristic waterMastery = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.WATER_MASTERY);
+            final FighterCharacteristic waterMastery = characteristic.getCharacteristic(FighterCharacteristicType.WATER_MASTERY);
             if (waterMastery != null) {
                 waterMastery.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_WATER_PERCENT, 1.0f, 0));
             }
-            final FighterCharacteristic agility = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.AGILITY);
+            final FighterCharacteristic agility = characteristic.getCharacteristic(FighterCharacteristicType.AGILITY);
             if (agility != null) {
                 agility.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_AIR_PERCENT, this.m_breed.getRatio(BreedRatios.AGILITY_TO_AIR_DMG), 0));
                 agility.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.RES_AIR_PERCENT, this.m_breed.getRatio(BreedRatios.AGILITY_TO_AIR_RES), 0));
             }
-            final FighterCharacteristic strength = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.STRENGTH);
+            final FighterCharacteristic strength = characteristic.getCharacteristic(FighterCharacteristicType.STRENGTH);
             if (strength != null) {
                 strength.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_EARTH_PERCENT, this.m_breed.getRatio(BreedRatios.STRENGTH_TO_EARTH_DMG), 0));
                 strength.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.RES_EARTH_PERCENT, this.m_breed.getRatio(BreedRatios.STRENGTH_TO_EARTH_RES), 0));
             }
-            final FighterCharacteristic intel = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.INTELLIGENCE);
+            final FighterCharacteristic intel = characteristic.getCharacteristic(FighterCharacteristicType.INTELLIGENCE);
             if (intel != null) {
                 intel.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_FIRE_PERCENT, this.m_breed.getRatio(BreedRatios.INTELLIGENCE_TO_FIRE_DMG), 0));
                 intel.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.RES_FIRE_PERCENT, this.m_breed.getRatio(BreedRatios.INTELLIGENCE_TO_FIRE_RES), 0));
             }
-            final FighterCharacteristic luck = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.LUCK);
+            final FighterCharacteristic luck = characteristic.getCharacteristic(FighterCharacteristicType.LUCK);
             if (luck != null) {
                 luck.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.DMG_WATER_PERCENT, this.m_breed.getRatio(BreedRatios.LUCK_TO_WATER_DMG), 0));
                 luck.addProcedure(new CharacBoostAnotherCharacProcedure(characteristic, FighterCharacteristicType.RES_WATER_PERCENT, this.m_breed.getRatio(BreedRatios.LUCK_TO_WATER_RES), 0));
             }
-            final FighterCharacteristic waterDmg = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_WATER_PERCENT);
+            final FighterCharacteristic waterDmg = characteristic.getCharacteristic(FighterCharacteristicType.DMG_WATER_PERCENT);
             if (waterDmg != null) {
                 waterDmg.addProcedure(new StasisDmgRecomputeProcedure(characteristic));
             }
-            final FighterCharacteristic fireDmg = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_FIRE_PERCENT);
+            final FighterCharacteristic fireDmg = characteristic.getCharacteristic(FighterCharacteristicType.DMG_FIRE_PERCENT);
             if (fireDmg != null) {
                 fireDmg.addProcedure(new StasisDmgRecomputeProcedure(characteristic));
             }
-            final FighterCharacteristic earthDmg = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_EARTH_PERCENT);
+            final FighterCharacteristic earthDmg = characteristic.getCharacteristic(FighterCharacteristicType.DMG_EARTH_PERCENT);
             if (earthDmg != null) {
                 earthDmg.addProcedure(new StasisDmgRecomputeProcedure(characteristic));
             }
-            final FighterCharacteristic airDmg = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_AIR_PERCENT);
+            final FighterCharacteristic airDmg = characteristic.getCharacteristic(FighterCharacteristicType.DMG_AIR_PERCENT);
             if (airDmg != null) {
                 airDmg.addProcedure(new StasisDmgRecomputeProcedure(characteristic));
             }
-            final FighterCharacteristic stasisMastery = characteristic.getCharacteristic((CharacteristicType)FighterCharacteristicType.STASIS_MASTERY);
+            final FighterCharacteristic stasisMastery = characteristic.getCharacteristic(FighterCharacteristicType.STASIS_MASTERY);
             if (stasisMastery != null) {
                 stasisMastery.addProcedure(new StasisDmgRecomputeProcedure(characteristic));
             }
@@ -333,7 +332,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             }
             return;
         }
-        BasicCharacterInfo.m_logger.error((Object)"Les NPCs ont des caract\u00e9ristiques paresseuses. Les proc\u00e9dures doivent \u00eatre ajout\u00e9es sur la breed.");
+        BasicCharacterInfo.m_logger.error("Les NPCs ont des caract\u00e9ristiques paresseuses. Les proc\u00e9dures doivent \u00eatre ajout\u00e9es sur la breed.");
     }
     
     public void addHpToChrageProcedureForSacrier() {
@@ -491,7 +490,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     }
     
     protected boolean isFighterLocalToCurrentFight() {
-        final BasicFight<?> currentFight = (BasicFight<?>)this.getCurrentFight();
+        final BasicFight<?> currentFight = this.getCurrentFight();
         return currentFight == null || currentFight.isLocalToFight(this);
     }
     
@@ -519,7 +518,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                     this.getRunningEffectManager().clear();
                 }
                 catch (Exception e) {
-                    BasicCharacterInfo.m_logger.error((Object)"Exception levee", (Throwable)e);
+                    BasicCharacterInfo.m_logger.error("Exception levee", e);
                 }
                 this.getRunningEffectManager().setDoNotNotifyEffectUnapplication(false);
             }
@@ -532,12 +531,12 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             this.setHpValue(hpValue);
         }
         catch (Exception e2) {
-            BasicCharacterInfo.m_logger.error((Object)("Exception levee lors du rechargment d'un perso " + this), (Throwable)e2);
+            BasicCharacterInfo.m_logger.error("Exception levee lors du rechargment d'un perso " + this, e2);
         }
     }
     
     public void setHpValue(final int hpValue) {
-        this.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).set(hpValue);
+        this.getCharacteristic(FighterCharacteristicType.HP).set(hpValue);
     }
     
     public abstract void returnToOriginalController();
@@ -617,7 +616,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         }
         this.m_position.set(x, y, alt);
         if (this.m_id != -1L && !this.checkPositionValidity()) {
-            BasicCharacterInfo.m_logger.error((Object)("Position invalide pour un BasicCharacterInfo : " + this.m_position + " worldId=" + this.m_instanceId));
+            BasicCharacterInfo.m_logger.error("Position invalide pour un BasicCharacterInfo : " + this.m_position + " worldId=" + this.m_instanceId);
         }
         if (this.m_currentCarryTarget != null) {
             this.m_currentCarryTarget.setPosition(x, y, alt);
@@ -669,7 +668,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (this.getBreed() == null || !(this.getBreed() instanceof AvatarBreed)) {
             return;
         }
-        ((AvatarBreed)this.getBreed()).getMasteryCharacsCalculator().computeAndApply(element, this.m_characteristics, (Iterable<? extends AbstractSpellLevel>)spellInventory);
+        ((AvatarBreed)this.getBreed()).getMasteryCharacsCalculator().computeAndApply(element, this.m_characteristics, spellInventory);
     }
     
     @Override
@@ -814,7 +813,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             }
             case 0: {
                 if (this.m_worldProperties == null) {
-                    this.m_worldProperties = (PropertyManager<WorldPropertyType>)PropertyManager.newInstance((byte)0, this);
+                    this.m_worldProperties = PropertyManager.newInstance((byte)0, this);
                 }
                 if (this.m_worldProperties != null) {
                     this.m_worldProperties.setPropertyValue((WorldPropertyType)property, value);
@@ -837,7 +836,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             }
             case 0: {
                 if (this.m_worldProperties == null) {
-                    this.m_worldProperties = (PropertyManager<WorldPropertyType>)PropertyManager.newInstance((byte)0, this);
+                    this.m_worldProperties = PropertyManager.newInstance((byte)0, this);
                 }
                 if (this.m_worldProperties != null) {
                     this.m_worldProperties.add((WorldPropertyType)property);
@@ -930,18 +929,18 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     
     @Override
     public boolean mustGoOffPlay() {
-        final BasicFight<?> fight = (BasicFight<?>)this.getCurrentFight();
-        return (fight == null || fight.getModel().isAllowNoFightersInPlayAtEnd() || fight.getInPlayFightersCount() >= 2) && this.isOnFight() && this.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).isZero() && !this.m_isDead && !this.m_isKO;
+        final BasicFight<?> fight = this.getCurrentFight();
+        return (fight == null || fight.getModel().isAllowNoFightersInPlayAtEnd() || fight.getInPlayFightersCount() >= 2) && this.isOnFight() && this.getCharacteristic(FighterCharacteristicType.HP).isZero() && !this.m_isDead && !this.m_isKO;
     }
     
     @Override
     public boolean mustGoBackInPlay() {
-        return this.isOnFight() && this.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).value() > 0 && !this.m_isDead && this.m_isKO && !this.m_isAbandonning;
+        return this.isOnFight() && this.getCharacteristic(FighterCharacteristicType.HP).value() > 0 && !this.m_isDead && this.m_isKO && !this.m_isAbandonning;
     }
     
     @Override
     public boolean mustGoOutOfPlay() {
-        return this.isOnFight() && (this.getCharacteristic((CharacteristicType)FighterCharacteristicType.KO_TIME_BEFORE_DEATH).isZero() || (this.getCurrentFight() != null && this.getCurrentFight().getFighterInPlayInTeamCountingForFightEnd(this.getTeamId()).isEmpty())) && this.m_isKO && this.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).value() <= 0;
+        return this.isOnFight() && (this.getCharacteristic(FighterCharacteristicType.KO_TIME_BEFORE_DEATH).isZero() || (this.getCurrentFight() != null && this.getCurrentFight().getFighterInPlayInTeamCountingForFightEnd(this.getTeamId()).isEmpty())) && this.m_isKO && this.getCharacteristic(FighterCharacteristicType.HP).value() <= 0;
     }
     
     @Override
@@ -991,11 +990,11 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (this.m_carrier != null) {
             this.m_carrier.forceUncarry();
         }
-        final BasicFight<?> currentFight = (BasicFight<?>)this.getCurrentFight();
+        final BasicFight<?> currentFight = this.getCurrentFight();
         if (currentFight == null) {
             return true;
         }
-        final Collection<? extends BasicCharacterInfo> fighters = (Collection<? extends BasicCharacterInfo>)currentFight.getFighters();
+        final Collection<? extends BasicCharacterInfo> fighters = currentFight.getFighters();
         for (final BasicCharacterInfo fighter : fighters) {
             this.getRunningEffectManager().removeLinkedToCaster(fighter);
         }
@@ -1018,7 +1017,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeFighterDatas();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1027,7 +1026,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeFighterDataForReconnection();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1036,7 +1035,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializePublicCharacteristics();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1045,7 +1044,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeAllCharacteristics();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1058,7 +1057,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             serializer.fromBuild(serializedFighter);
         }
         else {
-            BasicCharacterInfo.m_logger.error((Object)"Impossible de d\u00e9s\u00e9rialioser les donn\u00e9es binaire du fighter : pas de s\u00e9rialiseur d\u00e9fini.");
+            BasicCharacterInfo.m_logger.error("Impossible de d\u00e9s\u00e9rialioser les donn\u00e9es binaire du fighter : pas de s\u00e9rialiseur d\u00e9fini.");
         }
     }
     
@@ -1115,7 +1114,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             serializer.fromBuild(serializedCharacter);
         }
         else {
-            BasicCharacterInfo.m_logger.error((Object)"Impossible de d\u00e9coder les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+            BasicCharacterInfo.m_logger.error("Impossible de d\u00e9coder les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         }
     }
     
@@ -1154,7 +1153,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     
     public EffectContext<WakfuEffect> getFightEffectContext() {
         if (this.getCurrentFight() != null) {
-            return (EffectContext<WakfuEffect>)this.getCurrentFight().getContext();
+            return this.getCurrentFight().getContext();
         }
         return null;
     }
@@ -1306,7 +1305,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             new CharacterInfoPartControlledByAI(serializer.getControlledByAIPart());
         }
         else {
-            BasicCharacterInfo.m_logger.error((Object)"Pas de s\u00e9rialiseur \u00e0 initialiser : le personnage ne sera pas s\u00e9rialisable !");
+            BasicCharacterInfo.m_logger.error("Pas de s\u00e9rialiseur \u00e0 initialiser : le personnage ne sera pas s\u00e9rialisable !");
         }
     }
     
@@ -1330,7 +1329,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     
     public void loadFightData() {
         if (this.m_fightProperties == null) {
-            this.m_fightProperties = (PropertyManager<FightPropertyType>)PropertyManager.newInstance((byte)1, this);
+            this.m_fightProperties = PropertyManager.newInstance((byte)1, this);
         }
     }
     
@@ -1345,9 +1344,9 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     }
     
     public void setApPmPwToMax() {
-        this.setCharacToMaxValue(this.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP));
-        this.setCharacToMaxValue(this.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP));
-        this.setCharacToMaxValue(this.getCharacteristic((CharacteristicType)FighterCharacteristicType.WP));
+        this.setCharacToMaxValue(this.getCharacteristic(FighterCharacteristicType.AP));
+        this.setCharacToMaxValue(this.getCharacteristic(FighterCharacteristicType.MP));
+        this.setCharacToMaxValue(this.getCharacteristic(FighterCharacteristicType.WP));
     }
     
     private void setCharacToMaxValue(final AbstractCharacteristic characteristic) {
@@ -1467,7 +1466,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         final Nation nation = this.m_citizenComportment.getNation();
         final IntArray buffs = nation.getAllProtectorsBuffs();
         if (buffs == null) {
-            BasicCharacterInfo.m_logger.info((Object)"buffs nuls impossible de recharger les buff");
+            BasicCharacterInfo.m_logger.info("buffs nuls impossible de recharger les buff");
             return;
         }
         for (int i = 0, size = buffs.size(); i < size; ++i) {
@@ -1481,7 +1480,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 }
             }
             else {
-                BasicCharacterInfo.m_logger.error((Object)("Impossible d'appliquer ce buff (ID=" + buffId + "), il est introuvable."));
+                BasicCharacterInfo.m_logger.error("Impossible d'appliquer ce buff (ID=" + buffId + "), il est introuvable.");
             }
         }
     }
@@ -1515,21 +1514,21 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     public final byte levelUpAptitude(final short aptitudeId, final boolean consumePoints) {
         final AptitudeInventory aptitudeInventory = this.getAptitudeInventory();
         if (aptitudeInventory == null) {
-            BasicCharacterInfo.m_logger.error((Object)("Impossible de leveler les aptitudes d'un " + this.getClass().getName() + " qui n'en poss\u00e8de pas"));
+            BasicCharacterInfo.m_logger.error("Impossible de leveler les aptitudes d'un " + this.getClass().getName() + " qui n'en poss\u00e8de pas");
             return 1;
         }
         final Aptitude aptitude = aptitudeInventory.getWithUniqueId(aptitudeId);
         if (aptitude == null) {
-            BasicCharacterInfo.m_logger.error((Object)("Le personnage " + this + " ne poss\u00e8de pas l'aptitude " + aptitudeId));
+            BasicCharacterInfo.m_logger.error("Le personnage " + this + " ne poss\u00e8de pas l'aptitude " + aptitudeId);
             return 1;
         }
         if (!aptitude.getReferenceAptitude().hasBreed(this.getBreed())) {
-            BasicCharacterInfo.m_logger.error((Object)("Mauvaise breed pour augmenter l'aptitude " + aptitudeId + " : attendu=" + aptitude.getReferenceAptitude().toString() + ", trouv\u00e9=" + this.getBreed()));
+            BasicCharacterInfo.m_logger.error("Mauvaise breed pour augmenter l'aptitude " + aptitudeId + " : attendu=" + aptitude.getReferenceAptitude().toString() + ", trouv\u00e9=" + this.getBreed());
             return 1;
         }
         final short aptitudeLevel = aptitude.getLevel();
         if (aptitudeLevel < 0 || aptitudeLevel > aptitude.getReferenceAptitude().getMaxLevel()) {
-            BasicCharacterInfo.m_logger.error((Object)("Niveau invalide pour l'aptitude " + aptitude + " du personnage " + this + " : " + aptitudeLevel));
+            BasicCharacterInfo.m_logger.error("Niveau invalide pour l'aptitude " + aptitude + " du personnage " + this + " : " + aptitudeLevel);
             return 1;
         }
         if (aptitudeLevel == aptitude.getReferenceAptitude().getMaxLevel()) {
@@ -1542,7 +1541,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         }
         final int unlockLevel = aptitude.getReferenceAptitude().getLevelUnlock((short)(aptitudeLevel + 1));
         if (unlockLevel > this.getLevel()) {
-            BasicCharacterInfo.m_logger.error((Object)(this + " n'a pas le niveau pour augmenter l'aptitude " + aptitudeId + " jusqu'au niveau " + (aptitude.getLevel() + 1) + " : requis=" + unlockLevel + ", actuellement=" + this.getLevel()));
+            BasicCharacterInfo.m_logger.error(this + " n'a pas le niveau pour augmenter l'aptitude " + aptitudeId + " jusqu'au niveau " + (aptitude.getLevel() + 1) + " : requis=" + unlockLevel + ", actuellement=" + this.getLevel());
             return 4;
         }
         if (consumePoints) {
@@ -1550,7 +1549,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             final int requiredPoints = aptitude.getPointsForLevel((short)(aptitudeLevel + 1), this);
             final int availablePoints = aptitudeInventory.getAvailablePoints(type);
             if (availablePoints < requiredPoints) {
-                BasicCharacterInfo.m_logger.error((Object)("Pas assez de points \u00e0 " + this + " pour augmenter l'aptitude " + aptitudeId + " jusqu'au niveau " + (aptitude.getLevel() + 1) + " : requis=" + requiredPoints + ", actuellement=" + availablePoints));
+                BasicCharacterInfo.m_logger.error("Pas assez de points \u00e0 " + this + " pour augmenter l'aptitude " + aptitudeId + " jusqu'au niveau " + (aptitude.getLevel() + 1) + " : requis=" + requiredPoints + ", actuellement=" + availablePoints);
                 return 2;
             }
             aptitudeInventory.setAvailablePoints(type, availablePoints - requiredPoints);
@@ -1577,7 +1576,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serialize();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1586,7 +1585,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForCharacterList();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1595,7 +1594,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForCharacterPositionInformation();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1604,7 +1603,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForCharacterCreationInformation();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1613,7 +1612,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForLocalCharacterInformation();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1622,7 +1621,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForAccountInformationUpdate();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1631,7 +1630,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForAntiAddictionUpdate();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1640,7 +1639,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForAptitudeBonusInventory();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1649,7 +1648,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForRemoteAccountInformationUpdate();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1658,7 +1657,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForRemotePetUpdate();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1667,7 +1666,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForDiscoveredItemsUpdate();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1676,7 +1675,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForHeroLoad();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1685,7 +1684,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForPropertiesUpdate(withFightPart);
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1703,7 +1702,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             }
             return res;
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1721,7 +1720,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             }
             return res;
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1730,7 +1729,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForWorldToGlobalExchange();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1739,7 +1738,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForGlobalToGameServerExchange();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1748,7 +1747,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForNationPvp();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1757,7 +1756,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForGlobalToLocalClient();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1766,7 +1765,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeInventories();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1775,7 +1774,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         if (serializer != null) {
             return serializer.serializeForPersonalEffects();
         }
-        BasicCharacterInfo.m_logger.error((Object)"Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
+        BasicCharacterInfo.m_logger.error("Impossible de s\u00e9rialiser les donn\u00e9es binaire du personnage : pas de s\u00e9rialiseur d\u00e9fini.");
         return ArrayUtils.EMPTY_BYTE_ARRAY;
     }
     
@@ -1842,7 +1841,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
             final int bound = characBoundByLevel.getBound(this.getLevel());
             final FighterCharacteristicType characType = FighterCharacteristicType.getCharacteristicTypeFromId(characId);
             if (characType != null && this.hasCharacteristic(characType)) {
-                this.getCharacteristic((CharacteristicType)characType).setUpperBound(bound);
+                this.getCharacteristic(characType).setUpperBound(bound);
             }
         }
     }
@@ -2415,9 +2414,9 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         final int maxApDiff = newApMax - oldApMax;
         final int newMpMax = this.getCharacteristicMax(FighterCharacteristicType.MP);
         final int maxMpDiff = newMpMax - oldMpMax;
-        this.getCharacteristic((CharacteristicType)FighterCharacteristicType.WP).set(wp + maxWpDiff);
-        this.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).set(ap + maxApDiff);
-        this.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).set(mp + maxMpDiff);
+        this.getCharacteristic(FighterCharacteristicType.WP).set(wp + maxWpDiff);
+        this.getCharacteristic(FighterCharacteristicType.AP).set(ap + maxApDiff);
+        this.getCharacteristic(FighterCharacteristicType.MP).set(mp + maxMpDiff);
     }
     
     public void setSummonedFromSymbiot(final boolean summonedFromSymbiot) {
@@ -2462,7 +2461,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         }
         final PropertyManager<FightPropertyType> properties = this.getFightProperties();
         if (properties == null) {
-            BasicCharacterInfo.m_logger.error((Object)"manager de propri\u00e9t\u00e9 de combat null au chargement des donn\u00e9es de combat");
+            BasicCharacterInfo.m_logger.error("manager de propri\u00e9t\u00e9 de combat null au chargement des donn\u00e9es de combat");
             return;
         }
         for (final int propertyId : breed.getBaseFightProperties()) {
@@ -2471,7 +2470,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                 properties.add(prop);
             }
             else {
-                BasicCharacterInfo.m_logger.error((Object)("id d'une propri\u00e9t\u00e9 de base incorrect :" + propertyId));
+                BasicCharacterInfo.m_logger.error("id d'une propri\u00e9t\u00e9 de base incorrect :" + propertyId);
             }
         }
     }
@@ -2489,7 +2488,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
     public void spellApCostModification(final int value, final int propertyId) {
         final SpellPropertyType propertyType = SpellPropertyType.getPropertyFromId(propertyId);
         if (propertyType == null) {
-            BasicCharacterInfo.m_logger.error((Object)("Propri\u00e9t\u00e9 inconnue " + propertyId));
+            BasicCharacterInfo.m_logger.error("Propri\u00e9t\u00e9 inconnue " + propertyId);
             return;
         }
         this.m_spellCostModification.apCostModification(value, propertyType);
@@ -2535,7 +2534,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         }
         ++this.m_beginDelegateCount;
         if (this.m_beginDelegateCount > 100) {
-            BasicCharacterInfo.m_logger.warn((Object)"Il doit y avoir un pobl\u00e8me....", (Throwable)new Exception());
+            BasicCharacterInfo.m_logger.warn("Il doit y avoir un pobl\u00e8me....", new Exception());
         }
     }
     
@@ -2792,7 +2791,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         PUBLIC_TYPES = new FighterCharacteristicType[] { FighterCharacteristicType.HP, FighterCharacteristicType.AP, FighterCharacteristicType.MP, FighterCharacteristicType.WP, FighterCharacteristicType.INIT, FighterCharacteristicType.DMG_FIRE_PERCENT, FighterCharacteristicType.DMG_WATER_PERCENT, FighterCharacteristicType.DMG_EARTH_PERCENT, FighterCharacteristicType.DMG_AIR_PERCENT, FighterCharacteristicType.AP_DEBUFF_POWER, FighterCharacteristicType.MP_DEBUFF_POWER, FighterCharacteristicType.AP_DEBUFF_RES, FighterCharacteristicType.MP_DEBUFF_RES, FighterCharacteristicType.RES_IN_PERCENT, FighterCharacteristicType.RES_FIRE_PERCENT, FighterCharacteristicType.RES_WATER_PERCENT, FighterCharacteristicType.RES_EARTH_PERCENT, FighterCharacteristicType.RES_AIR_PERCENT, FighterCharacteristicType.TACKLE, FighterCharacteristicType.DODGE };
         PRIVATE_TYPES = new FighterCharacteristicType[] { FighterCharacteristicType.WISDOM, FighterCharacteristicType.PROSPECTION, FighterCharacteristicType.RANGE, FighterCharacteristicType.FEROCITY, FighterCharacteristicType.FUMBLE_RATE, FighterCharacteristicType.HEAL_IN_PERCENT, FighterCharacteristicType.MECHANISM_MASTERY, FighterCharacteristicType.MECHANICS, FighterCharacteristicType.LEADERSHIP, FighterCharacteristicType.SUMMONING_MASTERY, FighterCharacteristicType.BACKSTAB_BONUS, FighterCharacteristicType.DMG_IN_PERCENT, FighterCharacteristicType.DMG_FIRE_PERCENT, FighterCharacteristicType.DMG_WATER_PERCENT, FighterCharacteristicType.DMG_EARTH_PERCENT, FighterCharacteristicType.DMG_AIR_PERCENT, FighterCharacteristicType.DMG_REBOUND, FighterCharacteristicType.DMG_ABSORB, FighterCharacteristicType.EQUIPMENT_KNOWLEDGE, FighterCharacteristicType.AP_DEBUFF_POWER, FighterCharacteristicType.MP_DEBUFF_POWER, FighterCharacteristicType.AP_DEBUFF_RES, FighterCharacteristicType.MP_DEBUFF_RES, FighterCharacteristicType.STRENGTH, FighterCharacteristicType.AGILITY, FighterCharacteristicType.INTELLIGENCE, FighterCharacteristicType.LUCK };
         FOR_FIGHT_TYPES = new FighterCharacteristicType[] { FighterCharacteristicType.HP, FighterCharacteristicType.AP, FighterCharacteristicType.MP, FighterCharacteristicType.WP, FighterCharacteristicType.INIT, FighterCharacteristicType.RES_IN_PERCENT, FighterCharacteristicType.RES_FIRE_PERCENT, FighterCharacteristicType.RES_WATER_PERCENT, FighterCharacteristicType.RES_EARTH_PERCENT, FighterCharacteristicType.RES_AIR_PERCENT, FighterCharacteristicType.AP_DEBUFF_POWER, FighterCharacteristicType.MP_DEBUFF_POWER, FighterCharacteristicType.AP_DEBUFF_RES, FighterCharacteristicType.MP_DEBUFF_RES, FighterCharacteristicType.TACKLE, FighterCharacteristicType.DODGE, FighterCharacteristicType.BACKSTAB_BONUS, FighterCharacteristicType.DMG_IN_PERCENT, FighterCharacteristicType.DMG_FIRE_PERCENT, FighterCharacteristicType.DMG_WATER_PERCENT, FighterCharacteristicType.DMG_EARTH_PERCENT, FighterCharacteristicType.DMG_AIR_PERCENT, FighterCharacteristicType.DMG_REBOUND, FighterCharacteristicType.DMG_ABSORB, FighterCharacteristicType.FEROCITY, FighterCharacteristicType.FUMBLE_RATE, FighterCharacteristicType.HEAL_IN_PERCENT, FighterCharacteristicType.MECHANISM_MASTERY, FighterCharacteristicType.SUMMONING_MASTERY, FighterCharacteristicType.FECA_GLYPH_CHARGE_BONUS, FighterCharacteristicType.ARMOR_PLATE_BONUS, FighterCharacteristicType.ARMOR_PLATE, FighterCharacteristicType.BOMB_COOLDOWN, FighterCharacteristicType.STATE_APPLICATION_BONUS, FighterCharacteristicType.STATE_RESISTANCE_BONUS, FighterCharacteristicType.PERCEPTION, FighterCharacteristicType.VIRTUAL_HP, FighterCharacteristicType.STEAMER_MICROBOT_MAX_DISTANCE };
-        m_logger = Logger.getLogger((Class)BasicCharacterInfo.class);
+        m_logger = Logger.getLogger(BasicCharacterInfo.class);
     }
     
     public enum MonsterSpellsLevel
@@ -2907,7 +2906,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         @Override
         public void updateToSerializedPart() {
             if (BasicCharacterInfo.this.m_breed == AvatarBreed.NONE) {
-                BasicCharacterInfo.m_logger.warn((Object)"Serialisation d'une breed NONE ! probablement pas normal");
+                BasicCharacterInfo.m_logger.warn("Serialisation d'une breed NONE ! probablement pas normal");
             }
             this.m_part.breedId = BasicCharacterInfo.this.m_breed.getBreedId();
         }
@@ -3045,7 +3044,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
                         invocationCharacteristics = IceStatueDoubleCharacteristics.getDefaultInstance();
                     }
                     else {
-                        BasicCharacterInfo.m_logger.error((Object)("Type d'invoc de double inconnue " + this.m_part.SUMMONDATA.summon.DOUBLEINVOC.doubledata.doubleType));
+                        BasicCharacterInfo.m_logger.error("Type d'invoc de double inconnue " + this.m_part.SUMMONDATA.summon.DOUBLEINVOC.doubledata.doubleType);
                         invocationCharacteristics = DoubleInvocationCharacteristics.getDefaultInstance();
                     }
                     if (BasicCharacterInfo.this.getSpellInventory() != null) {
@@ -3079,7 +3078,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         
         @Override
         public void updateToSerializedPart() {
-            BasicCharacterInfo.this.getCharacteristics().toRaw(this.m_part.characteristics, (CharacteristicType[])BasicCharacterInfo.FOR_FIGHT_TYPES);
+            BasicCharacterInfo.this.getCharacteristics().toRaw(this.m_part.characteristics, BasicCharacterInfo.FOR_FIGHT_TYPES);
         }
         
         @Override
@@ -3100,7 +3099,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         
         @Override
         public void updateToSerializedPart() {
-            BasicCharacterInfo.this.getCharacteristics().toRaw(this.m_part.characteristics, (CharacteristicType[])FighterCharacteristicType.values());
+            BasicCharacterInfo.this.getCharacteristics().toRaw(this.m_part.characteristics, FighterCharacteristicType.values());
         }
         
         @Override
@@ -3134,7 +3133,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         public void onDataChanged() {
             if (this.m_part.properties != null) {
                 if (BasicCharacterInfo.this.m_worldProperties == null) {
-                    BasicCharacterInfo.this.m_worldProperties = (PropertyManager<WorldPropertyType>)PropertyManager.newInstance((byte)0, BasicCharacterInfo.this);
+                    BasicCharacterInfo.this.m_worldProperties = PropertyManager.newInstance((byte)0, BasicCharacterInfo.this);
                 }
                 BasicCharacterInfo.this.m_worldProperties.fromRaw(this.m_part.properties.properties);
             }
@@ -3169,7 +3168,7 @@ public abstract class BasicCharacterInfo implements BasicFighter, PropertyUpdate
         public void onDataChanged() {
             if (this.m_part.properties != null) {
                 if (BasicCharacterInfo.this.m_fightProperties == null) {
-                    BasicCharacterInfo.this.m_fightProperties = (PropertyManager<FightPropertyType>)PropertyManager.newInstance((byte)1, BasicCharacterInfo.this);
+                    BasicCharacterInfo.this.m_fightProperties = PropertyManager.newInstance((byte)1, BasicCharacterInfo.this);
                 }
                 BasicCharacterInfo.this.m_fightProperties.fromRaw(this.m_part.properties.properties);
             }

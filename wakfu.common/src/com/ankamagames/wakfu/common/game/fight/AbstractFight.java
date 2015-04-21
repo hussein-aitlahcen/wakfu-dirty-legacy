@@ -22,7 +22,6 @@ import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 
 import org.jetbrains.annotations.*;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timeevents.*;
 import com.ankamagames.wakfu.common.game.item.*;
@@ -32,7 +31,6 @@ import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
 
 public abstract class AbstractFight<F extends BasicCharacterInfo> extends WakfuTurnBasedFight<F> implements TimeEventHandler
 {
@@ -301,7 +299,7 @@ public abstract class AbstractFight<F extends BasicCharacterInfo> extends WakfuT
             res = this.m_spellCastValidator.getSpellCastValidity(fighter, spelllevel, targetCell, checkUseCost);
         }
         catch (Exception e) {
-            AbstractFight.m_logger.error((Object)"Exception levee", (Throwable)e);
+            BasicFight.m_logger.error("Exception levee", e);
             return CastValidity.CANNOT_EVALUATE;
         }
         finally {
@@ -402,27 +400,29 @@ public abstract class AbstractFight<F extends BasicCharacterInfo> extends WakfuT
         }
     }
     
-    public void onFighterStartTurn(@NotNull final F fighter) {
+    @Override
+	public void onFighterStartTurn(@NotNull final F fighter) {
         if (fighter.isActiveProperty(FightPropertyType.GROGGY_3)) {
-            fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).toMin();
+            fighter.getCharacteristic(FighterCharacteristicType.AP).toMin();
         }
         if (fighter.isActiveProperty(FightPropertyType.CRIPPLED_3)) {
-            fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).toMin();
+            fighter.getCharacteristic(FighterCharacteristicType.MP).toMin();
         }
         fighter.getSpellLevelCastHistory().onNewTurn();
         super.onFighterStartTurn(fighter);
     }
     
-    public void onFighterEndTurn(@NotNull final F fighter) {
+    @Override
+	public void onFighterEndTurn(@NotNull final F fighter) {
         if (fighter.isActiveProperty(FightPropertyType.GROGGY_3)) {
-            fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).toMin();
+            fighter.getCharacteristic(FighterCharacteristicType.AP).toMin();
         }
         else {
-            fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).toMax();
+            fighter.getCharacteristic(FighterCharacteristicType.AP).toMax();
         }
-        fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).toMax();
+        fighter.getCharacteristic(FighterCharacteristicType.MP).toMax();
         if (fighter.isActiveProperty(FightPropertyType.CRIPPLED_3)) {
-            fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).toMin();
+            fighter.getCharacteristic(FighterCharacteristicType.MP).toMin();
         }
         super.onFighterEndTurn(fighter);
     }
@@ -491,7 +491,7 @@ public abstract class AbstractFight<F extends BasicCharacterInfo> extends WakfuT
         final Iterator<? extends DroppedItem> it = this.getItems();
         final Collection<Long> toRemove = new ArrayList<Long>();
         while (it.hasNext()) {
-            final DroppedItem item = (DroppedItem)it.next();
+            final DroppedItem item = it.next();
             if (item.getPhase() == -1) {
                 if (item.getRemainingTicksInPhase() <= 0L) {
                     toRemove.add(item.getId());

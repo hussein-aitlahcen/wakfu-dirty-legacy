@@ -37,7 +37,7 @@ class PetColorChange implements PetChange
             controller.setColorItem(this.m_colorItemRefId);
         }
         catch (PetControllerException e) {
-            PetColorChange.m_logger.error((Object)"Impossible de changer la couleur du familier", (Throwable)e);
+            PetColorChange.m_logger.error("Impossible de changer la couleur du familier", e);
         }
     }
     
@@ -52,6 +52,6 @@ class PetColorChange implements PetChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PetColorChange.class);
+        m_logger = Logger.getLogger(PetColorChange.class);
     }
 }

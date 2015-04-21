@@ -1,6 +1,7 @@
 package com.ankamagames.baseImpl.common.clientAndServer.core;
 
 import com.ankamagames.framework.kernel.core.translator.*;
+
 import org.jetbrains.annotations.*;
 
 public class GameContentTranslator extends Translator
@@ -9,7 +10,7 @@ public class GameContentTranslator extends Translator
     private static final char GAME_CONTENT_TRANSLATOR_SEPARATOR = '.';
     
     public static GameContentTranslator getInstance() {
-        return (GameContentTranslator)GameContentTranslator.m_instance;
+        return (GameContentTranslator)Translator.m_instance;
     }
     
     @NotNull

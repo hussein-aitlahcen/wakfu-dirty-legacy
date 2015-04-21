@@ -44,7 +44,7 @@ public final class AptitudeInventoryImpl extends StackInventory<Aptitude, RawApt
     @Override
     public Iterator<Aptitude> iterator() {
         final ArrayList<Aptitude> contents = new ArrayList<Aptitude>(this.m_contents.size());
-        contents.addAll((Collection<? extends Aptitude>)this.m_contents.values());
+        contents.addAll(this.m_contents.values());
         Collections.sort(contents);
         return contents.iterator();
     }
@@ -62,7 +62,7 @@ public final class AptitudeInventoryImpl extends StackInventory<Aptitude, RawApt
     @Override
     public ArrayList<Aptitude> getAptitudes(final AptitudeType type) {
         final ArrayList<Aptitude> breed = new ArrayList<Aptitude>();
-        final Collection<Aptitude> aptitudes = (Collection<Aptitude>)this.m_contents.values();
+        final Collection<Aptitude> aptitudes = this.m_contents.values();
         for (final Aptitude aptitude : aptitudes) {
             if (aptitude.getReferenceAptitude().getType() == type) {
                 breed.add(aptitude);
@@ -74,7 +74,7 @@ public final class AptitudeInventoryImpl extends StackInventory<Aptitude, RawApt
     
     @Override
     public boolean destroyWithUniqueId(final long uniqueId) {
-        final Aptitude apt = (Aptitude)this.m_contents.get(uniqueId);
+        final Aptitude apt = this.m_contents.get(uniqueId);
         if (apt == null) {
             return false;
         }
@@ -120,7 +120,7 @@ public final class AptitudeInventoryImpl extends StackInventory<Aptitude, RawApt
         boolean bOk = true;
         try {
             for (final RawAptitudeInventory.Content content : raw.contents) {
-                final Aptitude aptitude = (Aptitude)this.m_contentProvider.unSerializeContent(content.aptitude);
+                final Aptitude aptitude = this.m_contentProvider.unSerializeContent(content.aptitude);
                 if (aptitude != null) {
                     if ((this).add(aptitude)) {
                         continue;
@@ -133,11 +133,11 @@ public final class AptitudeInventoryImpl extends StackInventory<Aptitude, RawApt
             }
         }
         catch (InventoryCapacityReachedException e) {
-            AptitudeInventoryImpl.m_logger.error((Object)ExceptionFormatter.toString(e));
+            AptitudeInventoryImpl.m_logger.error(ExceptionFormatter.toString(e));
             bOk = false;
         }
         catch (ContentAlreadyPresentException e2) {
-            AptitudeInventoryImpl.m_logger.error((Object)ExceptionFormatter.toString(e2));
+            AptitudeInventoryImpl.m_logger.error(ExceptionFormatter.toString(e2));
             bOk = false;
         }
         for (final RawAptitudeInventory.AvailablePoint points : raw.availablePointsArray) {
@@ -170,6 +170,6 @@ public final class AptitudeInventoryImpl extends StackInventory<Aptitude, RawApt
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AptitudeInventoryImpl.class);
+        m_logger = Logger.getLogger(AptitudeInventoryImpl.class);
     }
 }

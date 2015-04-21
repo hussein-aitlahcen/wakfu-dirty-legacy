@@ -3,8 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
@@ -12,7 +13,9 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -67,7 +70,7 @@ public class Summon extends WakfuRunningEffect
                 (this.properties = new RawProperties()).unserialize(buffer);
                 Summon.this.m_summonCharac = new BasicInvocationCharacteristics();
                 Summon.this.m_summonCharac.fromRaw(this.invocationCharacteristics);
-                Summon.this.m_properties = (PropertyManager<FightPropertyType>)new PropertyManager();
+                Summon.this.m_properties = new PropertyManager();
                 Summon.this.m_properties.fromRaw(this.properties);
                 Summon.this.m_summonCharac.setTeamId(buffer.get());
             }
@@ -101,7 +104,7 @@ public class Summon extends WakfuRunningEffect
             re = new Summon();
             re.m_pool = null;
             re.m_isStatic = false;
-            Summon.m_logger.error((Object)("Erreur lors d'un checkOut sur un Summon : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un Summon : " + e.getMessage());
         }
         re.m_summonCharac = null;
         re.m_properties = null;
@@ -112,7 +115,7 @@ public class Summon extends WakfuRunningEffect
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         if (this.m_summonCharac != null && this.m_caster instanceof BasicCharacterInfo) {
-            Summon.m_logger.info((Object)("Instanciation d'une nouvelle invocation avec un id de " + this.m_newTargetId));
+            RunningEffect.m_logger.info("Instanciation d'une nouvelle invocation avec un id de " + this.m_newTargetId);
             final BasicCharacterInfo basicCharacterInfo = (BasicCharacterInfo)this.m_caster;
             final BasicCharacterInfo monster = basicCharacterInfo.summonMonster(this.m_summonCharac.getSummonId(), this.m_targetCell, this.m_summonCharac.getTypeId(), this.m_summonCharac, this.m_summonIsOwnController, this.m_properties);
             if (this.isValueComputationEnabled()) {
@@ -134,10 +137,10 @@ public class Summon extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         int levelType;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
-            levelType = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 1) {
+            levelType = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         else {
             levelType = -1;
@@ -149,7 +152,7 @@ public class Summon extends WakfuRunningEffect
                     forcedLevel = (cappedLevel = this.getContainerLevel());
                     break;
                 }
-                Summon.m_logger.error((Object)"[Summon] Impossible d'invoquer une creature avec le mm niveau que le sort : l'effectContainer est null");
+                RunningEffect.m_logger.error("[Summon] Impossible d'invoquer une creature avec le mm niveau que le sort : l'effectContainer est null");
                 return;
             }
             case -2: {
@@ -158,7 +161,7 @@ public class Summon extends WakfuRunningEffect
                     cappedLevel = ((BasicCharacterInfo)this.m_caster).getLevel();
                     break;
                 }
-                Summon.m_logger.error((Object)"[Summon] Impossible d'invoquer une creature avec le mm niveau que le caster car celui-ci est null");
+                RunningEffect.m_logger.error("[Summon] Impossible d'invoquer une creature avec le mm niveau que le caster car celui-ci est null");
                 return;
             }
             case -3: {
@@ -170,7 +173,7 @@ public class Summon extends WakfuRunningEffect
                     }
                 }
                 if (forcedLevel == -1) {
-                    Summon.m_logger.error((Object)"[Summon] Impossible d'invoquer une creature, on ne peut pas recup\u00e9rer son niveau");
+                    RunningEffect.m_logger.error("[Summon] Impossible d'invoquer une creature, on ne peut pas recup\u00e9rer son niveau");
                     return;
                 }
                 break;
@@ -181,21 +184,21 @@ public class Summon extends WakfuRunningEffect
                     cappedLevel = (short)levelType;
                     break;
                 }
-                Summon.m_logger.error((Object)("[Summon] Erreur de saisie : le levelType doit etre positif ou -1 ou -2, l\u00e0 il vaut " + levelType));
+                RunningEffect.m_logger.error("[Summon] Erreur de saisie : le levelType doit etre positif ou -1 ou -2, l\u00e0 il vaut " + levelType);
                 return;
             }
         }
-        this.m_summonIsOwnController = (((WakfuEffect)this.m_genericEffect).getParamsCount() > 2 && ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.RANDOM) >= 1);
+        this.m_summonIsOwnController = (this.m_genericEffect.getParamsCount() > 2 && this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.RANDOM) >= 1);
         Direction8 direction;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 3) {
-            final int directionId = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 3) {
+            final int directionId = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             direction = Direction8.getDirectionFromIndex(directionId);
         }
         else {
             direction = Direction8.NONE;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 4) {
-            this.m_teamId = (byte)((WakfuEffect)this.m_genericEffect).getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 4) {
+            this.m_teamId = (byte)this.m_genericEffect.getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         else if (this.m_caster instanceof BasicCharacterInfo) {
             this.m_teamId = ((BasicCharacterInfo)this.m_caster).getTeamId();

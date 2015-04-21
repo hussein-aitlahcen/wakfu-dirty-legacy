@@ -153,7 +153,7 @@ public class Segment implements Iterable<Point3>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Segment.class);
+        m_logger = Logger.getLogger(Segment.class);
     }
     
     public enum RelativePosition

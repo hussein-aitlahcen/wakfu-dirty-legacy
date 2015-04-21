@@ -23,7 +23,8 @@ public class TokenTextImpl implements TokenText
         this.index = idx;
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         Object o = null;
         try {
             o = super.clone();

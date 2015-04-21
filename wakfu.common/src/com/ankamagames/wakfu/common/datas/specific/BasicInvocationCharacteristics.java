@@ -6,7 +6,6 @@ import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.xp.*;
 import com.ankamagames.wakfu.common.game.xp.modifications.*;
@@ -169,7 +168,7 @@ public class BasicInvocationCharacteristics implements Levelable, RawConvertible
     public void initializeSummoning(final BasicCharacterInfo summoning, final BasicCharacterInfo summoner) {
         summoning.setInvocationCharacteristic(this);
         if (this.m_currentHp > 0) {
-            summoning.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).set(this.m_currentHp);
+            summoning.getCharacteristic(FighterCharacteristicType.HP).set(this.m_currentHp);
         }
         this.initializeDmgPercent(summoning, summoner);
         summoning.setName(this.m_name);
@@ -183,10 +182,10 @@ public class BasicInvocationCharacteristics implements Levelable, RawConvertible
         final boolean useSummonerDmgPercent = ((AbstractMonsterBreed)summoning.getBreed()).containsBaseFightProperties(FightPropertyType.USE_SUMMONER_DMG_PERCENT);
         final boolean useSummoningMastery = !((AbstractMonsterBreed)summoning.getBreed()).containsBaseFightProperties(FightPropertyType.DONT_USE_SUMMONING_MASTERY);
         if (useSummoningMastery && summoner.hasCharacteristic(FighterCharacteristicType.SUMMONING_MASTERY) && !this.comeFromSymbiot()) {
-            summoning.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_IN_PERCENT).add(summoner.getCharacteristicValue(FighterCharacteristicType.SUMMONING_MASTERY));
+            summoning.getCharacteristic(FighterCharacteristicType.DMG_IN_PERCENT).add(summoner.getCharacteristicValue(FighterCharacteristicType.SUMMONING_MASTERY));
         }
         if (useSummonerDmgPercent && summoner.hasCharacteristic(FighterCharacteristicType.DMG_IN_PERCENT)) {
-            summoning.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_IN_PERCENT).add(summoner.getCharacteristicValue(FighterCharacteristicType.DMG_IN_PERCENT));
+            summoning.getCharacteristic(FighterCharacteristicType.DMG_IN_PERCENT).add(summoner.getCharacteristicValue(FighterCharacteristicType.DMG_IN_PERCENT));
         }
     }
     
@@ -304,6 +303,6 @@ public class BasicInvocationCharacteristics implements Levelable, RawConvertible
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BasicInvocationCharacteristics.class);
+        m_logger = Logger.getLogger(BasicInvocationCharacteristics.class);
     }
 }

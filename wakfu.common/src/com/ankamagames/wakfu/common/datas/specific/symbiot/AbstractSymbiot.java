@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.datas.specific.symbiot;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.wakfu.common.rawData.*;
-import java.util.*;
 import com.ankamagames.wakfu.common.datas.*;
 
 public abstract class AbstractSymbiot
@@ -58,7 +57,7 @@ public abstract class AbstractSymbiot
     
     public BasicInvocationCharacteristics getCreatureParametersFromIndex(final byte index) {
         if (index < 0 || index >= this.m_capturedCreatures.length) {
-            AbstractSymbiot.m_logger.error((Object)("[SYMBIOT] index invalide " + index));
+            AbstractSymbiot.m_logger.error("[SYMBIOT] index invalide " + index);
             return null;
         }
         return this.m_capturedCreatures[index];
@@ -118,10 +117,10 @@ public abstract class AbstractSymbiot
     
     public void addCreaturesParametersToIndex(final BasicInvocationCharacteristics characs, final byte index) {
         if (characs == null) {
-            AbstractSymbiot.m_logger.warn((Object)"[SYMBIOT] ajout des param\u00e8tres d'invoc null");
+            AbstractSymbiot.m_logger.warn("[SYMBIOT] ajout des param\u00e8tres d'invoc null");
             return;
         }
-        AbstractSymbiot.m_logger.info((Object)("[SYMBIOT] ajout des param\u00e8tres d'invoc " + characs.getSummonId() + " \u00e0 l'emplacement " + index));
+        AbstractSymbiot.m_logger.info("[SYMBIOT] ajout des param\u00e8tres d'invoc " + characs.getSummonId() + " \u00e0 l'emplacement " + index);
         try {
             if (this.m_capturedCreatures[index] == null) {
                 this.initializeBreed(this.m_capturedCreatures[index] = characs);
@@ -137,12 +136,12 @@ public abstract class AbstractSymbiot
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            AbstractSymbiot.m_logger.error((Object)"[SYMBIOT] index en dehors du tableau de cible lors de l'ajout");
+            AbstractSymbiot.m_logger.error("[SYMBIOT] index en dehors du tableau de cible lors de l'ajout");
         }
     }
     
     public void removeFromIndex(final byte index) {
-        AbstractSymbiot.m_logger.info((Object)("[Symbiot] on retire l'invoc d'emplacement " + index));
+        AbstractSymbiot.m_logger.info("[Symbiot] on retire l'invoc d'emplacement " + index);
         try {
             this.m_needUpdate = true;
             final BasicInvocationCharacteristics characteristics = this.m_capturedCreatures[index];
@@ -164,12 +163,12 @@ public abstract class AbstractSymbiot
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            AbstractSymbiot.m_logger.error((Object)"[SYMBIOT] on demande de supprimer une ligne en dehors du tableau de cible");
+            AbstractSymbiot.m_logger.error("[SYMBIOT] on demande de supprimer une ligne en dehors du tableau de cible");
         }
     }
     
     public void destroyCreaturesOnIndex(final byte index) {
-        AbstractSymbiot.m_logger.info((Object)("[Symbiot] on vide les invocs sur l'emplacement " + index));
+        AbstractSymbiot.m_logger.info("[Symbiot] on vide les invocs sur l'emplacement " + index);
         try {
             this.removeFromIndex(index);
             if (this.m_owner != null) {
@@ -177,7 +176,7 @@ public abstract class AbstractSymbiot
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            AbstractSymbiot.m_logger.error((Object)"[SYMBIOT] on demande de destroy une ligne en dehors du tableau de cible");
+            AbstractSymbiot.m_logger.error("[SYMBIOT] on demande de destroy une ligne en dehors du tableau de cible");
         }
     }
     
@@ -198,11 +197,11 @@ public abstract class AbstractSymbiot
                 this.m_availableCreatures[index] = false;
             }
             else {
-                AbstractSymbiot.m_logger.error((Object)("[SYMBIOT] on demande de rendre une creature accessible mais son index est invalide " + index));
+                AbstractSymbiot.m_logger.error("[SYMBIOT] on demande de rendre une creature accessible mais son index est invalide " + index);
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            AbstractSymbiot.m_logger.error((Object)("[SYMBIOT] on demande rendre une creature accessible mais son index est invalide " + index));
+            AbstractSymbiot.m_logger.error("[SYMBIOT] on demande rendre une creature accessible mais son index est invalide " + index);
         }
     }
     
@@ -213,7 +212,7 @@ public abstract class AbstractSymbiot
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            AbstractSymbiot.m_logger.error((Object)"[SYMBIOT] on demande de supprimer une ligne en dehors du tableau de cible");
+            AbstractSymbiot.m_logger.error("[SYMBIOT] on demande de supprimer une ligne en dehors du tableau de cible");
         }
         return false;
     }
@@ -335,6 +334,6 @@ public abstract class AbstractSymbiot
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractSymbiot.class);
+        m_logger = Logger.getLogger(AbstractSymbiot.class);
     }
 }

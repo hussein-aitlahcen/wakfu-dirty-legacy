@@ -23,6 +23,6 @@ public class MissingResources extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MissingResources.class);
+        m_logger = Logger.getLogger(MissingResources.class);
     }
 }

@@ -169,7 +169,7 @@ public class WordsModerator
             moderatedSentence = WordModeratorHelper.moderateWithPrecisePattern(moderatedString, this.m_chatWordContainingPattern);
         }
         if (moderatedSentence == null) {
-            WordsModerator.m_logger.error((Object)("[TRANSLATION] No censor pattern matched for languages " + this.m_languages));
+            WordsModerator.m_logger.error("[TRANSLATION] No censor pattern matched for languages " + this.m_languages);
             return sentence;
         }
         final StringBuilder finalText = new StringBuilder();
@@ -200,7 +200,7 @@ public class WordsModerator
     
     static {
         WordsModerator.CENSOR_ACTIVATED = true;
-        m_logger = Logger.getLogger((Class)WordsModerator.class);
+        m_logger = Logger.getLogger(WordsModerator.class);
         INSTANCE = new WordsModerator();
     }
 }

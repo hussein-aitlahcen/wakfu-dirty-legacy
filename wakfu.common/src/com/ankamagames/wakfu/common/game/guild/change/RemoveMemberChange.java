@@ -38,7 +38,7 @@ class RemoveMemberChange implements GuildChange
             controller.removeMember(this.m_memberId);
         }
         catch (GuildException e) {
-            RemoveMemberChange.m_logger.error((Object)"Impossible de retirer le membre", (Throwable)e);
+            RemoveMemberChange.m_logger.error("Impossible de retirer le membre", e);
         }
     }
     
@@ -53,6 +53,6 @@ class RemoveMemberChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RemoveMemberChange.class);
+        m_logger = Logger.getLogger(RemoveMemberChange.class);
     }
 }

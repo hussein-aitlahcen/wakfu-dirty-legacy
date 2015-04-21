@@ -1,13 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -52,7 +54,7 @@ public class HPGainForCasterBasedOnTarget extends WakfuRunningEffect
             re = new HPGainForCasterBasedOnTarget();
             re.m_pool = null;
             re.m_isStatic = false;
-            HPGainForCasterBasedOnTarget.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPGainForCasterBasedOnTarget : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPGainForCasterBasedOnTarget : " + e.getMessage());
         }
         re.m_element = element;
         re.m_id = RunningEffectConstants.HP_GAIN.getId();
@@ -73,7 +75,7 @@ public class HPGainForCasterBasedOnTarget extends WakfuRunningEffect
             re = new HPGainForCasterBasedOnTarget();
             re.m_pool = null;
             re.m_isStatic = false;
-            HPGainForCasterBasedOnTarget.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPGainForCasterBasedOnTarget : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPGainForCasterBasedOnTarget : " + e.getMessage());
         }
         re.m_element = this.m_element;
         return re;
@@ -115,9 +117,9 @@ public class HPGainForCasterBasedOnTarget extends WakfuRunningEffect
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         this.setNotified(true);
-        final WakfuRunningEffect hpgain = HPGain.checkOut((EffectContext<WakfuEffect>)this.m_context, this.getElement());
+        final WakfuRunningEffect hpgain = HPGain.checkOut(this.m_context, this.getElement());
         hpgain.forceValue(this.m_value);
-        (hpgain).setGenericEffect((WakfuEffect)this.m_genericEffect);
+        (hpgain).setGenericEffect(this.m_genericEffect);
         hpgain.setCaster(this.m_target);
         hpgain.setTarget(this.m_caster);
         hpgain.askForExecution();
@@ -146,12 +148,12 @@ public class HPGainForCasterBasedOnTarget extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        final int paramsCount = ((WakfuEffect)this.m_genericEffect).getParamsCount();
+        final int paramsCount = this.m_genericEffect.getParamsCount();
         if (paramsCount >= 1) {
-            this.m_percent = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_percent = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         if (paramsCount >= 2) {
-            this.m_fixedValue = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+            this.m_fixedValue = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         else {
             this.m_fixedValue = false;

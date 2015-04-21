@@ -35,13 +35,15 @@ public abstract class TLongHash extends TPrimitiveHash implements TLongHashingSt
         this._hashingStrategy = strategy;
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final TLongHash h = (TLongHash)super.clone();
         h._set = this._set.clone();
         return h;
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._set = new long[capacity];
         return capacity;
@@ -63,7 +65,8 @@ public abstract class TLongHash extends TPrimitiveHash implements TLongHashingSt
         return true;
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._set[index] = 0L;
         super.removeAt(index);
     }
@@ -120,7 +123,8 @@ public abstract class TLongHash extends TPrimitiveHash implements TLongHashingSt
         return (states[index] == 1) ? (-index - 1) : index;
     }
     
-    public final int computeHashCode(final long val) {
+    @Override
+	public final int computeHashCode(final long val) {
         return HashFunctions.hash(val);
     }
 }

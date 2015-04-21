@@ -22,7 +22,7 @@ public class MemoryObjectPool
                     return (MemoryObject) classType.newInstance();
                 }
                 catch (InstantiationException e) {
-                    MemoryObjectPool.m_logger.error((Object)"", (Throwable)e);
+                    MemoryObjectPool.m_logger.error("", e);
                 }
                 catch (IllegalAccessException e2) {
                     throw new IllegalArgumentException(classType.toString(), e2);
@@ -150,12 +150,12 @@ public class MemoryObjectPool
             return memoryObject;
         }
         catch (Exception e) {
-            MemoryObjectPool.m_logger.error((Object)"Failed to create object", (Throwable)e);
+            MemoryObjectPool.m_logger.error("Failed to create object", e);
             return null;
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MemoryObjectPool.class);
+        m_logger = Logger.getLogger(MemoryObjectPool.class);
     }
 }

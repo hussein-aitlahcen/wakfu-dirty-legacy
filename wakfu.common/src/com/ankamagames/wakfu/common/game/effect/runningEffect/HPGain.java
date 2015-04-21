@@ -16,7 +16,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.hpLoss.*;
 
-import cern.jet.random.engine.*;
 import cern.jet.random.engine.MersenneTwister;
 
 import com.ankamagames.framework.kernel.core.common.*;
@@ -72,7 +71,7 @@ public class HPGain extends WakfuRunningEffect
             re = new HPGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            HPGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPGain : " + e.getMessage());
         }
         re.m_element = element;
         re.m_id = RunningEffectConstants.HP_GAIN.getId();
@@ -94,7 +93,7 @@ public class HPGain extends WakfuRunningEffect
             re = new HPGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            HPGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPGain : " + e.getMessage());
         }
         re.m_element = this.m_element;
         return re;
@@ -153,7 +152,7 @@ public class HPGain extends WakfuRunningEffect
         }
         else {
             final int hpLossValue = this.m_value;
-            final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.getElement(), HPLoss.ComputeMode.CLASSIC, hpLossValue, this.m_target);
+            final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.getElement(), HPLoss.ComputeMode.CLASSIC, hpLossValue, this.m_target);
             hpLoss.setExecutionParameters(WakfuEffectExecutionParameters.checkOut(true, true, (WakfuRunningEffect)this.getParent()));
             this.setAppropriateGenericEffect(hpLoss);
             hpLoss.setParent(this);
@@ -164,15 +163,15 @@ public class HPGain extends WakfuRunningEffect
     }
     
     private void setAppropriateGenericEffect(final HPLoss hpLoss) {
-        if (((WakfuEffect)this.m_genericEffect).notifyInChat()) {
-            if (((WakfuEffect)this.m_genericEffect).dontTriggerAnything()) {
+        if (this.m_genericEffect.notifyInChat()) {
+            if (this.m_genericEffect.dontTriggerAnything()) {
                 (hpLoss).setGenericEffect(DefaultEffectManager.getInstance().getDefaultEffect(-11));
             }
             else {
                 (hpLoss).setGenericEffect(DefaultEffectManager.getInstance().getDefaultEffect(-3));
             }
         }
-        else if (((WakfuEffect)this.m_genericEffect).dontTriggerAnything()) {
+        else if (this.m_genericEffect.dontTriggerAnything()) {
             (hpLoss).setGenericEffect(DefaultEffectManager.getInstance().getDefaultEffect(-8));
         }
         else {
@@ -221,7 +220,7 @@ public class HPGain extends WakfuRunningEffect
         this.initValueFromParams();
         if (this.m_value == -1) {
             if (triggerRE == null) {
-                HPGain.m_logger.error((Object)("Value is -1. Unable to copy value of triggeringEffect : triggerRE==null. Effect id : " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+                RunningEffect.m_logger.error("Value is -1. Unable to copy value of triggeringEffect : triggerRE==null. Effect id : " + this.m_genericEffect.getEffectId());
                 this.m_value = 0;
             }
             else {
@@ -243,9 +242,9 @@ public class HPGain extends WakfuRunningEffect
         final short level = this.getContainerLevel();
         this.setParamsToDefault();
         if (this.m_genericEffect != null) {
-            switch (((WakfuEffect)this.m_genericEffect).getParamsCount()) {
+            switch (this.m_genericEffect.getParamsCount()) {
                 case 1: {
-                    this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+                    this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
                     if (this.m_element == Elements.PHYSICAL) {
                         this.m_fixedValue = true;
                         break;
@@ -254,35 +253,35 @@ public class HPGain extends WakfuRunningEffect
                     break;
                 }
                 case 2: {
-                    this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-                    this.m_fixedValue = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM) == 1);
+                    this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+                    this.m_fixedValue = (this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM) == 1);
                     break;
                 }
                 case 3: {
-                    this.m_value = DiceRoll.roll(((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM), ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM), ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM));
+                    this.m_value = DiceRoll.roll(this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM), this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM), this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM));
                     this.m_fixedValue = false;
                     break;
                 }
                 case 4: {
-                    this.m_value = DiceRoll.roll(((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM), ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM), ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM));
-                    this.m_fixedValue = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM) == 1);
+                    this.m_value = DiceRoll.roll(this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM), this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM), this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM));
+                    this.m_fixedValue = (this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM) == 1);
                     break;
                 }
                 case 5: {
-                    final int mean = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-                    final int variance = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
-                    final int min = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM);
-                    final int max = ((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM);
+                    final int mean = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+                    final int variance = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
+                    final int min = this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM);
+                    final int max = this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM);
                     final int v = (int)HPGain.RANDOM.nextDouble(mean, variance);
                     this.m_value = MathHelper.clamp(v, min, max);
                     break;
                 }
                 case 6: {
-                    this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+                    this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
                     this.m_fixedValue = false;
-                    this.m_useBonusDamage = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM) == 1);
-                    this.m_useHealBonus = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM) == 1);
-                    this.m_useHealResistance = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM) == 1);
+                    this.m_useBonusDamage = (this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM) == 1);
+                    this.m_useHealBonus = (this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM) == 1);
+                    this.m_useHealResistance = (this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM) == 1);
                     break;
                 }
             }
@@ -324,10 +323,10 @@ public class HPGain extends WakfuRunningEffect
         if (this.hasProperty(RunningEffectPropertyType.SINGLE_TARGET_EFFECT) && this.m_caster.hasCharacteristic(FighterCharacteristicType.SINGLE_TARGET_DMG)) {
             percentModificator += this.m_caster.getCharacteristicValue(FighterCharacteristicType.SINGLE_TARGET_DMG);
         }
-        if (HpLossComputerImpl.isMeleeEffect(this.m_caster, this.m_target, (WakfuEffect)this.m_genericEffect) && this.m_caster.hasCharacteristic(FighterCharacteristicType.MELEE_DMG)) {
+        if (HpLossComputerImpl.isMeleeEffect(this.m_caster, this.m_target, this.m_genericEffect) && this.m_caster.hasCharacteristic(FighterCharacteristicType.MELEE_DMG)) {
             percentModificator += this.m_caster.getCharacteristicValue(FighterCharacteristicType.MELEE_DMG);
         }
-        if (HpLossComputerImpl.isRangedEffect(this.m_caster, this.m_target, (WakfuEffect)this.m_genericEffect) && this.m_caster.hasCharacteristic(FighterCharacteristicType.RANGED_DMG)) {
+        if (HpLossComputerImpl.isRangedEffect(this.m_caster, this.m_target, this.m_genericEffect) && this.m_caster.hasCharacteristic(FighterCharacteristicType.RANGED_DMG)) {
             percentModificator += this.m_caster.getCharacteristicValue(FighterCharacteristicType.RANGED_DMG);
         }
         if (this.hasProperty(RunningEffectPropertyType.ZONE_EFFECT) && this.m_caster.hasCharacteristic(FighterCharacteristicType.AOE_DMG)) {

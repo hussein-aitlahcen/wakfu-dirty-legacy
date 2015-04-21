@@ -4,7 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -24,7 +26,7 @@ public class PlayEmote extends WakfuRunningEffect
             re = new PlayEmote();
             re.m_pool = null;
             re.m_isStatic = false;
-            PlayEmote.m_logger.error((Object)("Erreur lors d'un checkOut sur un PlayEmote : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un PlayEmote : " + e.getMessage());
         }
         re.m_id = RunningEffectConstants.PLAY_EMOTE.getId();
         re.m_status = RunningEffectConstants.PLAY_EMOTE.getObject().getRunningEffectStatus();
@@ -49,7 +51,7 @@ public class PlayEmote extends WakfuRunningEffect
             re = new PlayEmote();
             re.m_pool = null;
             re.m_isStatic = false;
-            PlayEmote.m_logger.error((Object)("Erreur lors d'un checkOut sur un PlayEmote : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un PlayEmote : " + e.getMessage());
         }
         return re;
     }
@@ -77,9 +79,9 @@ public class PlayEmote extends WakfuRunningEffect
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, (short)0, RoundingMethod.RANDOM);
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-                this.m_displayChatMessage = (((WakfuEffect)this.m_genericEffect).getParam(1) == 0.0f);
+            this.m_value = this.m_genericEffect.getParam(0, (short)0, RoundingMethod.RANDOM);
+            if (this.m_genericEffect.getParamsCount() == 2) {
+                this.m_displayChatMessage = (this.m_genericEffect.getParam(1) == 0.0f);
             }
             else {
                 this.m_displayChatMessage = false;

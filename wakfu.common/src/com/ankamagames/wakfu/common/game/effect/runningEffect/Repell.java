@@ -4,9 +4,10 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.movementEffect.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -30,7 +31,7 @@ public final class Repell extends MovementEffect
             re = new Repell();
             re.m_pool = null;
             re.m_isStatic = false;
-            Repell.m_logger.error((Object)("Erreur lors d'un checkOut sur un Repell : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un Repell : " + e.getMessage());
         }
         re.m_id = RunningEffectConstants.REPELL.getId();
         re.m_status = RunningEffectConstants.REPELL.getObject().getRunningEffectStatus();
@@ -55,7 +56,7 @@ public final class Repell extends MovementEffect
         catch (Exception e) {
             re = new Repell();
             re.m_pool = null;
-            Repell.m_logger.error((Object)("Erreur lors d'une newInstance sur un Repell : " + e.getMessage()));
+            m_logger.error("Erreur lors d'une newInstance sur un Repell : " + e.getMessage());
         }
         return re;
     }
@@ -101,7 +102,7 @@ public final class Repell extends MovementEffect
     
     @Override
     public boolean useTarget() {
-        if (this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 11) {
+        if (this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 11) {
             final AbstractSpellLevel spellLevel = (AbstractSpellLevel)this.m_effectContainer;
             if (spellLevel.getSpell() != null) {
                 return !spellLevel.getSpell().hasToTestFreeCell();

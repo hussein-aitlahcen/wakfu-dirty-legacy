@@ -35,13 +35,15 @@ public abstract class TIntHash extends TPrimitiveHash implements TIntHashingStra
         this._hashingStrategy = strategy;
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final TIntHash h = (TIntHash)super.clone();
         h._set = this._set.clone();
         return h;
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._set = new int[capacity];
         return capacity;
@@ -63,7 +65,8 @@ public abstract class TIntHash extends TPrimitiveHash implements TIntHashingStra
         return true;
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._set[index] = 0;
         super.removeAt(index);
     }
@@ -120,7 +123,8 @@ public abstract class TIntHash extends TPrimitiveHash implements TIntHashingStra
         return (states[index] == 1) ? (-index - 1) : index;
     }
     
-    public final int computeHashCode(final int val) {
+    @Override
+	public final int computeHashCode(final int val) {
         return HashFunctions.hash(val);
     }
 }

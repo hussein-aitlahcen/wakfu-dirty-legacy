@@ -4,10 +4,10 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.xp.*;
-import com.ankamagames.wakfu.common.rawData.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 
 public class HighestSpellsElementalOnlyFinder extends DoubleSpellsFinder
@@ -42,16 +42,16 @@ public class HighestSpellsElementalOnlyFinder extends DoubleSpellsFinder
         }
         Collections.sort(doubleSpells, LevelableComparator.getInstance());
         final short maxSpellsCount = params.getMaxSpellsCount();
-        final SpellInventory<AbstractSpellLevel> doubleSpellInventory = new SpellInventory<AbstractSpellLevel>(maxSpellsCount, (InventoryContentProvider<AbstractSpellLevel, RawSpellLevel>)modelSpellInventory.getContentProvider(), (InventoryContentChecker<AbstractSpellLevel>)modelSpellInventory.getContentChecker(), false, false, false);
+        final SpellInventory<AbstractSpellLevel> doubleSpellInventory = new SpellInventory<AbstractSpellLevel>(maxSpellsCount, modelSpellInventory.getContentProvider(), modelSpellInventory.getContentChecker(), false, false, false);
         for (int i = 0; i < maxSpellsCount && i < doubleSpells.size(); ++i) {
             try {
-                doubleSpellInventory.add((AbstractSpellLevel)doubleSpells.get(i));
+                doubleSpellInventory.add(doubleSpells.get(i));
             }
             catch (InventoryCapacityReachedException e) {
-                HighestSpellsElementalOnlyFinder.m_logger.error((Object)"Exception", (Throwable)e);
+                DoubleSpellsFinder.m_logger.error("Exception", e);
             }
             catch (ContentAlreadyPresentException e2) {
-                HighestSpellsElementalOnlyFinder.m_logger.error((Object)"Exception", (Throwable)e2);
+                DoubleSpellsFinder.m_logger.error("Exception", e2);
             }
         }
         return doubleSpellInventory;

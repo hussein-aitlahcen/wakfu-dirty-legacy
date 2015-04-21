@@ -10,7 +10,6 @@ import org.jetbrains.annotations.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import gnu.trove.*;
 
@@ -32,7 +31,7 @@ public abstract class AbstractBag implements Iterable<Item>, RawConvertible<RawB
         this.m_inventory = new ArrayInventory<Item, RawInventoryItem>(ReferenceItemManager.getInstance(), checker, maximumSize, true);
         this.m_position = 0;
         this.m_referenceId = referenceId;
-        this.m_baseChecker = (InventoryContentChecker<Item>)checker;
+        this.m_baseChecker = checker;
         this.setInventoryChecker();
     }
     
@@ -130,7 +129,7 @@ public abstract class AbstractBag implements Iterable<Item>, RawConvertible<RawB
                 content.position = this.m_inventory.getPosition(item.getUniqueId());
                 final boolean ok = item.toRaw(content.item);
                 if (!ok) {
-                    AbstractBag.m_logger.error((Object)("Impossible de convertir l'item \u00e0 la position " + content.position + " sous forme d\u00e9s\u00e9rialis\u00e9e brute"));
+                    AbstractBag.m_logger.error("Impossible de convertir l'item \u00e0 la position " + content.position + " sous forme d\u00e9s\u00e9rialis\u00e9e brute");
                     return false;
                 }
                 data.inventory.contents.add(content);
@@ -147,7 +146,7 @@ public abstract class AbstractBag implements Iterable<Item>, RawConvertible<RawB
         this.m_inventory.setMaximumSize(data.maximumSize);
         this.setInventoryChecker();
         if (!checkPosition(this.isTyped(), this.m_position)) {
-            AbstractBag.m_logger.error((Object)("La position (" + this.m_position + ") du sac " + this.m_uid + " refId=" + this.m_referenceId + " est incorrecte"));
+            AbstractBag.m_logger.error("La position (" + this.m_position + ") du sac " + this.m_uid + " refId=" + this.m_referenceId + " est incorrecte");
         }
         boolean ok = true;
         for (final RawInventoryItemInventory.Content rawContent : data.inventory.contents) {
@@ -161,19 +160,19 @@ public abstract class AbstractBag implements Iterable<Item>, RawConvertible<RawB
                 }
                 catch (InventoryCapacityReachedException e) {
                     ok = false;
-                    AbstractBag.m_logger.error((Object)e);
+                    AbstractBag.m_logger.error(e);
                 }
                 catch (ContentAlreadyPresentException e2) {
                     ok = false;
-                    AbstractBag.m_logger.error((Object)e2);
+                    AbstractBag.m_logger.error(e2);
                 }
                 catch (PositionAlreadyUsedException e3) {
                     ok = false;
-                    AbstractBag.m_logger.error((Object)e3);
+                    AbstractBag.m_logger.error(e3);
                 }
             }
             else {
-                AbstractBag.m_logger.error((Object)("D\u00e9s\u00e9rialisation d'un Item null \u00e0 la position " + rawContent.position));
+                AbstractBag.m_logger.error("D\u00e9s\u00e9rialisation d'un Item null \u00e0 la position " + rawContent.position);
                 ok = false;
             }
         }
@@ -408,6 +407,6 @@ public abstract class AbstractBag implements Iterable<Item>, RawConvertible<RawB
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractBag.class);
+        m_logger = Logger.getLogger(AbstractBag.class);
     }
 }

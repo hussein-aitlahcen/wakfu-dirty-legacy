@@ -118,7 +118,7 @@ public class HavenWorldSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HavenWorldSerializer.class);
+        m_logger = Logger.getLogger(HavenWorldSerializer.class);
     }
     
     private static class SerializeBuildingElements implements TObjectProcedure<BuildingElement>

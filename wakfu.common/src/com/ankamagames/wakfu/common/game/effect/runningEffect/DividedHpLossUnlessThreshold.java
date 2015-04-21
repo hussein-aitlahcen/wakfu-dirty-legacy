@@ -1,12 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -37,7 +40,7 @@ public final class DividedHpLossUnlessThreshold extends WakfuRunningEffect
             re = new DividedHpLossUnlessThreshold();
             re.m_pool = null;
             re.m_isStatic = false;
-            DividedHpLossUnlessThreshold.m_logger.error((Object)("Erreur lors d'un checkOut sur un DividedHpLossUnlessThreshold : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un DividedHpLossUnlessThreshold : " + e.getMessage());
         }
         re.m_threshold = this.m_threshold;
         return re;
@@ -45,16 +48,16 @@ public final class DividedHpLossUnlessThreshold extends WakfuRunningEffect
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_threshold = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_threshold = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         this.setNotified();
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(this.getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.getEffectId());
         if (effectGroup == null || effectGroup.getEffectsCount() == 0) {
-            DividedHpLossUnlessThreshold.m_logger.error((Object)("Il faut un sous-effet de type HpLoss " + this.getEffectId()));
+            RunningEffect.m_logger.error("Il faut un sous-effet de type HpLoss " + this.getEffectId());
             return;
         }
         final WakfuEffect effect = effectGroup.getEffect(0);
@@ -86,7 +89,7 @@ public final class DividedHpLossUnlessThreshold extends WakfuRunningEffect
             }
         }
         catch (Exception e) {
-            DividedHpLossUnlessThreshold.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
         }
         finally {
             params.release();

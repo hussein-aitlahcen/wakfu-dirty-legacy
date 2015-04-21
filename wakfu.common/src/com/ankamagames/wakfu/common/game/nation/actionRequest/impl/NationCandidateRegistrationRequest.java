@@ -124,7 +124,7 @@ public class NationCandidateRegistrationRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationCandidateRegistrationRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationCandidateRegistrationRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestRegisterCandidate(this);
@@ -208,7 +208,7 @@ public class NationCandidateRegistrationRequest extends NationActionRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationCandidateRegistrationRequest.class);
+        m_logger = Logger.getLogger(NationCandidateRegistrationRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

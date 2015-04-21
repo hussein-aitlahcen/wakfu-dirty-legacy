@@ -76,7 +76,7 @@ public final class PartyModel implements PartyModelInterface
             return false;
         }
         catch (Exception e) {
-            PartyModel.m_logger.error((Object)"Exception levee", (Throwable)e);
+            PartyModel.m_logger.error("Exception levee", e);
             return false;
         }
     }
@@ -207,7 +207,7 @@ public final class PartyModel implements PartyModelInterface
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PartyModel.class);
+        m_logger = Logger.getLogger(PartyModel.class);
     }
     
     private static class MembersTypeProcedure implements TLongObjectProcedure<PartyMemberInterface>

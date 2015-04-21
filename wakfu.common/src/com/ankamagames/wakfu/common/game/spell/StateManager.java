@@ -68,7 +68,7 @@ public class StateManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StateManager.class);
+        m_logger = Logger.getLogger(StateManager.class);
         m_instance = new StateManager();
     }
 }

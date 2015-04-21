@@ -42,7 +42,7 @@ class PetNameChange implements PetChange
             controller.setName(this.m_name);
         }
         catch (PetControllerException e) {
-            PetNameChange.m_logger.error((Object)"Impossible de changer le nom du familier", (Throwable)e);
+            PetNameChange.m_logger.error("Impossible de changer le nom du familier", e);
         }
     }
     
@@ -57,6 +57,6 @@ class PetNameChange implements PetChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PetNameChange.class);
+        m_logger = Logger.getLogger(PetNameChange.class);
     }
 }

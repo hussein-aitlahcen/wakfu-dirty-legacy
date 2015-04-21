@@ -16,7 +16,7 @@ public abstract class RunningEffectEvent extends DelayableTimeEvent
     
     public RunningEffect getRunningEffect() {
         if (this.m_runningEffect != null && this.m_runningEffect.getUniqueId() != this.m_runningEffectId) {
-            RunningEffectEvent.m_logger.error((Object)("Le running effect n'est plus le m\u00eame qu'a la creation de l'event " + this.m_runningEffectId));
+            RunningEffectEvent.m_logger.error("Le running effect n'est plus le m\u00eame qu'a la creation de l'event " + this.m_runningEffectId);
             return null;
         }
         return this.m_runningEffect;
@@ -83,7 +83,7 @@ public abstract class RunningEffectEvent extends DelayableTimeEvent
         }
         final RunningEffect re = ctx.getRunningEffect(reUid);
         if (re == null) {
-            RunningEffectEvent.m_logger.warn((Object)("D\u00e9s\u00e9rialisation de timeline : on ne trouve pas le RunningEffect d'UID " + reUid));
+            RunningEffectEvent.m_logger.warn("D\u00e9s\u00e9rialisation de timeline : on ne trouve pas le RunningEffect d'UID " + reUid);
             return;
         }
         this.setRunningEffect(re);
@@ -100,6 +100,6 @@ public abstract class RunningEffectEvent extends DelayableTimeEvent
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RunningEffectEvent.class);
+        m_logger = Logger.getLogger(RunningEffectEvent.class);
     }
 }

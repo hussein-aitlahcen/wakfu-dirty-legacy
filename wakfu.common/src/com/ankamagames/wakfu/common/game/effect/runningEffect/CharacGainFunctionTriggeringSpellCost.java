@@ -6,7 +6,9 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -40,7 +42,7 @@ public final class CharacGainFunctionTriggeringSpellCost extends CharacGain
             re = new CharacGainFunctionTriggeringSpellCost();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacGainFunctionTriggeringSpellCost.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGainFunctionTriggeringSpellCost : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGainFunctionTriggeringSpellCost : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -52,7 +54,7 @@ public final class CharacGainFunctionTriggeringSpellCost extends CharacGain
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
+        if (this.m_genericEffect.getParamsCount() > 1) {
             return;
         }
         if (triggerRE == null) {
@@ -62,11 +64,11 @@ public final class CharacGainFunctionTriggeringSpellCost extends CharacGain
             return;
         }
         float percentOfCost;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect.getParamsCount() == 0) {
             percentOfCost = 100.0f;
         }
         else {
-            percentOfCost = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel());
+            percentOfCost = this.m_genericEffect.getParam(0, this.getContainerLevel());
         }
         if (this.getContext() == null) {
             return;
@@ -93,7 +95,7 @@ public final class CharacGainFunctionTriggeringSpellCost extends CharacGain
                 break;
             }
             default: {
-                CharacGainFunctionTriggeringSpellCost.m_logger.error((Object)("Trying to compute triggering spell cost on a 'non-cost' charac : " + this.m_charac));
+                RunningEffect.m_logger.error("Trying to compute triggering spell cost on a 'non-cost' charac : " + this.m_charac);
                 cost = 0;
                 break;
             }

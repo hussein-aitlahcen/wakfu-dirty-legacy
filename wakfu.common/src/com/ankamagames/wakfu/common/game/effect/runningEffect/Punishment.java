@@ -3,10 +3,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class Punishment extends WakfuRunningEffect
@@ -43,7 +43,7 @@ public final class Punishment extends WakfuRunningEffect
         catch (Exception e) {
             re = new Punishment();
             re.m_pool = null;
-            Punishment.m_logger.error((Object)("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage());
         }
         re.m_baseDamage = this.m_baseDamage;
         re.m_threshold = this.m_threshold;
@@ -80,16 +80,16 @@ public final class Punishment extends WakfuRunningEffect
     
     private void extractParameters() {
         final short containerLevel = this.getContainerLevel();
-        this.m_baseDamage = ((WakfuEffect)this.m_genericEffect).getParam(0, containerLevel, RoundingMethod.RANDOM);
-        this.m_threshold = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, containerLevel, RoundingMethod.RANDOM);
-        this.m_bonusRatio = ((WakfuEffect)this.m_genericEffect).getParam(2, containerLevel);
+        this.m_baseDamage = this.m_genericEffect.getParam(0, containerLevel, RoundingMethod.RANDOM);
+        this.m_threshold = (byte)this.m_genericEffect.getParam(1, containerLevel, RoundingMethod.RANDOM);
+        this.m_bonusRatio = this.m_genericEffect.getParam(2, containerLevel);
     }
     
     @Override
     protected void executeOverride(final RunningEffect triggerRE, final boolean trigger) {
         final HPLoss hpLoss = HPLoss.checkOut(this.getContext(), Elements.FIRE, HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
         hpLoss.setCaster(this.m_caster);
-        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).checkFlags(1L), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
+        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && this.m_genericEffect.checkFlags(1L), this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
         (hpLoss).setGenericEffect((this).getGenericEffect());
         hpLoss.execute(null, false);
         this.setNotified(true);

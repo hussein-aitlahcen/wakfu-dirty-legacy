@@ -29,7 +29,7 @@ public class FakeItem extends Item
     @Override
     public void setQuantity(final short quantity) {
         this.m_quantity = quantity;
-        final ItemQuantityChangeListener quantityChangeListener = FakeItem.m_itemComposer.getQuantityChangeListener();
+        final ItemQuantityChangeListener quantityChangeListener = Item.m_itemComposer.getQuantityChangeListener();
         if (quantityChangeListener != null) {
             quantityChangeListener.onQuantityChanged(this);
         }

@@ -4,9 +4,10 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class CharacGain extends CharacModification
@@ -35,7 +36,7 @@ public class CharacGain extends CharacModification
         catch (Exception e) {
             re = new CharacGain();
             re.m_pool = null;
-            CharacGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGain : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_valuePerCentOfCurrentValue = this.m_valuePerCentOfCurrentValue;
@@ -75,7 +76,8 @@ public class CharacGain extends CharacModification
         return info.getType() == 5 && !this.hasProperty(RunningEffectPropertyType.COMPANION_ALLOWED_PROSPECTION_BUFF);
     }
     
-    protected void applyValueModification(final AbstractCharacteristic charac) {
+    @Override
+	protected void applyValueModification(final AbstractCharacteristic charac) {
         this.m_value = charac.add(this.m_value);
     }
     

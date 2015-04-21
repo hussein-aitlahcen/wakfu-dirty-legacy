@@ -444,7 +444,8 @@ public class EqualsBuilder implements Builder<Boolean>
         return this.isEquals;
     }
     
-    public Boolean build() {
+    @Override
+	public Boolean build() {
         return this.isEquals();
     }
     

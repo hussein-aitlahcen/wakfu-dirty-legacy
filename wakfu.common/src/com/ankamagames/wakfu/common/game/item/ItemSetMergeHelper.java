@@ -5,7 +5,6 @@ import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.item.validator.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 public class ItemSetMergeHelper
 {
@@ -52,20 +51,20 @@ public class ItemSetMergeHelper
         boolean ok = true;
         final Iterator<? extends AbstractReferenceItem> it = itemSet.iterator();
         while (it.hasNext() && ok) {
-            final AbstractReferenceItem referenceItem = (AbstractReferenceItem)it.next();
+            final AbstractReferenceItem referenceItem = it.next();
             final Item item = character.getBags().getFirstItemFromInventoryFromRefId(referenceItem.getId(), IntoSetMergeableItemValidator.INSTANCE);
             if (item == null) {
                 ok = false;
                 if (!withLogs) {
                     continue;
                 }
-                ItemSetMergeHelper.m_logger.error((Object)("Fusion de panoplie : le joueur id=" + character.getId() + " ne poss\u00e8de pas l'item de refId=" + referenceItem.getId()));
+                ItemSetMergeHelper.m_logger.error("Fusion de panoplie : le joueur id=" + character.getId() + " ne poss\u00e8de pas l'item de refId=" + referenceItem.getId());
             }
         }
         return ok;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemSetMergeHelper.class);
+        m_logger = Logger.getLogger(ItemSetMergeHelper.class);
     }
 }

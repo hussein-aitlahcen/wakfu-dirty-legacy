@@ -15,7 +15,7 @@ public final class HMIChangeMovementStyle extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 2) {
-                HMIChangeMovementStyle.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 1 : deltaAltitude) : " + parameters));
+                HMIChangeMovementStyle.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 1 : deltaAltitude) : " + parameters);
                 return false;
             }
             this.m_walkStyle = array[0];
@@ -23,7 +23,7 @@ public final class HMIChangeMovementStyle extends HMIAction
             return true;
         }
         catch (Exception e) {
-            HMIChangeMovementStyle.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas valide"));
+            HMIChangeMovementStyle.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas valide");
             return false;
         }
     }
@@ -42,6 +42,6 @@ public final class HMIChangeMovementStyle extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIChangeMovementStyle.class);
+        m_logger = Logger.getLogger(HMIChangeMovementStyle.class);
     }
 }

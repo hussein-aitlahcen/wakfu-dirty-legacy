@@ -1,6 +1,7 @@
 package com.ankamagames.wakfu.common.game.personalSpace.impl;
 
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.personalSpace.room.content.*;
 import com.ankamagames.wakfu.common.game.personalSpace.*;
 import com.ankamagames.wakfu.common.rawData.*;
@@ -281,7 +282,7 @@ public class GemControlledRoom extends Room
             return true;
         }
         catch (Exception e) {
-            GemControlledRoom.m_logger.error((Object)"Erreur lors de l'Update des room d'un Havre-sac", (Throwable)e);
+            Room.m_logger.error("Erreur lors de l'Update des room d'un Havre-sac", e);
             return false;
         }
     }
@@ -316,7 +317,7 @@ public class GemControlledRoom extends Room
             final AbstractReferenceItem primaryRefItem = ReferenceItemManager.getInstance().getReferenceItem(rawRoomSpecData.primaryGemitemRefId);
             final Item item = Item.newInstance(rawRoomSpecData.primaryGemUniqueId, primaryRefItem);
             if (!this.isGem(item)) {
-                GemControlledRoom.m_logger.error((Object)("La gemme primaire n'est pas un item de la bonne cat\u00e9gorie (refItemId=" + rawRoomSpecData.primaryGemitemRefId + "), on la remplace par la gemme par d\u00e9faut"));
+                Room.m_logger.error("La gemme primaire n'est pas un item de la bonne cat\u00e9gorie (refItemId=" + rawRoomSpecData.primaryGemitemRefId + "), on la remplace par la gemme par d\u00e9faut");
                 item.release();
                 this.m_primaryGem = this.createNewGem(GemType.getDefaultGemType().getItemReferenceId());
             }
@@ -329,13 +330,13 @@ public class GemControlledRoom extends Room
         }
         if (rawRoomSpecData.secondaryGemitemRefId != -1) {
             if (rawRoomSpecData.secondaryGemitemRefId != rawRoomSpecData.primaryGemitemRefId) {
-                GemControlledRoom.m_logger.error((Object)"Le type de gemme secondaire n'est pas le meme que le type primaire, on r\u00e9initialise cette gemme");
+                Room.m_logger.error("Le type de gemme secondaire n'est pas le meme que le type primaire, on r\u00e9initialise cette gemme");
                 rawRoomSpecData.secondaryGemitemRefId = rawRoomSpecData.primaryGemitemRefId;
             }
             final AbstractReferenceItem secondaryRefItem = ReferenceItemManager.getInstance().getReferenceItem(rawRoomSpecData.secondaryGemitemRefId);
             final Item item = Item.newInstance(rawRoomSpecData.secondaryGemUniqueId, secondaryRefItem);
             if (!this.isGem(item)) {
-                GemControlledRoom.m_logger.error((Object)("La gemme secondaire n'est pas un item de la bonne cat\u00e9gorie (refItemId=" + rawRoomSpecData.secondaryGemitemRefId + "), on la remplace par la gemme par d\u00e9faut"));
+                Room.m_logger.error("La gemme secondaire n'est pas un item de la bonne cat\u00e9gorie (refItemId=" + rawRoomSpecData.secondaryGemitemRefId + "), on la remplace par la gemme par d\u00e9faut");
                 item.release();
                 this.m_secondaryGem = this.createNewGem(this.m_primaryGem.getReferenceId());
             }

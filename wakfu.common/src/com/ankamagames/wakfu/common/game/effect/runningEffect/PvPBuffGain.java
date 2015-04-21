@@ -5,14 +5,20 @@ import com.ankamagames.framework.kernel.core.common.serialization.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import com.ankamagames.wakfu.common.game.xp.character.*;
 import com.ankamagames.wakfu.common.game.xp.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -45,7 +51,7 @@ public class PvPBuffGain extends WakfuRunningEffect
             final AbstractSpellLevel spellLevel = entry.getKey();
             final Short levelGain = entry.getValue();
             if (levelGain <= 0) {
-                PvPBuffGain.m_logger.error((Object)"Error dans PvPBuffGain : gain <= 0 ??");
+                RunningEffect.m_logger.error("Error dans PvPBuffGain : gain <= 0 ??");
             }
             else {
                 atLeastOne = true;
@@ -75,7 +81,7 @@ public class PvPBuffGain extends WakfuRunningEffect
             final AbstractSpellLevel spellLevel = entry.getKey();
             final Short levelGain = entry.getValue();
             if (levelGain <= 0) {
-                PvPBuffGain.m_logger.error((Object)"Error dans PvPBuffGain : gain <= 0 ??");
+                RunningEffect.m_logger.error("Error dans PvPBuffGain : gain <= 0 ??");
             }
             else {
                 spellLevel.addLevelGain(-levelGain);
@@ -101,9 +107,9 @@ public class PvPBuffGain extends WakfuRunningEffect
         }
         final BasicCharacterInfo target = (BasicCharacterInfo)this.m_target;
         final short effectLevel = this.getContainerLevel();
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, effectLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, effectLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (!this.computeSpellGains(target, this.m_value)) {
-            PvPBuffGain.m_logger.warn((Object)("Unable to apply spellGain to " + this.m_target));
+            RunningEffect.m_logger.warn("Unable to apply spellGain to " + this.m_target);
         }
         final Breed targetBreed = target.getBreed();
         if (targetBreed instanceof AvatarBreed) {
@@ -143,7 +149,7 @@ public class PvPBuffGain extends WakfuRunningEffect
         final long unpenalizedXpLimitAtWantedLevel = maxXpAtWantedLevel / 3L;
         final double gainFactor = maxXpAtWantedLevel / totalVirtualXp;
         if (gainFactor <= 1.0) {
-            PvPBuffGain.m_logger.error((Object)("Gain in a PvPBuffGain <= 1 (" + gainFactor + ")"));
+            RunningEffect.m_logger.error("Gain in a PvPBuffGain <= 1 (" + gainFactor + ")");
             return false;
         }
         for (final AbstractSpellLevel spell : spellInventory) {
@@ -199,7 +205,7 @@ public class PvPBuffGain extends WakfuRunningEffect
         catch (Exception e) {
             re = new PvPBuffGain();
             re.m_pool = null;
-            PvPBuffGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un " + PvPBuffGain.class + " : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un " + PvPBuffGain.class + " : " + e.getMessage());
         }
         return re;
     }
@@ -253,7 +259,7 @@ public class PvPBuffGain extends WakfuRunningEffect
                 PvPBuffGain.this.m_hpToAdd = buffer.getInt();
                 final Iterable<? extends AbstractSpellLevel> spellInventory = PvPBuffGain.this.getTargetSpellInventory();
                 if (spellInventory == null) {
-                    PvPBuffGain.m_logger.error((Object)"Unable to get target spell inventory");
+                    RunningEffect.m_logger.error("Unable to get target spell inventory");
                 }
                 final int spellsCount = buffer.get();
                 PvPBuffGain.this.m_gainsPerSpell.clear();
@@ -262,7 +268,7 @@ public class PvPBuffGain extends WakfuRunningEffect
                     final short levelGain = buffer.getShort();
                     final AbstractSpellLevel spellLevel = PvPBuffGain.this.getFirstWithReferenceId(spellInventory, spellRefId);
                     if (spellLevel == null) {
-                        PvPBuffGain.m_logger.error((Object)("Unable to find spellf or PvPBuffGain : " + spellRefId));
+                        RunningEffect.m_logger.error("Unable to find spellf or PvPBuffGain : " + spellRefId);
                     }
                     else {
                         PvPBuffGain.this.m_gainsPerSpell.put(spellLevel, levelGain);

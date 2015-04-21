@@ -7,17 +7,17 @@ import java.util.*;
 
 public enum AreaOfEffectEnum implements ExportableEnum, Parameterized
 {
-    POINT((short)1, (Class<? extends AreaOfEffect>)PointAOE.class, PointAOE.PARAMETERS_LIST_SET, (short)1), 
-    CIRCLE((short)2, (Class<? extends AreaOfEffect>)CircleAOE.class, CircleAOE.PARAMETERS_LIST_SET, (short)8), 
-    CROSS((short)3, (Class<? extends AreaOfEffect>)CrossAOE.class, CrossAOE.PARAMETERS_LIST_SET, (short)4), 
-    T((short)4, (Class<? extends AreaOfEffect>)TAOE.class, TAOE.PARAMETERS_LIST_SET, (short)2), 
-    RING((short)5, (Class<? extends AreaOfEffect>)RingAOE.class, RingAOE.PARAMETERS_LIST_SET, (short)7), 
-    RECTANGLE((short)6, (Class<? extends AreaOfEffect>)RectangleAOE.class, RectangleAOE.PARAMETERS_LIST_SET, (short)5), 
-    RECT_RING((short)7, (Class<? extends AreaOfEffect>)RectRingAOE.class, RectRingAOE.PARAMETERS_LIST_SET, (short)6), 
-    FREE_POINTS_FORM((short)8, (Class<? extends AreaOfEffect>)PointsAOE.class, PointsAOE.PARAMETERS_LIST_SET, (short)3), 
-    TI((short)9, (Class<? extends AreaOfEffect>)TAOEI.class, TAOEI.PARAMETERS_LIST_SET, (short)2), 
-    DIRECTED_RECTANGLE((short)10, (Class<? extends AreaOfEffect>)DirectedRectangleAOE.class, (ParameterListSet)DirectedRectangleAOE.PARAMETERS_LIST_SET, (short)5), 
-    EMPTY((short)32767, (Class<? extends AreaOfEffect>)EmptyAOE.class, EmptyAOE.PARAMETERS_LIST_SET, (short)0);
+    POINT((short)1, PointAOE.class, PointAOE.PARAMETERS_LIST_SET, (short)1), 
+    CIRCLE((short)2, CircleAOE.class, CircleAOE.PARAMETERS_LIST_SET, (short)8), 
+    CROSS((short)3, CrossAOE.class, CrossAOE.PARAMETERS_LIST_SET, (short)4), 
+    T((short)4, TAOE.class, TAOE.PARAMETERS_LIST_SET, (short)2), 
+    RING((short)5, RingAOE.class, RingAOE.PARAMETERS_LIST_SET, (short)7), 
+    RECTANGLE((short)6, RectangleAOE.class, RectangleAOE.PARAMETERS_LIST_SET, (short)5), 
+    RECT_RING((short)7, RectRingAOE.class, RectRingAOE.PARAMETERS_LIST_SET, (short)6), 
+    FREE_POINTS_FORM((short)8, PointsAOE.class, PointsAOE.PARAMETERS_LIST_SET, (short)3), 
+    TI((short)9, TAOEI.class, TAOEI.PARAMETERS_LIST_SET, (short)2), 
+    DIRECTED_RECTANGLE((short)10, DirectedRectangleAOE.class, DirectedRectangleAOE.PARAMETERS_LIST_SET, (short)5), 
+    EMPTY((short)32767, EmptyAOE.class, EmptyAOE.PARAMETERS_LIST_SET, (short)0);
     
     private static final Logger m_logger;
     private short m_index;
@@ -38,16 +38,16 @@ public enum AreaOfEffectEnum implements ExportableEnum, Parameterized
     
     public AreaOfEffect newInstance(final int[] params, final short areaOrderingMethod) throws IllegalArgumentException {
         try {
-            final AreaOfEffect aoe = (AreaOfEffect)this.m_class.newInstance();
+            final AreaOfEffect aoe = this.m_class.newInstance();
             aoe.initialize(params);
             aoe.setOrderingMethod(areaOrderingMethod);
             return aoe;
         }
         catch (InstantiationException e) {
-            AreaOfEffectEnum.m_logger.error((Object)ExceptionFormatter.toString(e));
+            AreaOfEffectEnum.m_logger.error(ExceptionFormatter.toString(e));
         }
         catch (IllegalAccessException e2) {
-            AreaOfEffectEnum.m_logger.error((Object)ExceptionFormatter.toString(e2));
+            AreaOfEffectEnum.m_logger.error(ExceptionFormatter.toString(e2));
         }
         return null;
     }
@@ -106,6 +106,6 @@ public enum AreaOfEffectEnum implements ExportableEnum, Parameterized
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AreaOfEffectEnum.class);
+        m_logger = Logger.getLogger(AreaOfEffectEnum.class);
     }
 }

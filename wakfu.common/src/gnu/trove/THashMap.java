@@ -35,35 +35,39 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     
     public THashMap(final Map<K, V> map) {
         this(map.size());
-        this.putAll((Map<? extends K, ? extends V>)map);
+        this.putAll(map);
     }
     
     public THashMap(final Map<K, V> map, final TObjectHashingStrategy<K> strategy) {
         this(map.size(), strategy);
-        this.putAll((Map<? extends K, ? extends V>)map);
+        this.putAll(map);
     }
     
-    public THashMap<K, V> clone() {
+    @Override
+	public THashMap<K, V> clone() {
         final THashMap<K, V> m = (THashMap)super.clone();
         m._values = this._values.clone();
         return m;
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._values = (V[]) new Object[capacity];
         return capacity;
     }
     
-    public V put(final K key, final V value) {
+    @Override
+	public V put(final K key, final V value) {
         final int index = this.insertionIndex(key);
         return this.doPut(key, value, index);
     }
     
-    public V putIfAbsent(final K key, final V value) {
+    @Override
+	public V putIfAbsent(final K key, final V value) {
         final int index = this.insertionIndex(key);
         if (index < 0) {
-            return (V)this._values[-index - 1];
+            return this._values[-index - 1];
         }
         return this.doPut(key, value, index);
     }
@@ -73,19 +77,20 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
         boolean isNewMapping = true;
         if (index < 0) {
             index = -index - 1;
-            previous = (V)this._values[index];
+            previous = this._values[index];
             isNewMapping = false;
         }
         final Object oldKey = this._set[index];
         this._set[index] = key;
         this._values[index] = value;
         if (isNewMapping) {
-            this.postInsertHook(oldKey == THashMap.FREE);
+            this.postInsertHook(oldKey == TObjectHash.FREE);
         }
         return previous;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof Map)) {
             return false;
         }
@@ -93,18 +98,21 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
         return that.size() == this.size() && this.forEachEntry(new EqProcedure<K, V>(that));
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEachEntry(p);
         return p.getHashCode();
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         this.forEachEntry(new TObjectObjectProcedure<K, V>() {
             private boolean first = true;
             
-            public boolean execute(final K key, final V value) {
+            @Override
+			public boolean execute(final K key, final V value) {
                 if (this.first) {
                     this.first = false;
                 }
@@ -126,11 +134,11 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     }
     
     public boolean forEachValue(final TObjectProcedure<V> procedure) {
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         final Object[] set = this._set;
         int i = values.length;
         while (i-- > 0) {
-            if (set[i] != THashMap.FREE && set[i] != THashMap.REMOVED && !procedure.execute(values[i])) {
+            if (set[i] != TObjectHash.FREE && set[i] != TObjectHash.REMOVED && !procedure.execute(values[i])) {
                 return false;
             }
         }
@@ -139,10 +147,10 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     
     public boolean forEachEntry(final TObjectObjectProcedure<K, V> procedure) {
         final Object[] keys = this._set;
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         int i = keys.length;
         while (i-- > 0) {
-            if (keys[i] != THashMap.FREE && keys[i] != THashMap.REMOVED && !procedure.execute((K)keys[i], values[i])) {
+            if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED && !procedure.execute((K)keys[i], values[i])) {
                 return false;
             }
         }
@@ -152,12 +160,12 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     public boolean retainEntries(final TObjectObjectProcedure<K, V> procedure) {
         boolean modified = false;
         final Object[] keys = this._set;
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         this.tempDisableAutoCompaction();
         try {
             int i = keys.length;
             while (i-- > 0) {
-                if (keys[i] != THashMap.FREE && keys[i] != THashMap.REMOVED && !procedure.execute((K)keys[i], values[i])) {
+                if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED && !procedure.execute((K)keys[i], values[i])) {
                     this.removeAt(i);
                     modified = true;
                 }
@@ -170,25 +178,26 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     }
     
     public void transformValues(final TObjectFunction<V, V> function) {
-        final V[] values = (V[])this._values;
+        final V[] values = this._values;
         final Object[] set = this._set;
         int i = values.length;
         while (i-- > 0) {
-            if (set[i] != THashMap.FREE && set[i] != THashMap.REMOVED) {
+            if (set[i] != TObjectHash.FREE && set[i] != TObjectHash.REMOVED) {
                 values[i] = function.execute(values[i]);
             }
         }
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final Object[] oldKeys = this._set;
-        final V[] oldVals = (V[])this._values;
-        Arrays.fill(this._set = new Object[newCapacity], THashMap.FREE);
+        final V[] oldVals = this._values;
+        Arrays.fill(this._set = new Object[newCapacity], TObjectHash.FREE);
         this._values = (V[]) new Object[newCapacity];
         int i = oldCapacity;
         while (i-- > 0) {
-            if (oldKeys[i] != THashMap.FREE && oldKeys[i] != THashMap.REMOVED) {
+            if (oldKeys[i] != TObjectHash.FREE && oldKeys[i] != TObjectHash.REMOVED) {
                 final Object o = oldKeys[i];
                 final int index = this.insertionIndex((K)o);
                 if (index < 0) {
@@ -200,54 +209,62 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
         }
     }
     
-    public V get(final Object key) {
+    @Override
+	public V get(final Object key) {
         final int index = this.index((K)key);
-        return (V)((index < 0) ? null : this._values[index]);
+        return (index < 0) ? null : this._values[index];
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         if (this.size() == 0) {
             return;
         }
         super.clear();
-        Arrays.fill(this._set, 0, this._set.length, THashMap.FREE);
+        Arrays.fill(this._set, 0, this._set.length, TObjectHash.FREE);
         Arrays.fill(this._values, 0, this._values.length, null);
     }
     
-    public V remove(final Object key) {
+    @Override
+	public V remove(final Object key) {
         V prev = null;
         final int index = this.index((K)key);
         if (index >= 0) {
-            prev = (V)this._values[index];
+            prev = this._values[index];
             this.removeAt(index);
         }
         return prev;
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._values[index] = null;
         super.removeAt(index);
     }
     
-    public Collection<V> values() {
+    @Override
+	public Collection<V> values() {
         return new ValueView();
     }
     
-    public Set<K> keySet() {
+    @Override
+	public Set<K> keySet() {
         return new KeyView();
     }
     
-    public Set<Map.Entry<K, V>> entrySet() {
+    @Override
+	public Set<Map.Entry<K, V>> entrySet() {
         return new EntryView();
     }
     
-    public boolean containsValue(final Object val) {
+    @Override
+	public boolean containsValue(final Object val) {
         final Object[] set = this._set;
-        final V[] vals = (V[])this._values;
+        final V[] vals = this._values;
         if (null == val) {
             int i = vals.length;
             while (i-- > 0) {
-                if (set[i] != THashMap.FREE && set[i] != THashMap.REMOVED && val == vals[i]) {
+                if (set[i] != TObjectHash.FREE && set[i] != TObjectHash.REMOVED && val == vals[i]) {
                     return true;
                 }
             }
@@ -255,7 +272,7 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
         else {
             int i = vals.length;
             while (i-- > 0) {
-                if (set[i] != THashMap.FREE && set[i] != THashMap.REMOVED && (val == vals[i] || val.equals(vals[i]))) {
+                if (set[i] != TObjectHash.FREE && set[i] != TObjectHash.REMOVED && (val == vals[i] || val.equals(vals[i]))) {
                     return true;
                 }
             }
@@ -263,18 +280,21 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
         return false;
     }
     
-    public boolean containsKey(final Object key) {
+    @Override
+	public boolean containsKey(final Object key) {
         return this.contains(key);
     }
     
-    public void putAll(final Map<? extends K, ? extends V> map) {
+    @Override
+	public void putAll(final Map<? extends K, ? extends V> map) {
         this.ensureCapacity(map.size());
         for (final Map.Entry<? extends K, ? extends V> e : map.entrySet()) {
             this.put(e.getKey(), e.getValue());
         }
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(1);
         super.writeExternal(out);
         out.writeInt(this._size);
@@ -284,7 +304,8 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         final byte version = in.readByte();
         if (version != 0) {
             super.readExternal(in);
@@ -311,7 +332,8 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             return this.h;
         }
         
-        public final boolean execute(final K key, final V value) {
+        @Override
+		public final boolean execute(final K key, final V value) {
             this.h += (THashMap.this._hashingStrategy.computeHashCode(key) ^ ((value == null) ? 0 : value.hashCode()));
             return true;
         }
@@ -326,7 +348,8 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             this._otherMap = otherMap;
         }
         
-        public final boolean execute(final K key, final V value) {
+        @Override
+		public final boolean execute(final K key, final V value) {
             if (value == null && !this._otherMap.containsKey(key)) {
                 return false;
             }
@@ -337,19 +360,23 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     
     protected class ValueView extends MapBackedView<V>
     {
-        public Iterator<V> iterator() {
+        @Override
+		public Iterator<V> iterator() {
             return new THashIterator<V>(THashMap.this) {
-                protected V objectAtIndex(final int index) {
-                    return (V)THashMap.this._values[index];
+                @Override
+				protected V objectAtIndex(final int index) {
+                    return THashMap.this._values[index];
                 }
             };
         }
         
-        public boolean containsElement(final V value) {
+        @Override
+		public boolean containsElement(final V value) {
             return THashMap.this.containsValue(value);
         }
         
-        public boolean removeElement(final V value) {
+        @Override
+		public boolean removeElement(final V value) {
             final Object[] values = THashMap.this._values;
             final Object[] set = THashMap.this._set;
             int i = values.length;
@@ -365,11 +392,13 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     
     protected class EntryView extends MapBackedView<Map.Entry<K, V>>
     {
-        public Iterator<Map.Entry<K, V>> iterator() {
+        @Override
+		public Iterator<Map.Entry<K, V>> iterator() {
             return new EntryIterator(THashMap.this);
         }
         
-        public boolean removeElement(final Map.Entry<K, V> entry) {
+        @Override
+		public boolean removeElement(final Map.Entry<K, V> entry) {
             final K key = this.keyForEntry(entry);
             final int index = THashMap.this.index(key);
             if (index >= 0) {
@@ -382,7 +411,8 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             return false;
         }
         
-        public boolean containsElement(final Map.Entry<K, V> entry) {
+        @Override
+		public boolean containsElement(final Map.Entry<K, V> entry) {
             final Object val = THashMap.this.get(this.keyForEntry(entry));
             final Object entryValue = entry.getValue();
             return entryValue == val || (null != val && val.equals(entryValue));
@@ -402,29 +432,34 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
                 super(map);
             }
             
-            public Entry objectAtIndex(final int index) {
-                return new Entry((K)THashMap.this._set[index], (V)THashMap.this._values[index], index);
+            @Override
+			public Entry objectAtIndex(final int index) {
+                return new Entry((K)THashMap.this._set[index], THashMap.this._values[index], index);
             }
         }
     }
     
     private abstract class MapBackedView<E> extends AbstractSet<E> implements Set<E>, Iterable<E>
     {
-        public abstract Iterator<E> iterator();
+        @Override
+		public abstract Iterator<E> iterator();
         
         public abstract boolean removeElement(final E p0);
         
         public abstract boolean containsElement(final E p0);
         
-        public boolean contains(final Object key) {
+        @Override
+		public boolean contains(final Object key) {
             return this.containsElement((E) key);
         }
         
-        public boolean remove(final Object o) {
+        @Override
+		public boolean remove(final Object o) {
             return this.removeElement((E) o);
         }
         
-        public boolean containsAll(final Collection<?> collection) {
+        @Override
+		public boolean containsAll(final Collection<?> collection) {
             final Iterator i = collection.iterator();
             while (i.hasNext()) {
                 if (!this.contains(i.next())) {
@@ -434,19 +469,23 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             return true;
         }
         
-        public void clear() {
+        @Override
+		public void clear() {
             THashMap.this.clear();
         }
         
-        public boolean add(final E obj) {
+        @Override
+		public boolean add(final E obj) {
             throw new UnsupportedOperationException();
         }
         
-        public int size() {
+        @Override
+		public int size() {
             return THashMap.this.size();
         }
         
-        public Object[] toArray() {
+        @Override
+		public Object[] toArray() {
             final Object[] result = new Object[this.size()];
             final Iterator e = this.iterator();
             int i = 0;
@@ -457,7 +496,8 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             return result;
         }
         
-        public <T> T[] toArray(T[] a) {
+        @Override
+		public <T> T[] toArray(T[] a) {
             final int size = this.size();
             if (a.length < size) {
                 a = (T[])Array.newInstance(a.getClass().getComponentType(), size);
@@ -473,15 +513,18 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             return a;
         }
         
-        public boolean isEmpty() {
+        @Override
+		public boolean isEmpty() {
             return THashMap.this.isEmpty();
         }
         
-        public boolean addAll(final Collection<? extends E> collection) {
+        @Override
+		public boolean addAll(final Collection<? extends E> collection) {
             throw new UnsupportedOperationException();
         }
         
-        public boolean retainAll(final Collection<?> collection) {
+        @Override
+		public boolean retainAll(final Collection<?> collection) {
             boolean changed = false;
             final Iterator i = this.iterator();
             while (i.hasNext()) {
@@ -496,15 +539,18 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
     
     protected class KeyView extends MapBackedView<K>
     {
-        public Iterator<K> iterator() {
+        @Override
+		public Iterator<K> iterator() {
             return new TObjectHashIterator<K>(THashMap.this);
         }
         
-        public boolean removeElement(final K key) {
+        @Override
+		public boolean removeElement(final K key) {
             return null != THashMap.this.remove(key);
         }
         
-        public boolean containsElement(final K key) {
+        @Override
+		public boolean containsElement(final K key) {
             return THashMap.this.contains(key);
         }
     }
@@ -530,15 +576,18 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             this.val = aValue;
         }
         
-        public K getKey() {
+        @Override
+		public K getKey() {
             return this.key;
         }
         
-        public V getValue() {
+        @Override
+		public V getValue() {
             return this.val;
         }
         
-        public V setValue(V o) {
+        @Override
+		public V setValue(V o) {
             if (THashMap.this._values[this.index] != this.val) {
                 throw new ConcurrentModificationException();
             }
@@ -547,11 +596,13 @@ public class THashMap<K, V> extends TObjectHash<K> implements Map<K, V>, Externa
             return this.val = o;
         }
         
-        public boolean equals(final Object o) {
+        @Override
+		public boolean equals(final Object o) {
             return false;
         }
         
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return ((this.getKey() == null) ? 0 : this.getKey().hashCode()) ^ ((this.getValue() == null) ? 0 : this.getValue().hashCode());
         }
     }

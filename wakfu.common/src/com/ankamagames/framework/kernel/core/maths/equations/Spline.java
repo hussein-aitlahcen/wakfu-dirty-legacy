@@ -190,7 +190,8 @@ public class Spline implements Equation
         this.m_points.clear();
     }
     
-    public Spline clone() {
+    @Override
+	public Spline clone() {
         final Spline spline = new Spline("");
         spline.setFrom(this);
         return spline;

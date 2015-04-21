@@ -42,7 +42,7 @@ public class LineOfSightChecker implements Releasable
             return (LineOfSightChecker)LineOfSightChecker.m_staticPool.borrowObject();
         }
         catch (Exception e) {
-            LineOfSightChecker.m_logger.error((Object)"Exception", (Throwable)e);
+            LineOfSightChecker.m_logger.error("Exception", e);
             return null;
         }
     }
@@ -53,7 +53,7 @@ public class LineOfSightChecker implements Releasable
             LineOfSightChecker.m_staticPool.returnObject(this);
         }
         catch (Exception e) {
-            LineOfSightChecker.m_logger.error((Object)"Exception", (Throwable)e);
+            LineOfSightChecker.m_logger.error("Exception", e);
         }
     }
     
@@ -508,7 +508,7 @@ public class LineOfSightChecker implements Releasable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LineOfSightChecker.class);
+        m_logger = Logger.getLogger(LineOfSightChecker.class);
         (m_debugLogger = Logger.getLogger("debug")).setLevel(Level.ALL);
         m_staticPool = new MonitoredPool(new ObjectFactory<LineOfSightChecker>() {
             @Override

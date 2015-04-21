@@ -30,7 +30,7 @@ public class BoatLink
             //criterion = CriteriaCompiler.compileBoolean(criteria);
         }
         catch (Exception e) {
-            BoatLink.m_logger.error((Object)("[LD] Erreur au chargement du crit\u00e8re " + criteria + " du BoatLink " + id), (Throwable)e);
+            BoatLink.m_logger.error("[LD] Erreur au chargement du crit\u00e8re " + criteria + " du BoatLink " + id, e);
         }
         this.m_criterion = criterion;
         SimpleCriterion criterionDisplay = null;
@@ -38,7 +38,7 @@ public class BoatLink
             //criterionDisplay = CriteriaCompiler.compileBoolean(criteriaDisplay);
         }
         catch (Exception e2) {
-            BoatLink.m_logger.error((Object)("[LD] Erreur au chargement du crit\u00e8re " + criteriaDisplay + " du BoatLink " + id), (Throwable)e2);
+            BoatLink.m_logger.error("[LD] Erreur au chargement du crit\u00e8re " + criteriaDisplay + " du BoatLink " + id, e2);
         }
         this.m_criterionDisplay = criterionDisplay;
     }
@@ -88,6 +88,6 @@ public class BoatLink
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BoatLink.class);
+        m_logger = Logger.getLogger(BoatLink.class);
     }
 }

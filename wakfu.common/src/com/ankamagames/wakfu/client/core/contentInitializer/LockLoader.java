@@ -1,9 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
-import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.lock.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
@@ -11,9 +8,8 @@ import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 public class LockLoader implements ContentInitializer
 {
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         this.execute();
-        clientInstance.fireContentInitializerDone(this);
     }
     
     public void execute() throws Exception {

@@ -74,7 +74,7 @@ public class SortedSetXpTable implements XpTable
     
     private short checkShort(final int i) {
         if (i < -32768 || i > 32767) {
-            SortedSetXpTable.m_logger.error((Object)("D\u00e9passement de short pour une limite de niveau dans " + this.getClass().getSimpleName()));
+            SortedSetXpTable.m_logger.error("D\u00e9passement de short pour une limite de niveau dans " + this.getClass().getSimpleName());
         }
         return (short)i;
     }
@@ -83,7 +83,7 @@ public class SortedSetXpTable implements XpTable
         final int tableLength = table.length;
         final int expectedTableLength = maxLevel - minLevel + 1;
         if (tableLength < expectedTableLength) {
-            SortedSetXpTable.m_logger.error((Object)this.notEnoughValuesErrorMessage(expectedTableLength, tableLength));
+            SortedSetXpTable.m_logger.error(this.notEnoughValuesErrorMessage(expectedTableLength, tableLength));
         }
     }
     
@@ -184,6 +184,6 @@ public class SortedSetXpTable implements XpTable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SortedSetXpTable.class);
+        m_logger = Logger.getLogger(SortedSetXpTable.class);
     }
 }

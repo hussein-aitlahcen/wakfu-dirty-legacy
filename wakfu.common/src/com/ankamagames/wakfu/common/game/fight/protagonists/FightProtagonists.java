@@ -5,7 +5,6 @@ import org.apache.log4j.*;
 import com.ankamagames.framework.kernel.utils.*;
 import gnu.trove.*;
 import java.util.*;
-import java.io.*;
 
 public class FightProtagonists<F extends BasicCharacterInfo>
 {
@@ -33,14 +32,14 @@ public class FightProtagonists<F extends BasicCharacterInfo>
     
     public void addFighter(final F fighter, final byte teamId, final boolean liveOnlyThisFight, final F controller) {
         if (fighter == null) {
-            FightProtagonists.m_logger.error((Object)("[FIGHT] fighter cannot be null - " + ExceptionFormatter.currentStackTrace()));
+            FightProtagonists.m_logger.error("[FIGHT] fighter cannot be null - " + ExceptionFormatter.currentStackTrace());
             return;
         }
         if (!this.controlErrorHelper(controller, "controller")) {
             return;
         }
         if (this.containsFighter(fighter)) {
-            FightProtagonists.m_logger.error((Object)String.format("[FIGHT] On ajoute le fighter %d d\u00e9j\u00e0 pr\u00e9sent -> r\u00e9initialisation de son \u00e9tat.", fighter.getId()));
+            FightProtagonists.m_logger.error(String.format("[FIGHT] On ajoute le fighter %d d\u00e9j\u00e0 pr\u00e9sent -> r\u00e9initialisation de son \u00e9tat.", fighter.getId()));
         }
         this.m_fightersStates.put(fighter.getId(), this.initializeState(teamId, liveOnlyThisFight, controller));
         this.m_fightersById.put(fighter.getId(), fighter);
@@ -68,7 +67,7 @@ public class FightProtagonists<F extends BasicCharacterInfo>
     
     public void removeFighter(final F fighter) {
         if (!this.containsFighter(fighter)) {
-            FightProtagonists.m_logger.error((Object)String.format("[FIGHT] removeFighter sur un fighter absent %d - %s", fighter.getId(), ExceptionFormatter.currentStackTrace(10)));
+            FightProtagonists.m_logger.error(String.format("[FIGHT] removeFighter sur un fighter absent %d - %s", fighter.getId(), ExceptionFormatter.currentStackTrace(10)));
             return;
         }
         final FighterState state = this.m_fightersStates.remove(fighter.getId());
@@ -180,12 +179,12 @@ public class FightProtagonists<F extends BasicCharacterInfo>
     }
     
     private F getFighterByNullableId(final Long fighterId) {
-        return (F)((fighterId == null) ? null : this.getFighterById(fighterId));
+        return (fighterId == null) ? null : this.getFighterById(fighterId);
     }
     
     private boolean controlErrorHelper(final F parameterValue, final String parameterName) {
         if (parameterValue == null) {
-            FightProtagonists.m_logger.error((Object)String.format("[FIGHT_CONTROLLERS] %s cannot be null - %s", parameterName, ExceptionFormatter.currentStackTrace(1, 10)));
+            FightProtagonists.m_logger.error(String.format("[FIGHT_CONTROLLERS] %s cannot be null - %s", parameterName, ExceptionFormatter.currentStackTrace(1, 10)));
             return false;
         }
         return true;
@@ -228,7 +227,7 @@ public class FightProtagonists<F extends BasicCharacterInfo>
             if (specs.length > 0) {
                 builder.setLength(builder.length() - 2);
             }
-            FightProtagonists.m_logger.error((Object)builder.toString());
+            FightProtagonists.m_logger.error(builder.toString());
         }
         return value.iterator().next();
     }
@@ -257,6 +256,6 @@ public class FightProtagonists<F extends BasicCharacterInfo>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightProtagonists.class);
+        m_logger = Logger.getLogger(FightProtagonists.class);
     }
 }

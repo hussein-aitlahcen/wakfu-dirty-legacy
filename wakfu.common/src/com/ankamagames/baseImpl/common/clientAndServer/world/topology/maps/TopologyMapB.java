@@ -64,6 +64,6 @@ public class TopologyMapB extends TopologyMapBlockedCells
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyMapB.class);
+        m_logger = Logger.getLogger(TopologyMapB.class);
     }
 }

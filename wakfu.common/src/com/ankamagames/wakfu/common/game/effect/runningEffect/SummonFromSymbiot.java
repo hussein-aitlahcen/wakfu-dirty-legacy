@@ -1,18 +1,20 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.datas.specific.symbiot.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -97,7 +99,7 @@ public class SummonFromSymbiot extends WakfuRunningEffect
             re = new SummonFromSymbiot();
             re.m_pool = null;
             re.m_isStatic = false;
-            SummonFromSymbiot.m_logger.error((Object)("Erreur lors d'un checkOut sur un SummonFromSymbiot : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SummonFromSymbiot : " + e.getMessage());
         }
         re.m_cannotSummon = false;
         return re;
@@ -106,7 +108,7 @@ public class SummonFromSymbiot extends WakfuRunningEffect
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         if (this.m_cannotSummon) {
-            SummonFromSymbiot.m_logger.error((Object)"Impossible d'invoquer");
+            RunningEffect.m_logger.error("Impossible d'invoquer");
             this.setNotified(true);
             return;
         }
@@ -121,10 +123,10 @@ public class SummonFromSymbiot extends WakfuRunningEffect
                 final BasicInvocationCharacteristics creatureInSymbiot = symbioticCharacter.getSymbiot().getCreatureParametersFromIndex(this.m_currentIndex);
                 creatureInSymbiot.setSummonId(this.m_newTargetId);
             }
-            SummonFromSymbiot.m_logger.info((Object)("Instanciation d'une nouvelle invocation avec un id de " + this.m_summonCharac.getSummonId()));
+            RunningEffect.m_logger.info("Instanciation d'une nouvelle invocation avec un id de " + this.m_summonCharac.getSummonId());
             monster = ((BasicCharacterInfo)symbioticCharacter).summonMonster(this.m_summonCharac.getSummonId(), this.m_targetCell, this.m_summonCharac.getTypeId(), this.m_summonCharac, false, null);
             this.nerfSummonCharacteristics(monster);
-            monster.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_IN_PERCENT).add(this.m_caster.getCharacteristicValue(FighterCharacteristicType.SUMMONING_MASTERY));
+            monster.getCharacteristic(FighterCharacteristicType.DMG_IN_PERCENT).add(this.m_caster.getCharacteristicValue(FighterCharacteristicType.SUMMONING_MASTERY));
             monster.setSummonedFromSymbiot(true);
             if (this.isValueComputationEnabled()) {
                 this.m_summonCharac.setObstacleId(monster.getObstacleId());
@@ -139,7 +141,7 @@ public class SummonFromSymbiot extends WakfuRunningEffect
         else if (this.m_caster instanceof BasicCharacterInfo) {
             monster = ((BasicCharacterInfo)this.m_caster).summonMonster(this.m_summonCharac.getSummonId(), this.m_targetCell, this.m_summonCharac.getTypeId(), this.m_summonCharac, false, null);
             this.nerfSummonCharacteristics(monster);
-            monster.getCharacteristic((CharacteristicType)FighterCharacteristicType.DMG_IN_PERCENT).add(this.m_caster.getCharacteristicValue(FighterCharacteristicType.SUMMONING_MASTERY));
+            monster.getCharacteristic(FighterCharacteristicType.DMG_IN_PERCENT).add(this.m_caster.getCharacteristicValue(FighterCharacteristicType.SUMMONING_MASTERY));
         }
         this.notifyExecution(linkedRE, trigger);
         if (this.isValueComputationEnabled() && ((BasicCharacterInfo)this.m_caster).getCurrentFight() != null) {
@@ -154,9 +156,9 @@ public class SummonFromSymbiot extends WakfuRunningEffect
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            this.m_primaryCharacteristicModifier = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) / 100.0f;
-            this.m_secondaryCharacteristicModifier = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) / 100.0f;
+        if (this.m_genericEffect.getParamsCount() == 2) {
+            this.m_primaryCharacteristicModifier = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) / 100.0f;
+            this.m_secondaryCharacteristicModifier = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) / 100.0f;
         }
         else {
             this.m_primaryCharacteristicModifier = 1.0f;

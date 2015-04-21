@@ -4,16 +4,13 @@ import com.ankamagames.wakfu.common.datas.*;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.fight.spellCastValidation.*;
 import com.ankamagames.framework.kernel.core.maths.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.wakfu.common.game.xp.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
-import com.ankamagames.wakfu.common.game.effect.*;
 
 final class SpellCastValidator extends CommonCastValidator<AbstractSpellLevel, BasicCharacterInfo>
 {
@@ -29,7 +26,7 @@ final class SpellCastValidator extends CommonCastValidator<AbstractSpellLevel, B
     
     CastValidity getSpellCastValidity(final BasicCharacterInfo fighter, final AbstractSpellLevel spellLevel, final Point3 targetCell, final boolean checkUseCost) {
         if (spellLevel == null) {
-            SpellCastValidator.m_logger.error((Object)this.m_linkedFight.withFightId("cast d'un spell null"));
+            SpellCastValidator.m_logger.error(this.m_linkedFight.withFightId("cast d'un spell null"));
             return CastValidity.INVALID_CONTAINER;
         }
         final AbstractSpell spell = spellLevel.getSpell();
@@ -75,7 +72,7 @@ final class SpellCastValidator extends CommonCastValidator<AbstractSpellLevel, B
                 if (!this.checkCellAlignement(fighter, targetCell, spellLevel, target, this.m_linkedFight, rangeMin, boostedRangeMax)) {
                     return CastValidity.CELLS_NOT_ALIGNED;
                 }
-                final List<EffectUser> targetsOnCell = (List<EffectUser>)this.m_linkedFight.getPossibleTargetsAtPosition(targetCell);
+                final List<EffectUser> targetsOnCell = this.m_linkedFight.getPossibleTargetsAtPosition(targetCell);
                 for (final EffectUser targetOnCell : targetsOnCell) {
                     final CastValidity validity = fighter.getSpellLevelCastHistory().canCastSpell(spellLevel, this.m_linkedFight.getTimeline().getCurrentTableturn(), targetOnCell);
                     if (!validity.isValid()) {
@@ -86,14 +83,14 @@ final class SpellCastValidator extends CommonCastValidator<AbstractSpellLevel, B
             if (fighter instanceof SpellXpLocker) {
                 final int lockedSpellId = ((SpellXpLocker)fighter).getLockedSpellId();
                 if (lockedSpellId == spell.getId()) {
-                    SpellCastValidator.m_logger.error((Object)("Trying to cast a locked spell. Spell :" + spell.getId() + " caster : " + fighter));
+                    SpellCastValidator.m_logger.error("Trying to cast a locked spell. Spell :" + spell.getId() + " caster : " + fighter);
                     return CastValidity.CAST_CRITERIONS_NOT_VALID;
                 }
             }
             castValidity = this.getCastValidity(fighter, spellLevel, targetCell, spellCastRangeDynamic, rangeMin, rangeMax, spell.isTestLineOfSight(spellLevel, fighter, targetCell, this.m_linkedFight.getContext()), spell.hasToTestFreeCell(), spell.hasToTestNotBorderCell(), spell.isCanCastOnCasterCell(), spell.getCastCriterions());
         }
         catch (Exception e) {
-            SpellCastValidator.m_logger.error((Object)"Exception levee", (Throwable)e);
+            SpellCastValidator.m_logger.error("Exception levee", e);
         }
         finally {
             this.m_castThroughGateValidator.clear();
@@ -184,6 +181,6 @@ final class SpellCastValidator extends CommonCastValidator<AbstractSpellLevel, B
     }
     
     static {
-        SpellCastValidator.m_logger = Logger.getLogger((Class)SpellCastValidator.class);
+        SpellCastValidator.m_logger = Logger.getLogger(SpellCastValidator.class);
     }
 }

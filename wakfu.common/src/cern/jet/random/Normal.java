@@ -23,7 +23,8 @@ public class Normal extends AbstractContinousDistribution
         return Probability.normal(this.mean, this.variance, n);
     }
     
-    public double nextDouble() {
+    @Override
+	public double nextDouble() {
         return this.nextDouble(this.mean, this.standardDeviation);
     }
     
@@ -51,7 +52,8 @@ public class Normal extends AbstractContinousDistribution
         return this.SQRT_INV * Math.exp(-(n2 * n2) / (2.0 * this.variance));
     }
     
-    protected void setRandomGenerator(final RandomEngine randomGenerator) {
+    @Override
+	protected void setRandomGenerator(final RandomEngine randomGenerator) {
         super.setRandomGenerator(randomGenerator);
         this.cacheFilled = false;
     }
@@ -72,7 +74,8 @@ public class Normal extends AbstractContinousDistribution
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return this.getClass().getName() + "(" + this.mean + "," + this.standardDeviation + ")";
     }
     

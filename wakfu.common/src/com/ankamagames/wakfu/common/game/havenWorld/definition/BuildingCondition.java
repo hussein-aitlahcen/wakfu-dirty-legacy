@@ -23,6 +23,6 @@ public class BuildingCondition
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BuildingCondition.class);
+        m_logger = Logger.getLogger(BuildingCondition.class);
     }
 }

@@ -5,7 +5,6 @@ import com.ankamagames.wakfu.common.rawData.*;
 import org.apache.log4j.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.*;
-import java.util.*;
 import gnu.trove.*;
 
 public class ShortcutInventory<S extends AbstractShortCutItem> extends ArrayInventory<S, RawShortcut> implements RawConvertible<RawShortcutInventory>
@@ -29,7 +28,7 @@ public class ShortcutInventory<S extends AbstractShortCutItem> extends ArrayInve
             final short pos = it.value();
             final S item = this.getFromPosition(pos);
             if (item == null) {
-                ShortcutInventory.m_logger.error((Object)("Incoh\u00e9rence d'Inventory, l'item $" + it.key() + " est r\u00e9f\u00e9renc\u00e9 mais n'est pas pr\u00e9sent dans le tableau"), (Throwable)new Exception());
+                ShortcutInventory.m_logger.error("Incoh\u00e9rence d'Inventory, l'item $" + it.key() + " est r\u00e9f\u00e9renc\u00e9 mais n'est pas pr\u00e9sent dans le tableau", new Exception());
             }
             else {
                 if (!item.shouldBeSerialized()) {
@@ -39,7 +38,7 @@ public class ShortcutInventory<S extends AbstractShortCutItem> extends ArrayInve
                 content.position = pos;
                 final boolean ok = item.toRaw(content.shortcut);
                 if (!ok) {
-                    ShortcutInventory.m_logger.error((Object)("Impossible de convertir le raccourci \u00e0 la position " + pos + " sous forme d\u00e9-s\u00e9rialis\u00e9e brute"));
+                    ShortcutInventory.m_logger.error("Impossible de convertir le raccourci \u00e0 la position " + pos + " sous forme d\u00e9-s\u00e9rialis\u00e9e brute");
                     return false;
                 }
                 raw.contents.add(content);
@@ -61,7 +60,7 @@ public class ShortcutInventory<S extends AbstractShortCutItem> extends ArrayInve
         }
         try {
             for (final RawShortcutInventory.Content content : raw.contents) {
-                final S item = (S)this.m_contentProvider.unSerializeContent(content.shortcut);
+                final S item = this.m_contentProvider.unSerializeContent(content.shortcut);
                 if (item != null) {
                     if (this.addAt(item, content.position)) {
                         continue;
@@ -70,20 +69,20 @@ public class ShortcutInventory<S extends AbstractShortCutItem> extends ArrayInve
                 }
                 else {
                     ok = false;
-                    ShortcutInventory.m_logger.error((Object)"Erreur lors de la d\u00e9-serialisation d'un ArrayInventory : item null");
+                    ShortcutInventory.m_logger.error("Erreur lors de la d\u00e9-serialisation d'un ArrayInventory : item null");
                 }
             }
         }
         catch (InventoryCapacityReachedException e) {
-            ShortcutInventory.m_logger.error((Object)e);
+            ShortcutInventory.m_logger.error(e);
             ok = false;
         }
         catch (ContentAlreadyPresentException e2) {
-            ShortcutInventory.m_logger.error((Object)e2);
+            ShortcutInventory.m_logger.error(e2);
             ok = false;
         }
         catch (PositionAlreadyUsedException e3) {
-            ShortcutInventory.m_logger.error((Object)e3);
+            ShortcutInventory.m_logger.error(e3);
             ok = false;
         }
         return ok;
@@ -99,6 +98,6 @@ public class ShortcutInventory<S extends AbstractShortCutItem> extends ArrayInve
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ShortcutInventory.class);
+        m_logger = Logger.getLogger(ShortcutInventory.class);
     }
 }

@@ -5,7 +5,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.rawData.*;
 
 public class ImageCharacteristics extends BasicInvocationCharacteristics
@@ -56,7 +55,7 @@ public class ImageCharacteristics extends BasicInvocationCharacteristics
         for (final FighterCharacteristicType type : FighterCharacteristicType.values()) {
             if (summonerCharacteristics.contains(type)) {
                 if (this.m_imageCharac.contains(type)) {
-                    this.m_imageCharac.getCharacteristic((CharacteristicType)type).set(summonerCharacteristics.getCharacteristic(type));
+                    this.m_imageCharac.getCharacteristic(type).set(summonerCharacteristics.getCharacteristic(type));
                 }
             }
         }
@@ -103,6 +102,6 @@ public class ImageCharacteristics extends BasicInvocationCharacteristics
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ImageCharacteristics.class);
+        m_logger = Logger.getLogger(ImageCharacteristics.class);
     }
 }

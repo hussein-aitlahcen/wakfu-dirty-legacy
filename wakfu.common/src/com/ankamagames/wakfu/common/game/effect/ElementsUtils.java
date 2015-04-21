@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.effect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
 import java.util.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 public final class ElementsUtils
 {

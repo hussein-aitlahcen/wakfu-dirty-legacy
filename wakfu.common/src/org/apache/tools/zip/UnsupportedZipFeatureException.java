@@ -34,7 +34,8 @@ public class UnsupportedZipFeatureException extends ZipException
             this.name = name;
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             return this.name;
         }
         

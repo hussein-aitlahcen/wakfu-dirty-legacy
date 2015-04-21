@@ -4,7 +4,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.nation.*;
@@ -151,7 +150,7 @@ public class EquipmentInventoryChecker implements InventoryContentChecker<Item>
             equipmentKnowledge = player.getCharacteristicValue(FighterCharacteristicType.EQUIPMENT_KNOWLEDGE);
         }
         int equipmentKnowledgeBonus = 0;
-        final Iterator<WakfuEffect> effectsIterator = (Iterator<WakfuEffect>)item.getEffectsIterator();
+        final Iterator<WakfuEffect> effectsIterator = item.getEffectsIterator();
         while (effectsIterator.hasNext()) {
             final WakfuEffect next = effectsIterator.next();
             if (next.getActionId() == RunningEffectConstants.EQUIPMENT_KNOWLEDGE_GAIN.getId()) {
@@ -174,7 +173,7 @@ public class EquipmentInventoryChecker implements InventoryContentChecker<Item>
         }
         if (!((BasicCharacterInfo)player).getEquipmentInventory().containsUniqueId(item.getUniqueId())) {
             int equipmentKnowledgeBonus = 0;
-            final Iterator<WakfuEffect> effectsIterator = (Iterator<WakfuEffect>)item.getReferenceItem().getEffectsIterator();
+            final Iterator<WakfuEffect> effectsIterator = item.getReferenceItem().getEffectsIterator();
             while (effectsIterator.hasNext()) {
                 final WakfuEffect next = effectsIterator.next();
                 if (next.getActionId() == RunningEffectConstants.EQUIPMENT_KNOWLEDGE_GAIN.getId()) {

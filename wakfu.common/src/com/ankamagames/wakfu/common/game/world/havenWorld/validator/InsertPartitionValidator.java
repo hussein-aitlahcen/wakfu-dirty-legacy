@@ -17,11 +17,11 @@ public class InsertPartitionValidator extends ModificationValidator<AbstractHave
         final int right = AbstractHavenWorldTopology.bottomRightPatchCoordX(mapX);
         final int top = AbstractHavenWorldTopology.topLeftPatchCoordY(mapY);
         final int bottom = AbstractHavenWorldTopology.bottomLeftPatchCoordY(mapY);
-        final Rect worldBounds = ((AbstractHavenWorldTopology)this.m_dataProvider).getEditableWorldBounds();
-        return worldBounds.contains(left, top) && worldBounds.contains(right, top) && worldBounds.contains(left, bottom) && worldBounds.contains(right, bottom) && !PartitionPatch.isEditable(((AbstractHavenWorldTopology)this.m_dataProvider).getPatchId(left, top)) && !PartitionPatch.isEditable(((AbstractHavenWorldTopology)this.m_dataProvider).getPatchId(right, top)) && !PartitionPatch.isEditable(((AbstractHavenWorldTopology)this.m_dataProvider).getPatchId(left, bottom)) && !PartitionPatch.isEditable(((AbstractHavenWorldTopology)this.m_dataProvider).getPatchId(right, bottom));
+        final Rect worldBounds = this.m_dataProvider.getEditableWorldBounds();
+        return worldBounds.contains(left, top) && worldBounds.contains(right, top) && worldBounds.contains(left, bottom) && worldBounds.contains(right, bottom) && !PartitionPatch.isEditable(this.m_dataProvider.getPatchId(left, top)) && !PartitionPatch.isEditable(this.m_dataProvider.getPatchId(right, top)) && !PartitionPatch.isEditable(this.m_dataProvider.getPatchId(left, bottom)) && !PartitionPatch.isEditable(this.m_dataProvider.getPatchId(right, bottom));
     }
     
     static {
-        m_logger = Logger.getLogger((Class)InsertPartitionValidator.class);
+        m_logger = Logger.getLogger(InsertPartitionValidator.class);
     }
 }

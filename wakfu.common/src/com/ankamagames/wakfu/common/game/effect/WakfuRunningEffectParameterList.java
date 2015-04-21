@@ -6,11 +6,11 @@ import java.util.*;
 public class WakfuRunningEffectParameterList extends ParameterList
 {
     public WakfuRunningEffectParameterList(final String name, final WakfuRunningEffectParameter... parameters) {
-        super(name, (Parameter[])parameters);
+        super(name, parameters);
     }
     
     public WakfuRunningEffectParameterList(final WakfuRunningEffectParameter... parameters) {
-        super((Parameter[])parameters);
+        super(parameters);
     }
     
     @Override

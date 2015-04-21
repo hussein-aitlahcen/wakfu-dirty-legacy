@@ -32,11 +32,11 @@ public abstract class CalendarEvent
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CalendarEvent.class);
+        m_logger = Logger.getLogger(CalendarEvent.class);
         CalendarEvent.COMPARATOR = new Comparator<CalendarEvent>() {
             @Override
             public int compare(final CalendarEvent o1, final CalendarEvent o2) {
-                return o1.m_date.compareTo((GameDateConst)o2.m_date);
+                return o1.m_date.compareTo(o2.m_date);
             }
         };
     }

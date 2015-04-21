@@ -41,7 +41,8 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
         this.addAll(array);
     }
     
-    public Iterator<Byte> iterator() {
+    @Override
+	public Iterator<Byte> iterator() {
         return (Iterator<Byte>) new TByteIterator(this);
     }
     
@@ -57,7 +58,8 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
         return true;
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final byte[] oldSet = this._set;
         final byte[] oldStates = this._states;
@@ -88,7 +90,8 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
         return result;
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final byte[] set = this._set;
         final byte[] states = this._states;
@@ -98,19 +101,22 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
         }
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TByteHashSet)) {
             return false;
         }
         final TByteHashSet that = (TByteHashSet)other;
         return that.size() == this.size() && this.forEach(new TByteProcedure() {
-            public final boolean execute(final byte value) {
+            @Override
+			public final boolean execute(final byte value) {
                 return that.contains(value);
             }
         });
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEach(p);
         return p.getHashCode();
@@ -172,7 +178,8 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
         return changed;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -181,7 +188,8 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -204,7 +212,8 @@ public class TByteHashSet extends TByteHash implements Externalizable, Iterable<
             return this.h;
         }
         
-        public final boolean execute(final byte key) {
+        @Override
+		public final boolean execute(final byte key) {
             this.h += TByteHashSet.this._hashingStrategy.computeHashCode(key);
             return true;
         }

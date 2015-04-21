@@ -133,7 +133,7 @@ public class AccountInformations extends BinarSerial
                 listener.accountExpirationDateChanged(this);
             }
             catch (Exception e) {
-                AccountInformations.m_logger.error((Object)"Exception levee", (Throwable)e);
+                AccountInformations.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -287,6 +287,6 @@ public class AccountInformations extends BinarSerial
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AccountInformations.class);
+        m_logger = Logger.getLogger(AccountInformations.class);
     }
 }

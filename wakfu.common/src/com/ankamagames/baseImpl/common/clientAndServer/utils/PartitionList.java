@@ -106,6 +106,6 @@ public class PartitionList
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PartitionList.class);
+        m_logger = Logger.getLogger(PartitionList.class);
     }
 }

@@ -32,7 +32,7 @@ public final class REGExecutionCountFunctionTriggeringActionCost extends REGExec
             re = new REGExecutionCountFunctionTriggeringActionCost();
             re.m_pool = null;
             re.m_isStatic = false;
-            REGExecutionCountFunctionTriggeringActionCost.m_logger.error((Object)("Erreur lors d'un checkOut sur un REGExecutionCountFunctionCharac : " + e.getMessage()));
+            REGExecutionCountParameterized.m_logger.error("Erreur lors d'un checkOut sur un REGExecutionCountFunctionCharac : " + e.getMessage());
         }
         return re;
     }
@@ -40,23 +40,23 @@ public final class REGExecutionCountFunctionTriggeringActionCost extends REGExec
     @Override
     protected int computeExecutionsCountParameter(final RunningEffect triggerRE) {
         if (triggerRE == null) {
-            REGExecutionCountFunctionTriggeringActionCost.m_logger.error((Object)"Unable to execute a REGExecutionCountFunctionTriggeringActionCost without triggering effect");
+            REGExecutionCountParameterized.m_logger.error("Unable to execute a REGExecutionCountFunctionTriggeringActionCost without triggering effect");
             return 0;
         }
         if (!(triggerRE instanceof ActionCost)) {
-            REGExecutionCountFunctionTriggeringActionCost.m_logger.error((Object)"Unable to execute a REGExecutionCountFunctionTriggeringActionCost without actionCost triggering effect");
+            REGExecutionCountParameterized.m_logger.error("Unable to execute a REGExecutionCountFunctionTriggeringActionCost without actionCost triggering effect");
             return 0;
         }
-        final float executionsPerPA = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel());
-        final float executionsPerPM = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel());
-        final float executionsPerPW = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel());
+        final float executionsPerPA = this.m_genericEffect.getParam(0, this.getContainerLevel());
+        final float executionsPerPM = this.m_genericEffect.getParam(1, this.getContainerLevel());
+        final float executionsPerPW = this.m_genericEffect.getParam(2, this.getContainerLevel());
         final ActionCost actionCost = (ActionCost)triggerRE;
         final int apCost = actionCost.getApUseFromValue();
         final int mpCost = actionCost.getMpUseFromValue();
         final int wpCost = actionCost.getWpUseFromValue();
         int executionsCount = Math.round(apCost * executionsPerPA + mpCost * executionsPerPM + wpCost * executionsPerPW);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            executionsCount = Math.min(executionsCount, ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            executionsCount = Math.min(executionsCount, this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
         return executionsCount;
     }

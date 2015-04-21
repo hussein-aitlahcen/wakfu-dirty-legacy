@@ -1,13 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.maths.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -43,7 +46,7 @@ public class HPLossEffectRebound extends AbstractEffectRebound
         catch (Exception e) {
             re = new HPLossEffectRebound();
             re.m_pool = null;
-            HPLossEffectRebound.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPLeech : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPLeech : " + e.getMessage());
         }
         return re;
     }
@@ -63,11 +66,11 @@ public class HPLossEffectRebound extends AbstractEffectRebound
     
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null || effectGroup.getEffect(0) == null) {
             throw new IllegalArgumentException("Un effet de perte de pdv avec rebond doit \u00eatre d\u00e9fini avec un sous effet qui sert de Generic Effect \u00e0 la perte de pdv");
         }
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_elements, this.m_mode, this.m_value, this.m_target);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.m_elements, this.m_mode, this.m_value, this.m_target);
         hpLoss.setCaster(this.m_caster);
         if (this.m_target != null) {
             final Point3 targetPos = this.m_target.getPosition();
@@ -77,14 +80,14 @@ public class HPLossEffectRebound extends AbstractEffectRebound
         hpLoss.setTriggersToExecute();
         hpLoss.addCustomTriggersToExecute(this.getTriggersToExecute());
         if (this.m_genericEffect != null) {
-            hpLoss.addCustomTriggersToExecute(((WakfuEffect)this.m_genericEffect).getExecutionTriggersAdditionnal());
+            hpLoss.addCustomTriggersToExecute(this.m_genericEffect.getExecutionTriggersAdditionnal());
         }
         hpLoss.forceInstant();
         final WakfuEffect hpLossGenericEffect = effectGroup.getEffect(0);
         (hpLoss).setGenericEffect(hpLossGenericEffect);
         hpLoss.trigger((byte)1);
         hpLoss.computeBaseValue();
-        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).checkFlags(1L), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
+        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && this.m_genericEffect.checkFlags(1L), this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
         hpLoss.askForExecution();
         super.executeOverride(linkedRE, trigger);
     }
@@ -93,13 +96,13 @@ public class HPLossEffectRebound extends AbstractEffectRebound
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_reboundCount == 0 && this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            this.m_reboundReduction = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
-            this.m_maxCellRange = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM);
-            this.m_dispersionMax = (byte)((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            this.m_reboundReduction = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
+            this.m_maxCellRange = this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM);
+            this.m_dispersionMax = (byte)this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM);
             this.m_originalValue = this.m_value;
             this.m_alreadyTargetedTargetIds = new HashSet<Long>();
-            this.m_isDiffused = (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 5 && ((WakfuEffect)this.m_genericEffect).getParam(4, level, RoundingMethod.RANDOM) == 1);
+            this.m_isDiffused = (this.m_genericEffect.getParamsCount() >= 5 && this.m_genericEffect.getParam(4, level, RoundingMethod.RANDOM) == 1);
         }
         super.effectiveComputeValue(triggerRE);
     }

@@ -17,7 +17,7 @@ public class BagStoringManager
     }
     
     public void put(final int bagReferenceId, final int[] itemTypeValidity, final short capacity) {
-        final int[] validities = (int[])((itemTypeValidity == null || itemTypeValidity.length == 0) ? null : itemTypeValidity);
+        final int[] validities = (itemTypeValidity == null || itemTypeValidity.length == 0) ? null : itemTypeValidity;
         this.m_bagsItemValidity.put(bagReferenceId, validities);
         this.m_bagCapacity.put(bagReferenceId, capacity);
     }
@@ -35,7 +35,7 @@ public class BagStoringManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BagStoringManager.class);
+        m_logger = Logger.getLogger(BagStoringManager.class);
         INSTANCE = new BagStoringManager();
     }
 }

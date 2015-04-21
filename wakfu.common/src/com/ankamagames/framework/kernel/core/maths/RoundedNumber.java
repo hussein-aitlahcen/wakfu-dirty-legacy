@@ -57,6 +57,6 @@ public class RoundedNumber extends Number
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RoundedNumber.class);
+        m_logger = Logger.getLogger(RoundedNumber.class);
     }
 }

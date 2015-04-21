@@ -26,7 +26,7 @@ public class PartitionExistValidator
             }
         }
         catch (Throwable e) {
-            PartitionExistValidator.m_logger.error((Object)"probl\u00e8me de lecture des coordonn\u00e9es de maps valides", e);
+            PartitionExistValidator.m_logger.error("probl\u00e8me de lecture des coordonn\u00e9es de maps valides", e);
         }
     }
     
@@ -43,6 +43,6 @@ public class PartitionExistValidator
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PartitionExistValidator.class);
+        m_logger = Logger.getLogger(PartitionExistValidator.class);
     }
 }

@@ -35,7 +35,7 @@ public class TopologyMapManager
                     TopologyMapManager.loadMap(mapCoordX, mapCoordY);
                 }
                 catch (IOException e) {
-                    TopologyMapManager.m_logger.error((Object)"", (Throwable)e);
+                    TopologyMapManager.m_logger.error("", e);
                 }
             }
         });
@@ -66,7 +66,7 @@ public class TopologyMapManager
             }
         }
         catch (IOException e) {
-            TopologyMapManager.m_logger.error((Object)("Invalid path : " + path), (Throwable)e);
+            TopologyMapManager.m_logger.error("Invalid path : " + path, e);
         }
     }
     
@@ -96,7 +96,7 @@ public class TopologyMapManager
             final byte header = bitStream.readByte();
             final TopologyMap topologyMap = TopologyMapFactory.createTopologyMap(header);
             if (topologyMap == null) {
-                TopologyMapManager.m_logger.error((Object)("Unable to create map (" + x + "; " + y + ";" + worldId + ")"));
+                TopologyMapManager.m_logger.error("Unable to create map (" + x + "; " + y + ";" + worldId + ")");
                 return;
             }
             topologyMap.load(bitStream);
@@ -107,11 +107,11 @@ public class TopologyMapManager
     
     public static void loadMap(final short x, final short y) throws IOException {
         assert TopologyMapManager.m_useConstantWorld : "Can't loadMap without giving worldId if not using constant world. See TopologyMapManager.enableConstantWorld for more informations";
-        TopologyMapManager.m_logger.debug((Object)("START loadMap " + TopologyMapManager.m_worldId));
+        TopologyMapManager.m_logger.debug("START loadMap " + TopologyMapManager.m_worldId);
         loadMap(TopologyMapManager.m_worldId, x, y);
-        TopologyMapManager.m_logger.debug((Object)("START addTopologyMapInstance " + TopologyMapManager.m_worldId));
+        TopologyMapManager.m_logger.debug("START addTopologyMapInstance " + TopologyMapManager.m_worldId);
         addTopologyMapInstance(TopologyMapManager.m_worldId, x, y, (short)0);
-        TopologyMapManager.m_logger.debug((Object)("END loadMap " + TopologyMapManager.m_worldId));
+        TopologyMapManager.m_logger.debug("END loadMap " + TopologyMapManager.m_worldId);
     }
     
     public static void unloadMap(final short x, final short y) {
@@ -239,7 +239,7 @@ public class TopologyMapManager
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            TopologyMapManager.m_logger.error((Object)"", (Throwable)e);
+            TopologyMapManager.m_logger.error("", e);
         }
         return false;
     }
@@ -258,7 +258,7 @@ public class TopologyMapManager
             }
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            TopologyMapManager.m_logger.error((Object)"", (Throwable)e);
+            TopologyMapManager.m_logger.error("", e);
         }
         return false;
     }
@@ -275,7 +275,7 @@ public class TopologyMapManager
             markBlocked(mapInstance, 0, numZ);
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            TopologyMapManager.m_logger.error((Object)"", (Throwable)e);
+            TopologyMapManager.m_logger.error("", e);
         }
         final int numZ = mapInstance.getTopologyMap().getPathData(cellX, cellY, TopologyMapManager.m_cellPathData, 0);
         markBlocked(mapInstance, 0, numZ);
@@ -291,7 +291,7 @@ public class TopologyMapManager
         assert !TopologyMapManager.m_limitToThreadSafeMethods : "Can't call getHighestWalkableZ in a 'thread safe aware' environnement. See TopologyMapManager.setLimitToThreadSafeMethods for more informations";
         final TopologyMapInstance mapInstance = getMapFromCell(worldId, cellX, cellY, instanceUniqueId);
         if (mapInstance == null) {
-            TopologyMapManager.m_logger.error((Object)("The cell (" + cellX + "; " + cellY + ", instance " + worldId + ") belongs to a map not loaded"));
+            TopologyMapManager.m_logger.error("The cell (" + cellX + "; " + cellY + ", instance " + worldId + ") belongs to a map not loaded");
             return -32768;
         }
         if (mapInstance.isCellBlocked(cellX, cellY)) {
@@ -302,7 +302,7 @@ public class TopologyMapManager
             markBlocked(mapInstance, 0, numZ);
         }
         catch (ArrayIndexOutOfBoundsException e) {
-            TopologyMapManager.m_logger.error((Object)"", (Throwable)e);
+            TopologyMapManager.m_logger.error("", e);
         }
         final int numZ = mapInstance.getTopologyMap().getPathData(cellX, cellY, TopologyMapManager.m_cellPathData, 0);
         markBlocked(mapInstance, 0, numZ);
@@ -323,7 +323,7 @@ public class TopologyMapManager
         assert !TopologyMapManager.m_limitToThreadSafeMethods : "Can't call getNearestWalkableZ in a 'thread safe aware' environnement. See TopologyMapManager.setLimitToThreadSafeMethods for more informations";
         final TopologyMapInstance mapInstance = getMapFromCell(worldId, cellX, cellY, instanceUniqueId);
         if (mapInstance == null) {
-            TopologyMapManager.m_logger.error((Object)("MapInstance is null for parameters : worldId=" + worldId + ", pos=[" + cellX + ";" + cellY + "], InstanceUid=" + instanceUniqueId));
+            TopologyMapManager.m_logger.error("MapInstance is null for parameters : worldId=" + worldId + ", pos=[" + cellX + ";" + cellY + "], InstanceUid=" + instanceUniqueId);
             return -32768;
         }
         if (mapInstance.isCellBlocked(cellX, cellY)) {
@@ -457,7 +457,7 @@ public class TopologyMapManager
         assert !TopologyMapManager.m_limitToThreadSafeMethods : "Can't call isFightoSterile in a 'thread safe aware' environnement. See TopologyMapManager.setLimitToThreadSafeMethods for more informations";
         final TopologyMapInstance mapInstance = getMapFromCell(worldId, cellX, cellY, instanceUniqueId);
         if (mapInstance == null) {
-            TopologyMapManager.m_logger.warn((Object)("On essaye d'acc\u00e9der \u00e0 une cellule dans une map pas charg\u00e9e : (" + cellX + ", " + cellY + ")@" + worldId));
+            TopologyMapManager.m_logger.warn("On essaye d'acc\u00e9der \u00e0 une cellule dans une map pas charg\u00e9e : (" + cellX + ", " + cellY + ")@" + worldId);
             return false;
         }
         final CellPathData result = getWalkableCellPathData(mapInstance, cellX, cellY, z);
@@ -473,7 +473,7 @@ public class TopologyMapManager
         assert !TopologyMapManager.m_limitToThreadSafeMethods : "Can't call isIESterile in a 'thread safe aware' environnement. See TopologyMapManager.setLimitToThreadSafeMethods for more informations";
         final TopologyMapInstance mapInstance = getMapFromCell(worldId, cellX, cellY, instanceUniqueId);
         if (mapInstance == null) {
-            TopologyMapManager.m_logger.warn((Object)("On essaye d'acc\u00e9der \u00e0 une cellule dans une map pas charg\u00e9e : (" + cellX + ", " + cellY + ")@" + worldId));
+            TopologyMapManager.m_logger.warn("On essaye d'acc\u00e9der \u00e0 une cellule dans une map pas charg\u00e9e : (" + cellX + ", " + cellY + ")@" + worldId);
             return false;
         }
         final CellPathData result = getWalkableCellPathData(mapInstance, cellX, cellY, z);
@@ -594,7 +594,7 @@ public class TopologyMapManager
             System.out.println(map.isCellBlocked(17, 17));
         }
         catch (IOException e) {
-            TopologyMapManager.m_logger.error((Object)"", (Throwable)e);
+            TopologyMapManager.m_logger.error("", e);
         }
     }
     
@@ -603,7 +603,7 @@ public class TopologyMapManager
         TopologyMapManager.m_limitToThreadSafeMethods = false;
         m_cellPathData = CellPathData.createCellPathDataTab();
         m_pathChecker = new PathChecker(-1, (byte)0, -1);
-        m_logger = Logger.getLogger((Class)TopologyMapManager.class);
+        m_logger = Logger.getLogger(TopologyMapManager.class);
         m_mapInstances = new TLongObjectHashMap<TopologyMapInstance>();
         m_topologyMaps = new TLongObjectHashMap<TopologyMap>();
         m_mapsSynchronizer = new Object();

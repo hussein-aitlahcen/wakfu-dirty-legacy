@@ -14,14 +14,14 @@ public class HMIChangeAppearanceAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 1) {
-                HMIChangeAppearanceAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvais nombre de param\u00e8tres (il en faut 1 : AppearanceId) : " + parameters));
+                HMIChangeAppearanceAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvais nombre de param\u00e8tres (il en faut 1 : AppearanceId) : " + parameters);
                 return false;
             }
             this.m_appearanceId = array[0];
             return true;
         }
         catch (NumberFormatException e) {
-            HMIChangeAppearanceAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMIChangeAppearanceAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -36,6 +36,6 @@ public class HMIChangeAppearanceAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

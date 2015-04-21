@@ -18,7 +18,7 @@ public class HttpFileCacheValidator extends CacheValidator<FileDownloadInfo>
     @Override
     public boolean isValid() {
         try {
-            final URLConnection conn = ((FileDownloadInfo)this.m_downloadInfo).getRemoteURL().openConnection();
+            final URLConnection conn = this.m_downloadInfo.getRemoteURL().openConnection();
             String remoteFileEtag = null;
             int i = 0;
             while (true) {

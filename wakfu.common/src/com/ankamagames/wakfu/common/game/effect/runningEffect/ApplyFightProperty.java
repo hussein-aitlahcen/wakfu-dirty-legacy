@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -34,7 +35,7 @@ public final class ApplyFightProperty extends WakfuRunningEffect
             re = new ApplyFightProperty();
             re.m_pool = null;
             re.m_isStatic = false;
-            ApplyFightProperty.m_logger.error((Object)("Erreur lors d'un checkOut sur un ApplyFightProperty : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ApplyFightProperty : " + e.getMessage());
         }
         re.m_value = this.m_value;
         return re;
@@ -71,7 +72,7 @@ public final class ApplyFightProperty extends WakfuRunningEffect
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override

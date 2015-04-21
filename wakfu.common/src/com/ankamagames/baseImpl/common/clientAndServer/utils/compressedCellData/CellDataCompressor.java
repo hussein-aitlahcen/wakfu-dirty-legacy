@@ -55,6 +55,6 @@ public class CellDataCompressor
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CellDataCompressor.class);
+        m_logger = Logger.getLogger(CellDataCompressor.class);
     }
 }

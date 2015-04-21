@@ -2,11 +2,12 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.FighterCharacteristicProcedures.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -46,7 +47,7 @@ public final class CharacModifiedByAnother extends WakfuRunningEffect
             re = new CharacModifiedByAnother();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacModifiedByAnother.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacModifiedByArmorPlate : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacModifiedByArmorPlate : " + e.getMessage());
         }
         re.m_modifiedCharac = this.m_modifiedCharac;
         re.m_referentialCharac = this.m_referentialCharac;
@@ -59,7 +60,7 @@ public final class CharacModifiedByAnother extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
@@ -69,12 +70,12 @@ public final class CharacModifiedByAnother extends WakfuRunningEffect
             return;
         }
         this.m_usePercent = true;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2 && ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1) {
+        if (this.m_genericEffect.getParamsCount() >= 2 && this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1) {
             this.m_usePercent = false;
         }
         int cap = -1;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            cap = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            cap = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         float ratioBetweenCharacs;
         if (this.m_usePercent) {
@@ -84,7 +85,7 @@ public final class CharacModifiedByAnother extends WakfuRunningEffect
             ratioBetweenCharacs = this.m_value;
         }
         final BasicCharacterInfo target = (BasicCharacterInfo)this.m_target;
-        final FighterCharacteristic referentialCharac = target.getCharacteristic((CharacteristicType)this.m_referentialCharac);
+        final FighterCharacteristic referentialCharac = target.getCharacteristic(this.m_referentialCharac);
         if (cap <= 0) {
             this.m_procedure = new CharacBoostAnotherCharacProcedure(target.getCharacteristics(), this.m_modifiedCharac, ratioBetweenCharacs, 0);
         }

@@ -5,7 +5,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -44,7 +46,7 @@ public class Push extends MovementEffect
             wre = new Push();
             wre.m_pool = null;
             wre.m_isStatic = false;
-            Push.m_logger.error((Object)("Erreur lors d'un checkOut sur un Push : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un Push : " + e.getMessage());
         }
         return wre;
     }
@@ -93,11 +95,11 @@ public class Push extends MovementEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            final int elementId = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            final int elementId = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             final Elements element = Elements.getElementFromId((byte)elementId);
             if (element == null) {
-                Push.m_logger.error((Object)("Erreur de parametre, l'element n'existe pas " + elementId));
+                RunningEffect.m_logger.error("Erreur de parametre, l'element n'existe pas " + elementId);
                 return;
             }
             this.m_collisionDamageElement = element;
@@ -108,9 +110,9 @@ public class Push extends MovementEffect
     @Override
     Point3 getReferentialCell() {
         int directionStatus = -1;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
+        if (this.m_genericEffect.getParamsCount() == 3) {
             final short level = this.getContainerLevel();
-            directionStatus = (byte)((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM);
+            directionStatus = (byte)this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM);
         }
         Direction8 dir = null;
         Label_0292: {

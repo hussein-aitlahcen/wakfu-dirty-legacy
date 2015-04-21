@@ -401,6 +401,6 @@ public abstract class AbstractSpell
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractSpell.class);
+        m_logger = Logger.getLogger(AbstractSpell.class);
     }
 }

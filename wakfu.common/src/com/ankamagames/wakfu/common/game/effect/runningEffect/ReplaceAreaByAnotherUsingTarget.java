@@ -1,7 +1,7 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class ReplaceAreaByAnotherUsingTarget extends ReplaceAreaByAnother
@@ -24,7 +24,7 @@ public final class ReplaceAreaByAnotherUsingTarget extends ReplaceAreaByAnother
             re = new ReplaceAreaByAnotherUsingTarget();
             re.m_pool = null;
             re.m_isStatic = false;
-            ReplaceAreaByAnotherUsingTarget.m_logger.error((Object)("Erreur lors d'un checkOut sur un ReplaceAreaByAnotherUsingTarget : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un ReplaceAreaByAnotherUsingTarget : " + e.getMessage());
         }
         return re;
     }

@@ -43,7 +43,7 @@ class PetSleepDateChange implements PetChange
             }
         }
         catch (PetControllerException e) {
-            PetSleepDateChange.m_logger.error((Object)"Impossible de changer la date de sommeil du familier", (Throwable)e);
+            PetSleepDateChange.m_logger.error("Impossible de changer la date de sommeil du familier", e);
         }
     }
     
@@ -58,6 +58,6 @@ class PetSleepDateChange implements PetChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PetSleepDateChange.class);
+        m_logger = Logger.getLogger(PetSleepDateChange.class);
     }
 }

@@ -37,7 +37,7 @@ class GuildLevelChange implements GuildChange
             controller.setGuildLevel(this.m_guildLevel);
         }
         catch (GuildException e) {
-            GuildLevelChange.m_logger.error((Object)"Impossible de retirer le membre", (Throwable)e);
+            GuildLevelChange.m_logger.error("Impossible de retirer le membre", e);
         }
     }
     
@@ -52,6 +52,6 @@ class GuildLevelChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildLevelChange.class);
+        m_logger = Logger.getLogger(GuildLevelChange.class);
     }
 }

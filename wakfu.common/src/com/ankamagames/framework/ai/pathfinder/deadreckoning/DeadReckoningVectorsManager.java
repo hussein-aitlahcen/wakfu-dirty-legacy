@@ -23,7 +23,7 @@ public final class DeadReckoningVectorsManager
                 manager.computeTrajectoryHistory();
             }
             catch (Exception e) {
-                DeadReckoningVectorsManager.m_logger.error((Object)"Exception", (Throwable)e);
+                DeadReckoningVectorsManager.m_logger.error("Exception", e);
             }
         }
     }
@@ -41,7 +41,7 @@ public final class DeadReckoningVectorsManager
     }
     
     private static void stats() {
-        DeadReckoningVectorsManager.m_logger.trace((Object)(DeadReckoningVectorsManager.m_managers.size() + " manager(s) registered"));
+        DeadReckoningVectorsManager.m_logger.trace(DeadReckoningVectorsManager.m_managers.size() + " manager(s) registered");
     }
     
     public static boolean addManager(final DeadReckoningVectorsManager o) {
@@ -58,7 +58,7 @@ public final class DeadReckoningVectorsManager
     public static boolean removeManager(final DeadReckoningVectorsManager o) {
         final boolean bRemove = DeadReckoningVectorsManager.m_managers.remove(o);
         if (!bRemove) {
-            DeadReckoningVectorsManager.m_logger.error((Object)("Impossible de retirer le manager " + o + " de la liste."));
+            DeadReckoningVectorsManager.m_logger.error("Impossible de retirer le manager " + o + " de la liste.");
         }
         return bRemove;
     }
@@ -156,12 +156,12 @@ public final class DeadReckoningVectorsManager
             final int len = DeadReckoningVectorsManager.m_managers.size();
             DeadReckoningVectorsManager.m_managers.clear();
             DeadReckoningVectorsManager.m_initialized = false;
-            DeadReckoningVectorsManager.m_logger.info((Object)("Nettoyage des vecteurs de mouvement des personnages (" + DeadReckoningVectorsManager.m_managers.size() + " restants sur " + len + ")"));
+            DeadReckoningVectorsManager.m_logger.info("Nettoyage des vecteurs de mouvement des personnages (" + DeadReckoningVectorsManager.m_managers.size() + " restants sur " + len + ")");
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DeadReckoningVectorsManager.class);
+        m_logger = Logger.getLogger(DeadReckoningVectorsManager.class);
         m_managers = new ArrayList<DeadReckoningVectorsManager>();
         DeadReckoningVectorsManager.GAP_THRESHOLD = 3.0;
     }

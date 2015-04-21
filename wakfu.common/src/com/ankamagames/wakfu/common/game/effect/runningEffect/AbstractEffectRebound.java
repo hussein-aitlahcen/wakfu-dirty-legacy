@@ -3,17 +3,16 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import java.util.*;
-import com.ankamagames.wakfu.common.game.effect.*;
+
 import com.ankamagames.framework.ai.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.los.*;
-import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 
 public abstract class AbstractEffectRebound extends WakfuRunningEffect
@@ -100,7 +99,7 @@ public abstract class AbstractEffectRebound extends WakfuRunningEffect
         if (!(this.m_target instanceof AbstractWallEffectArea)) {
             final Iterator<? extends EffectUser> it = this.getPossibleTargetsAroundOriginalTarget();
             while (it.hasNext()) {
-                final EffectUser eu = (EffectUser)it.next();
+                final EffectUser eu = it.next();
                 if (!eu.hasCharacteristic(FighterCharacteristicType.HP) && !eu.hasCharacteristic(FighterCharacteristicType.AREA_HP)) {
                     continue;
                 }
@@ -125,7 +124,7 @@ public abstract class AbstractEffectRebound extends WakfuRunningEffect
         if (this.m_alreadyTargetedTargetIds.contains(currentPossibleSubTarget.getId())) {
             return;
         }
-        final SimpleCriterion conditions = ((WakfuEffect)this.m_genericEffect).getConditions();
+        final SimpleCriterion conditions = this.m_genericEffect.getConditions();
         if (conditions != null) {
             final boolean valid = conditions.isValid(this.m_caster, currentPossibleSubTarget, (this).getEffectContainer(), this.getContext());
             if (!valid) {
@@ -160,7 +159,7 @@ public abstract class AbstractEffectRebound extends WakfuRunningEffect
     private boolean verifyLineOfSight(final EffectUser target, final EffectUser caster) {
         final FightMap fightMap = this.m_context.getFightMap();
         if (fightMap == null) {
-            AbstractEffectRebound.m_logger.warn((Object)("pas de fightmap sur le context " + this.m_context));
+            RunningEffect.m_logger.warn("pas de fightmap sur le context " + this.m_context);
             return false;
         }
         final LineOfSightChecker losChecker = LineOfSightChecker.checkOut();
@@ -188,7 +187,7 @@ public abstract class AbstractEffectRebound extends WakfuRunningEffect
             losChecker.release();
         }
         catch (Exception e) {
-            AbstractEffectRebound.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
             fightMap.clearIgnoredSightObstacles();
             return false;
         }

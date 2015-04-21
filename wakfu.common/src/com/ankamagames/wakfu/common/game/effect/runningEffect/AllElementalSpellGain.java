@@ -1,14 +1,19 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.spell.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class AllElementalSpellGain extends SeveralSpellsGain
@@ -52,7 +57,7 @@ public final class AllElementalSpellGain extends SeveralSpellsGain
             re = new AllElementalSpellGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            AllElementalSpellGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un AllElementalSpellGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un AllElementalSpellGain : " + e.getMessage());
         }
         return re;
     }
@@ -65,7 +70,7 @@ public final class AllElementalSpellGain extends SeveralSpellsGain
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                AllElementalSpellGain.m_logger.error((Object)"Exception lors du retour au pool", (Throwable)e);
+                RunningEffect.m_logger.error("Exception lors du retour au pool", e);
             }
         }
         else {
@@ -76,8 +81,8 @@ public final class AllElementalSpellGain extends SeveralSpellsGain
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_includeStasis = (((WakfuEffect)this.m_genericEffect).getParamsCount() < 2 || ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+            this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_includeStasis = (this.m_genericEffect.getParamsCount() < 2 || this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     

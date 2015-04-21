@@ -3,7 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -33,7 +35,7 @@ public final class HpLossFunctionTriggeringValue extends HPLoss
             re = new HpLossFunctionTriggeringValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossFunctionTriggeringValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossFunctionTriggeringValue : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossFunctionTriggeringValue : " + e.getMessage());
         }
         return re;
     }
@@ -55,22 +57,22 @@ public final class HpLossFunctionTriggeringValue extends HPLoss
         final RunningEffect triggeringEffect = (triggerRE != null) ? triggerRE : ((WakfuEffectExecutionParameters)this.getParams()).getExternalTriggeringEffect();
         if (triggeringEffect == null) {
             this.m_value = 0;
-            HpLossFunctionTriggeringValue.m_logger.error((Object)"Impossible de calculer la valeur de cet effet, il doit etre d\u00e9clencher par un autre");
+            RunningEffect.m_logger.error("Impossible de calculer la valeur de cet effet, il doit etre d\u00e9clencher par un autre");
             return;
         }
         final short level = this.getContainerLevel();
         if (this.m_genericEffect == null) {
             return;
         }
-        final float percentage = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final float percentage = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final float value = triggeringEffect.getValue() * percentage / 100.0f;
         this.m_value = ValueRounder.randomRound(value);
-        final int paramsCount = ((WakfuEffect)this.m_genericEffect).getParamsCount();
+        final int paramsCount = this.m_genericEffect.getParamsCount();
         if (paramsCount > 1) {
-            this.m_staticElement = Elements.getElementFromId((byte)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+            this.m_staticElement = Elements.getElementFromId((byte)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
         if (paramsCount >= 3) {
-            this.setCondition(((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+            this.setCondition(this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
     }
     

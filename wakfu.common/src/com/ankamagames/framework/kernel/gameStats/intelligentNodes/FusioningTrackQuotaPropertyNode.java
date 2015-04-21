@@ -63,6 +63,6 @@ public class FusioningTrackQuotaPropertyNode extends ContainerNode
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FusioningTrackQuotaPropertyNode.class);
+        m_logger = Logger.getLogger(FusioningTrackQuotaPropertyNode.class);
     }
 }

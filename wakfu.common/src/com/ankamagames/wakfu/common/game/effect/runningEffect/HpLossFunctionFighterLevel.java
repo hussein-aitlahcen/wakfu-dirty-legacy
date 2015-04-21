@@ -4,7 +4,9 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,7 +43,7 @@ public final class HpLossFunctionFighterLevel extends HPLoss
             re = new HpLossFunctionFighterLevel();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossFunctionFighterLevel.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossFunctionFighterLevel : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossFunctionFighterLevel : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -60,15 +62,15 @@ public final class HpLossFunctionFighterLevel extends HPLoss
         if (this.m_genericEffect == null) {
             return;
         }
-        final float fValue = ((WakfuEffect)this.m_genericEffect).getParam(0, level);
+        final float fValue = this.m_genericEffect.getParam(0, level);
         if (this.m_caster instanceof BasicFighter) {
             this.m_value = Math.round(fValue * ((BasicFighter)this.m_caster).getLevel());
         }
         else {
             this.m_value = 0;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
-            this.m_condition = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 1) {
+            this.m_condition = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

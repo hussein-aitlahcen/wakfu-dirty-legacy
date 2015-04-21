@@ -2,7 +2,6 @@ package com.ankamagames.framework.kernel.core.common;
 
 import org.apache.log4j.*;
 import javax.swing.*;
-import java.awt.*;
 
 public abstract class ReferenceCounter
 {
@@ -26,7 +25,7 @@ public abstract class ReferenceCounter
         assert this.m_numReferences < Integer.MAX_VALUE : "Too many references added";
         if (this.m_numReferences >= 2147483646) {
             if (this.m_numReferences == 2147483646) {
-                ReferenceCounter.m_logger.fatal((Object)("Too many references added " + this.getClass().getName()), (Throwable)new Exception());
+                ReferenceCounter.m_logger.fatal("Too many references added " + this.getClass().getName(), new Exception());
                 JOptionPane.showMessageDialog(null, "Fatal error: Too many references added " + this.getClass().getName());
                 ++this.m_numReferences;
             }
@@ -43,7 +42,7 @@ public abstract class ReferenceCounter
             this.onNegativeNumReferences();
         }
         if (this.m_numReferences == -2) {
-            ReferenceCounter.m_logger.warn((Object)("on enl\u00e8ve encore une reference " + this.getClass().getSimpleName()));
+            ReferenceCounter.m_logger.warn("on enl\u00e8ve encore une reference " + this.getClass().getSimpleName());
         }
     }
     
@@ -63,6 +62,6 @@ public abstract class ReferenceCounter
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ReferenceCounter.class);
+        m_logger = Logger.getLogger(ReferenceCounter.class);
     }
 }

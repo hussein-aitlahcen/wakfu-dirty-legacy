@@ -47,7 +47,7 @@ public class DefaultEffectManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DefaultEffectManager.class);
+        m_logger = Logger.getLogger(DefaultEffectManager.class);
         DefaultEffectManager.ourInstance = new DefaultEffectManager();
     }
 }

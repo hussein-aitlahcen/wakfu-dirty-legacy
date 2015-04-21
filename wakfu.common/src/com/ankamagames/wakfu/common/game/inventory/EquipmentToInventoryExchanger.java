@@ -17,14 +17,14 @@ public class EquipmentToInventoryExchanger extends AbstractInventoryContentExcha
     
     @Override
     public int moveItem(final ItemEquipment sourceInventory, final ArrayInventory<Item, RawInventoryItem> targetInventory, final Item item, final EffectUser player, final EffectContext context) throws InventoryCapacityReachedException, ContentAlreadyPresentException {
-        final int removeResult = (sourceInventory).getContentChecker().canRemoveItem((Inventory<Item>)sourceInventory, item);
-        final int addResult = targetInventory.getContentChecker().canAddItem((Inventory<Item>)targetInventory, item);
+        final int removeResult = (sourceInventory).getContentChecker().canRemoveItem(sourceInventory, item);
+        final int addResult = targetInventory.getContentChecker().canAddItem(targetInventory, item);
         final short sourcePosition = (sourceInventory).getPosition(item);
         if (removeResult < 0 || addResult < 0) {
             return 1;
         }
         if (this.removeFromEquipment(item, sourceInventory)) {}
-        if (!(sourceInventory).getContentChecker().checkCriterion((Inventory<Item>)sourceInventory, player, context)) {
+        if (!(sourceInventory).getContentChecker().checkCriterion(sourceInventory, player, context)) {
             try {
                 this.addItemToEquipment(item, sourceInventory, sourcePosition);
             }
@@ -44,8 +44,8 @@ public class EquipmentToInventoryExchanger extends AbstractInventoryContentExcha
         if (targetPosition >= 0 && targetItem != null && !item.canStackWith(targetItem)) {
             return 1;
         }
-        final int removeResult = (sourceInventory).getContentChecker().canRemoveItem((Inventory<Item>)sourceInventory, item);
-        final int addResult = targetInventory.getContentChecker().canAddItem((Inventory<Item>)targetInventory, item);
+        final int removeResult = (sourceInventory).getContentChecker().canRemoveItem(sourceInventory, item);
+        final int addResult = targetInventory.getContentChecker().canAddItem(targetInventory, item);
         final short sourcePosition = (sourceInventory).getPosition(item);
         if (removeResult < 0 || addResult < 0) {
             return 1;
@@ -68,7 +68,7 @@ public class EquipmentToInventoryExchanger extends AbstractInventoryContentExcha
             }
         }
         catch (Exception e) {
-            EquipmentToInventoryExchanger.m_logger.trace((Object)"Impossible d'ajouter l'objet a la position donn\u00e9", (Throwable)e);
+            AbstractInventoryContentExchanger.m_logger.trace("Impossible d'ajouter l'objet a la position donn\u00e9", e);
         }
         if (b_addOk) {
             return 0;
@@ -77,7 +77,7 @@ public class EquipmentToInventoryExchanger extends AbstractInventoryContentExcha
             this.addItemToEquipment(item, sourceInventory, sourcePosition);
         }
         catch (PositionAlreadyUsedException e2) {
-            EquipmentToInventoryExchanger.m_logger.error((Object)"Impossible de remettre l'objet a sa position d'origine", (Throwable)e2);
+            AbstractInventoryContentExchanger.m_logger.error("Impossible de remettre l'objet a sa position d'origine", e2);
         }
         return 1;
     }

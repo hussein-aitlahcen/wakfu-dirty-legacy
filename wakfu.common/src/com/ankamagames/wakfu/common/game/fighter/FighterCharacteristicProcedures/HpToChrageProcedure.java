@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.game.fighter.FighterCharacteristicProcedures;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 
 public final class HpToChrageProcedure implements FighterCharacteristicProcedure
@@ -16,9 +15,9 @@ public final class HpToChrageProcedure implements FighterCharacteristicProcedure
     
     @Override
     public void execute(final FighterCharacteristicEvent event, final int value) {
-        final FighterCharacteristic hp = this.m_manager.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP);
-        final FighterCharacteristic virtualHp = this.m_manager.getCharacteristic((CharacteristicType)FighterCharacteristicType.VIRTUAL_HP);
-        final FighterCharacteristic chrage = this.m_manager.getCharacteristic((CharacteristicType)FighterCharacteristicType.CHRAGE);
+        final FighterCharacteristic hp = this.m_manager.getCharacteristic(FighterCharacteristicType.HP);
+        final FighterCharacteristic virtualHp = this.m_manager.getCharacteristic(FighterCharacteristicType.VIRTUAL_HP);
+        final FighterCharacteristic chrage = this.m_manager.getCharacteristic(FighterCharacteristicType.CHRAGE);
         if (hp == null || chrage == null || virtualHp == null) {
             return;
         }

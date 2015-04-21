@@ -21,7 +21,8 @@ public class NumericEntityUnescaper extends CharSequenceTranslator
         return this.options != null && this.options.contains(option);
     }
     
-    public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+    @Override
+	public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
         final int seqEnd = input.length();
         if (input.charAt(index) == '&' && index < seqEnd - 2 && input.charAt(index + 1) == '#') {
             int start = index + 2;

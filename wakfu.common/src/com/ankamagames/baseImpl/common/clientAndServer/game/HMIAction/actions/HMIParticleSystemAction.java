@@ -28,7 +28,7 @@ public class HMIParticleSystemAction extends HMIAction
             return true;
         }
         catch (IllegalArgumentException e) {
-            HMIParticleSystemAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " invalid  " + e.getMessage()));
+            HMIParticleSystemAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " invalid  " + e.getMessage());
             return false;
         }
     }
@@ -36,7 +36,7 @@ public class HMIParticleSystemAction extends HMIAction
     private boolean extractParams(final String parameters) {
         final String[] params = StringUtils.split(parameters, ';');
         if (params.length != 2 && params.length != 3) {
-            HMIParticleSystemAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + " nombre de param\u00e8tre invalide: " + parameters + "(attendu: idParticule(int)[;alwaysActivated(boolean)][;localisation(string)])"));
+            HMIParticleSystemAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + " nombre de param\u00e8tre invalide: " + parameters + "(attendu: idParticule(int)[;alwaysActivated(boolean)][;localisation(string)])");
             return false;
         }
         this.m_particleSystemId = Integer.parseInt(params[0]);
@@ -62,7 +62,7 @@ public class HMIParticleSystemAction extends HMIAction
         }
         else {
             if (!localisationParam.equalsIgnoreCase("pied")) {
-                HMIParticleSystemAction.m_logger.error((Object)("Erreur de parametre, localisation inconnue " + localisationParam + ", " + this.toString()));
+                HMIParticleSystemAction.m_logger.error("Erreur de parametre, localisation inconnue " + localisationParam + ", " + this.toString());
                 return false;
             }
             this.m_localisation = ParticleLocalisation.FOOT;
@@ -93,6 +93,6 @@ public class HMIParticleSystemAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

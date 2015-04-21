@@ -44,6 +44,6 @@ public class MemoryDownloadInfo extends DownloadInfo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MemoryDownloadInfo.class);
+        m_logger = Logger.getLogger(MemoryDownloadInfo.class);
     }
 }

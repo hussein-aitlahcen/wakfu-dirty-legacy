@@ -1,7 +1,5 @@
 package com.ankamagames.wakfu.common.game.fighter;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-
 public class MonsterBreedCharacteristicManager extends BreedCharacteristicManager
 {
     private final float[] m_increments;

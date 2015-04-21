@@ -330,7 +330,8 @@ public class ZipOutputStream extends FilterOutputStream
         return ZipUtil.canHandleEntryData(ae);
     }
     
-    public void write(final byte[] b, final int offset, final int length) throws IOException {
+    @Override
+	public void write(final byte[] b, final int offset, final int length) throws IOException {
         ZipUtil.checkRequestedFeatures(this.entry.entry);
         this.entry.hasWritten = true;
         if (this.entry.entry.getMethod() == 8) {
@@ -365,14 +366,16 @@ public class ZipOutputStream extends FilterOutputStream
         }
     }
     
-    public void close() throws IOException {
+    @Override
+	public void close() throws IOException {
         if (!this.finished) {
             this.finish();
         }
         this.destroy();
     }
     
-    public void flush() throws IOException {
+    @Override
+	public void flush() throws IOException {
         if (this.out != null) {
             this.out.flush();
         }
@@ -720,7 +723,8 @@ public class ZipOutputStream extends FilterOutputStream
             this.name = n;
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             return this.name;
         }
         

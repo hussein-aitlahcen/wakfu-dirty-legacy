@@ -36,7 +36,7 @@ class AddBonusChange implements GuildChange
             controller.addBonus(this.m_bonus);
         }
         catch (GuildException e) {
-            AddBonusChange.m_logger.error((Object)"Impossible d'ajouter le bonus", (Throwable)e);
+            AddBonusChange.m_logger.error("Impossible d'ajouter le bonus", e);
         }
     }
     
@@ -51,6 +51,6 @@ class AddBonusChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AddBonusChange.class);
+        m_logger = Logger.getLogger(AddBonusChange.class);
     }
 }

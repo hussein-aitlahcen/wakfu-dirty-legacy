@@ -51,7 +51,7 @@ public final class SpellCastParameters
     
     public byte getCost(final FighterCharacteristicType charac, final int level) {
         final CastParameter characCost = this.m_cost.get(charac);
-        return (byte)((characCost == null) ? 0 : characCost.getCost(level));
+        return (characCost == null) ? 0 : characCost.getCost(level);
     }
     
     public Map<FighterCharacteristicType, CastParameter> getCost() {

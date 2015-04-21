@@ -164,6 +164,6 @@ public class HavenWorldDataProvider
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HavenWorldDataProvider.class);
+        m_logger = Logger.getLogger(HavenWorldDataProvider.class);
     }
 }

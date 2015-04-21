@@ -23,7 +23,7 @@ public enum Rank implements ExportableEnum
                 return rank;
             }
         }
-        Rank.m_logger.error((Object)("Rang inconnu " + id));
+        Rank.m_logger.error("Rang inconnu " + id);
         return Rank.None;
     }
     
@@ -43,6 +43,6 @@ public enum Rank implements ExportableEnum
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Rank.class);
+        m_logger = Logger.getLogger(Rank.class);
     }
 }

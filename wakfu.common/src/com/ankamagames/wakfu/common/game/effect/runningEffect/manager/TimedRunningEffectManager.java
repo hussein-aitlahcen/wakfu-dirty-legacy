@@ -22,11 +22,7 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.*;
 
 import org.jetbrains.annotations.*;
-import org.apache.log4j.*;
-
 import gnu.trove.*;
-
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 
 public class TimedRunningEffectManager extends RunningEffectManager implements MessageHandler
 {
@@ -105,11 +101,11 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
         if (effect instanceof StateRunningEffect) {
             final State state = ((StateRunningEffect)effect).getState();
             if (!state.hasInfiniteDurations()) {
-                TimedRunningEffectManager.m_logger.error((Object)("Le temps de fin pour un etat non infini n'est pas contenu dans la map des effets en cours : effect.uid=" + effect.getUniqueId() + ", effect.id=" + effect.getId() + ", stateId=" + state.getStateBaseId()));
+                RunningEffectManager.m_logger.error("Le temps de fin pour un etat non infini n'est pas contenu dans la map des effets en cours : effect.uid=" + effect.getUniqueId() + ", effect.id=" + effect.getId() + ", stateId=" + state.getStateBaseId());
             }
         }
         else {
-            TimedRunningEffectManager.m_logger.error((Object)("Le temps de fin n'est pas contenu dans la map des effets en cours : effect.uid=" + effect.getUniqueId() + ", effect.id=" + effect.getId()));
+            RunningEffectManager.m_logger.error("Le temps de fin n'est pas contenu dans la map des effets en cours : effect.uid=" + effect.getUniqueId() + ", effect.id=" + effect.getId());
         }
         return 0L;
     }
@@ -165,20 +161,20 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
         for (short effectCount = buffer.getShort(), i = 0; i < effectCount; ++i) {
             final StaticRunningEffect<WakfuEffect, WakfuEffectContainer> staticEffect = (RunningEffectConstants.getInstance()).getObjectFromId(buffer.getInt());
             if (staticEffect == null) {
-                TimedRunningEffectManager.m_logger.error((Object)"Impossible d'instancier un runningEffect ");
+                RunningEffectManager.m_logger.error("Impossible d'instancier un runningEffect ");
             }
             final byte[] serializedRunningEffect = new byte[buffer.getShort()];
             buffer.get(serializedRunningEffect);
             if (staticEffect != null) {
                 if (context == null) {
-                    TimedRunningEffectManager.m_logger.error((Object)"contexte null au moment de d\u00e9s\u00e9rialiser un effet");
+                    RunningEffectManager.m_logger.error("contexte null au moment de d\u00e9s\u00e9rialiser un effet");
                 }
                 final WakfuRunningEffect runningEffect = (WakfuRunningEffect)staticEffect.newInstance(context, null);
                 try {
                     runningEffect.fromBuild(serializedRunningEffect);
                 }
                 catch (Exception e) {
-                    TimedRunningEffectManager.m_logger.error((Object)("Exception levee a la deserialisation d'un effet " + staticEffect.getId()), (Throwable)e);
+                    RunningEffectManager.m_logger.error("Exception levee a la deserialisation d'un effet " + staticEffect.getId(), e);
                     this.logManagerEffects();
                     break;
                 }
@@ -192,15 +188,15 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     }
     
     private void logManagerEffects() {
-        this.m_effects.forEachValue((TObjectProcedure<RunningEffect>)new TObjectProcedure<RunningEffect>() {
+        this.m_effects.forEachValue(new TObjectProcedure<RunningEffect>() {
             @Override
             public boolean execute(final RunningEffect effect) {
                 final Effect genericEffect = effect.getGenericEffect();
                 if (genericEffect == null) {
-                    TimedRunningEffectManager.m_logger.info((Object)effect.getId());
+                    RunningEffectManager.m_logger.info(effect.getId());
                 }
                 else {
-                    TimedRunningEffectManager.m_logger.info((Object)("Action Id " + effect.getId() + ", EffectId " + genericEffect.getEffectId()));
+                    RunningEffectManager.m_logger.info("Action Id " + effect.getId() + ", EffectId " + genericEffect.getEffectId());
                 }
                 return true;
             }
@@ -213,7 +209,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     
     public boolean toRawStateRunningEffects(final RawStateRunningEffects rawEffects, final boolean onlyStateToSave, final boolean withoutStateToSave) {
         rawEffects.effects.clear();
-        final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+        final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
         while (it.hasNext()) {
             it.advance();
             final RunningEffect effect = it.value();
@@ -258,12 +254,12 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
         for (final RawStateRunningEffects.StateRunningEffect rawStateRunningEffect : rawEffects.effects) {
             final StaticRunningEffect staticEffect = (RunningEffectConstants.getInstance()).getObjectFromId(RunningEffectConstants.RUNNING_STATE.getId());
             if (staticEffect == null) {
-                TimedRunningEffectManager.m_logger.error((Object)"On des\u00e9rialise un effet qui n'existe pas : RUNNING_STATE");
+                RunningEffectManager.m_logger.error("On des\u00e9rialise un effet qui n'existe pas : RUNNING_STATE");
                 return false;
             }
             final StateRunningEffect effect = StateRunningEffect.checkOut(context, user, null, State.getUniqueIdFromBasicInformation(rawStateRunningEffect.stateBaseId, rawStateRunningEffect.level));
             if (effect == null) {
-                TimedRunningEffectManager.m_logger.error((Object)("Effect not unserialized because of an unknown state : " + rawStateRunningEffect.stateBaseId));
+                RunningEffectManager.m_logger.error("Effect not unserialized because of an unknown state : " + rawStateRunningEffect.stateBaseId);
             }
             else {
                 final State state = effect.getState();
@@ -338,7 +334,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     private void removeStateEffects(final StateRunningEffect stateRunningEffect) {
         final State state = stateRunningEffect.getState();
         if (state == null) {
-            TimedRunningEffectManager.m_logger.warn((Object)"On veut retirer les effets d'un \u00e9tat inconnu");
+            RunningEffectManager.m_logger.warn("On veut retirer les effets d'un \u00e9tat inconnu");
             return;
         }
         final LinkedToEffectContainerIterator it = this.getLinkedToContainerRunningEffects(state);
@@ -359,7 +355,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
                 this.onEffectRemoved(re);
             }
             catch (Exception e) {
-                TimedRunningEffectManager.m_logger.error((Object)("Exception lors du retrait des effets lies a l'etat " + state.getStateBaseId()), (Throwable)e);
+                RunningEffectManager.m_logger.error("Exception lors du retrait des effets lies a l'etat " + state.getStateBaseId(), e);
             }
         }
     }
@@ -419,7 +415,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     }
     
     public void removeLinkedToItem(final Item item, final boolean withState) {
-        final Iterator it = new LinkedToItemIterator(this, (TLongObjectIterator<RunningEffect>)this.m_effects.iterator(), item);
+        final Iterator it = new LinkedToItemIterator(this, this.m_effects.iterator(), item);
         this.removeFromIterator(it);
         this.cleanState(withState);
     }
@@ -485,7 +481,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     
     public void removeLinkedToContainerType(final int containerType, final boolean withState, final boolean notifyUnapplication) {
         final List<EffectContainer> toRemove = new ArrayList<EffectContainer>();
-        final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+        final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
         while (it.hasNext()) {
             it.advance();
             final RunningEffect effect = it.value();
@@ -505,7 +501,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     
     public void removeLinkedToProperty(final FightPropertyType prop) {
         final List<EffectContainer> toRemove = new ArrayList<EffectContainer>();
-        final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+        final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
         while (it.hasNext()) {
             it.advance();
             final RunningEffect effect = it.value();
@@ -524,7 +520,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     
     public int removeStatesFromId(final int stateBaseId) {
         int count = 0;
-        final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+        final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
         while (it.hasNext()) {
             it.advance();
             final RunningEffect effect = it.value();
@@ -544,7 +540,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     
     public List<StateRunningEffect> getRunningState() {
         final List<StateRunningEffect> states = new ArrayList<StateRunningEffect>();
-        final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+        final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
         while (it.hasNext()) {
             it.advance();
             final RunningEffect effect = it.value();
@@ -556,7 +552,7 @@ public class TimedRunningEffectManager extends RunningEffectManager implements M
     }
     
     public StateRunningEffect getRunningState(final int stateId) {
-        final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+        final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
         while (it.hasNext()) {
             it.advance();
             final RunningEffect effect = it.value();

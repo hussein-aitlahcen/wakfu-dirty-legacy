@@ -43,6 +43,6 @@ public abstract class CharacterSerializedPart implements VersionableObject
             public void clear() {
             }
         };
-        m_logger = Logger.getLogger((Class)CharacterSerializedPart.class);
+        m_logger = Logger.getLogger(CharacterSerializedPart.class);
     }
 }

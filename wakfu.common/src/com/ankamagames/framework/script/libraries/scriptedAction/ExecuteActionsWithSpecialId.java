@@ -29,7 +29,8 @@ final class ExecuteActionsWithSpecialId extends ActionGroupFunction
         return null;
     }
     
-    public void run(final int paramCount) throws LuaException {
+    @Override
+	public void run(final int paramCount) throws LuaException {
         final int id = this.getParamInt(0);
         for (Action action = this.m_actionGroup.getActionsBySpecialId(id); action != null; action = this.m_actionGroup.getActionsBySpecialId(id)) {
             this.m_actionGroup.runAction(action, false);

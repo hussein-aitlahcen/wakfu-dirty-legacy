@@ -96,6 +96,6 @@ public abstract class NationLaw<E extends NationLawEvent>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationLaw.class);
+        m_logger = Logger.getLogger(NationLaw.class);
     }
 }

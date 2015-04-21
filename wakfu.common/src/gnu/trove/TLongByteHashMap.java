@@ -13,7 +13,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     public TLongByteHashMap() {
         super();
         this.PUT_ALL_PROC = new TLongByteProcedure() {
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 TLongByteHashMap.this.put(key, value);
                 return true;
             }
@@ -23,7 +24,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     public TLongByteHashMap(final int initialCapacity) {
         super(initialCapacity);
         this.PUT_ALL_PROC = new TLongByteProcedure() {
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 TLongByteHashMap.this.put(key, value);
                 return true;
             }
@@ -33,7 +35,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     public TLongByteHashMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
         this.PUT_ALL_PROC = new TLongByteProcedure() {
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 TLongByteHashMap.this.put(key, value);
                 return true;
             }
@@ -43,7 +46,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     public TLongByteHashMap(final TLongHashingStrategy strategy) {
         super(strategy);
         this.PUT_ALL_PROC = new TLongByteProcedure() {
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 TLongByteHashMap.this.put(key, value);
                 return true;
             }
@@ -53,7 +57,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     public TLongByteHashMap(final int initialCapacity, final TLongHashingStrategy strategy) {
         super(initialCapacity, strategy);
         this.PUT_ALL_PROC = new TLongByteProcedure() {
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 TLongByteHashMap.this.put(key, value);
                 return true;
             }
@@ -63,14 +68,16 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     public TLongByteHashMap(final int initialCapacity, final float loadFactor, final TLongHashingStrategy strategy) {
         super(initialCapacity, loadFactor, strategy);
         this.PUT_ALL_PROC = new TLongByteProcedure() {
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 TLongByteHashMap.this.put(key, value);
                 return true;
             }
         };
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final TLongByteHashMap m = (TLongByteHashMap)super.clone();
         m._values = this._values.clone();
         return m;
@@ -80,7 +87,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         return new TLongByteIterator(this);
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._values = new byte[capacity];
         return capacity;
@@ -121,7 +129,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         map.forEachEntry(this.PUT_ALL_PROC);
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final long[] oldKeys = this._set;
         final byte[] oldVals = this._values;
@@ -143,10 +152,11 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
     
     public byte get(final long key) {
         final int index = this.index(key);
-        return (byte)((index < 0) ? 0 : this._values[index]);
+        return (index < 0) ? 0 : this._values[index];
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final long[] keys = this._set;
         final byte[] vals = this._values;
@@ -166,7 +176,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         return prev;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TLongByteHashMap)) {
             return false;
         }
@@ -174,13 +185,15 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         return that.size() == this.size() && this.forEachEntry(new EqProcedure(that));
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEachEntry(p);
         return p.getHashCode();
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._values[index] = 0;
         super.removeAt(index);
     }
@@ -349,7 +362,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         return newValue;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -358,7 +372,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -369,12 +384,14 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         this.forEachEntry(new TLongByteProcedure() {
             private boolean first = true;
             
-            public boolean execute(final long key, final byte value) {
+            @Override
+			public boolean execute(final long key, final byte value) {
                 if (this.first) {
                     this.first = false;
                 }
@@ -404,7 +421,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
             return this.h;
         }
         
-        public final boolean execute(final long key, final byte value) {
+        @Override
+		public final boolean execute(final long key, final byte value) {
             this.h += (TLongByteHashMap.this._hashingStrategy.computeHashCode(key) ^ HashFunctions.hash(value));
             return true;
         }
@@ -419,7 +437,8 @@ public class TLongByteHashMap extends TLongHash implements Externalizable
             this._otherMap = otherMap;
         }
         
-        public final boolean execute(final long key, final byte value) {
+        @Override
+		public final boolean execute(final long key, final byte value) {
             final int index = this._otherMap.index(key);
             return index >= 0 && this.eq(value, this._otherMap.get(key));
         }

@@ -37,7 +37,7 @@ public abstract class AbstractMerchantInventoryItem implements InventoryContent,
     
     public void setPackType(final PackType packType) {
         if (packType == null) {
-            AbstractMerchantInventoryItem.m_logger.error((Object)("set de packtype invalide sur merchantitem=" + this), (Throwable)new Exception());
+            AbstractMerchantInventoryItem.m_logger.error("set de packtype invalide sur merchantitem=" + this, new Exception());
             this.m_packType = PackType.ONE;
             return;
         }
@@ -132,6 +132,6 @@ public abstract class AbstractMerchantInventoryItem implements InventoryContent,
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractMerchantInventoryItem.class);
+        m_logger = Logger.getLogger(AbstractMerchantInventoryItem.class);
     }
 }

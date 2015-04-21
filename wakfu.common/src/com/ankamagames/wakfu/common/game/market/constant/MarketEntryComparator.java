@@ -6,7 +6,7 @@ import com.ankamagames.wakfu.common.game.market.*;
 
 public enum MarketEntryComparator
 {
-    PRICE_CRESCENT(1, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    PRICE_CRESCENT(1, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -21,7 +21,7 @@ public enum MarketEntryComparator
             return o1.compareReleaseDate(o2);
         }
     }), 
-    PRICE_DESCENDING(2, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    PRICE_DESCENDING(2, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -36,7 +36,7 @@ public enum MarketEntryComparator
             return o2.compareReleaseDate(o1);
         }
     }), 
-    SELLER_CRESCENT(3, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    SELLER_CRESCENT(3, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -48,7 +48,7 @@ public enum MarketEntryComparator
             return o1.getSellerName().compareTo(o2.getSellerName());
         }
     }), 
-    SELLER_DESCENDING(4, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    SELLER_DESCENDING(4, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -60,7 +60,7 @@ public enum MarketEntryComparator
             return o2.getSellerName().compareTo(o1.getSellerName());
         }
     }), 
-    PACK_NUMBER_CRESCENT(5, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    PACK_NUMBER_CRESCENT(5, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -72,7 +72,7 @@ public enum MarketEntryComparator
             return o1.getPackNumber() - o2.getPackNumber();
         }
     }), 
-    PACK_NUMBER_DESCENDING(6, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    PACK_NUMBER_DESCENDING(6, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -84,7 +84,7 @@ public enum MarketEntryComparator
             return o2.getPackNumber() - o1.getPackNumber();
         }
     }), 
-    PACK_TYPE_CRESCENT(7, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    PACK_TYPE_CRESCENT(7, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -96,7 +96,7 @@ public enum MarketEntryComparator
             return o1.getPackType().qty - o2.getPackType().qty;
         }
     }), 
-    PACK_TYPE_DESCENDING(8, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    PACK_TYPE_DESCENDING(8, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -108,7 +108,7 @@ public enum MarketEntryComparator
             return o2.getPackType().qty - o1.getPackType().qty;
         }
     }), 
-    RELEASE_DATE_CRESCENT(9, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    RELEASE_DATE_CRESCENT(9, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -120,7 +120,7 @@ public enum MarketEntryComparator
             return o1.compareReleaseDate(o2);
         }
     }), 
-    RELEASE_DATE_DESCENDING(10, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    RELEASE_DATE_DESCENDING(10, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -132,7 +132,7 @@ public enum MarketEntryComparator
             return o2.compareReleaseDate(o1);
         }
     }), 
-    REMAINING_TIME_CRESCENT(11, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    REMAINING_TIME_CRESCENT(11, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {
@@ -144,7 +144,7 @@ public enum MarketEntryComparator
             return o1.compareRemainingTime(o2);
         }
     }), 
-    REMAINING_TIME_DESCENDING(12, (Comparator<MarketEntry>)new Comparator<MarketEntry>() {
+    REMAINING_TIME_DESCENDING(12, new Comparator<MarketEntry>() {
         @Override
         public int compare(final MarketEntry o1, final MarketEntry o2) {
             if (o1 == null) {

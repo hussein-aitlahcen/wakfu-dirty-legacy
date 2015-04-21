@@ -36,7 +36,7 @@ public final class ClimateBonusManager
                 bonus.add(b);
             }
             else {
-                ClimateBonusManager.m_logger.error((Object)("Impossible de trouver le bonus correspondant, ID=" + bonusList[i]));
+                ClimateBonusManager.m_logger.error("Impossible de trouver le bonus correspondant, ID=" + bonusList[i]);
             }
         }
         final ClimateBonusList list = new ClimateBonusList(id, bonus.toArray(new ClimateBonus[bonus.size()]));
@@ -49,6 +49,6 @@ public final class ClimateBonusManager
     
     static {
         INSTANCE = new ClimateBonusManager();
-        m_logger = Logger.getLogger((Class)ClimateBonusManager.class);
+        m_logger = Logger.getLogger(ClimateBonusManager.class);
     }
 }

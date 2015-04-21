@@ -16,7 +16,7 @@ public class HMISetMonsterSkinAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 2) {
-                HMISetMonsterSkinAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 2 : monsterBreedId, displayEquipment) : " + parameters));
+                HMISetMonsterSkinAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 2 : monsterBreedId, displayEquipment) : " + parameters);
                 return false;
             }
             this.m_monsterId = array[0];
@@ -24,7 +24,7 @@ public class HMISetMonsterSkinAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMISetMonsterSkinAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMISetMonsterSkinAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -43,6 +43,6 @@ public class HMISetMonsterSkinAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

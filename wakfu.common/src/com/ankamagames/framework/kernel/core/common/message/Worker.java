@@ -30,7 +30,7 @@ public final class Worker
     
     public void start() {
         if (this.m_workerThread != null && this.m_workerThread.isRunning()) {
-            Worker.m_logger.fatal((Object)"[PAS BIEN !!! Worker already running !!!");
+            Worker.m_logger.fatal("[PAS BIEN !!! Worker already running !!!");
             return;
         }
         (this.m_workerThread = new WorkerThread(new WorkerRunner(this.m_worker), "Worker")).start();
@@ -38,7 +38,7 @@ public final class Worker
     
     public void join() throws InterruptedException {
         if (this.m_workerThread == null) {
-            Worker.m_logger.fatal((Object)"[PAS BIEN !!! Worker is not running !!!", (Throwable)new IllegalStateException("Worker is not running"));
+            Worker.m_logger.fatal("[PAS BIEN !!! Worker is not running !!!", new IllegalStateException("Worker is not running"));
             return;
         }
         this.m_workerThread.join();
@@ -46,7 +46,7 @@ public final class Worker
     
     public void wakeUp() {
         if (this.m_workerThread == null) {
-            Worker.m_logger.fatal((Object)"[PAS BIEN !!! Worker is not running !!!", (Throwable)new IllegalStateException("Worker is not running"));
+            Worker.m_logger.fatal("[PAS BIEN !!! Worker is not running !!!", new IllegalStateException("Worker is not running"));
             return;
         }
         if (this.m_wakeUpMutex.tryLock()) {
@@ -57,7 +57,7 @@ public final class Worker
     
     public void interrupt() {
         if (this.m_workerThread == null) {
-            Worker.m_logger.fatal((Object)"[PAS BIEN !!! Worker is not running !!!", (Throwable)new IllegalStateException("Worker is not running"));
+            Worker.m_logger.fatal("[PAS BIEN !!! Worker is not running !!!", new IllegalStateException("Worker is not running"));
             return;
         }
         this.m_workerThread.interrupt();
@@ -66,17 +66,17 @@ public final class Worker
     
     public void kill() {
         if (this.m_workerThread == null) {
-            Worker.m_logger.fatal((Object)"[PAS BIEN !!! Worker is not running !!!", (Throwable)new IllegalStateException("Worker is not running"));
+            Worker.m_logger.fatal("[PAS BIEN !!! Worker is not running !!!", new IllegalStateException("Worker is not running"));
             return;
         }
-        Worker.m_logger.warn((Object)("Worker killed by " + ExceptionFormatter.currentStackTrace()));
+        Worker.m_logger.warn("Worker killed by " + ExceptionFormatter.currentStackTrace());
         this.m_worker.clear();
         this.setRunning(false);
     }
     
     public void setRunning(final boolean running) {
         if (this.m_workerThread == null) {
-            Worker.m_logger.fatal((Object)"[PAS BIEN !!! Worker is not running !!!", (Throwable)new IllegalStateException("Worker is not running"));
+            Worker.m_logger.fatal("[PAS BIEN !!! Worker is not running !!!", new IllegalStateException("Worker is not running"));
             return;
         }
         this.m_workerThread.setRunning(running);
@@ -123,7 +123,7 @@ public final class Worker
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Worker.class);
+        m_logger = Logger.getLogger(Worker.class);
         m_instance = new Worker();
     }
     
@@ -160,7 +160,7 @@ public final class Worker
         
         @Override
         public void run() {
-            Worker.m_logger.info((Object)"Worker running");
+            Worker.m_logger.info("Worker running");
             Worker.this.setRunning(true);
             while (Worker.this.isRunning()) {
                 this.m_runner.run();
@@ -175,13 +175,13 @@ public final class Worker
                     Worker.this.m_wakeUpCond.await(timeToWait, TimeUnit.MILLISECONDS);
                 }
                 catch (InterruptedException e) {
-                    Worker.m_logger.error((Object)"Worker interrupted", (Throwable)e);
+                    Worker.m_logger.error("Worker interrupted", e);
                 }
                 finally {
                     Worker.this.m_wakeUpMutex.unlock();
                 }
             }
-            Worker.m_logger.info((Object)"Worker stopped");
+            Worker.m_logger.info("Worker stopped");
             Worker.this.m_workerThread = null;
         }
     }

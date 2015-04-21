@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -29,7 +30,7 @@ public final class SpellBreak extends WakfuRunningEffect
             re = new SpellBreak();
             re.m_pool = null;
             re.m_isStatic = false;
-            SpellBreak.m_logger.error((Object)("Erreur lors d'un checkOut sur un SpellBreak : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SpellBreak : " + e.getMessage());
         }
         return re;
     }

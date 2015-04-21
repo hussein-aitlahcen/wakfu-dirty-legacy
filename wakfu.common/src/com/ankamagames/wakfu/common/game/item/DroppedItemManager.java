@@ -102,6 +102,6 @@ public abstract class DroppedItemManager<FloorItem extends DroppedItem> extends 
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DroppedItemManager.class);
+        m_logger = Logger.getLogger(DroppedItemManager.class);
     }
 }

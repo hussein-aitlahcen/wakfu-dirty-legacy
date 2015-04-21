@@ -32,7 +32,7 @@ public class MergedIterator<T> implements Iterator<T>
     }
     
     public MergedIterator(final Iterator<? extends T> it1, final Iterator<? extends T> it2) {
-        this((Collection)Arrays.asList(it1, it2));
+        this(Arrays.asList(it1, it2));
     }
     
     public void merge(final Iterator<? extends T> it) {
@@ -62,13 +62,13 @@ public class MergedIterator<T> implements Iterator<T>
     @Override
     public T next() {
         if (this.lastIterator.hasNext()) {
-            return (T)this.lastIterator.next();
+            return this.lastIterator.next();
         }
         for (int iteratorsCount = this.m_iterators.size(), i = this.lastIteratorIndex + 1; i < iteratorsCount; ++i) {
             this.lastIteratorIndex = i;
             this.lastIterator = this.m_iterators.get(i);
             if (this.lastIterator.hasNext()) {
-                return (T)this.lastIterator.next();
+                return this.lastIterator.next();
             }
         }
         throw new NoSuchElementException();

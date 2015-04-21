@@ -105,6 +105,6 @@ public abstract class AbstractItemTypeManager<ItemType extends AbstractItemType>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ReferenceItemManager.class);
+        m_logger = Logger.getLogger(ReferenceItemManager.class);
     }
 }

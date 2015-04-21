@@ -11,7 +11,8 @@ public class TObjectIntIterator<K> extends TIterator
         this._map = map;
     }
     
-    protected final int nextIndex() {
+    @Override
+	protected final int nextIndex() {
         if (this._expectedSize != this._hash.size()) {
             throw new ConcurrentModificationException();
         }

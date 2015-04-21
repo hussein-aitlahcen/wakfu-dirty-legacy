@@ -1,8 +1,8 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class RunningEffectGroupWithAtLeastNullEffect extends RunningEffectGroup
@@ -25,7 +25,7 @@ public final class RunningEffectGroupWithAtLeastNullEffect extends RunningEffect
             re = new RunningEffectGroupWithAtLeastNullEffect();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupWithAtLeastNullEffect.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupWithAtLeastNullEffect : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupWithAtLeastNullEffect : " + e.getMessage());
         }
         return re;
     }

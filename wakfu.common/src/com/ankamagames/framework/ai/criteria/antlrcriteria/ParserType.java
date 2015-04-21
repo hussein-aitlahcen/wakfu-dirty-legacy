@@ -5,10 +5,10 @@ import com.ankamagames.framework.ai.criteria.antlrcriteria.parsing.*;
 
 public enum ParserType
 {
-    STRING((StringParser)new StringValueStringParser()), 
-    NUMBER((StringParser)new NumericalValueStringParser()), 
-    BOOLEAN((StringParser)new BooleanValueStringParser()), 
-    NUMBERLIST((StringParser)new NumericalListStringParser()), 
+    STRING(new StringValueStringParser()), 
+    NUMBER(new NumericalValueStringParser()), 
+    BOOLEAN(new BooleanValueStringParser()), 
+    NUMBERLIST(new NumericalListStringParser()), 
     STRINGLIST((StringParser)null), 
     POSITION((StringParser)null), 
     POSITIONLIST((StringParser)null), 
@@ -24,13 +24,13 @@ public enum ParserType
     
     public StringParser getStringParser() {
         if (this.m_stringParser == null) {
-            ParserType.m_logger.error((Object)("Acc\u00e8s \u00e0 un parser non impl\u00e9ment\u00e9 dans ParserType." + this.name()));
+            ParserType.m_logger.error("Acc\u00e8s \u00e0 un parser non impl\u00e9ment\u00e9 dans ParserType." + this.name());
         }
         return this.m_stringParser;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ParserType.class);
+        m_logger = Logger.getLogger(ParserType.class);
         EMPTY_ARRAY = new ParserType[0];
     }
 }

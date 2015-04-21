@@ -4,7 +4,6 @@ import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.craft.util.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
-import org.apache.commons.pool.*;
 import gnu.trove.*;
 
 class Craft implements Releasable
@@ -138,7 +137,7 @@ class Craft implements Releasable
             craft = (Craft)Craft.m_pool.borrowObject();
         }
         catch (Exception e) {
-            Craft.m_logger.error((Object)("Erreur lors d'un checkout de " + Craft.class), (Throwable)e);
+            Craft.m_logger.error("Erreur lors d'un checkout de " + Craft.class, e);
             craft = new Craft();
         }
         craft.m_refId = referenceCraftId;
@@ -151,7 +150,7 @@ class Craft implements Releasable
             Craft.m_pool.returnObject(this);
         }
         catch (Exception e) {
-            Craft.m_logger.error((Object)("Erreur lors d'un release de " + Craft.class), (Throwable)e);
+            Craft.m_logger.error("Erreur lors d'un release de " + Craft.class, e);
             this.onCheckIn();
         }
     }
@@ -179,7 +178,7 @@ class Craft implements Releasable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Craft.class);
+        m_logger = Logger.getLogger(Craft.class);
         m_pool = new MonitoredPool(new ObjectFactory<Craft>() {
             @Override
             public Craft makeObject() {

@@ -6,7 +6,9 @@ import com.ankamagames.wakfu.common.game.item.loot.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -37,7 +39,7 @@ public final class AddBonusLoot extends WakfuRunningEffect
             re = new AddBonusLoot();
             re.m_pool = null;
             re.m_isStatic = false;
-            AddBonusLoot.m_logger.error((Object)("Erreur lors d'un checkOut sur un AddBonusLoot : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un AddBonusLoot : " + e.getMessage());
         }
         return re;
     }
@@ -48,13 +50,13 @@ public final class AddBonusLoot extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            this.m_quantity = (short)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 2) {
+            this.m_quantity = (short)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        else if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
-            final float a = ((WakfuEffect)this.m_genericEffect).getParam(1, level);
-            final int b = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        else if (this.m_genericEffect.getParamsCount() == 3) {
+            final float a = this.m_genericEffect.getParam(1, level);
+            final int b = this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             this.m_quantity = (short)StrictMath.pow(a, level / b);
         }
     }
@@ -70,7 +72,7 @@ public final class AddBonusLoot extends WakfuRunningEffect
         }
         final AbstractReferenceItem item = ReferenceItemManager.getInstance().getReferenceItem(this.m_value);
         if (item == null) {
-            AddBonusLoot.m_logger.error((Object)("L'item a ajouter au loot n'existe pas " + this.m_value));
+            RunningEffect.m_logger.error("L'item a ajouter au loot n'existe pas " + this.m_value);
             this.setNotified();
             return;
         }

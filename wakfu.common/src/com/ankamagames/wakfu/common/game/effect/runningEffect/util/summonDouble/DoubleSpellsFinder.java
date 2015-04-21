@@ -11,6 +11,6 @@ public abstract class DoubleSpellsFinder
     public abstract SpellInventory<AbstractSpellLevel> getSpells(final BasicCharacterInfo p0, final SummonDoubleParams p1, final short p2);
     
     static {
-        m_logger = Logger.getLogger((Class)DoubleSpellsFinder.class);
+        m_logger = Logger.getLogger(DoubleSpellsFinder.class);
     }
 }

@@ -5,7 +5,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -50,7 +52,7 @@ public class RunningEffectGroupLevelFunctionCharacteristic extends RunningEffect
             re = new RunningEffectGroupLevelFunctionCharacteristic();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupLevelFunctionCharacteristic.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionCharacteristic : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionCharacteristic : " + e.getMessage());
         }
         return re;
     }
@@ -61,23 +63,23 @@ public class RunningEffectGroupLevelFunctionCharacteristic extends RunningEffect
             return;
         }
         super.effectiveComputeValue(triggerRE);
-        final int characId = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int characId = this.m_genericEffect.getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.m_characType = FighterCharacteristicType.getCharacteristicTypeFromId((byte)characId);
         this.m_valueToUse = 0;
         if (this.m_characType == null) {
-            RunningEffectGroupLevelFunctionCharacteristic.m_logger.error((Object)("Unable to get characteristic with id " + characId));
+            RunningEffect.m_logger.error("Unable to get characteristic with id " + characId);
         }
-        this.m_checkOnCaster = (((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 9) {
+        this.m_checkOnCaster = (this.m_genericEffect.getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() == 9) {
             this.m_basedOnStep = true;
-            this.m_characStep = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_characStep = this.m_genericEffect.getParam(8, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         else {
             this.m_basedOnStep = false;
-            this.m_levelBase = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel());
-            this.m_levelIncrement = ((WakfuEffect)this.m_genericEffect).getParam(9, this.getContainerLevel());
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 11) {
-                this.m_valueToUse = ((WakfuEffect)this.m_genericEffect).getParam(10, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_levelBase = this.m_genericEffect.getParam(8, this.getContainerLevel());
+            this.m_levelIncrement = this.m_genericEffect.getParam(9, this.getContainerLevel());
+            if (this.m_genericEffect.getParamsCount() == 11) {
+                this.m_valueToUse = this.m_genericEffect.getParam(10, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             }
         }
     }

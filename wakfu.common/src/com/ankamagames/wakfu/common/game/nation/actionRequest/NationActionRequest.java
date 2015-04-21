@@ -36,6 +36,6 @@ public abstract class NationActionRequest implements SerializableObject
     public abstract boolean authorizedFromClient(final Citizen p0);
     
     static {
-        m_logger = Logger.getLogger((Class)NationActionRequest.class);
+        m_logger = Logger.getLogger(NationActionRequest.class);
     }
 }

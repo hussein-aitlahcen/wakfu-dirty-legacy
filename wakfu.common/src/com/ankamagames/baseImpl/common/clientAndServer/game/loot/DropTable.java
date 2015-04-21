@@ -34,7 +34,7 @@ public class DropTable<D extends Dropable>
     @Nullable
     public D drop(final Object dropUser, final Object dropTarget, final Object dropContent, final Object dropContext) {
         final int dropId = this.dropId(dropUser, dropTarget, dropContent, dropContext);
-        return (D)((dropId == -1) ? null : ((D)this.m_drops.get(dropId)));
+        return (dropId == -1) ? null : ((D)this.m_drops.get(dropId));
     }
     
     public boolean hasDrops(final Object dropUser, final Object dropTarget, final Object dropContent, final Object dropContext) {
@@ -80,12 +80,12 @@ public class DropTable<D extends Dropable>
             }
         }
         if (selectedKey == -1) {
-            DropTable.m_logger.warn((Object)"Roll sur une DropTable non vide mais avec des poids de drop \u00e0 0");
+            DropTable.m_logger.warn("Roll sur une DropTable non vide mais avec des poids de drop \u00e0 0");
             return -1;
         }
         final int id = DropTable.TMP_DROP_HELPER.get(selectedKey);
         if (id == -1) {
-            DropTable.m_logger.warn((Object)"Roll \u00e9trange sur une dropTable : \u00e0 v\u00e9rifier");
+            DropTable.m_logger.warn("Roll \u00e9trange sur une dropTable : \u00e0 v\u00e9rifier");
         }
         return id;
     }
@@ -112,7 +112,7 @@ public class DropTable<D extends Dropable>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DropTable.class);
+        m_logger = Logger.getLogger(DropTable.class);
         TMP_DROP_ACCUMULATOR = new Accumulator();
         TMP_DROP_HELPER = new TIntIntHashMap();
     }

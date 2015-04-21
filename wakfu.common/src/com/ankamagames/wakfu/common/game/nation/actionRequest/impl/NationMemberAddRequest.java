@@ -23,7 +23,7 @@ public class NationMemberAddRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationMemberAddRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationMemberAddRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestAddCitizen(this.m_characterId);
@@ -58,7 +58,7 @@ public class NationMemberAddRequest extends NationActionRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationMemberAddRequest.class);
+        m_logger = Logger.getLogger(NationMemberAddRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

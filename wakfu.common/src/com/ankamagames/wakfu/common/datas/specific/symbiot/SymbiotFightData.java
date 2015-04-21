@@ -34,7 +34,7 @@ final class SymbiotFightData
     public SymbiotXpModification getCreatureXp(final long summonerXp) {
         final SymbiotXpModification res = new SymbiotXpModification();
         if (this.m_nbTurnsPlayedBySummoner == 0) {
-            SymbiotFightData.m_logger.warn((Object)"[SYMBIOT] On cherche a recuperer l'xp des creatures d'un symbiote, mais le summoner a jou\u00e9 0 tour");
+            SymbiotFightData.m_logger.warn("[SYMBIOT] On cherche a recuperer l'xp des creatures d'un symbiote, mais le summoner a jou\u00e9 0 tour");
             return res;
         }
         final TByteIntIterator it = this.m_nbTurnPlayedByCreatureId.iterator();
@@ -51,6 +51,6 @@ final class SymbiotFightData
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SymbiotFightData.class);
+        m_logger = Logger.getLogger(SymbiotFightData.class);
     }
 }

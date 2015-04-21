@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
@@ -23,15 +22,15 @@ abstract class ModifySubEffectValueByCharac extends UsingEffectGroupRunningEffec
             return;
         }
         final EffectUser characHolder = this.getCharacHolder();
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 1) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 1) {
+            this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             if (characHolder.hasCharacteristic(this.m_charac)) {
                 this.m_value = Math.max(this.m_value * characHolder.getCharacteristicValue(this.m_charac), 1);
             }
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            final int increment = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 2) {
+            this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            final int increment = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             if (characHolder.hasCharacteristic(this.m_charac)) {
                 this.m_value += increment * characHolder.getCharacteristicValue(this.m_charac);
             }

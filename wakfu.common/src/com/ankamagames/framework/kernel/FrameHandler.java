@@ -52,7 +52,7 @@ public class FrameHandler implements MessageHandler
                             retFlag = frame.onMessage(message);
                         }
                         catch (RuntimeException e) {
-                            FrameHandler.m_logger.error((Object)("Exception lev\u00e9e lors du traitement d'un message : " + message), (Throwable)e);
+                            FrameHandler.m_logger.error("Exception lev\u00e9e lors du traitement d'un message : " + message, e);
                         }
                         if (!retFlag) {
                             break;
@@ -61,13 +61,13 @@ public class FrameHandler implements MessageHandler
                 }
             }
             else {
-                FrameHandler.m_logger.warn((Object)("L'entit\u00e9 destinataire du message n'a pas de frames, message : " + message.getClass().getSimpleName()));
+                FrameHandler.m_logger.warn("L'entit\u00e9 destinataire du message n'a pas de frames, message : " + message.getClass().getSimpleName());
                 retFlag = true;
             }
             this.m_runningFrame = false;
         }
         if (retFlag) {
-            FrameHandler.m_logger.warn((Object)("[DEFAUT DE CONCEPTION] Message (" + message.getClass().getSimpleName() + ") non trait\u00e9" + ", type " + message.getId() + ", Handler=" + this + ", Message=" + message));
+            FrameHandler.m_logger.warn("[DEFAUT DE CONCEPTION] Message (" + message.getClass().getSimpleName() + ") non trait\u00e9" + ", type " + message.getId() + ", Handler=" + this + ", Message=" + message);
         }
         this.postFrameExecutionSetup();
         return false;
@@ -250,6 +250,6 @@ public class FrameHandler implements MessageHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FrameHandler.class);
+        m_logger = Logger.getLogger(FrameHandler.class);
     }
 }

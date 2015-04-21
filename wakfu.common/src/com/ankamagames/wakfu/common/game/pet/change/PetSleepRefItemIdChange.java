@@ -42,7 +42,7 @@ class PetSleepRefItemIdChange implements PetChange
             }
         }
         catch (PetControllerException e) {
-            PetSleepRefItemIdChange.m_logger.error((Object)"Impossible de changer l'objet de sommeil du familier", (Throwable)e);
+            PetSleepRefItemIdChange.m_logger.error("Impossible de changer l'objet de sommeil du familier", e);
         }
     }
     
@@ -57,6 +57,6 @@ class PetSleepRefItemIdChange implements PetChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PetSleepRefItemIdChange.class);
+        m_logger = Logger.getLogger(PetSleepRefItemIdChange.class);
     }
 }

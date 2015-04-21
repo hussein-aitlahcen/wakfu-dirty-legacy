@@ -16,7 +16,7 @@ public class HMISetUiProperty extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 3) {
-                HMISetUiProperty.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 3) : " + parameters));
+                HMISetUiProperty.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 3) : " + parameters);
                 return false;
             }
             this.m_uiObjectId = array[0];
@@ -25,7 +25,7 @@ public class HMISetUiProperty extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMISetUiProperty.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMISetUiProperty.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -48,6 +48,6 @@ public class HMISetUiProperty extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

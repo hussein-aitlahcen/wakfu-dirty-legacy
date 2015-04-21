@@ -2,10 +2,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -34,7 +35,7 @@ public class RaiseOutOfCombat extends WakfuRunningEffect
         catch (Exception e) {
             re = new RaiseOutOfCombat();
             re.m_pool = null;
-            RaiseOutOfCombat.m_logger.error((Object)("Erreur lors d'un checkOut sur un NullEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un NullEffect : " + e.getMessage());
         }
         return re;
     }
@@ -47,8 +48,8 @@ public class RaiseOutOfCombat extends WakfuRunningEffect
     
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
-        final float xpPenaltyFractionToCompensate = ((WakfuEffect)this.m_genericEffect).getParam(1);
-        final int hpValue = (int)Math.max(1.0f, this.m_target.getCharacteristicValue(FighterCharacteristicType.HP) * ((WakfuEffect)this.m_genericEffect).getParam(0));
+        final float xpPenaltyFractionToCompensate = this.m_genericEffect.getParam(1);
+        final int hpValue = (int)Math.max(1.0f, this.m_target.getCharacteristicValue(FighterCharacteristicType.HP) * this.m_genericEffect.getParam(0));
         if (this.m_target != null && this.m_target instanceof BasicCharacterInfo) {
             final BasicCharacterInfo character = (BasicCharacterInfo)this.m_target;
             this.m_target.getCharacteristic(FighterCharacteristicType.HP).set(hpValue);

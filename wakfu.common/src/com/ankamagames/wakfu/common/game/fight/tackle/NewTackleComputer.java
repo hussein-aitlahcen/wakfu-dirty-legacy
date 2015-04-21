@@ -6,7 +6,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.part.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import java.util.*;
 
 public final class NewTackleComputer
@@ -125,7 +124,7 @@ public final class NewTackleComputer
     private static int computeTackleValue(final List<? extends BasicCharacterInfo> inRangeTacklers) {
         int tackleValue = 0;
         for (int i = 0, n = inRangeTacklers.size(); i < n; ++i) {
-            final BasicCharacterInfo tackler = (BasicCharacterInfo)inRangeTacklers.get(i);
+            final BasicCharacterInfo tackler = inRangeTacklers.get(i);
             tackleValue += tackler.getTackleValue() / (i + 1);
         }
         return tackleValue;
@@ -141,7 +140,7 @@ public final class NewTackleComputer
         final List<? extends BasicCharacterInfo> inRangeTacklers = new ArrayList<BasicCharacterInfo>(potentialTacklers);
         final Iterator<? extends BasicCharacterInfo> it = inRangeTacklers.iterator();
         while (it.hasNext()) {
-            final BasicCharacterInfo next = (BasicCharacterInfo)it.next();
+            final BasicCharacterInfo next = it.next();
             if (TackleUtils.moverIsNotInTacklerRange(next, this.m_mover, moverPos) || !next.hasCharacteristic(FighterCharacteristicType.TACKLE)) {
                 it.remove();
             }

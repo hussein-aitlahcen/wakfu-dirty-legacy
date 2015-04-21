@@ -35,7 +35,7 @@ public class FileDownloadInfo extends DownloadInfo
                 tempFile.deleteOnExit();
             }
             catch (IOException e) {
-                FileDownloadInfo.m_logger.error((Object)("Unable to create temporary file for " + this));
+                FileDownloadInfo.m_logger.error("Unable to create temporary file for " + this);
                 tempFile = null;
             }
             this.m_tempFile = ((tempFile == null) ? this.m_localFile : tempFile);
@@ -45,7 +45,7 @@ public class FileDownloadInfo extends DownloadInfo
         }
         if (this.m_tempFile.exists()) {
             if (!this.m_allowOverride) {
-                FileDownloadInfo.m_logger.error((Object)("Dest file already exists for " + this));
+                FileDownloadInfo.m_logger.error("Dest file already exists for " + this);
                 throw new IOException("File already exists " + this.m_localFile);
             }
         }
@@ -69,7 +69,7 @@ public class FileDownloadInfo extends DownloadInfo
             this.m_stream.close();
         }
         catch (IOException e) {
-            FileDownloadInfo.m_logger.error((Object)("Error while closing stream for download " + this));
+            FileDownloadInfo.m_logger.error("Error while closing stream for download " + this);
             success = false;
         }
         finally {
@@ -86,14 +86,14 @@ public class FileDownloadInfo extends DownloadInfo
         }
         if (this.m_localFile.exists()) {
             if (!this.m_allowOverride) {
-                FileDownloadInfo.m_logger.error((Object)("Dest file already exists for " + this));
+                FileDownloadInfo.m_logger.error("Dest file already exists for " + this);
                 return false;
             }
             this.m_localFile.delete();
         }
         final boolean fileMoved = this.m_tempFile.renameTo(this.m_localFile);
         if (!fileMoved) {
-            FileDownloadInfo.m_logger.error((Object)("Unable to rename temporary file " + this.m_tempFile + "as file " + this.m_localFile + " for " + this));
+            FileDownloadInfo.m_logger.error("Unable to rename temporary file " + this.m_tempFile + "as file " + this.m_localFile + " for " + this);
         }
         return fileMoved;
     }
@@ -108,6 +108,6 @@ public class FileDownloadInfo extends DownloadInfo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FileDownloadInfo.class);
+        m_logger = Logger.getLogger(FileDownloadInfo.class);
     }
 }

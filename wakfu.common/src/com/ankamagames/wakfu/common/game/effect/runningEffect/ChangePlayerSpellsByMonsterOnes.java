@@ -2,10 +2,14 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +43,7 @@ public final class ChangePlayerSpellsByMonsterOnes extends WakfuRunningEffect
                         return;
                     }
                 }
-                ChangePlayerSpellsByMonsterOnes.m_logger.error((Object)("Unknown orndinal for MOnsterSpellLevel : " + ordinal));
+                RunningEffect.m_logger.error("Unknown orndinal for MOnsterSpellLevel : " + ordinal);
             }
         };
         this.setTriggersToExecute();
@@ -57,7 +61,7 @@ public final class ChangePlayerSpellsByMonsterOnes extends WakfuRunningEffect
             re.m_pool = null;
             re.m_isStatic = false;
             re.m_spellLevel = BasicCharacterInfo.MonsterSpellsLevel.MONSTER_LEVEL;
-            ChangePlayerSpellsByMonsterOnes.m_logger.error((Object)("Erreur lors d'un checkOut sur un ChangePlayerByMobSkinAndSpells : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ChangePlayerByMobSkinAndSpells : " + e.getMessage());
         }
         return re;
     }
@@ -67,9 +71,9 @@ public final class ChangePlayerSpellsByMonsterOnes extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            final int levelType = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            final int levelType = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             this.m_spellLevel = ((levelType == 1) ? BasicCharacterInfo.MonsterSpellsLevel.PLAYER_LEVEL : BasicCharacterInfo.MonsterSpellsLevel.MONSTER_LEVEL);
         }
         else {

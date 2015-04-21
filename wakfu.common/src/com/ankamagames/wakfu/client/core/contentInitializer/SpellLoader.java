@@ -1,12 +1,11 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import com.ankamagames.wakfu.client.core.*;
-import com.ankamagames.baseImpl.graphics.*;
+import com.ankamagames.wakfu.client.core.game.breed.AvatarBreedInfo;
+import com.ankamagames.wakfu.client.core.game.breed.AvatarBreedInfoManager;
+import com.ankamagames.wakfu.client.core.game.spell.SpellManager;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
-import com.ankamagames.wakfu.client.core.game.breed.*;
-import com.ankamagames.wakfu.client.core.game.spell.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 
 public class SpellLoader implements ContentInitializer
@@ -17,13 +16,12 @@ public class SpellLoader implements ContentInitializer
     }
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         final SpellBinaryData bs = new SpellBinaryData();
         for (final AvatarBreedInfo breed : AvatarBreedInfoManager.getInstance().getBreedInfos()) {
             this.addSpells(bs, breed.getId());
         }
         this.addSpells(bs, AvatarBreed.COMMON.getBreedId());
-        clientInstance.fireContentInitializerDone(this);
     }
     
     private void addSpells(final SpellBinaryData bs, final int breedId) throws Exception {

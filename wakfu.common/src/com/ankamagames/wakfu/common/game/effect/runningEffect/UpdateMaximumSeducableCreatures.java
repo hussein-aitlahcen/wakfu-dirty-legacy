@@ -1,11 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -50,7 +54,7 @@ public class UpdateMaximumSeducableCreatures extends WakfuRunningEffect
             re = new UpdateMaximumSeducableCreatures();
             re.m_pool = null;
             re.m_isStatic = false;
-            UpdateMaximumSeducableCreatures.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetGlyph : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetGlyph : " + e.getMessage());
         }
         return re;
     }
@@ -58,7 +62,7 @@ public class UpdateMaximumSeducableCreatures extends WakfuRunningEffect
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         if (!(this.m_target instanceof SymbioticCharacter)) {
-            UpdateMaximumSeducableCreatures.m_logger.error((Object)"Execution impossible, la cible n'est pas du bon type");
+            RunningEffect.m_logger.error("Execution impossible, la cible n'est pas du bon type");
             this.setNotified(true);
             return;
         }
@@ -71,8 +75,8 @@ public class UpdateMaximumSeducableCreatures extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_isIncrement = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 0);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_isIncrement = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 0);
         }
     }
     

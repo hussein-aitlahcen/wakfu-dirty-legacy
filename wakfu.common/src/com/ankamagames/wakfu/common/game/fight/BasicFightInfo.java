@@ -7,7 +7,8 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 
 public interface BasicFightInfo<F extends BasicFighter> extends FightersInformationProvider<F>
 {
-    int getId();
+    @Override
+	int getId();
     
     @NotNull
     FightModel getModel();

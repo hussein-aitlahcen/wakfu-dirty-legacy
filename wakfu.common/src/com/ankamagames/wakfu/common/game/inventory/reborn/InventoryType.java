@@ -5,12 +5,12 @@ import com.ankamagames.wakfu.common.game.inventory.reborn.definition.*;
 
 public enum InventoryType
 {
-    BAG((SimpleObjectFactory<? extends Inventory>)new BagFactory()), 
-    QUEST((SimpleObjectFactory<? extends Inventory>)new QuestItemFactory()), 
-    EQUIPMENT((SimpleObjectFactory<? extends Inventory>)new EquipmentFactory()), 
+    BAG(new BagFactory()), 
+    QUEST(new QuestItemFactory()), 
+    EQUIPMENT(new EquipmentFactory()), 
 //    TEMPORARY_INVENTORY((SimpleObjectFactory<? extends Inventory>)new TemporaryInventoryFactory()), 
-    COSMETICS((SimpleObjectFactory<? extends Inventory>)new CosmeticsInventoryFactory()), 
-    PET_COSMETICS((SimpleObjectFactory<? extends Inventory>)new CosmeticsInventoryFactory());
+    COSMETICS(new CosmeticsInventoryFactory()), 
+    PET_COSMETICS(new CosmeticsInventoryFactory());
     
     private final SimpleObjectFactory<? extends Inventory> factory;
     
@@ -19,7 +19,7 @@ public enum InventoryType
     }
     
     public Inventory createInventory() {
-        return (Inventory)this.factory.createNew();
+        return this.factory.createNew();
     }
     
 //    private static class TemporaryInventoryFactory implements SimpleObjectFactory<TemporaryInventoryModel>

@@ -1,16 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,7 +42,7 @@ public final class SteamerBlockDamageRedirection extends WakfuRunningEffect
             re = new SteamerBlockDamageRedirection();
             re.m_pool = null;
             re.m_isStatic = false;
-            SteamerBlockDamageRedirection.m_logger.error((Object)("Erreur lors d'un checkOut sur un SteamerBlockDamageRedirection : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SteamerBlockDamageRedirection : " + e.getMessage());
         }
         return re;
     }
@@ -51,8 +52,8 @@ public final class SteamerBlockDamageRedirection extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_blockBaseId = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_blockBaseId = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
@@ -67,11 +68,11 @@ public final class SteamerBlockDamageRedirection extends WakfuRunningEffect
             triggeringEffect = ((params == null) ? null : params.getExternalTriggeringEffect());
         }
         if (triggeringEffect == null) {
-            SteamerBlockDamageRedirection.m_logger.error((Object)"Cet effet doit \u00eatre d\u00e9clench\u00e9");
+            RunningEffect.m_logger.error("Cet effet doit \u00eatre d\u00e9clench\u00e9");
             return;
         }
         if (!triggeringEffect.getTriggersToExecute().get(2)) {
-            SteamerBlockDamageRedirection.m_logger.error((Object)"Cet effet doit \u00eatre d\u00e9clench\u00e9 par une perte de pdv");
+            RunningEffect.m_logger.error("Cet effet doit \u00eatre d\u00e9clench\u00e9 par une perte de pdv");
             return;
         }
         final List<BasicEffectArea> casterBlocks = this.getCasterBlocks();
@@ -88,12 +89,12 @@ public final class SteamerBlockDamageRedirection extends WakfuRunningEffect
     }
     
     private int executeHpLossOnBlocks(final List<BasicEffectArea> absorbingBlocks, final int valueToAbsorb, final RunningEffect triggerRE) {
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null) {
             return 0;
         }
         if (effectGroup.getEffectsCount() != 1) {
-            SteamerBlockDamageRedirection.m_logger.error((Object)("On ne peut pas qu'un seul effet dans un groupe d'effet de ce type " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("On ne peut pas qu'un seul effet dans un groupe d'effet de ce type " + this.m_genericEffect.getEffectId());
             return 0;
         }
         final int[] remainingToAbsorb = { valueToAbsorb };

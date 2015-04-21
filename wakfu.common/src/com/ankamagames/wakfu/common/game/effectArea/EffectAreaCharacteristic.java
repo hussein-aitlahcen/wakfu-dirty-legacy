@@ -182,6 +182,6 @@ public class EffectAreaCharacteristic extends AbstractCharacteristic
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EffectAreaCharacteristic.class);
+        m_logger = Logger.getLogger(EffectAreaCharacteristic.class);
     }
 }

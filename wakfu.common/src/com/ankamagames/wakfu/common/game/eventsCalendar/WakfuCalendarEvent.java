@@ -36,7 +36,7 @@ public class WakfuCalendarEvent implements CalendarEvent, Poolable
         }
         catch (Exception e) {
             obj = new WakfuCalendarEvent();
-            WakfuCalendarEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type CreateGuildRequestMessage : " + e.getMessage()));
+            WakfuCalendarEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type CreateGuildRequestMessage : " + e.getMessage());
         }
         return obj;
     }
@@ -70,7 +70,7 @@ public class WakfuCalendarEvent implements CalendarEvent, Poolable
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                WakfuCalendarEvent.m_logger.error((Object)"Exception levee", (Throwable)e);
+                WakfuCalendarEvent.m_logger.error("Exception levee", e);
             }
         }
         else {
@@ -438,7 +438,7 @@ public class WakfuCalendarEvent implements CalendarEvent, Poolable
     }
     
     static {
-        WakfuCalendarEvent.m_logger = Logger.getLogger((Class)WakfuCalendarEvent.class);
+        WakfuCalendarEvent.m_logger = Logger.getLogger(WakfuCalendarEvent.class);
         WakfuCalendarEvent.UID_TEMP_GEN = -1L;
         POOL = new MonitoredPool(new ObjectFactory<WakfuCalendarEvent>() {
             @Override

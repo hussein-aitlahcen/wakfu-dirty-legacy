@@ -2,6 +2,7 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class ApplyStateWithoutNotification extends ApplyState
@@ -18,7 +19,7 @@ public final class ApplyStateWithoutNotification extends ApplyState
         catch (Exception e) {
             re = new ApplyStateWithoutNotification();
             re.m_pool = null;
-            ApplyStateWithoutNotification.m_logger.error((Object)("Erreur lors d'un newInstance sur un ApplyStateWithoutNotification : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un ApplyStateWithoutNotification : " + e.getMessage());
         }
         this.copyParams(re);
         return re;

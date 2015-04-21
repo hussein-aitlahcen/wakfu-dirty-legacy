@@ -28,7 +28,7 @@ public class NationProtectorBuffsRemoveRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationProtectorBuffsRemoveRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationProtectorBuffsRemoveRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestRemoveProtectorBuffs(this.m_protectorId, this.m_buffs);
@@ -55,7 +55,7 @@ public class NationProtectorBuffsRemoveRequest extends NationActionRequest
         this.m_protectorId = buffer.getInt();
         final int remainingBytes = buffer.remaining();
         if (remainingBytes % 4 != 0) {
-            NationProtectorBuffsRemoveRequest.m_logger.error((Object)"Impossible de d\u00e9s\u00e9rialiser une nationActionRequest. Nombre d'octets restants non valides pour former des entiers... pas multiple de 4.");
+            NationProtectorBuffsRemoveRequest.m_logger.error("Impossible de d\u00e9s\u00e9rialiser une nationActionRequest. Nombre d'octets restants non valides pour former des entiers... pas multiple de 4.");
             return false;
         }
         final int buffsCount = remainingBytes / 4;
@@ -82,7 +82,7 @@ public class NationProtectorBuffsRemoveRequest extends NationActionRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationProtectorBuffsRemoveRequest.class);
+        m_logger = Logger.getLogger(NationProtectorBuffsRemoveRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

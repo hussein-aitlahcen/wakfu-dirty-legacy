@@ -6,7 +6,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.characteristics.skill.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.craftNew.util.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import gnu.trove.*;
@@ -193,7 +192,7 @@ public class CraftRecipeReference
     public void addResultItem(final int itemId, final short quantity) {
         final RecipeResultItem resultItem = new RecipeResultItem(itemId, quantity);
         if (this.m_resultItems.contains(resultItem)) {
-            CraftRecipeReference.m_logger.warn((Object)("Duplication d'item r\u00e9sultant " + itemId + " sur la recette " + this.getId()));
+            CraftRecipeReference.m_logger.warn("Duplication d'item r\u00e9sultant " + itemId + " sur la recette " + this.getId());
             return;
         }
         this.m_resultItems.add(resultItem);
@@ -206,7 +205,7 @@ public class CraftRecipeReference
         }
         final RecipeMaterialSlot recipeMaterialSlot = new RecipeMaterialSlot(types, minLevel, minRarity, optionnal);
         if (this.m_materialSlots.contains(recipeMaterialSlot)) {
-            CraftRecipeReference.m_logger.warn((Object)("Duplication de slot de mat\u00e9riau " + recipeMaterialSlot + " sur la recette " + this.getId()));
+            CraftRecipeReference.m_logger.warn("Duplication de slot de mat\u00e9riau " + recipeMaterialSlot + " sur la recette " + this.getId());
             return;
         }
         this.m_materialSlots.add(recipeMaterialSlot);
@@ -217,6 +216,6 @@ public class CraftRecipeReference
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CraftRecipeReference.class);
+        m_logger = Logger.getLogger(CraftRecipeReference.class);
     }
 }

@@ -17,6 +17,6 @@ public abstract class AbstractDimensionalBagPlacementPolicy
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractDimensionalBagPlacementPolicy.class);
+        m_logger = Logger.getLogger(AbstractDimensionalBagPlacementPolicy.class);
     }
 }

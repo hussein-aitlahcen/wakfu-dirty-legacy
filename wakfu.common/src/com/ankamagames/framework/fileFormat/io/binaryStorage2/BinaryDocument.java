@@ -56,7 +56,7 @@ class BinaryDocument
             data.reset();
             final Index index = this.m_indexes.get("id");
             if (index.getEntryCount(id) == 0) {
-                BinaryDocument.m_logger.error((Object)("Pas de " + data.getClass().getSimpleName() + " existant. id=" + id), (Throwable)new Exception());
+                BinaryDocument.m_logger.error("Pas de " + data.getClass().getSimpleName() + " existant. id=" + id, new Exception());
                 return false;
             }
             final int cur = index.getEntryCursor(id, 0);
@@ -64,7 +64,7 @@ class BinaryDocument
             return true;
         }
         catch (Exception e) {
-            BinaryDocument.m_logger.error((Object)("Probl\u00e8me  de lecture de " + data.getClass().getSimpleName() + "id=" + id), (Throwable)e);
+            BinaryDocument.m_logger.error("Probl\u00e8me  de lecture de " + data.getClass().getSimpleName() + "id=" + id, e);
             return false;
         }
     }
@@ -98,7 +98,7 @@ class BinaryDocument
                 procedure.load(data);
             }
             catch (Exception e) {
-                BinaryDocument.m_logger.error((Object)("Probl\u00e8me  de lecture de " + data.getClass().getSimpleName() + "id=" + objectId + "item num:" + i), (Throwable)e);
+                BinaryDocument.m_logger.error("Probl\u00e8me  de lecture de " + data.getClass().getSimpleName() + "id=" + objectId + "item num:" + i, e);
             }
         }
     }
@@ -108,6 +108,6 @@ class BinaryDocument
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinaryDocument.class);
+        m_logger = Logger.getLogger(BinaryDocument.class);
     }
 }

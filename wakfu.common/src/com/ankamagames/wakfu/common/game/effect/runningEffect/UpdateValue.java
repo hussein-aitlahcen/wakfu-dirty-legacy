@@ -2,7 +2,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,7 +37,7 @@ public class UpdateValue extends WakfuRunningEffect
             re = new UpdateValue();
             re.m_isStatic = false;
             re.m_pool = null;
-            UpdateValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un UpdateValue : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un UpdateValue : " + e.getMessage());
         }
         return re;
     }
@@ -52,9 +54,9 @@ public class UpdateValue extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         if (this.m_genericEffect != null) {
             final short level = this.getContainerLevel();
-            this.m_what = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_mustset = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) != 0);
+            this.m_what = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_mustset = (this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) != 0);
         }
     }
     

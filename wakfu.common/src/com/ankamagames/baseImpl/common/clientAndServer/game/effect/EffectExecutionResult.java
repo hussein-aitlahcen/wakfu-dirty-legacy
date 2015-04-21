@@ -3,7 +3,6 @@ package com.ankamagames.baseImpl.common.clientAndServer.game.effect;
 import org.apache.log4j.*;
 import java.util.*;
 import com.ankamagames.framework.kernel.core.common.*;
-import org.apache.commons.pool.*;
 
 public class EffectExecutionResult implements Poolable
 {
@@ -27,7 +26,7 @@ public class EffectExecutionResult implements Poolable
         }
         catch (Exception e) {
             executionResult = new EffectExecutionResult();
-            EffectExecutionResult.m_logger.error((Object)("Erreur de checkout : " + e.getMessage()));
+            EffectExecutionResult.m_logger.error("Erreur de checkout : " + e.getMessage());
         }
         return executionResult;
     }
@@ -81,7 +80,7 @@ public class EffectExecutionResult implements Poolable
                 EffectExecutionResult.m_staticPool.returnObject(this);
             }
             catch (Exception e) {
-                EffectExecutionResult.m_logger.error((Object)("Impossible de retourner l'\u00e9v\u00e9nement " + this + " au pool"), (Throwable)e);
+                EffectExecutionResult.m_logger.error("Impossible de retourner l'\u00e9v\u00e9nement " + this + " au pool", e);
             }
         }
         else {
@@ -101,7 +100,7 @@ public class EffectExecutionResult implements Poolable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EffectExecutionResult.class);
+        m_logger = Logger.getLogger(EffectExecutionResult.class);
         m_staticPool = new MonitoredPool(new ObjectFactory<EffectExecutionResult>() {
             @Override
             public EffectExecutionResult makeObject() {

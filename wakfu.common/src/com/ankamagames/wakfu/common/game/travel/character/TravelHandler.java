@@ -132,6 +132,6 @@ public class TravelHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TravelHandler.class);
+        m_logger = Logger.getLogger(TravelHandler.class);
     }
 }

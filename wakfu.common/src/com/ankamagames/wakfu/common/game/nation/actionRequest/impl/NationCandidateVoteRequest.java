@@ -29,7 +29,7 @@ public class NationCandidateVoteRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationCandidateVoteRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationCandidateVoteRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestCitizenVote(this.m_citizenId, this.m_candidateId);
@@ -75,7 +75,7 @@ public class NationCandidateVoteRequest extends NationActionRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationCandidateVoteRequest.class);
+        m_logger = Logger.getLogger(NationCandidateVoteRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

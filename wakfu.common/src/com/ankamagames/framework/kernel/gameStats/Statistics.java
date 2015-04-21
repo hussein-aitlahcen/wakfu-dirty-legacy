@@ -4,7 +4,6 @@ import org.apache.log4j.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import java.nio.*;
 import com.ankamagames.framework.kernel.utils.*;
-import java.util.*;
 
 public class Statistics
 {
@@ -46,7 +45,7 @@ public class Statistics
         buffer.get();
         buffer.get();
         if (!name.equals(this.getRootPackage().getName())) {
-            Statistics.m_logger.error((Object)("Synchronisation depuis un root package diff\u00e9rent : " + name + " au lieu de " + this.getRootPackage().getName()));
+            Statistics.m_logger.error("Synchronisation depuis un root package diff\u00e9rent : " + name + " au lieu de " + this.getRootPackage().getName());
             return;
         }
         this.getRootPackage().unserialize(buffer, source);
@@ -61,7 +60,7 @@ public class Statistics
             final long value = buffer.getLong();
             final Node node = this.addNode(fullName, value);
             if (node == null) {
-                Statistics.m_logger.error((Object)("Impossible de cr\u00e9er le node " + fullName));
+                Statistics.m_logger.error("Impossible de cr\u00e9er le node " + fullName);
             }
         }
     }
@@ -73,7 +72,7 @@ public class Statistics
             final String aPackage = packages[j];
             if (j == 0) {
                 if (!aPackage.equals(this.m_rootPackage.getName())) {
-                    Statistics.m_logger.error((Object)("Le root package ne s'appelle pas " + aPackage));
+                    Statistics.m_logger.error("Le root package ne s'appelle pas " + aPackage);
                     return null;
                 }
                 currentPackage = this.m_rootPackage;
@@ -90,7 +89,7 @@ public class Statistics
                     propertyNode.setValue(value);
                     return propertyNode;
                 }
-                Statistics.m_logger.error((Object)("Impossible de d\u00e9finir une valeur au neoud " + subNode + " qui n'est pas une propri\u00e9t\u00e9"));
+                Statistics.m_logger.error("Impossible de d\u00e9finir une valeur au neoud " + subNode + " qui n'est pas une propri\u00e9t\u00e9");
             }
             else {
                 final Node subNode = currentPackage.getDirectChild(aPackage);
@@ -99,7 +98,7 @@ public class Statistics
                 }
                 else {
                     if (!(subNode instanceof PackageNode)) {
-                        Statistics.m_logger.error((Object)("Impossible de cr\u00e9er un fils \u00e0 " + subNode + " qui n'est pas un package"));
+                        Statistics.m_logger.error("Impossible de cr\u00e9er un fils \u00e0 " + subNode + " qui n'est pas un package");
                         return null;
                     }
                     currentPackage = (PackageNode)subNode;
@@ -110,14 +109,14 @@ public class Statistics
     }
     
     public void printAllStats() {
-        Statistics.m_logger.info((Object)"All statistics:");
+        Statistics.m_logger.info("All statistics:");
         for (final SimplePropertyNode propertyNode : this.getRootPackage().select("*").getPropertyNodes()) {
-            Statistics.m_logger.info((Object)("  " + propertyNode.getFullName() + " = " + propertyNode.getValue()));
+            Statistics.m_logger.info("  " + propertyNode.getFullName() + " = " + propertyNode.getValue());
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Statistics.class);
+        m_logger = Logger.getLogger(Statistics.class);
         m_instance = new Statistics();
     }
 }

@@ -32,6 +32,6 @@ public abstract class AbstractEditorGroupMapLibrary<B extends AbstractEditorGrou
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractEditorGroupMapLibrary.class);
+        m_logger = Logger.getLogger(AbstractEditorGroupMapLibrary.class);
     }
 }

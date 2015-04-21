@@ -13,7 +13,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
     public TObjectFloatHashMap() {
         super();
         this.PUT_ALL_PROC = new TObjectFloatProcedure<K>() {
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 TObjectFloatHashMap.this.put(key, value);
                 return true;
             }
@@ -23,7 +24,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
     public TObjectFloatHashMap(final int initialCapacity) {
         super(initialCapacity);
         this.PUT_ALL_PROC = new TObjectFloatProcedure<K>() {
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 TObjectFloatHashMap.this.put(key, value);
                 return true;
             }
@@ -33,7 +35,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
     public TObjectFloatHashMap(final int initialCapacity, final float loadFactor) {
         super(initialCapacity, loadFactor);
         this.PUT_ALL_PROC = new TObjectFloatProcedure<K>() {
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 TObjectFloatHashMap.this.put(key, value);
                 return true;
             }
@@ -43,7 +46,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
     public TObjectFloatHashMap(final TObjectHashingStrategy<K> strategy) {
         super(strategy);
         this.PUT_ALL_PROC = new TObjectFloatProcedure<K>() {
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 TObjectFloatHashMap.this.put(key, value);
                 return true;
             }
@@ -53,7 +57,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
     public TObjectFloatHashMap(final int initialCapacity, final TObjectHashingStrategy<K> strategy) {
         super(initialCapacity, strategy);
         this.PUT_ALL_PROC = new TObjectFloatProcedure<K>() {
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 TObjectFloatHashMap.this.put(key, value);
                 return true;
             }
@@ -63,7 +68,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
     public TObjectFloatHashMap(final int initialCapacity, final float loadFactor, final TObjectHashingStrategy<K> strategy) {
         super(initialCapacity, loadFactor, strategy);
         this.PUT_ALL_PROC = new TObjectFloatProcedure<K>() {
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 TObjectFloatHashMap.this.put(key, value);
                 return true;
             }
@@ -74,7 +80,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         return new TObjectFloatIterator<K>(this);
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         this._values = new float[capacity];
         return capacity;
@@ -105,7 +112,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         this._set[index] = key;
         this._values[index] = value;
         if (isNewMapping) {
-            this.postInsertHook(oldKey == TObjectFloatHashMap.FREE);
+            this.postInsertHook(oldKey == TObjectHash.FREE);
         }
         return previous;
     }
@@ -114,15 +121,16 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         map.forEachEntry(this.PUT_ALL_PROC);
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final K[] oldKeys = (K[])this._set;
         final float[] oldVals = this._values;
-        Arrays.fill(this._set = new Object[newCapacity], TObjectFloatHashMap.FREE);
+        Arrays.fill(this._set = new Object[newCapacity], TObjectHash.FREE);
         this._values = new float[newCapacity];
         int i = oldCapacity;
         while (i-- > 0) {
-            if (oldKeys[i] != TObjectFloatHashMap.FREE && oldKeys[i] != TObjectFloatHashMap.REMOVED) {
+            if (oldKeys[i] != TObjectHash.FREE && oldKeys[i] != TObjectHash.REMOVED) {
                 final K o = oldKeys[i];
                 final int index = this.insertionIndex(o);
                 if (index < 0) {
@@ -139,11 +147,12 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         return (index < 0) ? 0.0f : this._values[index];
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final Object[] keys = this._set;
         final float[] vals = this._values;
-        Arrays.fill(this._set, 0, this._set.length, TObjectFloatHashMap.FREE);
+        Arrays.fill(this._set, 0, this._set.length, TObjectHash.FREE);
         Arrays.fill(this._values, 0, this._values.length, 0.0f);
     }
     
@@ -157,7 +166,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         return prev;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TObjectFloatHashMap)) {
             return false;
         }
@@ -165,14 +175,16 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         return that.size() == this.size() && this.forEachEntry(new EqProcedure(that));
     }
     
-    public TObjectFloatHashMap<K> clone() {
+    @Override
+	public TObjectFloatHashMap<K> clone() {
         final TObjectFloatHashMap<K> clone = (TObjectFloatHashMap)super.clone();
         clone._values = new float[this._values.length];
         System.arraycopy(this._values, 0, clone._values, 0, clone._values.length);
         return clone;
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._values[index] = 0.0f;
         super.removeAt(index);
     }
@@ -184,7 +196,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         int i = v.length;
         int j = 0;
         while (i-- > 0) {
-            if (keys[i] != TObjectFloatHashMap.FREE && keys[i] != TObjectFloatHashMap.REMOVED) {
+            if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED) {
                 vals[j++] = v[i];
             }
         }
@@ -197,7 +209,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         int i = k.length;
         int j = 0;
         while (i-- > 0) {
-            if (k[i] != TObjectFloatHashMap.FREE && k[i] != TObjectFloatHashMap.REMOVED) {
+            if (k[i] != TObjectHash.FREE && k[i] != TObjectHash.REMOVED) {
                 keys[j++] = k[i];
             }
         }
@@ -213,7 +225,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         int i = k.length;
         int j = 0;
         while (i-- > 0) {
-            if (k[i] != TObjectFloatHashMap.FREE && k[i] != TObjectFloatHashMap.REMOVED) {
+            if (k[i] != TObjectHash.FREE && k[i] != TObjectHash.REMOVED) {
                 a[j++] = k[i];
             }
         }
@@ -225,7 +237,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         final float[] vals = this._values;
         int i = vals.length;
         while (i-- > 0) {
-            if (keys[i] != TObjectFloatHashMap.FREE && keys[i] != TObjectFloatHashMap.REMOVED && val == vals[i]) {
+            if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED && val == vals[i]) {
                 return true;
             }
         }
@@ -245,7 +257,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         final float[] values = this._values;
         int i = values.length;
         while (i-- > 0) {
-            if (keys[i] != TObjectFloatHashMap.FREE && keys[i] != TObjectFloatHashMap.REMOVED && !procedure.execute(values[i])) {
+            if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED && !procedure.execute(values[i])) {
                 return false;
             }
         }
@@ -257,7 +269,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         final float[] values = this._values;
         int i = keys.length;
         while (i-- > 0) {
-            if (keys[i] != TObjectFloatHashMap.FREE && keys[i] != TObjectFloatHashMap.REMOVED && !procedure.execute(keys[i], values[i])) {
+            if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED && !procedure.execute(keys[i], values[i])) {
                 return false;
             }
         }
@@ -272,7 +284,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         try {
             int i = keys.length;
             while (i-- > 0) {
-                if (keys[i] != TObjectFloatHashMap.FREE && keys[i] != TObjectFloatHashMap.REMOVED && !procedure.execute(keys[i], values[i])) {
+                if (keys[i] != TObjectHash.FREE && keys[i] != TObjectHash.REMOVED && !procedure.execute(keys[i], values[i])) {
                     this.removeAt(i);
                     modified = true;
                 }
@@ -289,7 +301,7 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         final float[] values = this._values;
         int i = values.length;
         while (i-- > 0) {
-            if (keys[i] != null && keys[i] != TObjectFloatHashMap.REMOVED) {
+            if (keys[i] != null && keys[i] != TObjectHash.REMOVED) {
                 values[i] = function.execute(values[i]);
             }
         }
@@ -331,12 +343,13 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         final K oldKey = (K)this._set[index];
         this._set[index] = key;
         if (isNewMapping) {
-            this.postInsertHook(oldKey == TObjectFloatHashMap.FREE);
+            this.postInsertHook(oldKey == TObjectHash.FREE);
         }
         return newValue;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -345,7 +358,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -356,12 +370,14 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         this.forEachEntry(new TObjectFloatProcedure<K>() {
             private boolean first = true;
             
-            public boolean execute(final K key, final float value) {
+            @Override
+			public boolean execute(final K key, final float value) {
                 if (this.first) {
                     this.first = false;
                 }
@@ -387,7 +403,8 @@ public class TObjectFloatHashMap<K> extends TObjectHash<K> implements Externaliz
             this._otherMap = otherMap;
         }
         
-        public final boolean execute(final Object key, final float value) {
+        @Override
+		public final boolean execute(final Object key, final float value) {
             final int index = this._otherMap.index(key);
             return index >= 0 && this.eq(value, this._otherMap.get(key));
         }

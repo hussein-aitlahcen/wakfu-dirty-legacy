@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.client.core.contentInitializer;
 import org.apache.log4j.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
-import com.ankamagames.framework.kernel.core.common.collections.lightweight.byteKey.*;
 import com.ankamagames.wakfu.client.core.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
@@ -20,7 +19,7 @@ public class AvatarBreedLoader implements ContentInitializer
                 final int breedId = bs.getId();
                 final AvatarBreed breed = AvatarBreed.getBreedFromId(breedId);
                 if (breed == null) {
-                    AvatarBreedLoader.m_logger.error((Object)("Tentative d'initialiser une breed inconnue " + breedId));
+                    AvatarBreedLoader.m_logger.error("Tentative d'initialiser une breed inconnue " + breedId);
                     return;
                 }
                 breed.setData(createAvatarBreedData(bs));
@@ -61,6 +60,6 @@ public class AvatarBreedLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AvatarBreedLoader.class);
+        m_logger = Logger.getLogger(AvatarBreedLoader.class);
     }
 }

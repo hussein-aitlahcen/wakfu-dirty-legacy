@@ -7,11 +7,13 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 
@@ -79,7 +81,7 @@ public abstract class AbstractWallEffectArea extends AbstractEffectArea
             this.m_wallRunningEffectManager = new TimedRunningEffectManager(this);
         }
         else {
-            AbstractWallEffectArea.m_logger.error((Object)"nombre de param\u00e8tre incorrect pour la cr\u00e9ation d'un mur");
+            BasicEffectArea.m_logger.error("nombre de param\u00e8tre incorrect pour la cr\u00e9ation d'un mur");
         }
     }
     

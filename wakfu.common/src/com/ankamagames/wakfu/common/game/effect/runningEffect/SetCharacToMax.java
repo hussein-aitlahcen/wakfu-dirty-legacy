@@ -4,7 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -40,7 +42,7 @@ public class SetCharacToMax extends CharacGain
             re = new SetCharacToMax();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetCharacToMax.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetCharacToMax : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetCharacToMax : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_valuePerCentOfCurrentValue = false;

@@ -3,8 +3,6 @@ package com.ankamagames.baseImpl.common.clientAndServer.game.inventory.event;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.logs.*;
 
-import org.apache.commons.lang3.*;
-
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.framework.kernel.utils.ArrayUtils;
 import com.ankamagames.framework.kernel.core.common.*;
@@ -62,7 +60,7 @@ public class InventoryItemModifiedEvent extends InventoryEvent
             event.m_pool = InventoryItemModifiedEvent.m_staticPool;
         }
         catch (Exception e) {
-            InventoryItemModifiedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type InventoryItemModifiedEvent : " + e.getMessage()));
+            InventoryEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type InventoryItemModifiedEvent : " + e.getMessage());
             event = new InventoryItemModifiedEvent();
         }
         event.init(inventory, action);
@@ -88,7 +86,7 @@ public class InventoryItemModifiedEvent extends InventoryEvent
     public String getLogRepresentation() {
         final InventoryContent item = this.getConcernedItem();
         if (!(item instanceof LoggableEntity)) {
-            InventoryItemModifiedEvent.m_logger.error((Object)("Log de type " + this.getClass().getName() + " sur un InventoryItemModifiedEvent d'un item de type non-loggable : " + item.getClass().getName()));
+            InventoryEvent.m_logger.error("Log de type " + this.getClass().getName() + " sur un InventoryItemModifiedEvent d'un item de type non-loggable : " + item.getClass().getName());
             return null;
         }
         final String itemRepr = ((LoggableEntity)item).getLogRepresentation();
@@ -101,7 +99,7 @@ public class InventoryItemModifiedEvent extends InventoryEvent
                     }
                 }
                 catch (Throwable e) {
-                    InventoryItemModifiedEvent.m_logger.error((Object)"Exception : ", e);
+                    InventoryEvent.m_logger.error("Exception : ", e);
                 }
                 return "itemAcquired=" + itemRepr;
             }
@@ -118,7 +116,7 @@ public class InventoryItemModifiedEvent extends InventoryEvent
                     }
                 }
                 catch (Throwable e) {
-                    InventoryItemModifiedEvent.m_logger.error((Object)"Exception : ", e);
+                    InventoryEvent.m_logger.error("Exception : ", e);
                 }
                 return "itemQuantityModified=" + itemRepr + " quantity=" + this.getQuantity();
             }
@@ -127,7 +125,7 @@ public class InventoryItemModifiedEvent extends InventoryEvent
                 return "itemLost=" + itemRepr;
             }
             default: {
-                InventoryItemModifiedEvent.m_logger.error((Object)("Log de type " + this.getClass().getName() + " sur un InventoryItemModifiedEvent d'action " + this.getAction() + " inconnue"));
+                InventoryEvent.m_logger.error("Log de type " + this.getClass().getName() + " sur un InventoryItemModifiedEvent d'action " + this.getAction() + " inconnue");
                 return null;
             }
         }

@@ -433,7 +433,8 @@ public class CompareToBuilder implements Builder<Integer>
         return this.comparison;
     }
     
-    public Integer build() {
+    @Override
+	public Integer build() {
         return this.toComparison();
     }
 }

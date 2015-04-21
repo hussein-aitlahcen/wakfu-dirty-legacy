@@ -1,13 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -54,7 +57,7 @@ public final class CopyCharacAtApplicationValue extends WakfuRunningEffect
             re = new CopyCharacAtApplicationValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            CopyCharacAtApplicationValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un CopyCharacValueAtApplication : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CopyCharacValueAtApplication : " + e.getMessage());
         }
         re.m_characId = this.m_characId;
         re.m_max = this.m_max;
@@ -73,16 +76,16 @@ public final class CopyCharacAtApplicationValue extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_characId = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_characId = (byte)this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         int ratio = 100;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            ratio = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            ratio = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         final FighterCharacteristicType charac = FighterCharacteristicType.getCharacteristicTypeFromId(this.m_characId);
         if (charac == null) {
-            CopyCharacAtApplicationValue.m_logger.error((Object)("Charac parametree inconnue " + this.m_characId));
+            RunningEffect.m_logger.error("Charac parametree inconnue " + this.m_characId);
             return;
         }
         if (!this.m_caster.hasCharacteristic(charac) || !this.m_target.hasCharacteristic(charac)) {
@@ -102,7 +105,7 @@ public final class CopyCharacAtApplicationValue extends WakfuRunningEffect
         }
         final FighterCharacteristicType charac = FighterCharacteristicType.getCharacteristicTypeFromId(this.m_characId);
         if (charac == null) {
-            CopyCharacAtApplicationValue.m_logger.error((Object)("Charac parametree inconnue " + this.m_characId));
+            RunningEffect.m_logger.error("Charac parametree inconnue " + this.m_characId);
             this.setNotified();
             return;
         }

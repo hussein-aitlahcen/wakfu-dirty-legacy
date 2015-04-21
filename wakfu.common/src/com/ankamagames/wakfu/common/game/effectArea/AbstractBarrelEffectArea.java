@@ -7,7 +7,6 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.configuration.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;

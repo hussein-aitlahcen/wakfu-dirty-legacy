@@ -264,7 +264,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).nameChanged();
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de nom de la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de nom de la guilde " + this, e);
             }
         }
     }
@@ -275,7 +275,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).blazonChanged();
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de blason pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de blason pour la guilde " + this, e);
             }
         }
     }
@@ -286,7 +286,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).descriptionChanged();
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de description pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de description pour la guilde " + this, e);
             }
         }
     }
@@ -297,7 +297,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).levelChanged(level);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de niveau pour la guilde " + this + " niveau = " + level), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de niveau pour la guilde " + this + " niveau = " + level, e);
             }
         }
     }
@@ -308,7 +308,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).nationIdChanged(nationId);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de nation pour la guilde " + this + " nationId= " + nationId), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de nation pour la guilde " + this + " nationId= " + nationId, e);
             }
         }
     }
@@ -319,7 +319,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).totalGuildPointsChanged(deltaPoints);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de point de guilde, delta = " + deltaPoints + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de point de guilde, delta = " + deltaPoints + " pour la guilde " + this, e);
             }
         }
     }
@@ -330,7 +330,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).currentGuildPointsChanged(deltaPoints);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de point de guilde, delta = " + deltaPoints + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de point de guilde, delta = " + deltaPoints + " pour la guilde " + this, e);
             }
         }
     }
@@ -341,7 +341,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).messageChanged();
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au changement de message de la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au changement de message de la guilde " + this, e);
             }
         }
     }
@@ -352,7 +352,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).rankAdded(rank);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee \u00e0 l'ajout du rank " + rank + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee \u00e0 l'ajout du rank " + rank + " pour la guilde " + this, e);
             }
         }
     }
@@ -363,7 +363,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).rankMoved(rank);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee sur le changement de rang " + rank + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee sur le changement de rang " + rank + " pour la guilde " + this, e);
             }
         }
     }
@@ -374,7 +374,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).rankRemoved(rank);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au retrait du rang " + rank + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au retrait du rang " + rank + " pour la guilde " + this, e);
             }
         }
     }
@@ -385,7 +385,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).memberAdded(member);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee \u00e0 l'ajout d'un membre " + member + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee \u00e0 l'ajout d'un membre " + member + " pour la guilde " + this, e);
             }
         }
     }
@@ -396,7 +396,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).memberRemoved(member);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au retrait d'un membre " + member + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au retrait d'un membre " + member + " pour la guilde " + this, e);
             }
         }
     }
@@ -407,7 +407,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).bonusAdded(bonus);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee pour le bonus " + bonus + " de la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee pour le bonus " + bonus + " de la guilde " + this, e);
             }
         }
     }
@@ -418,7 +418,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).bonusRemoved(bonus);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee au retrait d'un bonus " + bonus + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee au retrait d'un bonus " + bonus + " pour la guilde " + this, e);
             }
         }
     }
@@ -429,7 +429,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).earnedPointsWeeklyChanged(earnedPoints);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee lors de la modification de points gagn\u00e9s " + earnedPoints + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee lors de la modification de points gagn\u00e9s " + earnedPoints + " pour la guilde " + this, e);
             }
         }
     }
@@ -440,7 +440,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).lastEarningPointWeekChanged(week);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee lors de la modification de la semaine " + week + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee lors de la modification de la semaine " + week + " pour la guilde " + this, e);
             }
         }
     }
@@ -452,7 +452,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).rankChanged(rank);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee \u00e0 la modification d'un rang " + rank + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee \u00e0 la modification d'un rang " + rank + " pour la guilde " + this, e);
             }
         }
     }
@@ -464,7 +464,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).memberChanged(member);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee \u00e0 la modification d'un membre " + member + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee \u00e0 la modification d'un membre " + member + " pour la guilde " + this, e);
             }
         }
     }
@@ -476,7 +476,7 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
                 this.m_listeners.get(i).bonusActivated(bonus);
             }
             catch (RuntimeException e) {
-                GuildModel.m_logger.error((Object)("Exception levee \u00e0 l'activation d'un bonus " + bonus + " pour la guilde " + this), (Throwable)e);
+                GuildModel.m_logger.error("Exception levee \u00e0 l'activation d'un bonus " + bonus + " pour la guilde " + this, e);
             }
         }
     }
@@ -497,6 +497,6 @@ final class GuildModel implements Guild, GuildRankListener, GuildMemberListener,
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildModel.class);
+        m_logger = Logger.getLogger(GuildModel.class);
     }
 }

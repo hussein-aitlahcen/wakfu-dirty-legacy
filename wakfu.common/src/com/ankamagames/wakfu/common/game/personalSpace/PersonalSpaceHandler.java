@@ -34,7 +34,7 @@ public class PersonalSpaceHandler
             public boolean execute(final int viewId) {
                 if (!PersonalSpaceHandler.this.knowView(viewId)) {
                     PersonalSpaceHandler.this.learnView(viewId);
-                    PersonalSpaceHandler.m_logger.info((Object)("apprentissage de la custom de havre-sac inn\u00e9e id=" + viewId));
+                    PersonalSpaceHandler.m_logger.info("apprentissage de la custom de havre-sac inn\u00e9e id=" + viewId);
                 }
                 return true;
             }
@@ -58,6 +58,6 @@ public class PersonalSpaceHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PersonalSpaceHandler.class);
+        m_logger = Logger.getLogger(PersonalSpaceHandler.class);
     }
 }

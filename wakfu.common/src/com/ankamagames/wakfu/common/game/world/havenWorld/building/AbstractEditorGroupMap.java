@@ -73,6 +73,6 @@ public class AbstractEditorGroupMap
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractEditorGroupMap.class);
+        m_logger = Logger.getLogger(AbstractEditorGroupMap.class);
     }
 }

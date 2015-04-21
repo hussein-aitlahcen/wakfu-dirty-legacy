@@ -3,13 +3,13 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.spellsFinder.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.framework.kernel.core.common.serialization.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.external.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class SummonDoubleForBellaphone extends SummonDouble
@@ -29,7 +29,7 @@ public final class SummonDoubleForBellaphone extends SummonDouble
             re = new SummonDoubleForBellaphone();
             re.m_pool = null;
             re.m_isStatic = false;
-            SummonDoubleForBellaphone.m_logger.error((Object)("Erreur lors d'un checkOut sur un SummonDoubleForBellaphone : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un SummonDoubleForBellaphone : " + e.getMessage());
         }
         return re;
     }

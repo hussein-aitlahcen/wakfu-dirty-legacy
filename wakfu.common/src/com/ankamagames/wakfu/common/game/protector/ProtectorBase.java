@@ -94,7 +94,7 @@ public abstract class ProtectorBase implements DialogSource
     
     @Override
     public String toString() {
-        return "Protector {" + "id=" + this.m_id + ", nativeNation=" + (Object)((this.m_nativeNation != null) ? this.m_nativeNation.getNationId() : null) + ", currentNation=" + (Object)((this.m_currentNation != null) ? this.m_currentNation.getNationId() : null) + ", territory=" + (Object)((this.m_territory != null) ? this.m_territory.getId() : null) + '}';
+        return "Protector {" + "id=" + this.m_id + ", nativeNation=" + ((this.m_nativeNation != null) ? this.m_nativeNation.getNationId() : null) + ", currentNation=" + ((this.m_currentNation != null) ? this.m_currentNation.getNationId() : null) + ", territory=" + ((this.m_territory != null) ? this.m_territory.getId() : null) + '}';
     }
     
     public int getCurrentNationId() {
@@ -118,6 +118,6 @@ public abstract class ProtectorBase implements DialogSource
     }
     
     static {
-        ProtectorBase.m_logger = Logger.getLogger((Class)ProtectorBase.class);
+        ProtectorBase.m_logger = Logger.getLogger(ProtectorBase.class);
     }
 }

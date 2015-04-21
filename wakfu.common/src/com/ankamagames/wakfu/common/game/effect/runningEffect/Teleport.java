@@ -1,16 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import com.ankamagames.framework.external.*;
@@ -82,7 +82,7 @@ public abstract class Teleport extends WakfuRunningEffect
     private void teleportCharacter(final RunningEffect linkedRE, final boolean trigger, final EffectUser characterToTeleport) {
         boolean mustBeExecuted = true;
         if (characterToTeleport == null) {
-            Teleport.m_logger.error((Object)"caster null sur un running effect teleport");
+            RunningEffect.m_logger.error("caster null sur un running effect teleport");
             mustBeExecuted = false;
         }
         final Point3 teleportCell = this.getTeleportCell();
@@ -125,7 +125,7 @@ public abstract class Teleport extends WakfuRunningEffect
         }
         final FightMap fightMap = this.m_context.getFightMap();
         if (fightMap == null) {
-            Teleport.m_logger.warn((Object)("pas de fightmap sur le context " + this.m_context));
+            RunningEffect.m_logger.warn("pas de fightmap sur le context " + this.m_context);
             this.m_canBeExecuted = false;
             return;
         }
@@ -142,7 +142,7 @@ public abstract class Teleport extends WakfuRunningEffect
             this.m_canBeExecuted = false;
         }
         if (this.m_checkFightMap && !fightMap.checkPosition(characterToTeleport, this.m_targetCell)) {
-            Teleport.m_logger.error((Object)("On demande un t\u00e9l\u00e9port sur une cellule invalide. Position demand\u00e9e : " + this.m_targetCell + " pour l'instance " + fightMap.getWorldId()));
+            RunningEffect.m_logger.error("On demande un t\u00e9l\u00e9port sur une cellule invalide. Position demand\u00e9e : " + this.m_targetCell + " pour l'instance " + fightMap.getWorldId());
             this.m_canBeExecuted = false;
         }
     }

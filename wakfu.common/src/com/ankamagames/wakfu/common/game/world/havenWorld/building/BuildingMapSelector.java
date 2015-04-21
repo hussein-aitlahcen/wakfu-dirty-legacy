@@ -31,7 +31,7 @@ public class BuildingMapSelector
         final int cellY = mapCoordY * 18;
         final Rect bounds = new Rect(cellX, cellX + 18 - 1, cellY, cellY + 18 - 1);
         final ArrayList<AbstractBuildingStruct> result = new ArrayList<AbstractBuildingStruct>();
-        this.m_buildings.forEachValue((TObjectProcedure<AbstractBuildingStruct>)new TObjectProcedure<AbstractBuildingStruct>() {
+        this.m_buildings.forEachValue(new TObjectProcedure<AbstractBuildingStruct>() {
             @Override
             public boolean execute(final AbstractBuildingStruct b) {
                 if (bounds.containsOrIntersect(b.getCellBounds())) {
@@ -53,7 +53,7 @@ public class BuildingMapSelector
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BuildingMapSelector.class);
+        m_logger = Logger.getLogger(BuildingMapSelector.class);
         EMPTY = new AbstractBuildingStruct[0];
     }
 }

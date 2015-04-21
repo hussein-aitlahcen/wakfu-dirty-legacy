@@ -36,11 +36,11 @@ public abstract class SimpleCriterion extends ParserObject
         }
         catch (CriteriaExecutionException e) {
             valid = false;
-            SimpleCriterion.m_logger.error((Object)("Exception sur crit\u00e8re (expected) !! User : " + criterionUser + " Target : " + criterionTarget + " Context : " + criterionContext), (Throwable)e);
+            SimpleCriterion.m_logger.error("Exception sur crit\u00e8re (expected) !! User : " + criterionUser + " Target : " + criterionTarget + " Context : " + criterionContext, e);
         }
         catch (Exception e2) {
             valid = false;
-            SimpleCriterion.m_logger.error((Object)"Exception inattendue", (Throwable)e2);
+            SimpleCriterion.m_logger.error("Exception inattendue", e2);
         }
         return valid;
     }
@@ -55,6 +55,6 @@ public abstract class SimpleCriterion extends ParserObject
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SimpleCriterion.class);
+        m_logger = Logger.getLogger(SimpleCriterion.class);
     }
 }

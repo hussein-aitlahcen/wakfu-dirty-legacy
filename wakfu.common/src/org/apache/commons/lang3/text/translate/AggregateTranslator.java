@@ -12,7 +12,8 @@ public class AggregateTranslator extends CharSequenceTranslator
         this.translators = ArrayUtils.clone(translators);
     }
     
-    public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+    @Override
+	public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
         for (final CharSequenceTranslator translator : this.translators) {
             final int consumed = translator.translate(input, index, out);
             if (consumed != 0) {

@@ -106,7 +106,7 @@ public abstract class AbstractTrapEffectArea extends AbstractEffectArea
             return true;
         }
         final BasicFighter ownerCharacterInfo = (BasicFighter)this.m_owner;
-        final BasicFight<?> currentFight = (BasicFight<?>)ownerCharacterInfo.getCurrentFight();
+        final BasicFight<?> currentFight = ownerCharacterInfo.getCurrentFight();
         return currentFight == null || !currentFight.getTimeline().isCurrentFighter(ownerCharacterInfo.getId());
     }
     

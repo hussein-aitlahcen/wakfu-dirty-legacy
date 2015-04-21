@@ -11,10 +11,8 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.pathfind.*;
-import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 
@@ -30,7 +28,7 @@ public class CommonCastValidator<T extends WakfuEffectContainer, E extends Effec
     
     public CastValidity getCastValidity(final E fighter, final T container, final Point3 targetCell, final boolean rangeBoostable, final int rangemin, final int rangemax, final boolean testLOS, final boolean cellMustBeFree, final boolean cellCantBeFightBorder, final boolean canCastOnCasterCell, final SimpleCriterion castCriterions) {
         if (container == null) {
-            CommonCastValidator.m_logger.error((Object)this.m_linkedFight.withFightId("cast d'un conteneur null"));
+            CommonCastValidator.m_logger.error(this.m_linkedFight.withFightId("cast d'un conteneur null"));
             return CastValidity.INVALID_CONTAINER;
         }
         if (!this.m_linkedFight.getTimeline().hasCurrentFighter() || this.m_linkedFight.getTimeline().getCurrentFighterId() != fighter.getId()) {
@@ -198,6 +196,6 @@ public class CommonCastValidator<T extends WakfuEffectContainer, E extends Effec
     }
     
     static {
-        CommonCastValidator.m_logger = Logger.getLogger((Class)CommonCastValidator.class);
+        CommonCastValidator.m_logger = Logger.getLogger(CommonCastValidator.class);
     }
 }

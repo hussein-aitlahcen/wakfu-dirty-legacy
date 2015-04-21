@@ -4,7 +4,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import java.nio.*;
 import com.ankamagames.wakfu.common.rawData.*;
-import java.util.*;
 
 public class CharacterSerializedBreedSpecific extends CharacterSerializedPart implements VersionableObject
 {

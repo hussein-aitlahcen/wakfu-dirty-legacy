@@ -2,19 +2,23 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.framework.kernel.core.maths.*;
-import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.pathfind.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -49,7 +53,7 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
             re = new EnutrofDepositPlacement();
             re.m_pool = null;
             re.m_isStatic = false;
-            EnutrofDepositPlacement.m_logger.error((Object)("Erreur lors d'un checkOut sur un EnutrofDepositPlacement : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un EnutrofDepositPlacement : " + e.getMessage());
         }
         return re;
     }
@@ -59,19 +63,19 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect.getParamsCount() == 0) {
             this.m_nbDepositMax = 1;
             this.m_nbDepositMin = 1;
             this.m_discoverRareDepositPercentage = 0;
             this.m_randomCell = false;
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 3) {
+        if (this.m_genericEffect.getParamsCount() < 3) {
             return;
         }
         this.m_randomCell = true;
-        this.m_nbDepositMin = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_nbDepositMax = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_nbDepositMin = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_nbDepositMax = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.m_nbDepositMax < this.m_nbDepositMin) {
             final int nbDepositMax = this.m_nbDepositMax;
             this.m_nbDepositMax = this.m_nbDepositMin;
@@ -80,7 +84,7 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
         if (this.m_nbDepositMin < 0) {
             this.m_nbDepositMin = 1;
         }
-        this.m_discoverRareDepositPercentage = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_discoverRareDepositPercentage = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
@@ -130,7 +134,7 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
         if (cell == null) {
             return;
         }
-        final SetEffectArea setEffectArea = SetEffectArea.checkOut((EffectContext<WakfuEffect>)this.m_context, cell, areaId);
+        final SetEffectArea setEffectArea = SetEffectArea.checkOut(this.m_context, cell, areaId);
         setEffectArea.setCaster(((BasicCharacterInfo)this.m_caster).getController());
         setEffectArea.setShouldBeInfinite(true);
         setEffectArea.setZoneLevel((short)1);
@@ -143,7 +147,7 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
     private Point3 getSpawnCell() {
         final FightMap fightMap = this.m_context.getFightMap();
         if (this.m_randomCell && fightMap == null) {
-            EnutrofDepositPlacement.m_logger.warn((Object)("pas de fightmap sur le context " + this.m_context));
+            RunningEffect.m_logger.warn("pas de fightmap sur le context " + this.m_context);
             return null;
         }
         if (!this.m_randomCell) {
@@ -186,13 +190,13 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
     }
     
     private Point3 getRandomCellInEffectArea(final FightMap fightMap) {
-        final AreaOfEffect areaOfEffect = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect();
+        final AreaOfEffect areaOfEffect = this.m_genericEffect.getAreaOfEffect();
         if (areaOfEffect.getType() == AreaOfEffectEnum.EMPTY) {
             return fightMap.getInsideRandomCell();
         }
         final Direction8 dir = this.m_caster.getDirection();
         final Point3 casterCell = this.m_caster.getPosition();
-        final Iterable<int[]> iterable = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect().getCells(this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), casterCell.getX(), casterCell.getY(), casterCell.getZ(), dir);
+        final Iterable<int[]> iterable = this.m_genericEffect.getAreaOfEffect().getCells(this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), casterCell.getX(), casterCell.getY(), casterCell.getZ(), dir);
         final ArrayList<int[]> cells = new ArrayList<int[]>();
         for (final int[] next : iterable) {
             final int cellX = next[0];
@@ -210,7 +214,7 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
             cells.add(next);
         }
         if (cells.isEmpty()) {
-            EnutrofDepositPlacement.m_logger.error((Object)("Pas de cellule trouvee pour le spawn d'un gisement " + areaOfEffect.getType()));
+            RunningEffect.m_logger.error("Pas de cellule trouvee pour le spawn d'un gisement " + areaOfEffect.getType());
             return null;
         }
         return new Point3(cells.get(MathHelper.random(cells.size())));
@@ -232,7 +236,7 @@ public final class EnutrofDepositPlacement extends WakfuRunningEffect
             path = pathFinder.findPath();
         }
         catch (Exception e) {
-            EnutrofDepositPlacement.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
         }
         finally {
             pathFinder.release();

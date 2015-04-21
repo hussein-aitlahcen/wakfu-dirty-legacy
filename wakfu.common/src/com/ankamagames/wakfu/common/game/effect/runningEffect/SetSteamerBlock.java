@@ -1,14 +1,18 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -70,7 +74,7 @@ public final class SetSteamerBlock extends SetEffectArea
             re = new SetSteamerBlock();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetSteamerBlock.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetSteamerBlock : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetSteamerBlock : " + e.getMessage());
         }
         return re;
     }
@@ -85,7 +89,7 @@ public final class SetSteamerBlock extends SetEffectArea
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         this.m_newTargetId = this.m_context.getEffectUserInformationProvider().getNextFreeEffectUserId((byte)2);
         this.m_zoneLevel = this.getContainerLevel();
@@ -95,7 +99,7 @@ public final class SetSteamerBlock extends SetEffectArea
     }
     
     private int computeHp() {
-        final int baseHp = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int baseHp = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.m_caster == null) {
             return baseHp;
         }

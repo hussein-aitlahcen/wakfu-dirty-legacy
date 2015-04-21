@@ -23,6 +23,6 @@ public class MissingWorker extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MissingWorker.class);
+        m_logger = Logger.getLogger(MissingWorker.class);
     }
 }

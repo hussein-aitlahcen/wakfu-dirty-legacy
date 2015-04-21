@@ -71,7 +71,7 @@ public class WakfuEventsCalendarSerializer extends BinarSerial implements Poolab
         }
         catch (Exception e) {
             obj = new WakfuEventsCalendarSerializer();
-            WakfuEventsCalendarSerializer.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type WakfuEventsCalendarSerializable : " + e.getMessage()));
+            WakfuEventsCalendarSerializer.m_logger.error("Erreur lors d'un checkOut sur un message de type WakfuEventsCalendarSerializable : " + e.getMessage());
         }
         return obj;
     }
@@ -83,7 +83,7 @@ public class WakfuEventsCalendarSerializer extends BinarSerial implements Poolab
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                WakfuEventsCalendarSerializer.m_logger.error((Object)"Exception", (Throwable)e);
+                WakfuEventsCalendarSerializer.m_logger.error("Exception", e);
             }
         }
         else {
@@ -174,7 +174,7 @@ public class WakfuEventsCalendarSerializer extends BinarSerial implements Poolab
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuEventsCalendarSerializer.class);
+        m_logger = Logger.getLogger(WakfuEventsCalendarSerializer.class);
         POOL = new MonitoredPool(new ObjectFactory<WakfuEventsCalendarSerializer>() {
             @Override
             public WakfuEventsCalendarSerializer makeObject() {

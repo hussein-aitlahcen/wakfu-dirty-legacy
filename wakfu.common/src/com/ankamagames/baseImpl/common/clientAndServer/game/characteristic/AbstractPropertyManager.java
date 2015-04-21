@@ -86,6 +86,6 @@ public abstract class AbstractPropertyManager<T extends PropertyType> implements
     }
     
     static {
-        AbstractPropertyManager.m_logger = Logger.getLogger((Class)AbstractPropertyManager.class);
+        AbstractPropertyManager.m_logger = Logger.getLogger(AbstractPropertyManager.class);
     }
 }

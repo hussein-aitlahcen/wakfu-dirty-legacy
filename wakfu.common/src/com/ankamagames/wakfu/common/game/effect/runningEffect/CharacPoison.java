@@ -1,12 +1,13 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.hpLoss.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -43,7 +44,7 @@ public class CharacPoison extends WakfuRunningEffect
             re = new CharacPoison();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacPoison.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -78,9 +79,9 @@ public class CharacPoison extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        this.m_value = ValueRounder.randomRound(((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM));
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            final byte elementId = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+        this.m_value = ValueRounder.randomRound(this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM));
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            final byte elementId = (byte)this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
             this.m_element = Elements.getElementFromId(elementId);
         }
     }
@@ -90,13 +91,13 @@ public class CharacPoison extends WakfuRunningEffect
             this.m_element = Elements.WATER;
         }
         int conditions = 0;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            conditions = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            conditions = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        final HpLossComputer computer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_element, (WakfuEffect)this.m_genericEffect);
+        final HpLossComputer computer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_element, this.m_genericEffect);
         computer.setConditions(conditions);
         computer.setValue(this.m_value);
-        computer.setAffectedByLocalisation(this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
+        computer.setAffectedByLocalisation(this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
         computer.computeWithModificator();
         RunningEffectUtils.setTriggerForElement(computer.getElementForResistance(), this);
         this.m_value = computer.getValue();

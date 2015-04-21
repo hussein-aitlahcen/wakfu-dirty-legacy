@@ -27,7 +27,7 @@ public class ZoneBuffManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ZoneBuffManager.class);
+        m_logger = Logger.getLogger(ZoneBuffManager.class);
         m_instance = new ZoneBuffManager();
     }
 }

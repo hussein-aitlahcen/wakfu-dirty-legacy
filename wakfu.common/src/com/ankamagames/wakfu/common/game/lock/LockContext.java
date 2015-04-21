@@ -59,7 +59,7 @@ public class LockContext
     public void setCurrentLockValue(final int lockId, final int currentLockValue) {
         final LockData lockData = this.m_locks.get(lockId);
         if (lockData == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId);
             return;
         }
         lockData.setCurrentLockValue(currentLockValue);
@@ -68,7 +68,7 @@ public class LockContext
     public void setCurrentLockValueDate(final int lockId, final GameDateConst currentLockValueDate) {
         final LockData lockData = this.m_locks.get(lockId);
         if (lockData == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId);
             return;
         }
         lockData.setCurrentLockValueDate(currentLockValueDate);
@@ -77,7 +77,7 @@ public class LockContext
     public void setLockDate(final int lockId, final GameDateConst lockDate) {
         final LockData lockData = this.m_locks.get(lockId);
         if (lockData == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId);
             return;
         }
         lockData.setLockDate(lockDate);
@@ -86,7 +86,7 @@ public class LockContext
     public void setLockDate(final int lockId, final GameDateConst lockDate, final GameDateConst unlockDate) {
         final LockData lockData = this.m_locks.get(lockId);
         if (lockData == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de modifier un Lock inconnu id=" + lockId);
             return;
         }
         lockData.setLockDate(lockDate);
@@ -96,7 +96,7 @@ public class LockContext
     public boolean isLocked(final int lockId) {
         final LockInstance lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId);
             return false;
         }
         final GameDateConst now = WakfuGameCalendar.getInstance().getDate();
@@ -106,7 +106,7 @@ public class LockContext
     public boolean isLockedPersonnaly(final int lockId) {
         final LockInstance lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId);
             return false;
         }
         final GameDateConst now = WakfuGameCalendar.getInstance().getDate();
@@ -141,7 +141,7 @@ public class LockContext
     public boolean isLockedGlobally(final int lockId) {
         final LockInstance lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId);
             return false;
         }
         final GameDateConst now = WakfuGameCalendar.getInstance().getDate();
@@ -155,7 +155,7 @@ public class LockContext
     public GameDateConst getNextStartTime(final int lockId) {
         final LockInstance lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId);
             return GameDate.getNullDate();
         }
         final GameDateConst now = WakfuGameCalendar.getInstance().getDate();
@@ -165,7 +165,7 @@ public class LockContext
     public int getActualCurrentLockValue(final int lockId) {
         final LockInstance lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de v\u00e9rifier qu'un Lock inconnu est actif id=" + lockId);
             return 0;
         }
         if (lock.getLockValue() == 0) {
@@ -185,7 +185,7 @@ public class LockContext
     public void lock(final int lockId) {
         final LockData lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de verrouiller un Lock inconnu id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de verrouiller un Lock inconnu id=" + lockId);
             return;
         }
         final GameDateConst date = WakfuGameCalendar.getInstance().getNewDate();
@@ -198,7 +198,7 @@ public class LockContext
     public void incrementLock(final int lockId) {
         final LockData lock = this.m_locks.get(lockId);
         if (lock == null) {
-            LockContext.m_logger.warn((Object)("[LOCK] On essaye de verrouiller un Lock inconnu id=" + lockId));
+            LockContext.m_logger.warn("[LOCK] On essaye de verrouiller un Lock inconnu id=" + lockId);
             return;
         }
         this.incrementLock(lock);
@@ -234,7 +234,7 @@ public class LockContext
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LockContext.class);
+        m_logger = Logger.getLogger(LockContext.class);
         reloadBypassedDailyLocks();
         SystemConfiguration.INSTANCE.addListener(new SystemConfigurationListener() {
             @Override

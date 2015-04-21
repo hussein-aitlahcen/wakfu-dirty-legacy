@@ -115,7 +115,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
             return item;
         }
         catch (Exception e) {
-            Item.m_logger.error((Object)"Erreur lors d'un checkOut sur un Item : ", (Throwable)e);
+            Item.m_logger.error("Erreur lors d'un checkOut sur un Item : ", e);
             return null;
         }
     }
@@ -231,7 +231,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
             return;
         }
         if (Item.traceRelease) {
-            Item.m_logger.info((Object)("On release un Item, hashCode = " + this.hashCode() + " StackTrace = " + ExceptionFormatter.currentStackTrace(1, 1)));
+            Item.m_logger.info("On release un Item, hashCode = " + this.hashCode() + " StackTrace = " + ExceptionFormatter.currentStackTrace(1, 1));
         }
         if (this.m_isReleased) {
             this.logItemReleased();
@@ -241,7 +241,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
     @Override
     public void onCheckOut() {
         if (Item.traceRelease) {
-            Item.m_logger.info((Object)("Item checkout, hashCode = " + this.hashCode() + " stackTrace = " + ExceptionFormatter.currentStackTrace(5, 1)));
+            Item.m_logger.info("Item checkout, hashCode = " + this.hashCode() + " stackTrace = " + ExceptionFormatter.currentStackTrace(5, 1));
         }
         this.m_isReleased = false;
     }
@@ -405,7 +405,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
     @Override
     public Iterator<WakfuEffect> iterator() {
         if (!this.hasGems()) {
-            return (Iterator<WakfuEffect>)this.m_referenceItem.getEffectsIterator();
+            return this.m_referenceItem.getEffectsIterator();
         }
         return this.getBaseAndGemsEffectsIterator();
     }
@@ -477,7 +477,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
     @Override
     public String[] getFields() {
         final ItemDisplayer provider = Item.m_itemComposer.getFieldProvider();
-        return (String[])((provider != null) ? provider.getFields() : null);
+        return (provider != null) ? provider.getFields() : null;
     }
     
     @Override
@@ -604,7 +604,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
         this.m_uniqueId = raw.uniqueId;
         this.m_referenceItem = ReferenceItemManager.getInstance().getReferenceItem(raw.refId);
         if (this.m_referenceItem == null) {
-            Item.m_logger.error((Object)("Impossible de d\u00ef¿½s\u00ef¿½rialiser un item : item d'id " + raw.refId + " inconnu UID : " + this.m_uniqueId), (Throwable)new Exception());
+            Item.m_logger.error("Impossible de d\u00ef¿½s\u00ef¿½rialiser un item : item d'id " + raw.refId + " inconnu UID : " + this.m_uniqueId, new Exception());
             return false;
         }
         this.m_quantity = raw.quantity;
@@ -699,7 +699,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
     }
     
     public AbstractItemType<AbstractItemType> getType() {
-        return (AbstractItemType<AbstractItemType>)this.m_referenceItem.getItemType();
+        return this.m_referenceItem.getItemType();
     }
     
     public boolean isUsableInFight() {
@@ -902,9 +902,9 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
     }
     
     private void logItemReleased() {
-        Item.m_logger.error((Object)new InventoryException("Attention : Double release sur un Item, Hashcode = " + this.hashCode()));
+        Item.m_logger.error(new InventoryException("Attention : Double release sur un Item, Hashcode = " + this.hashCode()));
         if (Item.traceRelease) {
-            Item.m_logger.info((Object)("Double release sur un item qu'on a trace, hashCode = " + this.hashCode()));
+            Item.m_logger.info("Double release sur un item qu'on a trace, hashCode = " + this.hashCode());
             ++Item.nbDoubleRelease;
             if (Item.nbDoubleRelease >= 20) {
                 Item.traceRelease = false;
@@ -981,7 +981,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Item.class);
+        m_logger = Logger.getLogger(Item.class);
         m_itemComposer = new ItemComposer();
     }
     
@@ -1023,7 +1023,7 @@ public class Item implements BagItem, InventoryContent, WakfuEffectContainer, Re
         public static Item toItem(final LogRepresentation logRepresentation) {
             final Item item = new Item(logRepresentation.uid);
             item.m_referenceItem = ReferenceItemManager.getInstance().getReferenceItem(logRepresentation.refid);
-            item.m_quantity = (short)((logRepresentation.quantity > 0) ? logRepresentation.quantity : 1);
+            item.m_quantity = (logRepresentation.quantity > 0) ? logRepresentation.quantity : 1;
             item.m_timeStamp = logRepresentation.timestamp;
             return item;
         }

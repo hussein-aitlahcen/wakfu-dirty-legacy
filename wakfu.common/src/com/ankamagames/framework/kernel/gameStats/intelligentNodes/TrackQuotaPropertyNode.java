@@ -60,6 +60,6 @@ public class TrackQuotaPropertyNode extends ContainerNode
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TrackQuotaPropertyNode.class);
+        m_logger = Logger.getLogger(TrackQuotaPropertyNode.class);
     }
 }

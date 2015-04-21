@@ -31,7 +31,7 @@ public class CollectorInventoryCheckerFree extends CollectorInventoryChecker imp
         }
         final short itemQty = item.getQuantity();
         final int realQty = Math.min(qty, itemQty);
-        final int canRemove = (realQty == itemQty) ? this.canRemoveItem((Inventory)inventory, item) : ((realQty < itemQty) ? 0 : -1);
+        final int canRemove = (realQty == itemQty) ? this.canRemoveItem(inventory, item) : ((realQty < itemQty) ? 0 : -1);
         if (canRemove < 0) {
             return canRemove;
         }
@@ -50,7 +50,7 @@ public class CollectorInventoryCheckerFree extends CollectorInventoryChecker imp
             return -4;
         }
         Item stack;
-        for (int i = 0; i < items.size() && qty > 0; qty -= (short)(stack.canStackWith(item) ? stack.getStackFreePlace() : 0), ++i) {
+        for (int i = 0; i < items.size() && qty > 0; qty -= stack.canStackWith(item) ? stack.getStackFreePlace() : 0, ++i) {
             stack = items.get(i);
         }
         return (qty <= 0 || !inventory.isFull()) ? 0 : -1;

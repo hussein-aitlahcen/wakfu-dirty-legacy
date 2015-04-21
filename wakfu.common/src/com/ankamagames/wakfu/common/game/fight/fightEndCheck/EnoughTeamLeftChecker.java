@@ -18,7 +18,7 @@ public final class EnoughTeamLeftChecker implements FightEndChecker
         final Collection<? extends BasicCharacterInfo> inPlayFighters = fight.getInPlayOrSimulatingFighters();
         for (final BasicCharacterInfo f : inPlayFighters) {
             if (f.getTeamId() == -1) {
-                EnoughTeamLeftChecker.m_logger.error((Object)fight.withFightId("[FIGHT_REFACTOR] On a un fighter inPlay avec un teamId \u00e0 -1 " + f + " - " + ExceptionFormatter.currentStackTrace(8)));
+                EnoughTeamLeftChecker.m_logger.error(fight.withFightId("[FIGHT_REFACTOR] On a un fighter inPlay avec un teamId \u00e0 -1 " + f + " - " + ExceptionFormatter.currentStackTrace(8)));
             }
             else {
                 remainingTeams.add(f.getTeamId());
@@ -33,6 +33,6 @@ public final class EnoughTeamLeftChecker implements FightEndChecker
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EnoughTeamLeftChecker.class);
+        m_logger = Logger.getLogger(EnoughTeamLeftChecker.class);
     }
 }

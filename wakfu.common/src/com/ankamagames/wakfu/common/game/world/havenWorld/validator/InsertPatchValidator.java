@@ -19,11 +19,11 @@ public class InsertPatchValidator extends ModificationValidator<AbstractHavenWor
     }
     
     public boolean validate(final short patchId, final int patchX, final int patchY) {
-        if (!((AbstractHavenWorldTopology)this.m_dataProvider).isEditablePatch(patchX, patchY)) {
+        if (!this.m_dataProvider.isEditablePatch(patchX, patchY)) {
             this.addPatchConflict(patchId, patchX, patchY);
             return false;
         }
-        final AbstractHavenWorldTopology world = ((AbstractHavenWorldTopology)this.m_dataProvider).copy();
+        final AbstractHavenWorldTopology world = this.m_dataProvider.copy();
         world.setPatchId(patchX, patchY, patchId);
         if (!this.hasOnePatchNeighbor(world, patchX, patchY)) {
             this.addPatchConflict(patchId, patchX, patchY);
@@ -84,6 +84,6 @@ public class InsertPatchValidator extends ModificationValidator<AbstractHavenWor
     }
     
     static {
-        m_logger = Logger.getLogger((Class)InsertPatchValidator.class);
+        m_logger = Logger.getLogger(InsertPatchValidator.class);
     }
 }

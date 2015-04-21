@@ -17,7 +17,7 @@ public abstract class CollectorInventoryLimited extends CollectorInventory<Colle
     
     public void notifyItemAdded(final int refId, final int qty) {
         if (this.m_observer != null) {
-            ((CollectorInventoryObserverLimited)this.m_observer).onItemAdded(refId, qty);
+            this.m_observer.onItemAdded(refId, qty);
         }
     }
     
@@ -56,10 +56,10 @@ public abstract class CollectorInventoryLimited extends CollectorInventory<Colle
     }
     
     public boolean canAddItem(final int itemRefId, final int qty) {
-        return ((CollectorInventoryCheckerLimited)this.m_checker).canAddItem(this, itemRefId, qty);
+        return this.m_checker.canAddItem(this, itemRefId, qty);
     }
     
     public int canRemoveItem(final int refId, final int qty) {
-        return ((CollectorInventoryCheckerLimited)this.m_checker).canRemoveItem(this, refId, qty);
+        return this.m_checker.canRemoveItem(this, refId, qty);
     }
 }

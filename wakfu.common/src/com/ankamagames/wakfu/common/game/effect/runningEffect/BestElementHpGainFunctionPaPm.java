@@ -1,11 +1,11 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class BestElementHpGainFunctionPaPm extends EffectValueFunctionPaPm
@@ -34,7 +34,7 @@ public final class BestElementHpGainFunctionPaPm extends EffectValueFunctionPaPm
             re = new BestElementHpGainFunctionPaPm();
             re.m_pool = null;
             re.m_isStatic = false;
-            BestElementHpGainFunctionPaPm.m_logger.error((Object)("Erreur lors d'un checkOut sur un BestElementHpGainFunctionPaPm : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un BestElementHpGainFunctionPaPm : " + e.getMessage());
         }
         return re;
     }
@@ -46,10 +46,10 @@ public final class BestElementHpGainFunctionPaPm extends EffectValueFunctionPaPm
     
     @Override
     protected void executeSubEffect() {
-        final HPGain hpGain = HPGain.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_element);
+        final HPGain hpGain = HPGain.checkOut(this.m_context, this.m_element);
         hpGain.setCaster(this.m_caster);
         hpGain.setTarget(this.m_target);
-        (hpGain).setGenericEffect((WakfuEffect)this.m_genericEffect);
+        (hpGain).setGenericEffect(this.m_genericEffect);
         hpGain.forceValue(this.m_value);
         hpGain.trigger((byte)1);
         hpGain.modifyValueWithModificatorIfNecessary();
@@ -72,28 +72,28 @@ public final class BestElementHpGainFunctionPaPm extends EffectValueFunctionPaPm
     
     @Override
     protected float computeDmgPerAp(final short containerLevel) {
-        float dmgPerAp = ((WakfuEffect)this.m_genericEffect).getParam(0);
+        float dmgPerAp = this.m_genericEffect.getParam(0);
         final float inc = ((WakfuStandardEffect)this.m_genericEffect).getParamInc(0);
-        final boolean valueFunctionCasterLevel = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        final boolean valueFunctionCasterLevel = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
         if (valueFunctionCasterLevel && this.m_caster instanceof BasicFighter) {
             dmgPerAp += inc * this.getContainerLevel() * ((BasicFighter)this.m_caster).getLevel();
         }
         else {
-            dmgPerAp = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            dmgPerAp = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         return dmgPerAp;
     }
     
     @Override
     protected float computeDmgPerMp(final short containerLevel) {
-        float dmgPerMp = ((WakfuEffect)this.m_genericEffect).getParam(1);
+        float dmgPerMp = this.m_genericEffect.getParam(1);
         final float inc = ((WakfuStandardEffect)this.m_genericEffect).getParamInc(1);
-        final boolean valueFunctionCasterLevel = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        final boolean valueFunctionCasterLevel = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
         if (valueFunctionCasterLevel && this.m_caster instanceof BasicFighter) {
             dmgPerMp += inc * this.getContainerLevel() * ((BasicFighter)this.m_caster).getLevel();
         }
         else {
-            dmgPerMp = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            dmgPerMp = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         return dmgPerMp;
     }

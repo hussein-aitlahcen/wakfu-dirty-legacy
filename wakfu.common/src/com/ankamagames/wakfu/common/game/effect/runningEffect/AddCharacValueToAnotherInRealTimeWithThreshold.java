@@ -1,11 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
@@ -56,7 +60,7 @@ public final class AddCharacValueToAnotherInRealTimeWithThreshold extends Abstra
             re = new AddCharacValueToAnotherInRealTimeWithThreshold();
             re.m_pool = null;
             re.m_isStatic = false;
-            AddCharacValueToAnotherInRealTimeWithThreshold.m_logger.error((Object)("Erreur lors d'un checkOut sur un CopyCharacInRealTime : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CopyCharacInRealTime : " + e.getMessage());
         }
         return re;
     }
@@ -70,16 +74,16 @@ public final class AddCharacValueToAnotherInRealTimeWithThreshold extends Abstra
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_destCharacId = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 2) {
-            this.m_targetCopyCaster = (((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_destCharacId = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 2) {
+            this.m_targetCopyCaster = (this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 3) {
-            this.m_threshold = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 3) {
+            this.m_threshold = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 4) {
-            this.m_maxModification = ((WakfuEffect)this.m_genericEffect).getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > 4) {
+            this.m_maxModification = this.m_genericEffect.getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

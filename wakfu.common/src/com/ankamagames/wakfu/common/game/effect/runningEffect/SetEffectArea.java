@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
@@ -12,6 +14,7 @@ import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class SetEffectArea extends WakfuRunningEffect
@@ -115,7 +118,7 @@ public class SetEffectArea extends WakfuRunningEffect
             re = new SetEffectArea();
             re.m_isStatic = false;
             re.m_pool = null;
-            SetEffectArea.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetEffectArea : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetEffectArea : " + e.getMessage());
         }
         re.m_id = RunningEffectConstants.SET_EFFECT_AREA.getId();
         re.m_status = RunningEffectConstants.SET_EFFECT_AREA.getObject().getRunningEffectStatus();
@@ -148,7 +151,7 @@ public class SetEffectArea extends WakfuRunningEffect
             re = new SetEffectArea();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetEffectArea.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         re.m_newTargetId = this.m_newTargetId;
         re.m_area = this.m_area;
@@ -170,7 +173,7 @@ public class SetEffectArea extends WakfuRunningEffect
         if (area != null && this.m_targetCell != null) {
             this.createArea(area);
             if (this.m_context == null || this.m_context.getEffectAreaManager() == null) {
-                SetEffectArea.m_logger.warn((Object)"Impossible d'ajouter une zone d'effet au combat le contexte est null ou l'effectAreaManager est null");
+                RunningEffect.m_logger.warn("Impossible d'ajouter une zone d'effet au combat le contexte est null ou l'effectAreaManager est null");
                 return;
             }
             this.notifyExecution(linkedRE, trigger);
@@ -178,7 +181,7 @@ public class SetEffectArea extends WakfuRunningEffect
             this.m_context.getEffectAreaManager().addEffectArea(this.m_area);
         }
         else {
-            SetEffectArea.m_logger.error((Object)("Impossible d'ajouter une zone inconnue " + this.m_value));
+            RunningEffect.m_logger.error("Impossible d'ajouter une zone inconnue " + this.m_value);
             this.setNotified(true);
         }
     }
@@ -224,38 +227,38 @@ public class SetEffectArea extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         this.m_newTargetId = this.m_context.getEffectUserInformationProvider().getNextFreeEffectUserId((byte)2);
         this.extractZoneLevel(level);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_shouldBeInfinite = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_shouldBeInfinite = (this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     
     private void extractZoneLevel(final short level) {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 4) {
+        if (this.m_genericEffect.getParamsCount() == 4) {
             if (this.m_caster == null || !(this.m_caster instanceof BasicCharacterInfo)) {
-                SetEffectArea.m_logger.error((Object)"Impossible de poser la zone, le caster n'est pas valide");
+                RunningEffect.m_logger.error("Impossible de poser la zone, le caster n'est pas valide");
                 return;
             }
-            final int spellId = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            final int spellId = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             final SpellInventory<? extends AbstractSpellLevel> spellInventory = ((BasicCharacterInfo)this.m_caster).getSpellInventory();
             if (spellInventory == null) {
-                SetEffectArea.m_logger.error((Object)"Impossible de poser la zone, le caster n'a pas d'inventaire de sort");
+                RunningEffect.m_logger.error("Impossible de poser la zone, le caster n'a pas d'inventaire de sort");
                 return;
             }
             final AbstractSpellLevel spell = spellInventory.getFirstWithReferenceId(spellId);
             if (spell == null) {
-                SetEffectArea.m_logger.error((Object)("Impossible de poser la zone, l'inventaire de sort ne contient pas le sort " + spellId + ", breed caster : " + ((BasicCharacterInfo)this.m_caster).getBreedId()));
+                RunningEffect.m_logger.error("Impossible de poser la zone, l'inventaire de sort ne contient pas le sort " + spellId + ", breed caster : " + ((BasicCharacterInfo)this.m_caster).getBreedId());
                 return;
             }
             this.m_zoneLevel = spell.getLevel();
-            final float factor = ((WakfuEffect)this.m_genericEffect).getParam(3, level);
+            final float factor = this.m_genericEffect.getParam(3, level);
             this.m_zoneLevel *= (short)factor;
         }
-        else if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_zoneLevel = (short)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        else if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_zoneLevel = (short)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         else {
             this.m_zoneLevel = this.getContainerLevel();

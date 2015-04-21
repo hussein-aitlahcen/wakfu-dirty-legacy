@@ -4,7 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +41,7 @@ public class HealBoostPercentFunctionDmgBonus extends WakfuRunningEffect
         catch (Exception e) {
             re = new HealBoostPercentFunctionDmgBonus();
             re.m_pool = null;
-            HealBoostPercentFunctionDmgBonus.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGain : " + e.getMessage());
         }
         return re;
     }
@@ -66,9 +68,9 @@ public class HealBoostPercentFunctionDmgBonus extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-            final int valueType = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            final int valuePercent = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() > 0) {
+            final int valueType = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            final int valuePercent = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
             switch (valueType) {
                 case 1: {
                     if (this.getCaster().hasCharacteristic(FighterCharacteristicType.DMG_AIR_PERCENT)) {

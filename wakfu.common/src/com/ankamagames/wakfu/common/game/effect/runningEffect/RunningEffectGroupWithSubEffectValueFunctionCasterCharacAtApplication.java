@@ -1,13 +1,13 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -44,7 +44,7 @@ public final class RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApp
             re = new RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApplication();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApplication.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuffFunctionCasterCharacAtApplication : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuffFunctionCasterCharacAtApplication : " + e.getMessage());
         }
         re.m_sourceCharacs = this.m_sourceCharacs;
         return re;
@@ -59,8 +59,8 @@ public final class RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApp
                     this.m_value += this.m_caster.getCharacteristicValue(sourceCharac);
                 }
             }
-            if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-                final int ratio = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() > 0) {
+                final int ratio = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
                 this.m_value = this.m_value * ratio / 100;
             }
         }
@@ -80,9 +80,9 @@ public final class RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApp
             this.setNotified();
             return;
         }
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null) {
-            RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApplication.m_logger.error((Object)("Groupe d'effet inconnu" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Groupe d'effet inconnu" + this.m_genericEffect.getEffectId());
             this.setNotified();
             return;
         }
@@ -96,7 +96,7 @@ public final class RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApp
                 effect.execute(this.getEffectContainer(), this.getCaster(), this.getContext(), RunningEffectConstants.getInstance(), this.m_target.getWorldCellX(), this.m_target.getWorldCellY(), this.m_target.getWorldCellAltitude(), this.getCaster(), params, false);
             }
             catch (Exception e) {
-                RunningEffectGroupWithSubEffectValueFunctionCasterCharacAtApplication.m_logger.error((Object)"Exception levee", (Throwable)e);
+                RunningEffect.m_logger.error("Exception levee", e);
             }
         }
         params.release();

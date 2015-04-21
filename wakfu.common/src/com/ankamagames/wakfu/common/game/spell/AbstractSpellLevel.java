@@ -42,7 +42,7 @@ public abstract class AbstractSpellLevel<Spell extends AbstractSpell> implements
     @Override
     public int getContainerType() {
         if (this.m_spell == null) {
-            AbstractSpellLevel.m_logger.error((Object)("ATTENTION, on essaie de v\u00e9rifier le type de conteneur mais le spell est inconnu, uid : " + this.m_uid));
+            AbstractSpellLevel.m_logger.error("ATTENTION, on essaie de v\u00e9rifier le type de conteneur mais le spell est inconnu, uid : " + this.m_uid);
             return 11;
         }
         if (this.m_spell.isPassive()) {
@@ -54,7 +54,7 @@ public abstract class AbstractSpellLevel<Spell extends AbstractSpell> implements
     @Override
     public long getEffectContainerId() {
         if (this.m_spell == null) {
-            AbstractSpellLevel.m_logger.error((Object)"On cherche a r\u00e9cup\u00e9rer l'id d'un SpellLevel mais son spell associ\u00e9 est null ", (Throwable)new Exception("Exception pour etude de stack"));
+            AbstractSpellLevel.m_logger.error("On cherche a r\u00e9cup\u00e9rer l'id d'un SpellLevel mais son spell associ\u00e9 est null ", new Exception("Exception pour etude de stack"));
             return 0L;
         }
         return getDefaultUId(this.m_spell.getId(), this.getLevel());
@@ -116,7 +116,7 @@ public abstract class AbstractSpellLevel<Spell extends AbstractSpell> implements
         this.m_spell = this.getSpellManager().getSpell(rawSpellLevel.spellId);
         this.setLevelAndXp(rawSpellLevel.level, rawSpellLevel.xp);
         if (this.m_spell == null) {
-            AbstractSpellLevel.m_logger.error((Object)("Impossible de d\u00e9s\u00e9rialiser un sort : sort d'id " + rawSpellLevel.spellId + " inconnu UID : " + this.m_uid));
+            AbstractSpellLevel.m_logger.error("Impossible de d\u00e9s\u00e9rialiser un sort : sort d'id " + rawSpellLevel.spellId + " inconnu UID : " + this.m_uid);
             return false;
         }
         return true;
@@ -269,6 +269,6 @@ public abstract class AbstractSpellLevel<Spell extends AbstractSpell> implements
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractSpellLevel.class);
+        m_logger = Logger.getLogger(AbstractSpellLevel.class);
     }
 }

@@ -54,7 +54,7 @@ public class LuaScript
                     library.importLibs(this.m_luaState);
                 }
                 catch (Exception e) {
-                    LuaScript.m_logger.error((Object)e);
+                    LuaScript.m_logger.error(e);
                 }
             }
         }
@@ -196,10 +196,10 @@ public class LuaScript
                 for (final Map.Entry<String, Object> var : contextVariables.entrySet()) {
                     try {
                         this.m_luaState.pushObjectValue(var.getValue());
-                        this.m_luaState.setGlobal((String)var.getKey());
+                        this.m_luaState.setGlobal(var.getKey());
                     }
                     catch (LuaException e) {
-                        LuaScript.m_logger.error((Object)"Impossible de d?finir une variable de contexte pour un script", (Throwable)e);
+                        LuaScript.m_logger.error("Impossible de d?finir une variable de contexte pour un script", e);
                     }
                 }
             }
@@ -294,7 +294,7 @@ public class LuaScript
     
     public LuaValue getValue(final String varName) {
         if (this.m_luaState.isClosed()) {
-            LuaScript.m_logger.error((Object)("Tente de r?cup?rer une variable (" + varName + ") alors que le script est ferm?"));
+            LuaScript.m_logger.error("Tente de r?cup?rer une variable (" + varName + ") alors que le script est ferm?");
             return null;
         }
         this.m_luaState.getGlobal(varName);
@@ -303,7 +303,7 @@ public class LuaScript
             value = LuaValue.createFrom(this.m_luaState, -1);
         }
         catch (LuaException e) {
-            LuaScript.m_logger.error((Object)("Variable " + varName + " inconnue?"), (Throwable)e);
+            LuaScript.m_logger.error("Variable " + varName + " inconnue?", e);
         }
         this.m_luaState.pop(1);
         return value;
@@ -320,7 +320,7 @@ public class LuaScript
     
     public final LuaValue[] runFunction(final String funcName, final LuaValue[] params, final LuaTable... obj) {
         if (this.m_state == State.NOT_LOADED || this.m_state == State.DONE) {
-            LuaScript.m_logger.error((Object)("Le script devrait ?tre charg? avant d'appeler une fonction. (loadFile) " + this.m_state));
+            LuaScript.m_logger.error("Le script devrait ?tre charg? avant d'appeler une fonction. (loadFile) " + this.m_state);
             return null;
         }
         if (this.m_state == State.LOADED) {
@@ -337,9 +337,9 @@ public class LuaScript
         if (funcName.contains(".")) {
             final String[] func = StringUtils.split(funcName, "\\.");
             this.m_luaState.pushString(func[0]);
-            this.m_luaState.getTable((int)LuaState.LUA_GLOBALSINDEX);
+            this.m_luaState.getTable(LuaState.LUA_GLOBALSINDEX);
             if (!this.m_luaState.isTable(-1)) {
-                LuaScript.m_logger.error((Object)(func[0] + " n'est pas une librairie connue"));
+                LuaScript.m_logger.error(func[0] + " n'est pas une librairie connue");
                 this.m_luaState.remove(-1);
                 switch (this.m_state) {
                     case RUNNING: {
@@ -361,7 +361,7 @@ public class LuaScript
             this.m_luaState.getGlobal(funcName);
         }
         if (!this.isFunction()) {
-            LuaScript.m_logger.error((Object)("Fonction inconnue " + funcName + " dans le script " + this.m_source + " ligne " + this.getCurrentLine()), (Throwable)new Exception());
+            LuaScript.m_logger.error("Fonction inconnue " + funcName + " dans le script " + this.m_source + " ligne " + this.getCurrentLine(), new Exception());
             return null;
         }
         int paramCount = 0;
@@ -376,7 +376,7 @@ public class LuaScript
                 }
             }
         }
-        if (this.m_luaState.pcall(paramCount, (int)LuaState.LUA_MULTRET, 0) != 0) {
+        if (this.m_luaState.pcall(paramCount, LuaState.LUA_MULTRET, 0) != 0) {
             this.onError(this.m_luaState, LuaScriptErrorType.RUNTIME_ERROR);
         }
         final int resultLength = this.m_luaState.getTop();
@@ -386,7 +386,7 @@ public class LuaScript
                 returnValues[k] = LuaValue.createFrom(this.m_luaState, -1);
             }
             catch (LuaException e) {
-                LuaScript.m_logger.error((Object)("Error retrieving a function(" + funcName + ") result : " + e));
+                LuaScript.m_logger.error("Error retrieving a function(" + funcName + ") result : " + e);
             }
             this.m_luaState.pop(1);
         }
@@ -445,7 +445,7 @@ public class LuaScript
                         this.m_fightId = Integer.parseInt(fightIdObject.toString());
                     }
                     catch (NumberFormatException e) {
-                        LuaScript.m_logger.error((Object)("Impossible de recuperer un id de combat sur un objet non transformable en entier : " + fightIdObject));
+                        LuaScript.m_logger.error("Impossible de recuperer un id de combat sur un objet non transformable en entier : " + fightIdObject);
                     }
                 }
             }
@@ -476,7 +476,7 @@ public class LuaScript
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LuaScript.class);
+        m_logger = Logger.getLogger(LuaScript.class);
     }
     
     enum State
@@ -511,15 +511,15 @@ public class LuaScript
         @Override
         public void execute() {
             if (LuaScript.this.m_luaState.isClosed()) {
-                LuaScript.m_logger.error((Object)("Tentative d'execution d'une WaitingTask sur un script ferm? id=" + LuaScript.this.m_id));
+                LuaScript.m_logger.error("Tentative d'execution d'une WaitingTask sur un script ferm? id=" + LuaScript.this.m_id);
                 return;
             }
             if (this.m_funcName.contains(".")) {
                 final String[] func = StringUtils.split(this.m_funcName, '.');
                 LuaScript.this.m_luaState.pushString(func[0]);
-                LuaScript.this.m_luaState.getTable((int)LuaState.LUA_GLOBALSINDEX);
+                LuaScript.this.m_luaState.getTable(LuaState.LUA_GLOBALSINDEX);
                 if (!LuaScript.this.m_luaState.isTable(-1)) {
-                    LuaScript.m_logger.error((Object)(func[0] + " n'est pas une librairie connue"));
+                    LuaScript.m_logger.error(func[0] + " n'est pas une librairie connue");
                     LuaScript.this.m_luaState.remove(-1);
                     switch (LuaScript.this.m_state) {
                         case RUNNING: {
@@ -539,19 +539,19 @@ public class LuaScript
             }
             else {
                 LuaScript.this.m_luaState.pushString(this.m_funcName);
-                LuaScript.this.m_luaState.getTable((int)LuaState.LUA_GLOBALSINDEX);
+                LuaScript.this.m_luaState.getTable(LuaState.LUA_GLOBALSINDEX);
             }
             if (LuaScript.this.isFunction()) {
                 final int paramCount = (this.m_args == null) ? 0 : this.m_args.length;
                 for (int i = 0; i < paramCount; ++i) {
                     this.m_args[i].pushIn(LuaScript.this.m_luaState);
                 }
-                if (LuaScript.this.m_luaState.pcall(paramCount, (int)LuaState.LUA_MULTRET, 0) != 0) {
+                if (LuaScript.this.m_luaState.pcall(paramCount, LuaState.LUA_MULTRET, 0) != 0) {
                     LuaScript.this.onError(LuaScript.this.m_luaState, LuaScriptErrorType.RUNTIME_ERROR);
                 }
             }
             else {
-                LuaScript.m_logger.error((Object)("Fonction inconnue " + this.m_funcName + " dans le script " + LuaScript.this.m_source));
+                LuaScript.m_logger.error("Fonction inconnue " + this.m_funcName + " dans le script " + LuaScript.this.m_source);
             }
             LuaScript.this.m_luaState.pop(LuaScript.this.m_luaState.getTop());
             switch (LuaScript.this.m_state) {
@@ -597,9 +597,9 @@ public class LuaScript
             if (this.m_funcName.contains(".")) {
                 final String[] func = StringUtils.split(this.m_funcName, '.');
                 LuaScript.this.m_luaState.pushString(func[0]);
-                LuaScript.this.m_luaState.getTable((int)LuaState.LUA_GLOBALSINDEX);
+                LuaScript.this.m_luaState.getTable(LuaState.LUA_GLOBALSINDEX);
                 if (!LuaScript.this.m_luaState.isTable(-1)) {
-                    LuaScript.m_logger.error((Object)(func[0] + " n'est pas une librairie connue"));
+                    LuaScript.m_logger.error(func[0] + " n'est pas une librairie connue");
                     LuaScript.this.m_luaState.remove(-1);
                     switch (LuaScript.this.m_state) {
                         case RUNNING: {
@@ -619,19 +619,19 @@ public class LuaScript
             }
             else {
                 LuaScript.this.m_luaState.pushString(this.m_funcName);
-                LuaScript.this.m_luaState.getTable((int)LuaState.LUA_GLOBALSINDEX);
+                LuaScript.this.m_luaState.getTable(LuaState.LUA_GLOBALSINDEX);
             }
             if (LuaScript.this.isFunction()) {
                 final int paramCount = (this.m_args == null) ? 0 : this.m_args.length;
                 for (int i = 0; i < paramCount; ++i) {
                     this.m_args[i].pushIn(LuaScript.this.m_luaState);
                 }
-                if (LuaScript.this.m_luaState.pcall(paramCount, (int)LuaState.LUA_MULTRET, 0) != 0) {
+                if (LuaScript.this.m_luaState.pcall(paramCount, LuaState.LUA_MULTRET, 0) != 0) {
                     LuaScript.this.onError(LuaScript.this.m_luaState, LuaScriptErrorType.RUNTIME_ERROR);
                 }
             }
             else {
-                LuaScript.m_logger.error((Object)("Fonction inconnue " + this.m_funcName + " dans le script " + LuaScript.this.m_source));
+                LuaScript.m_logger.error("Fonction inconnue " + this.m_funcName + " dans le script " + LuaScript.this.m_source);
             }
             LuaScript.this.m_luaState.pop(LuaScript.this.m_luaState.getTop());
             switch (LuaScript.this.m_state) {

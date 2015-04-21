@@ -2,8 +2,6 @@ package com.ankamagames.wakfu.common.datas;
 
 import org.apache.log4j.*;
 
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.*;
@@ -16,8 +14,6 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 
 import gnu.trove.*;
-
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 final class ItemEffectsApplier
 {
@@ -45,7 +41,7 @@ final class ItemEffectsApplier
             this.applyAllBagsEffects();
         }
         catch (Exception e) {
-            ItemEffectsApplier.m_logger.error((Object)"Exception levee", (Throwable)e);
+            ItemEffectsApplier.m_logger.error("Exception levee", e);
         }
         finally {
             this.unlockPaPmPwHpCurrentValue();
@@ -100,7 +96,7 @@ final class ItemEffectsApplier
                 this.applyItemOnEquipEffectWithoutCriterionCheck(item);
             }
             catch (ConcurrentModificationException e) {
-                ItemEffectsApplier.m_logger.error((Object)("ConcurrentModificationException while applyingItemAndSetEffects for item " + item.toString() + " on breed " + this.m_linkedCharacter.getBreedId()));
+                ItemEffectsApplier.m_logger.error("ConcurrentModificationException while applyingItemAndSetEffects for item " + item.toString() + " on breed " + this.m_linkedCharacter.getBreedId());
                 throw e;
             }
         }
@@ -125,7 +121,7 @@ final class ItemEffectsApplier
                 if (item.hasPet() && this.m_linkedCharacter.isOnFight()) {
                     continue;
                 }
-                if (!EquipmentInventoryChecker.getInstance().checkCriterion(item, (EffectUser)this.m_linkedCharacter, context)) {
+                if (!EquipmentInventoryChecker.getInstance().checkCriterion(item, this.m_linkedCharacter, context)) {
                     itemEffectsModified = true;
                     disabledItems.add(item);
                     this.unapplyItemOnEquipEffect(item);
@@ -141,7 +137,7 @@ final class ItemEffectsApplier
     
     boolean applyItemOnEquipEffect(final Item item) {
         final EffectContext context = this.getAppropriateContext();
-        return EquipmentInventoryChecker.getInstance().checkCriterion(item, (EffectUser)this.m_linkedCharacter, context) && this.applyItemOnEquipEffectWithoutCriterionCheck(item);
+        return EquipmentInventoryChecker.getInstance().checkCriterion(item, this.m_linkedCharacter, context) && this.applyItemOnEquipEffectWithoutCriterionCheck(item);
     }
     
     boolean applyItemOnEquipEffectWithoutCriterionCheck(final Item item) {
@@ -172,7 +168,7 @@ final class ItemEffectsApplier
         final WakfuEffectContainer fakeSetLevelContainer = this.m_setEffectContainerBuilder.setContainerId(set.getId()).build();
         this.getRunningEffectManager().removeLinkedToContainer(fakeSetLevelContainer, true);
         final short count = this.getEquipedSetItemsCount(set);
-        final ArrayList<ItemSetLevel> list = (ArrayList<ItemSetLevel>)set.getEffectsToApplyByNbElements(count);
+        final ArrayList<ItemSetLevel> list = set.getEffectsToApplyByNbElements(count);
         if (list.isEmpty()) {
             return;
         }
@@ -189,7 +185,7 @@ final class ItemEffectsApplier
         short count = 0;
         for (final AbstractReferenceItem setItem : set) {
             final Item item = (equipmentInventory).getFirstWithReferenceId(setItem.getId());
-            if (item != null && EquipmentInventoryChecker.getInstance().checkCriterion(item, (EffectUser)this.m_linkedCharacter, this.getAppropriateContext())) {
+            if (item != null && EquipmentInventoryChecker.getInstance().checkCriterion(item, this.m_linkedCharacter, this.getAppropriateContext())) {
                 ++count;
             }
         }

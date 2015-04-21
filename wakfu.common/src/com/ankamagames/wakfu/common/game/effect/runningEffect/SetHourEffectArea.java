@@ -1,12 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -44,13 +47,13 @@ public class SetHourEffectArea extends SetEffectArea
         if (this.m_area == null) {
             final AbstractHourEffectArea modelHour = StaticEffectAreaManager.getInstance().getHourAreas(this.m_value);
             if (modelHour == null) {
-                SetHourEffectArea.m_logger.error((Object)("EffectArea inexistante pour l'id " + this.m_value));
+                RunningEffect.m_logger.error("EffectArea inexistante pour l'id " + this.m_value);
                 this.setNotified(true);
                 return;
             }
             if (this.m_hour == 0 && this.m_genericEffect != null) {
                 final short level = this.getContainerLevel();
-                this.m_hour = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+                this.m_hour = (byte)this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
             }
             final short level = this.getContainerLevel();
             this.m_area = modelHour.instanceAnother(new EffectAreaParameters(this.m_newTargetId, this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), this.m_context, this.m_caster, level, this.m_caster.getDirection()));
@@ -77,7 +80,7 @@ public class SetHourEffectArea extends SetEffectArea
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         super.effectiveComputeValue(triggerRE);
-        this.m_hour = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.RANDOM);
+        this.m_hour = (byte)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.RANDOM);
     }
     
     static {

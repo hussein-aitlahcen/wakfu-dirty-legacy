@@ -48,6 +48,6 @@ class FightCharacteristicMap
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightCharacteristicMap.class);
+        m_logger = Logger.getLogger(FightCharacteristicMap.class);
     }
 }

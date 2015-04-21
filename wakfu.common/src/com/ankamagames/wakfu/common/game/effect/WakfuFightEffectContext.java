@@ -91,6 +91,6 @@ public class WakfuFightEffectContext<F extends BasicCharacterInfo> implements Wa
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuFightEffectContext.class);
+        m_logger = Logger.getLogger(WakfuFightEffectContext.class);
     }
 }

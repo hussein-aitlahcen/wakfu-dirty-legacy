@@ -5,7 +5,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -30,7 +32,7 @@ public class PickUpItem extends WakfuRunningEffect
             re = new PickUpItem();
             re.m_pool = null;
             re.m_isStatic = false;
-            PickUpItem.m_logger.error((Object)("Erreur lors d'un newInstance sur PickUpItem : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur PickUpItem : " + e.getMessage());
         }
         return re;
     }
@@ -52,7 +54,7 @@ public class PickUpItem extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
         }
         this.m_value = 0;
     }

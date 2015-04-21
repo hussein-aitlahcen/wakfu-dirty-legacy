@@ -6,10 +6,7 @@ import org.jetbrains.annotations.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.wakfu.common.game.fight.protagonists.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.turnBased.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import java.util.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
 
 public abstract class WakfuTurnBasedFight<F extends BasicCharacterInfo> extends BasicFight<F>
 {
@@ -54,14 +51,14 @@ public abstract class WakfuTurnBasedFight<F extends BasicCharacterInfo> extends 
         }
         final boolean success = this.getTimeline().askForFighterStartTurn(fighter.getId());
         if (!success) {
-            WakfuTurnBasedFight.m_logger.error((Object)this.withFightId("Impossible de d\u00e9buter le tour de " + fighter.getId()));
+            BasicFight.m_logger.error(this.withFightId("Impossible de d\u00e9buter le tour de " + fighter.getId()));
         }
         return success;
     }
     
     protected boolean checkTimelineIsRunning() {
         if (this.getTimeline() == null || !this.getTimeline().isRunning()) {
-            WakfuTurnBasedFight.m_logger.error((Object)this.withFightId("timeline null ou arret\u00e9e"));
+            BasicFight.m_logger.error(this.withFightId("timeline null ou arret\u00e9e"));
             return false;
         }
         return true;
@@ -77,7 +74,7 @@ public abstract class WakfuTurnBasedFight<F extends BasicCharacterInfo> extends 
         }
         final boolean success = this.getTimeline().askForFighterEndTurn(fighterId);
         if (!success) {
-            WakfuTurnBasedFight.m_logger.error((Object)this.withFightId("Impossible de terminer le tour de " + fighterId));
+            BasicFight.m_logger.error(this.withFightId("Impossible de terminer le tour de " + fighterId));
         }
         return success;
     }
@@ -105,7 +102,7 @@ public abstract class WakfuTurnBasedFight<F extends BasicCharacterInfo> extends 
             fighter.onSpecialFighterEvent(new EndTurnEvent());
         }
         catch (Exception e) {
-            WakfuTurnBasedFight.m_logger.error((Object)"Exception levee", (Throwable)e);
+            BasicFight.m_logger.error("Exception levee", e);
         }
     }
     
@@ -114,7 +111,7 @@ public abstract class WakfuTurnBasedFight<F extends BasicCharacterInfo> extends 
         for (final F f : this.m_protagonists.getFighters(ProtagonistFilter.offPlay())) {
             if (f != null) {
                 f.onSpecialFighterEvent(new TableTurnEvent());
-                final FighterCharacteristic ko = f.getCharacteristic((CharacteristicType)FighterCharacteristicType.KO_TIME_BEFORE_DEATH);
+                final FighterCharacteristic ko = f.getCharacteristic(FighterCharacteristicType.KO_TIME_BEFORE_DEATH);
                 ko.substract(1);
             }
         }

@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.ai.targetfinder.*;
+
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.maths.*;
@@ -10,7 +12,9 @@ import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -63,7 +67,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
             re = new RunningEffectGroup();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroup.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         re.m_endTriggers.clear();
         re.m_effectGroup = null;
@@ -140,7 +144,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
                 this.m_caster = this.m_target;
             }
             else {
-                RunningEffectGroup.m_logger.error((Object)("On veut changer le caster d'un groupe d'effet pas la cible mais la cible est nulle, on ne fait rien, effectId = " + this.getEffectId()));
+                RunningEffect.m_logger.error("On veut changer le caster d'un groupe d'effet pas la cible mais la cible est nulle, on ne fait rien, effectId = " + this.getEffectId());
             }
         }
         else if (this.m_casterTargetChange == 2) {
@@ -150,7 +154,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
                 this.m_caster = target;
             }
             else {
-                RunningEffectGroup.m_logger.error((Object)("On veut inverser le caster et la target d'un groupe mais l'un des deux est null, on ne fait rien, effectId = " + this.getEffectId()));
+                RunningEffect.m_logger.error("On veut inverser le caster et la target d'un groupe mais l'un des deux est null, on ne fait rien, effectId = " + this.getEffectId());
             }
         }
     }
@@ -164,7 +168,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
             this.executeEffectGroup(effects, params);
         }
         catch (Exception e) {
-            RunningEffectGroup.m_logger.error((Object)("Exception levee lors de l'execution d'un groupe d'effets id " + ((this.m_genericEffect == null) ? -1 : ((WakfuEffect)this.m_genericEffect).getEffectId())), (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee lors de l'execution d'un groupe d'effets id " + ((this.m_genericEffect == null) ? -1 : this.m_genericEffect.getEffectId()), e);
         }
         finally {
             params.release();
@@ -197,7 +201,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
             }
             if (this.useTarget()) {
                 if (this.m_target == null) {
-                    RunningEffectGroup.m_logger.error((Object)("Impossible d'executer l'effet " + e.getEffectId() + " on a plus de cible"));
+                    RunningEffect.m_logger.error("Impossible d'executer l'effet " + e.getEffectId() + " on a plus de cible");
                     return;
                 }
                 EffectExecutionResult result;
@@ -205,7 +209,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
                     result = e.execute(this.getEffectContainer(), this.getCaster(), this.getContext(), RunningEffectConstants.getInstance(), this.m_target.getWorldCellX(), this.m_target.getWorldCellY(), this.m_target.getWorldCellAltitude(), this.m_transmitOriginalTarget ? this.m_target : null, params, true);
                 }
                 catch (Exception e2) {
-                    RunningEffectGroup.m_logger.error((Object)("Pb a l''execution de l'effet " + e.getEffectId()), (Throwable)e2);
+                    RunningEffect.m_logger.error("Pb a l''execution de l'effet " + e.getEffectId(), e2);
                     return;
                 }
                 if (result != null && result.getExecutionCount() > 0) {
@@ -219,10 +223,10 @@ public class RunningEffectGroup extends WakfuRunningEffect
             }
             else {
                 final Point3 targetCell = new Point3(this.getTargetCell());
-                if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getAreaOfEffect() == null) {
+                if (this.m_genericEffect == null || this.m_genericEffect.getAreaOfEffect() == null) {
                     continue;
                 }
-                final AreaOfEffect area = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect();
+                final AreaOfEffect area = this.m_genericEffect.getAreaOfEffect();
                 final Iterable<int[]> iterable = area.getCells(this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), this.m_caster.getWorldCellX(), this.m_caster.getWorldCellY(), this.m_caster.getWorldCellAltitude(), this.m_caster.getDirection());
                 for (final int[] ints : iterable) {
                     targetCell.setX(ints[0]);
@@ -263,7 +267,7 @@ public class RunningEffectGroup extends WakfuRunningEffect
     private boolean isValidTargetCellAndSetZIfNecessary(final Point3 targetCell) {
         final FightMap fightMap = this.m_context.getFightMap();
         if (fightMap == null) {
-            RunningEffectGroup.m_logger.error((Object)("On tente d'execute un groupe d'effets sur cellule sans FightMap " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("On tente d'execute un groupe d'effets sur cellule sans FightMap " + this.m_genericEffect.getEffectId());
             return false;
         }
         if (fightMap.isInsideOrBorder(targetCell.getX(), targetCell.getY())) {
@@ -295,22 +299,22 @@ public class RunningEffectGroup extends WakfuRunningEffect
         if (AbstractEffectGroupManager.getInstance() == null) {
             return;
         }
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup != null) {
             this.m_effectGroup = effectGroup.instanceAnother(level);
         }
-        this.m_maxEffectToExecute = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_withSuccess = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_maxEffectToExecute = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_withSuccess = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            this.m_withRelativeProbability = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            this.m_withRelativeProbability = (this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 5) {
-            this.m_transmitOriginalTarget = (((WakfuEffect)this.m_genericEffect).getParam(4, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 5) {
+            this.m_transmitOriginalTarget = (this.m_genericEffect.getParam(4, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 6) {
-            this.m_casterTargetChange = (byte)((WakfuEffect)this.m_genericEffect).getParam(5, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 6) {
+            this.m_casterTargetChange = (byte)this.m_genericEffect.getParam(5, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     
@@ -334,12 +338,12 @@ public class RunningEffectGroup extends WakfuRunningEffect
     
     @Override
     public boolean useTarget() {
-        return this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() < 3 || ((WakfuEffect)this.m_genericEffect).getParam(2) == 1.0f;
+        return this.m_genericEffect == null || this.m_genericEffect.getParamsCount() < 3 || this.m_genericEffect.getParam(2) == 1.0f;
     }
     
     @Override
     public boolean useTargetCell() {
-        return this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3 && ((WakfuEffect)this.m_genericEffect).getParam(2) == 0.0f;
+        return this.m_genericEffect != null && this.m_genericEffect.getParamsCount() >= 3 && this.m_genericEffect.getParam(2) == 0.0f;
     }
     
     @Override

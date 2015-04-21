@@ -1,8 +1,10 @@
 package com.ankamagames.framework.kernel.gameStats.intelligentNodes;
 
 import gnu.trove.*;
+
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import com.ankamagames.framework.kernel.gameStats.*;
+
 import java.nio.*;
 
 public class MultipleValuesPropertyNode extends ContainerNode
@@ -48,7 +50,7 @@ public class MultipleValuesPropertyNode extends ContainerNode
     @Override
     public void unserialize(final ByteBuffer buffer, final String source) {
         if (this.m_mergeMode != MergeMode.REPLACE) {
-            MultipleValuesPropertyNode.m_logger.warn((Object)"ATTENTION! Le noeud MultipleValuesPropertyNode ne supporte pas d'autre mode de fusion que REPLACE pour l'instant");
+            Node.m_logger.warn("ATTENTION! Le noeud MultipleValuesPropertyNode ne supporte pas d'autre mode de fusion que REPLACE pour l'instant");
         }
         this.m_total.setValue(buffer.getLong());
         this.m_min.setValue(buffer.getLong());

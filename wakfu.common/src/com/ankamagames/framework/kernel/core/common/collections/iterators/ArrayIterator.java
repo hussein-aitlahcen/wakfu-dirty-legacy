@@ -28,7 +28,7 @@ public class ArrayIterator<E> implements Iterator<E>
         if (!this.hasNext()) {
             throw new NoSuchElementException("Array end reached. Array Size : " + this.m_arrayLength);
         }
-        final E val = (E)this.m_array[this.m_nextIndex];
+        final E val = this.m_array[this.m_nextIndex];
         this.searchNextIndex();
         return val;
     }

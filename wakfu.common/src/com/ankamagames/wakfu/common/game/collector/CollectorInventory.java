@@ -58,6 +58,6 @@ public abstract class CollectorInventory<Checker extends CollectorInventoryCheck
     public abstract boolean isFull();
     
     static {
-        m_logger = Logger.getLogger((Class)CollectorInventory.class);
+        m_logger = Logger.getLogger(CollectorInventory.class);
     }
 }

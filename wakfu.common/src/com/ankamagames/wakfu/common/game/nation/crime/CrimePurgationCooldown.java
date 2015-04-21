@@ -32,7 +32,7 @@ public class CrimePurgationCooldown implements CoolDown, Runnable
         final long cooldown = CrimeUtil.getJailDurationFromCrimePoints(this.m_totalCrimePoint);
         final int nationId = this.m_comportment.getCrimePurgationNationId();
         if (cooldown > 0L && nationId == -1) {
-            CrimePurgationCooldown.m_logger.error((Object)"Attention un cooldown de purgation tourne sur une nation vide");
+            CrimePurgationCooldown.m_logger.error("Attention un cooldown de purgation tourne sur une nation vide");
         }
         return cooldown;
     }
@@ -81,6 +81,6 @@ public class CrimePurgationCooldown implements CoolDown, Runnable
     }
     
     static {
-        CrimePurgationCooldown.m_logger = Logger.getLogger((Class)CrimePurgationCooldown.class);
+        CrimePurgationCooldown.m_logger = Logger.getLogger(CrimePurgationCooldown.class);
     }
 }

@@ -2,15 +2,18 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.framework.kernel.core.maths.*;
@@ -18,7 +21,6 @@ import com.ankamagames.wakfu.common.game.effect.runningEffect.util.movementEffec
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
 public abstract class MovementEffect extends WakfuRunningEffect
@@ -72,7 +74,7 @@ public abstract class MovementEffect extends WakfuRunningEffect
                 if (size == 0) {
                     return;
                 }
-                MovementEffect.this.m_path = (List<Point3>)new ArrayList();
+                MovementEffect.this.m_path = new ArrayList();
                 for (int i = 0; i < size; ++i) {
                     MovementEffect.this.m_path.add(new Point3(buffer.getInt(), buffer.getInt(), buffer.getShort()));
                 }
@@ -134,7 +136,7 @@ public abstract class MovementEffect extends WakfuRunningEffect
             return;
         }
         final int effectId = Carry.CARRIER_EFFECT_ID.get(mover.getId());
-        final AbstractEffectGroup group = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(effectId);
+        final AbstractEffectGroup group = AbstractEffectGroupManager.getInstance().getEffectGroup(effectId);
         if (group == null || group.getEffectsCount() == 0) {
             return;
         }
@@ -144,7 +146,7 @@ public abstract class MovementEffect extends WakfuRunningEffect
             effect.execute(this.getEffectContainer(), mover, this.getContext(), RunningEffectConstants.getInstance(), mover.getWorldCellX(), mover.getWorldCellY(), mover.getWorldCellAltitude(), null, params, false);
         }
         catch (Exception e) {
-            MovementEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
         }
         params.release();
     }
@@ -209,7 +211,7 @@ public abstract class MovementEffect extends WakfuRunningEffect
                     areaOccupationComputer.triggerAreaEffects();
                 }
                 catch (Exception e) {
-                    MovementEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+                    RunningEffect.m_logger.error("Exception levee", e);
                 }
                 finally {
                     this.getMover().setSpecialMovementDirection(null);
@@ -258,14 +260,14 @@ public abstract class MovementEffect extends WakfuRunningEffect
         }
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-                this.m_distance = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            if (this.m_genericEffect.getParamsCount() >= 1) {
+                this.m_distance = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             }
             else {
                 this.m_distance = this.m_targetCell.getDistance(this.getMover().getWorldCellX(), this.getMover().getWorldCellY());
             }
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-                this.m_collisionDamage = ((WakfuEffect)this.m_genericEffect).getParam(1, level);
+            if (this.m_genericEffect.getParamsCount() >= 2) {
+                this.m_collisionDamage = this.m_genericEffect.getParam(1, level);
             }
             else {
                 this.m_collisionDamage = 0.0f;
@@ -308,10 +310,10 @@ public abstract class MovementEffect extends WakfuRunningEffect
     
     public void computeMovement() {
         if (this.m_context == null || this.m_context.getFightMap() == null) {
-            MovementEffect.m_logger.error((Object)("Pas de fightMap pour le context " + this.m_context));
+            RunningEffect.m_logger.error("Pas de fightMap pour le context " + this.m_context);
             return;
         }
-        final PathComputer pathComputer = new PathComputer(this.getMover(), this.getReferentialCell(), this.m_distance, (EffectContext<WakfuEffect>)this.m_context);
+        final PathComputer pathComputer = new PathComputer(this.getMover(), this.getReferentialCell(), this.m_distance, this.m_context);
         if (!this.getCloser()) {
             pathComputer.setOppositeMovement(true);
         }
@@ -376,7 +378,7 @@ public abstract class MovementEffect extends WakfuRunningEffect
     
     private void executeCollisionDamage() {
         if (this.m_lifePointsToLose > 0.0f) {
-            final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_collisionDamageElement, HPLoss.ComputeMode.CLASSIC, ValueRounder.randomRound(this.m_lifePointsToLose), this.getMover());
+            final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.m_collisionDamageElement, HPLoss.ComputeMode.CLASSIC, ValueRounder.randomRound(this.m_lifePointsToLose), this.getMover());
             hpLoss.setCaster(this.m_caster);
             if (this.m_computeCollisionDamage) {
                 hpLoss.computeModificatorWithDefaults();
@@ -389,7 +391,7 @@ public abstract class MovementEffect extends WakfuRunningEffect
             hpLoss.release();
             if (this.m_obstacle != null && this.m_obstacle instanceof EffectUser && ((EffectUser)this.m_obstacle).hasCharacteristic(FighterCharacteristicType.HP)) {
                 final int halfDamages = ValueRounder.randomRound(this.m_lifePointsToLose / 2.0f);
-                final HPLoss obstacleHpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_collisionDamageElement, HPLoss.ComputeMode.CLASSIC, halfDamages, (EffectUser)this.m_obstacle);
+                final HPLoss obstacleHpLoss = HPLoss.checkOut(this.m_context, this.m_collisionDamageElement, HPLoss.ComputeMode.CLASSIC, halfDamages, (EffectUser)this.m_obstacle);
                 (obstacleHpLoss).setGenericEffect(DefaultFightInstantEffectWithChatNotif.getInstance());
                 obstacleHpLoss.setCaster(this.m_caster);
                 obstacleHpLoss.getTriggersToExecute().set(204);

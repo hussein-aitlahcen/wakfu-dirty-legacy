@@ -169,7 +169,7 @@ public class ObjectUtils
             if (obj.getClass().isArray()) {
                 final Class<?> componentType = obj.getClass().getComponentType();
                 if (!componentType.isPrimitive()) {
-                    result = ((Object[])(Object)obj).clone();
+                    result = ((Object[])obj).clone();
                 }
                 else {
                     int length = Array.getLength(obj);
@@ -181,7 +181,7 @@ public class ObjectUtils
             }
             else {
                 try {
-                    final Method clone = obj.getClass().getMethod("clone", (Class<?>[])new Class[0]);
+                    final Method clone = obj.getClass().getMethod("clone", new Class[0]);
                     result = clone.invoke(obj, new Object[0]);
                 }
                 catch (NoSuchMethodException e) {

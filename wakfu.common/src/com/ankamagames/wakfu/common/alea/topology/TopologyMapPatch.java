@@ -166,7 +166,7 @@ public class TopologyMapPatch extends TopologyMapBlockedCells implements Convert
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyMapPatch.class);
+        m_logger = Logger.getLogger(TopologyMapPatch.class);
         HEIGHT_CELLS_DATA = new CellDataCompressor(18, 18, (short)(-32768));
         PROPERTIES_CELLS_DATA = new CellDataCompressor(18, 18, (short)0);
     }

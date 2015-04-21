@@ -38,7 +38,7 @@ public class DimensionalBagModelViewManager
     
     public short getBackgroundMapId(final int viewId) {
         final DimensionalBagModelView view = this.get(viewId);
-        return (short)((view != null) ? view.getBackgroundMapId() : -1);
+        return (view != null) ? view.getBackgroundMapId() : -1;
     }
     
     public boolean exists(final int modelId) {

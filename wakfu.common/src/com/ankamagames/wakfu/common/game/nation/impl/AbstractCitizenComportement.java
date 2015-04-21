@@ -295,6 +295,6 @@ public abstract class AbstractCitizenComportement implements CitizenComportment
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractCitizenComportement.class);
+        m_logger = Logger.getLogger(AbstractCitizenComportement.class);
     }
 }

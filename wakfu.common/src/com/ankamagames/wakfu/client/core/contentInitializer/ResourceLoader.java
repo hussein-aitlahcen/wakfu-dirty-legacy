@@ -1,20 +1,22 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
+
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.core.*;
+import com.ankamagames.wakfu.client.core.game.ressource.CollectAction;
+import com.ankamagames.wakfu.client.core.game.ressource.ReferenceResource;
+import com.ankamagames.wakfu.client.core.game.ressource.ReferenceResourceManager;
+import com.ankamagames.wakfu.client.core.game.ressource.ResourceEvolutionStep;
 import com.ankamagames.wakfu.common.game.resource.*;
 import com.ankamagames.wakfu.common.game.world.*;
-import com.ankamagames.wakfu.client.core.game.ressource.*;
+
 import gnu.trove.*;
-import com.ankamagames.framework.graphics.image.*;
-import com.ankamagames.wakfu.client.core.game.craft.*;
-import com.ankamagames.wakfu.common.game.ai.antlrcriteria.system.*;
+
 import com.ankamagames.wakfu.common.game.craft.collect.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
+
 import org.jetbrains.annotations.*;
 
 public class ResourceLoader implements ContentInitializer
@@ -22,15 +24,15 @@ public class ResourceLoader implements ContentInitializer
     private static final Logger m_logger;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         BinaryDocumentManager.getInstance().foreach(new ResourceBinaryData(), new LoadProcedure<ResourceBinaryData>() {
             @Override
             public void load(final ResourceBinaryData data) {
                 final ReferenceResource resource = ResourceLoader.loadFromBinaryForm(data);
-                ReferenceResourceManager.getInstance().addReferenceResource(resource);
+                if(resource != null)
+                	ReferenceResourceManager.getInstance().addReferenceResource(resource);
             }
         });
-        clientInstance.fireContentInitializerDone(this);
     }
     
     @Override
@@ -51,11 +53,12 @@ public class ResourceLoader implements ContentInitializer
         final short tempMin = bs.getIdealTemperatureMin();
         final short tempMax = bs.getIdealTemperatureMax();
         final boolean useBigChallengeAps = bs.isUseBigChallengeAps();
-        ReferenceResource resource;
+        ReferenceResource resource = null;
         if (bs.isMonsterEmbryo()) {
-            resource = new MonsterReferenceResource(resourceId, (short)resourceType, tempMin, tempMax, rainMin, rainMax, isBlocking, height, gfxIds, iconGfxId, useBigChallengeAps);
-            ((MonsterReferenceResource)resource).addMonsterFamilies(bs.getMonsterFamilies());
-            ((MonsterReferenceResource)resource).setBirthEvolutionStep(bs.getMonsterStepHatching());
+        	return null;
+//            resource = new MonsterReferenceResource(resourceId, (short)resourceType, tempMin, tempMax, rainMin, rainMax, isBlocking, height, gfxIds, iconGfxId, useBigChallengeAps);
+//            ((MonsterReferenceResource)resource).addMonsterFamilies(bs.getMonsterFamilies());
+//            ((MonsterReferenceResource)resource).setBirthEvolutionStep(bs.getMonsterStepHatching());
         }
         else {
             resource = new ReferenceResource(resourceId, (short)resourceType, tempMin, tempMax, rainMin, rainMax, isBlocking, height, gfxIds, iconGfxId, useBigChallengeAps);
@@ -64,7 +67,7 @@ public class ResourceLoader implements ContentInitializer
             final int propertyId = resourcePropertyIds[i];
             final ResourcesProperty prop = ResourcesProperty.getProperty(propertyId);
             if (prop == null) {
-                ResourceLoader.m_logger.error((Object)("Impossible de trouver la propri\u00e9t\u00e9 " + propertyId + " d\u00e9finie pour la ressource " + resourceId));
+                ResourceLoader.m_logger.error("Impossible de trouver la propri\u00e9t\u00e9 " + propertyId + " d\u00e9finie pour la ressource " + resourceId);
             }
             else {
                 resource.addProperty(prop);
@@ -88,7 +91,7 @@ public class ResourceLoader implements ContentInitializer
         float lightRange = 0.0f;
         final int intColor = bsStep.getLightColor();
         if (intColor != 0) {
-            lightIntensity = new Color(intColor).getFloatRGBA();
+            lightIntensity = new float[] {0, 0, 0, 0};// new Color(intColor).getFloatRGBA();
             lightRange = bsStep.getLightRadius();
         }
         final ResourceEvolutionStep evolutionStep = new ResourceEvolutionStep(stepidx, sizeCategories[sizeIdx], lightIntensity, lightRange);
@@ -116,19 +119,21 @@ public class ResourceLoader implements ContentInitializer
         final int consumableGfxId = action.getGfxId();
         final int[] lootItems = action.getLootItems();
         final boolean displayInCrfatDialog = action.isDisplayInCraftDialog();
-        final ClientConsumableInfo consumableInfo = new ClientConsumableInfo(consumableId, consumableGfxId);
-        SimpleCriterion criterion;
+        final ConsumableInfo consumableInfo = new ConsumableInfo(consumableId);
+        // new ClientConsumableInfo(consumableId, consumableGfxId);
+        
+        SimpleCriterion criterion = null;
         try {
-            criterion = CriteriaCompiler.compileBoolean(criterionAsString);
+            criterion = null;//CriteriaCompiler.compileBoolean(criterionAsString);
         }
         catch (Exception e) {
-            ResourceLoader.m_logger.error((Object)("Erreur de compilation du crit\u00e8rre sur l'action de collecte de ressource " + action.getId() + " de la ressource " + resourceId));
+            ResourceLoader.m_logger.error("Erreur de compilation du crit\u00e8rre sur l'action de collecte de ressource " + action.getId() + " de la ressource " + resourceId);
             return null;
         }
-        return new CollectAction(collectId, stepIndex, craftId, levelMin, nbPlayerMin, collectDuration, collectedItemId, visualId, criterion, resourceNextIndex, order, consumableInfo, displayInCrfatDialog, lootItems);
+        return new CollectAction(action.getId(), craftId, levelMin, nbPlayerMin, collectDuration, visualId, criterion, resourceNextIndex, consumableInfo);
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ResourceLoader.class);
+        m_logger = Logger.getLogger(ResourceLoader.class);
     }
 }

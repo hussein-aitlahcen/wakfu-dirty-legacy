@@ -7,11 +7,9 @@ import java.nio.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.pathfind.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import com.ankamagames.framework.kernel.core.maths.*;
@@ -69,7 +67,7 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
         catch (Exception e) {
             re = new PullTargetBackToCaster();
             re.m_pool = null;
-            PullTargetBackToCaster.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         re.m_lifePointsToLose = this.m_lifePointsToLose;
         return re;
@@ -88,13 +86,13 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
         if (mustBeExecuted) {
             if (this.m_valueComputationEnabled) {
                 if (this.m_lifePointsToLose > 0.0f) {
-                    final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, Elements.EARTH, HPLoss.ComputeMode.CLASSIC, ValueRounder.randomRound(this.m_lifePointsToLose), this.m_caster);
+                    final HPLoss hpLoss = HPLoss.checkOut(this.m_context, Elements.EARTH, HPLoss.ComputeMode.CLASSIC, ValueRounder.randomRound(this.m_lifePointsToLose), this.m_caster);
                     hpLoss.disableValueComputation();
                     hpLoss.execute(null, false);
                 }
             }
             else if (this.m_arrivalCell == null) {
-                PullTargetBackToCaster.m_logger.error((Object)"pas de cellule d'arriv\u00e9e");
+                RunningEffect.m_logger.error("pas de cellule d'arriv\u00e9e");
                 this.setNotified(true);
                 return;
             }
@@ -110,8 +108,8 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            this.m_collisionDamage = ((WakfuEffect)this.m_genericEffect).getParam(1, level);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            this.m_collisionDamage = this.m_genericEffect.getParam(1, level);
         }
         else {
             this.m_value = 0;
@@ -130,7 +128,7 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
         if (this.m_target instanceof BasicCharacterInfo && this.m_caster instanceof BasicCharacterInfo) {
             final FightMap fightMap = this.m_context.getFightMap();
             if (fightMap == null) {
-                PullTargetBackToCaster.m_logger.error((Object)("pas de fightmap sur le context " + this.m_context));
+                RunningEffect.m_logger.error("pas de fightmap sur le context " + this.m_context);
                 return;
             }
             int x = this.m_caster.getWorldCellX();
@@ -141,13 +139,13 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
             pathChecker.setMoverCaracteristics(mover.getHeight(), mover.getPhysicalRadius(), mover.getJumpCapacity());
             TopologyMap map = fightMap.getTopologyMapFromCell(x, y);
             if (map == null) {
-                PullTargetBackToCaster.m_logger.error((Object)("The cell (" + x + "; " + y + ") is not in the fightMap"));
+                RunningEffect.m_logger.error("The cell (" + x + "; " + y + ") is not in the fightMap");
                 return;
             }
             int sourceNumZ = map.getPathData(x, y, PullTargetBackToCaster.m_sourceCellPathData, 0);
             int sourceIndex = TopologyChecker.getIndexFromZ(0, sourceNumZ, PullTargetBackToCaster.m_sourceCellPathData, z);
             if (sourceIndex == -32768) {
-                PullTargetBackToCaster.m_logger.error((Object)("Unable to find the cell (" + x + "; " + y + ") with z value = " + z));
+                RunningEffect.m_logger.error("Unable to find the cell (" + x + "; " + y + ") with z value = " + z);
                 return;
             }
             final Direction8 dir = new Vector3i(this.m_caster.getWorldCellX(), this.m_caster.getWorldCellY(), this.m_caster.getWorldCellAltitude(), this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ()).toDirection4().getOppositeDirection();
@@ -160,7 +158,7 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
                 if (!map.isInMap(destX, destY)) {
                     map = fightMap.getTopologyMapFromCell(destX, destY);
                     if (map == null) {
-                        PullTargetBackToCaster.m_logger.error((Object)("The cell (" + destX + "; " + destY + ") is not in the fightMap"));
+                        RunningEffect.m_logger.error("The cell (" + destX + "; " + destY + ") is not in the fightMap");
                         return;
                     }
                 }
@@ -183,7 +181,7 @@ public class PullTargetBackToCaster extends WakfuRunningEffect
                 z = cellArrivalAltitude;
                 final Iterable<BasicEffectArea> activeEffectAreas = this.m_context.getEffectAreaManager().getActiveEffectAreas();
                 if (activeEffectAreas != null) {
-                    final Iterator<BasicEffectArea> effectAreaIterator = (Iterator<BasicEffectArea>)activeEffectAreas.iterator();
+                    final Iterator<BasicEffectArea> effectAreaIterator = activeEffectAreas.iterator();
                     boolean grip = false;
                     while (effectAreaIterator.hasNext()) {
                         final AbstractEffectArea basicEffectArea = (AbstractEffectArea) effectAreaIterator.next();

@@ -5,7 +5,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.logs.*;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.wakfu.common.game.item.*;
-import java.util.*;
 
 public class Gems implements RawConvertible<RawGems>, LoggableEntity
 {
@@ -68,7 +67,7 @@ public class Gems implements RawConvertible<RawGems>, LoggableEntity
     }
     
     public byte getSlotCount() {
-        return (byte)((this.m_holderDefintion == null) ? 0 : this.m_holderDefintion.getGemsNum());
+        return (this.m_holderDefintion == null) ? 0 : this.m_holderDefintion.getGemsNum();
     }
     
     public int getGem(final int index) {
@@ -110,12 +109,12 @@ public class Gems implements RawConvertible<RawGems>, LoggableEntity
             if (referenceId != 0) {
                 final AbstractReferenceItem refItem = ReferenceItemManager.getInstance().getReferenceItem(referenceId);
                 if (refItem == null) {
-                    Gems.m_logger.warn((Object)("Probl\u00e8me \u00e0 la d\u00e9s\u00e9rialisation, on essaye de placer une gemme inconnue d'id : " + referenceId), (Throwable)new Exception());
+                    Gems.m_logger.warn("Probl\u00e8me \u00e0 la d\u00e9s\u00e9rialisation, on essaye de placer une gemme inconnue d'id : " + referenceId, new Exception());
                     continue;
                 }
             }
             if (position < 0 || position >= this.m_gems.length) {
-                Gems.m_logger.warn((Object)"Probl\u00e8me \u00e0 la d\u00e9s\u00e9rialisation, on essaye de placer une gemme \u00e0 un emplacement indisponible", (Throwable)new Exception());
+                Gems.m_logger.warn("Probl\u00e8me \u00e0 la d\u00e9s\u00e9rialisation, on essaye de placer une gemme \u00e0 un emplacement indisponible", new Exception());
             }
             else {
                 this.m_gems[position] = referenceId;
@@ -139,7 +138,7 @@ public class Gems implements RawConvertible<RawGems>, LoggableEntity
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Gems.class);
+        m_logger = Logger.getLogger(Gems.class);
         EMPTY = new ImmutableGems(null);
     }
 }

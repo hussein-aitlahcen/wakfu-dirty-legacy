@@ -55,14 +55,14 @@ public abstract class Inventory<C extends InventoryContent> implements Iterable<
                 observer.onInventoryEvent(event);
             }
             catch (Exception e) {
-                Inventory.m_logger.error((Object)("Exception lors de la notification de l'event " + event + " \u00e0 l'observer " + observer), (Throwable)e);
+                Inventory.m_logger.error("Exception lors de la notification de l'event " + event + " \u00e0 l'observer " + observer, e);
             }
         }
         try {
             event.release();
         }
         catch (Exception e2) {
-            Inventory.m_logger.error((Object)"Exception lors du release d'un InventoryEvent", (Throwable)e2);
+            Inventory.m_logger.error("Exception lors du release d'un InventoryEvent", e2);
         }
     }
     
@@ -73,7 +73,7 @@ public abstract class Inventory<C extends InventoryContent> implements Iterable<
     
     public boolean setMaximumSize(final short maxSize) {
         if (this.m_maximumSize > 0 && maxSize < this.size()) {
-            Inventory.m_logger.error((Object)("Can't change the size of the inventory to " + maxSize + " : current size is " + this.size()));
+            Inventory.m_logger.error("Can't change the size of the inventory to " + maxSize + " : current size is " + this.size());
             return false;
         }
         this.m_maximumSize = MathHelper.maxShort((short)(-1), maxSize);
@@ -152,6 +152,6 @@ public abstract class Inventory<C extends InventoryContent> implements Iterable<
     public abstract void setContentChecker(final InventoryContentChecker<C> p0);
     
     static {
-        m_logger = Logger.getLogger((Class)Inventory.class);
+        m_logger = Logger.getLogger(Inventory.class);
     }
 }

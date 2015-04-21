@@ -40,19 +40,19 @@ public class SkillInventory<S extends AbstractSkill> extends StackInventory<S, R
     @Override
     public boolean fromRaw(final RawSkillInventory raw) {
         if (this.m_serializeQuantity) {
-            SkillInventory.m_logger.warn((Object)"Impossible d'ajouter les quantit\u00e9s depuis un RawSkillInventory qui ne connait pas cette information");
+            SkillInventory.m_logger.warn("Impossible d'ajouter les quantit\u00e9s depuis un RawSkillInventory qui ne connait pas cette information");
         }
         this.destroyAll();
         boolean bOk = true;
         S skill = null;
         for (final RawSkillInventory.Content content : raw.contents) {
             try {
-                skill = (S)this.m_contentProvider.unSerializeContent(content.skill);
+                skill = this.m_contentProvider.unSerializeContent(content.skill);
                 if (skill != null) {
                     if (this.add(skill)) {
                         continue;
                     }
-                    SkillInventory.m_logger.error((Object)("Impossible d'ajouter un skill (" + skill.getReferenceId() + ") au SkillInventory"));
+                    SkillInventory.m_logger.error("Impossible d'ajouter un skill (" + skill.getReferenceId() + ") au SkillInventory");
                     bOk = false;
                     skill.release();
                 }
@@ -61,12 +61,12 @@ public class SkillInventory<S extends AbstractSkill> extends StackInventory<S, R
                 }
             }
             catch (InventoryCapacityReachedException e) {
-                SkillInventory.m_logger.error((Object)ExceptionFormatter.toString(e));
+                SkillInventory.m_logger.error(ExceptionFormatter.toString(e));
                 bOk = false;
                 skill.release();
             }
             catch (ContentAlreadyPresentException e2) {
-                SkillInventory.m_logger.error((Object)ExceptionFormatter.toString(e2));
+                SkillInventory.m_logger.error(ExceptionFormatter.toString(e2));
                 bOk = false;
                 skill.release();
             }
@@ -77,7 +77,7 @@ public class SkillInventory<S extends AbstractSkill> extends StackInventory<S, R
     @Override
     public boolean toRaw(final RawSkillInventory raw) {
         if (this.m_serializeQuantity) {
-            SkillInventory.m_logger.warn((Object)"Impossible d'ajouter l'information de quantit\u00e9 \u00e0 un RawSkillInventory qui n'est pas pr\u00e9vu pour");
+            SkillInventory.m_logger.warn("Impossible d'ajouter l'information de quantit\u00e9 \u00e0 un RawSkillInventory qui n'est pas pr\u00e9vu pour");
         }
         raw.clear();
         for (final S skill : this) {
@@ -103,6 +103,6 @@ public class SkillInventory<S extends AbstractSkill> extends StackInventory<S, R
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SkillInventory.class);
+        m_logger = Logger.getLogger(SkillInventory.class);
     }
 }

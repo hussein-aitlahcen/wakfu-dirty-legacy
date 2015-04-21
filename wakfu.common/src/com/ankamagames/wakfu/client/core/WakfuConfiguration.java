@@ -286,7 +286,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
     
     @Override
     public boolean load(final String fileName) {
-        WakfuConfiguration.m_logger.info((Object)String.format("Chargement de la configuration depuis le fichier : '%s'", fileName));
+        WakfuConfiguration.m_logger.info(String.format("Chargement de la configuration depuis le fichier : '%s'", fileName));
         final boolean load = super.load((fileName == null || fileName.length() == 0) ? "config.properties" : fileName);
         final boolean multiJarLoaded = this.prepareMultiJarIndex();
         final boolean worldIndexLoaded = this.prepareWorldIndex();
@@ -298,7 +298,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
             return ContentFileHelper.prepare(this.getString("fileIndexers"), this.getString("indexedContentsPrefix"));
         }
         catch (PropertyException e) {
-            WakfuConfiguration.m_logger.error((Object)"", (Throwable)e);
+            WakfuConfiguration.m_logger.error("", e);
             return false;
         }
     }
@@ -309,7 +309,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
             return WorldMapFileHelper.prepare(path);
         }
         catch (PropertyException e) {
-            WakfuConfiguration.m_logger.warn((Object)(e.getMessage() + "\n(no problemo si lanc\u00e9 depuis les sources)"));
+            WakfuConfiguration.m_logger.warn(e.getMessage() + "\n(no problemo si lanc\u00e9 depuis les sources)");
             return true;
         }
     }
@@ -364,7 +364,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
             return this.getString("particlePath") + particleId + ".xps";
         }
         catch (PropertyException e) {
-            WakfuConfiguration.m_logger.warn((Object)e);
+            WakfuConfiguration.m_logger.warn(e);
             return null;
         }
     }
@@ -377,7 +377,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
                 return url;
             }
             if (!this.m_urlNotFound.contains(url)) {
-                WakfuConfiguration.m_logger.warn((Object)("Impossible de trouver l'icone d'URL " + url));
+                WakfuConfiguration.m_logger.warn("Impossible de trouver l'icone d'URL " + url);
                 this.m_urlNotFound.add(url);
             }
             if (defaultKey != null) {
@@ -386,7 +386,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
             return null;
         }
         catch (PropertyException e) {
-            WakfuConfiguration.m_logger.warn((Object)e.getMessage());
+            WakfuConfiguration.m_logger.warn(e.getMessage());
             return null;
         }
     }
@@ -513,7 +513,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
             return ContentFileHelper.getURL(formattedStrUrl);
         }
         catch (MalformedURLException e) {
-            WakfuConfiguration.m_logger.error((Object)"While get loginNewsUrl", (Throwable)e);
+            WakfuConfiguration.m_logger.error("While get loginNewsUrl", e);
             return null;
         }
     }
@@ -544,7 +544,7 @@ public class WakfuConfiguration extends PropertiesReaderWriter
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuConfiguration.class);
+        m_logger = Logger.getLogger(WakfuConfiguration.class);
         m_instance = new WakfuConfiguration();
     }
 }

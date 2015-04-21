@@ -6,7 +6,8 @@ public abstract class PersistentObject implements Serializable, Cloneable
 {
     public static final long serialVersionUID = 1020L;
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         try {
             return super.clone();
         }

@@ -43,7 +43,7 @@ public final class ReferenceAptitude implements Comparable<ReferenceAptitude>
                 this.m_breed.add(breed);
             }
             else {
-                ReferenceAptitude.m_logger.warn((Object)("Breed Id inconnue : " + breedId));
+                ReferenceAptitude.m_logger.warn("Breed Id inconnue : " + breedId);
             }
         }
         this.m_characteristic = characteristicType;
@@ -163,6 +163,6 @@ public final class ReferenceAptitude implements Comparable<ReferenceAptitude>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ReferenceAptitude.class);
+        m_logger = Logger.getLogger(ReferenceAptitude.class);
     }
 }

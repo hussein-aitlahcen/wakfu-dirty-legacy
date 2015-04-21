@@ -25,7 +25,7 @@ public abstract class ObjectFactory<E extends Poolable> implements PoolableObjec
             ((Poolable)obj).onCheckOut();
         }
         catch (Exception e) {
-            ObjectFactory.m_logger.error((Object)"Exception on checkOut : ", (Throwable)e);
+            ObjectFactory.m_logger.error("Exception on checkOut : ", e);
         }
     }
     
@@ -35,7 +35,7 @@ public abstract class ObjectFactory<E extends Poolable> implements PoolableObjec
             ((Poolable)obj).onCheckIn();
         }
         catch (Exception e) {
-            ObjectFactory.m_logger.error((Object)"Exception on checkIn : ", (Throwable)e);
+            ObjectFactory.m_logger.error("Exception on checkIn : ", e);
             throw new RuntimeException(e.toString());
         }
     }
@@ -59,6 +59,6 @@ public abstract class ObjectFactory<E extends Poolable> implements PoolableObjec
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ObjectFactory.class);
+        m_logger = Logger.getLogger(ObjectFactory.class);
     }
 }

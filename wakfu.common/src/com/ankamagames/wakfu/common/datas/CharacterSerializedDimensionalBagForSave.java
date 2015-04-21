@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.datas;
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import java.nio.*;
-import java.util.*;
 import com.ankamagames.wakfu.common.rawData.*;
 
 public class CharacterSerializedDimensionalBagForSave extends CharacterSerializedPart implements VersionableObject

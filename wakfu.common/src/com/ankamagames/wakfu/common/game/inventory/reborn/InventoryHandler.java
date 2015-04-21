@@ -5,9 +5,6 @@ import com.ankamagames.wakfu.common.game.inventory.reborn.definition.*;
 import com.ankamagames.wakfu.common.game.inventory.reborn.exception.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.wakfu.common.game.item.*;
-import com.ankamagames.wakfu.common.game.inventory.reborn.definition.quest.*;
-//import com.ankamagames.wakfu.common.game.inventory.reborn.definition.temporary.*;
-import com.ankamagames.wakfu.common.game.inventory.reborn.definition.cosmetics.*;
 
 public class InventoryHandler
 {

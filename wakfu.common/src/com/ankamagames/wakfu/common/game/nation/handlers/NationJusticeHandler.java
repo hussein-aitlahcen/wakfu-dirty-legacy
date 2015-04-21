@@ -8,7 +8,6 @@ import com.ankamagames.wakfu.common.game.nation.event.*;
 import java.nio.*;
 import com.ankamagames.wakfu.common.game.nation.data.*;
 import com.ankamagames.wakfu.common.rawData.*;
-import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 
 public abstract class NationJusticeHandler extends NationHandler<NationJusticeEventHandler>
 {
@@ -93,7 +92,7 @@ public abstract class NationJusticeHandler extends NationHandler<NationJusticeEv
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationJusticeHandler.class);
+        m_logger = Logger.getLogger(NationJusticeHandler.class);
     }
     
     protected class NationJailPart extends NationPart

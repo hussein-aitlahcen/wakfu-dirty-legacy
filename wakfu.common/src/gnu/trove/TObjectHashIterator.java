@@ -9,7 +9,8 @@ class TObjectHashIterator<E> extends THashIterator<E>
         this._objectHash = hash;
     }
     
-    protected E objectAtIndex(final int index) {
+    @Override
+	protected E objectAtIndex(final int index) {
         return (E)this._objectHash._set[index];
     }
 }

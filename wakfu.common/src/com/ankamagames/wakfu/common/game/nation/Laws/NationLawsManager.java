@@ -130,7 +130,7 @@ public class NationLawsManager
     }
     
     public TLongObjectIterator<NationLaw> lawsIterator() {
-        return (TLongObjectIterator<NationLaw>)this.m_laws.iterator();
+        return this.m_laws.iterator();
     }
     
     public int getCitizenPointsCost(final long lawId) {

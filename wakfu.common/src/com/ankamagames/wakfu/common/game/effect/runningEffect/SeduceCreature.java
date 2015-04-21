@@ -3,11 +3,12 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.datas.specific.symbiot.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -33,7 +34,7 @@ public class SeduceCreature extends WakfuRunningEffect
             re = new SeduceCreature();
             re.m_pool = null;
             re.m_isStatic = false;
-            SeduceCreature.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         return re;
     }
@@ -44,20 +45,20 @@ public class SeduceCreature extends WakfuRunningEffect
             return;
         }
         if (!(this.m_caster instanceof BasicCharacterInfo) || !(this.m_target instanceof BasicCharacterInfo)) {
-            SeduceCreature.m_logger.error((Object)"La cible ou le caster n'est pas du bon type");
+            RunningEffect.m_logger.error("La cible ou le caster n'est pas du bon type");
             this.setNotified(true);
             return;
         }
         final BasicCharacterInfo caster = (BasicCharacterInfo)this.m_caster;
         final AbstractSymbiot symbiot = caster.getSymbiot();
         if (symbiot == null) {
-            SeduceCreature.m_logger.error((Object)"On n'a pas de symbiote");
+            RunningEffect.m_logger.error("On n'a pas de symbiote");
             this.setNotified(true);
             return;
         }
         final BasicCharacterInfo targetInfo = (BasicCharacterInfo)this.m_target;
         if (targetInfo.getType() != 1 || targetInfo.isSummoned()) {
-            SeduceCreature.m_logger.error((Object)"La cible que l'on tente de seduire n'est pas seductible");
+            RunningEffect.m_logger.error("La cible que l'on tente de seduire n'est pas seductible");
             this.setNotified(true);
             return;
         }
@@ -65,7 +66,7 @@ public class SeduceCreature extends WakfuRunningEffect
         if (toSeduce == null) {
             return;
         }
-        SeduceCreature.m_logger.info((Object)("S\u00e9duction d'une cr\u00e9ature avec " + toSeduce.getCurrentHp() + " PV"));
+        RunningEffect.m_logger.info("S\u00e9duction d'une cr\u00e9ature avec " + toSeduce.getCurrentHp() + " PV");
         if (this.isValueComputationEnabled()) {
             this.m_value = symbiot.addCreaturesParameters(toSeduce);
         }
@@ -73,7 +74,7 @@ public class SeduceCreature extends WakfuRunningEffect
             symbiot.addCreaturesParametersToIndex(toSeduce, (byte)this.m_value);
         }
         if (this.m_value == -1) {
-            SeduceCreature.m_logger.info((Object)"Erreur lors de l'ajout de la creature au symbiot, annulation de la seduction");
+            RunningEffect.m_logger.info("Erreur lors de l'ajout de la creature au symbiot, annulation de la seduction");
             this.setNotified(true);
             return;
         }

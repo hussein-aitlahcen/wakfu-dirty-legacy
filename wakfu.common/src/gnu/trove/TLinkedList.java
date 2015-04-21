@@ -15,22 +15,26 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         this._size = 0;
     }
     
-    public ListIterator<T> listIterator(final int index) {
+    @Override
+	public ListIterator<T> listIterator(final int index) {
         return new IteratorImpl(index);
     }
     
-    public int size() {
+    @Override
+	public int size() {
         return this._size;
     }
     
-    public void add(final int index, final T linkable) {
+    @Override
+	public void add(final int index, final T linkable) {
         if (index < 0 || index > this.size()) {
             throw new IndexOutOfBoundsException("index:" + index);
         }
         this.insert(index, linkable);
     }
     
-    public boolean add(final T linkable) {
+    @Override
+	public boolean add(final T linkable) {
         this.insert(this._size, linkable);
         return true;
     }
@@ -43,7 +47,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         this.insert(this.size(), linkable);
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         if (null != this._head) {
             for (TLinkable link = this._head.getNext(); link != null; link = link.getNext()) {
                 final TLinkable prev = link.getPrevious();
@@ -57,7 +62,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         this._size = 0;
     }
     
-    public Object[] toArray() {
+    @Override
+	public Object[] toArray() {
         final Object[] o = new Object[this._size];
         int i = 0;
         for (TLinkable link = this._head; link != null; link = link.getNext()) {
@@ -86,7 +92,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         return o;
     }
     
-    public boolean contains(final Object o) {
+    @Override
+	public boolean contains(final Object o) {
         for (TLinkable link = this._head; link != null; link = link.getNext()) {
             if (o.equals(link)) {
                 return true;
@@ -95,7 +102,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         return false;
     }
     
-    public T get(final int index) {
+    @Override
+	public T get(final int index) {
         if (index < 0 || index >= this._size) {
             throw new IndexOutOfBoundsException("Index: " + index + ", Size: " + this._size);
         }
@@ -195,7 +203,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         ++this._size;
     }
     
-    public boolean remove(final Object o) {
+    @Override
+	public boolean remove(final Object o) {
         if (o instanceof TLinkable) {
             final TLinkable link = (TLinkable)o;
             final T p = (T)link.getPrevious();
@@ -274,14 +283,16 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
         return true;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         out.writeObject(this._head);
         out.writeObject(this._tail);
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         this._size = in.readInt();
         this._head = (T)in.readObject();
@@ -324,7 +335,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
             }
         }
         
-        public final void add(final T linkable) {
+        @Override
+		public final void add(final T linkable) {
             this._lastReturned = null;
             ++this._nextIndex;
             if (TLinkedList.this._size == 0) {
@@ -335,15 +347,18 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
             }
         }
         
-        public final boolean hasNext() {
+        @Override
+		public final boolean hasNext() {
             return this._nextIndex != TLinkedList.this._size;
         }
         
-        public final boolean hasPrevious() {
+        @Override
+		public final boolean hasPrevious() {
             return this._nextIndex != 0;
         }
         
-        public final T next() {
+        @Override
+		public final T next() {
             if (this._nextIndex == TLinkedList.this._size) {
                 throw new NoSuchElementException();
             }
@@ -353,11 +368,13 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
             return this._lastReturned;
         }
         
-        public final int nextIndex() {
+        @Override
+		public final int nextIndex() {
             return this._nextIndex;
         }
         
-        public final T previous() {
+        @Override
+		public final T previous() {
             if (this._nextIndex == 0) {
                 throw new NoSuchElementException();
             }
@@ -375,11 +392,13 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
             return this._lastReturned;
         }
         
-        public final int previousIndex() {
+        @Override
+		public final int previousIndex() {
             return this._nextIndex - 1;
         }
         
-        public final void remove() {
+        @Override
+		public final void remove() {
             if (this._lastReturned == null) {
                 throw new IllegalStateException("must invoke next or previous before invoking remove");
             }
@@ -391,7 +410,8 @@ public class TLinkedList<T extends TLinkable> extends AbstractSequentialList<T> 
             this._lastReturned = null;
         }
         
-        public final void set(final T linkable) {
+        @Override
+		public final void set(final T linkable) {
             if (this._lastReturned == null) {
                 throw new IllegalStateException();
             }

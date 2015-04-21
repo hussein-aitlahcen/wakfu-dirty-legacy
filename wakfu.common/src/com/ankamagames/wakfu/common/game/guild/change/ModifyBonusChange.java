@@ -36,7 +36,7 @@ class ModifyBonusChange implements GuildChange
             controller.changeBonusActivationDate(this.m_bonus.getBonusId(), this.m_bonus.getActivationDate());
         }
         catch (GuildException e) {
-            ModifyBonusChange.m_logger.error((Object)"Impossible de modifier le bonus", (Throwable)e);
+            ModifyBonusChange.m_logger.error("Impossible de modifier le bonus", e);
         }
     }
     
@@ -51,6 +51,6 @@ class ModifyBonusChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ModifyBonusChange.class);
+        m_logger = Logger.getLogger(ModifyBonusChange.class);
     }
 }

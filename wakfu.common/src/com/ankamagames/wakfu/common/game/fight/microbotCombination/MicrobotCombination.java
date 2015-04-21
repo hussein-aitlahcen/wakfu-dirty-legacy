@@ -86,6 +86,6 @@ public class MicrobotCombination implements Iterable<Point3>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MicrobotCombination.class);
+        m_logger = Logger.getLogger(MicrobotCombination.class);
     }
 }

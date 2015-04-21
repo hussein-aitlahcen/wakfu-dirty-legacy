@@ -32,6 +32,6 @@ public abstract class PartitionPatchLibrary<P extends PartitionPatch>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PartitionPatchLibrary.class);
+        m_logger = Logger.getLogger(PartitionPatchLibrary.class);
     }
 }

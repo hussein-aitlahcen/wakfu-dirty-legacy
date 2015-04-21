@@ -12,7 +12,7 @@ public class BuildingEvolveConditionValidator extends BaseBuildingConditionValid
     
     @Override
     protected void validateMaxQuantity(final AbstractBuildingStruct info) {
-        if (!BuildingValidationHelper.checkMaxQuantity(info, (HavenWorldDataProvider)this.m_dataProvider, true)) {
+        if (!BuildingValidationHelper.checkMaxQuantity(info, this.m_dataProvider, true)) {
             this.addError(new BuildMaxQuantityReached(new BuildingItem(info)));
         }
     }

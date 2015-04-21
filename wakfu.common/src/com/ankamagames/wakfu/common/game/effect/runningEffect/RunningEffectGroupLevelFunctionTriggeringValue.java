@@ -2,7 +2,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -33,7 +35,7 @@ public final class RunningEffectGroupLevelFunctionTriggeringValue extends Runnin
             re = new RunningEffectGroupLevelFunctionTriggeringValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupLevelFunctionTriggeringValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionTriggeringValue : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionTriggeringValue : " + e.getMessage());
         }
         re.m_ratio = this.m_ratio;
         return re;
@@ -46,8 +48,8 @@ public final class RunningEffectGroupLevelFunctionTriggeringValue extends Runnin
         }
         super.effectiveComputeValue(triggerRE);
         this.m_ratio = 1.0f;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 6) {
-            this.m_ratio = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel());
+        if (this.m_genericEffect.getParamsCount() > 6) {
+            this.m_ratio = this.m_genericEffect.getParam(6, this.getContainerLevel());
         }
     }
     
@@ -55,7 +57,7 @@ public final class RunningEffectGroupLevelFunctionTriggeringValue extends Runnin
     protected WakfuEffectExecutionParameters getExecutionParameters(final WakfuRunningEffect linkedRE, final boolean disableProbabilityComputation) {
         final WakfuEffectExecutionParameters params = super.getExecutionParameters(linkedRE, disableProbabilityComputation);
         if (linkedRE == null) {
-            RunningEffectGroupLevelFunctionTriggeringValue.m_logger.error((Object)"Unable to execute a RunningEffectGroupLevelFunctionTriggeringActionCost without triggering effect");
+            RunningEffect.m_logger.error("Unable to execute a RunningEffectGroupLevelFunctionTriggeringActionCost without triggering effect");
             return params;
         }
         params.setForcedLevel((int)(linkedRE.getValue() * this.m_ratio));

@@ -81,7 +81,7 @@ public abstract class AbstractPartyRequester
     }
     
     public ImmutableList<PartyOccupation> getOccupations() {
-        return (ImmutableList<PartyOccupation>)ImmutableList.copyOf((Collection)this.m_occupations);
+        return ImmutableList.copyOf((Collection)this.m_occupations);
     }
     
     public boolean hasOccupation(final PartyOccupation occupation) {

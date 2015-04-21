@@ -51,6 +51,6 @@ public abstract class AbstractWakfuInstanceEffectContext implements EffectContex
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractWakfuInstanceEffectContext.class);
+        m_logger = Logger.getLogger(AbstractWakfuInstanceEffectContext.class);
     }
 }

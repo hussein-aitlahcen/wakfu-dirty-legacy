@@ -10,7 +10,8 @@ public class UnrecognizedExtraField implements CentralDirectoryParsingZipExtraFi
         this.headerId = headerId;
     }
     
-    public ZipShort getHeaderId() {
+    @Override
+	public ZipShort getHeaderId() {
         return this.headerId;
     }
     
@@ -18,11 +19,13 @@ public class UnrecognizedExtraField implements CentralDirectoryParsingZipExtraFi
         this.localData = ZipUtil.copy(data);
     }
     
-    public ZipShort getLocalFileDataLength() {
+    @Override
+	public ZipShort getLocalFileDataLength() {
         return new ZipShort(this.localData.length);
     }
     
-    public byte[] getLocalFileDataData() {
+    @Override
+	public byte[] getLocalFileDataData() {
         return ZipUtil.copy(this.localData);
     }
     
@@ -30,27 +33,31 @@ public class UnrecognizedExtraField implements CentralDirectoryParsingZipExtraFi
         this.centralData = ZipUtil.copy(data);
     }
     
-    public ZipShort getCentralDirectoryLength() {
+    @Override
+	public ZipShort getCentralDirectoryLength() {
         if (this.centralData != null) {
             return new ZipShort(this.centralData.length);
         }
         return this.getLocalFileDataLength();
     }
     
-    public byte[] getCentralDirectoryData() {
+    @Override
+	public byte[] getCentralDirectoryData() {
         if (this.centralData != null) {
             return ZipUtil.copy(this.centralData);
         }
         return this.getLocalFileDataData();
     }
     
-    public void parseFromLocalFileData(final byte[] data, final int offset, final int length) {
+    @Override
+	public void parseFromLocalFileData(final byte[] data, final int offset, final int length) {
         final byte[] tmp = new byte[length];
         System.arraycopy(data, offset, tmp, 0, length);
         this.setLocalFileDataData(tmp);
     }
     
-    public void parseFromCentralDirectoryData(final byte[] data, final int offset, final int length) {
+    @Override
+	public void parseFromCentralDirectoryData(final byte[] data, final int offset, final int length) {
         final byte[] tmp = new byte[length];
         System.arraycopy(data, offset, tmp, 0, length);
         this.setCentralDirectoryData(tmp);

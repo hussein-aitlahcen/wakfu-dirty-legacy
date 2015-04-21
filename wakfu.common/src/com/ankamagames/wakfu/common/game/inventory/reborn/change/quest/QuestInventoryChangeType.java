@@ -5,9 +5,9 @@ import org.jetbrains.annotations.*;
 
 public enum QuestInventoryChangeType
 {
-    ADD_ITEM((SimpleObjectFactory<? extends QuestInventoryChange>)new AddItemFactory()), 
-    REMOVE_ITEM((SimpleObjectFactory<? extends QuestInventoryChange>)new RemoveItemFactory()), 
-    ITEM_QUANTITY((SimpleObjectFactory<? extends QuestInventoryChange>)new ItemQuantityFactory());
+    ADD_ITEM(new AddItemFactory()), 
+    REMOVE_ITEM(new RemoveItemFactory()), 
+    ITEM_QUANTITY(new ItemQuantityFactory());
     
     public final byte idx;
     private final SimpleObjectFactory<? extends QuestInventoryChange> factory;
@@ -18,7 +18,7 @@ public enum QuestInventoryChangeType
     }
     
     public QuestInventoryChange createNew() {
-        return (QuestInventoryChange)this.factory.createNew();
+        return this.factory.createNew();
     }
     
     @Nullable

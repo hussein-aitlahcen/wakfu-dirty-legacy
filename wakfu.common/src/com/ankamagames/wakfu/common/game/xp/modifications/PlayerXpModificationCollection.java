@@ -28,7 +28,7 @@ public class PlayerXpModificationCollection implements Iterable<PlayerXpModifica
     
     public void addSkillOrSpell(final long playerId, final SkillOrSpell skillOrSpell, final XpModification xpModification) {
         if (!this.m_playerXpModifications.containsKey(playerId)) {
-            PlayerXpModificationCollection.m_logger.error((Object)("Joueur id=" + playerId + " inconnu, impossible de rajouter un sort/skill pour lui."));
+            PlayerXpModificationCollection.m_logger.error("Joueur id=" + playerId + " inconnu, impossible de rajouter un sort/skill pour lui.");
         }
         this.m_playerXpModifications.get(playerId).addSkillOrSpellXpModification(skillOrSpell, xpModification);
     }
@@ -121,6 +121,6 @@ public class PlayerXpModificationCollection implements Iterable<PlayerXpModifica
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PlayerXpModificationCollection.class);
+        m_logger = Logger.getLogger(PlayerXpModificationCollection.class);
     }
 }

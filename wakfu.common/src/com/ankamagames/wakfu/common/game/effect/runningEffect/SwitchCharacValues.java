@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -58,7 +62,7 @@ public final class SwitchCharacValues extends WakfuRunningEffect
             re = new SwitchCharacValues();
             re.m_pool = null;
             re.m_isStatic = false;
-            SwitchCharacValues.m_logger.error((Object)("Erreur lors d'un checkOut sur un SwitchCharacValues : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SwitchCharacValues : " + e.getMessage());
         }
         return re;
     }
@@ -68,8 +72,8 @@ public final class SwitchCharacValues extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_firstCharacId = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_secondCharacId = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_firstCharacId = (byte)this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_secondCharacId = (byte)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
@@ -81,14 +85,14 @@ public final class SwitchCharacValues extends WakfuRunningEffect
         final FighterCharacteristicType firstCharacType = FighterCharacteristicType.getCharacteristicTypeFromId(this.m_firstCharacId);
         final FighterCharacteristicType secondCharacType = FighterCharacteristicType.getCharacteristicTypeFromId(this.m_secondCharacId);
         if (firstCharacType == null || secondCharacType == null) {
-            SwitchCharacValues.m_logger.error((Object)"Impossible d'executer l'effet, l'une des carac est inconnue");
+            RunningEffect.m_logger.error("Impossible d'executer l'effet, l'une des carac est inconnue");
             this.setNotified();
             return;
         }
         final AbstractCharacteristic firstCharac = this.m_target.getCharacteristic(firstCharacType);
         final AbstractCharacteristic secondCharac = this.m_target.getCharacteristic(secondCharacType);
         if (firstCharac == null || secondCharac == null) {
-            SwitchCharacValues.m_logger.error((Object)"Impossible d'executer l'effet, l'une des carac est inconnue");
+            RunningEffect.m_logger.error("Impossible d'executer l'effet, l'une des carac est inconnue");
             this.setNotified();
             return;
         }

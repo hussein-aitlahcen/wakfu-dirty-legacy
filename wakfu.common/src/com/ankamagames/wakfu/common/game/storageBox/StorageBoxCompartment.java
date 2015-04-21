@@ -38,7 +38,7 @@ public class StorageBoxCompartment implements ItemInventoryHandler
             return this.canAdd(item) && this.m_inventory.add(item);
         }
         catch (InventoryException e) {
-            StorageBoxCompartment.m_logger.error((Object)"[STORAGE_BOX] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", (Throwable)e);
+            StorageBoxCompartment.m_logger.error("[STORAGE_BOX] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", e);
             return false;
         }
     }
@@ -54,7 +54,7 @@ public class StorageBoxCompartment implements ItemInventoryHandler
             return this.canAdd(item, position) && this.m_inventory.addAt(item, position);
         }
         catch (InventoryException e) {
-            StorageBoxCompartment.m_logger.error((Object)"[STORAGE_BOX] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", (Throwable)e);
+            StorageBoxCompartment.m_logger.error("[STORAGE_BOX] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", e);
             return false;
         }
     }
@@ -143,7 +143,7 @@ public class StorageBoxCompartment implements ItemInventoryHandler
                 this.m_inventory.addAt(item, innerItem.position);
             }
             catch (InventoryException e) {
-                StorageBoxCompartment.m_logger.error((Object)"[STORAGE_BOX] Probl\u00e8me de r\u00e9cup\u00e9ration d'un item de compartiment", (Throwable)e);
+                StorageBoxCompartment.m_logger.error("[STORAGE_BOX] Probl\u00e8me de r\u00e9cup\u00e9ration d'un item de compartiment", e);
             }
         }
     }
@@ -154,6 +154,6 @@ public class StorageBoxCompartment implements ItemInventoryHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StorageBoxCompartment.class);
+        m_logger = Logger.getLogger(StorageBoxCompartment.class);
     }
 }

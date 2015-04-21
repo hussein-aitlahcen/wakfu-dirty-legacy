@@ -43,7 +43,7 @@ public abstract class InteractiveElementFactory<T extends MapInteractiveElement,
         try {
             final InteractiveElementInfo info = this.m_infos.get(instanceId);
             if (info == null) {
-                InteractiveElementFactory.m_logger.error((Object)("Aucune d\u00e9finition trouv\u00e9e pour l'instance d'\u00e9lement interactif " + instanceId));
+                InteractiveElementFactory.m_logger.error("Aucune d\u00e9finition trouv\u00e9e pour l'instance d'\u00e9lement interactif " + instanceId);
                 return null;
             }
             final T element = this.createInteractiveElement(instanceId, info.m_type, info.m_data, isDummy);
@@ -51,7 +51,7 @@ public abstract class InteractiveElementFactory<T extends MapInteractiveElement,
             return element;
         }
         catch (RuntimeException e) {
-            InteractiveElementFactory.m_logger.error((Object)("Exception lors de InteractiveElementFactory.createInteractiveElement(" + instanceId + ")"), (Throwable)e);
+            InteractiveElementFactory.m_logger.error("Exception lors de InteractiveElementFactory.createInteractiveElement(" + instanceId + ")", e);
             return null;
         }
     }
@@ -63,7 +63,7 @@ public abstract class InteractiveElementFactory<T extends MapInteractiveElement,
     private T createInteractiveElement(final long instanceId, final short type, final byte[] data, final boolean isDummy) {
         final ObjectFactory<T> factory = this.m_configuration.getFactory(type);
         if (factory == null) {
-            InteractiveElementFactory.m_logger.error((Object)("Aucune factory d'enregistr\u00e9e pour un \u00e9l\u00e9ment interactif de type " + type));
+            InteractiveElementFactory.m_logger.error("Aucune factory d'enregistr\u00e9e pour un \u00e9l\u00e9ment interactif de type " + type);
             return null;
         }
         final T element = factory.makeObject();
@@ -79,6 +79,6 @@ public abstract class InteractiveElementFactory<T extends MapInteractiveElement,
     protected abstract void setAdditionalData(final T p0, final InteractiveElementInfo p1);
     
     static {
-        m_logger = Logger.getLogger((Class)InteractiveElementFactory.class);
+        m_logger = Logger.getLogger(InteractiveElementFactory.class);
     }
 }

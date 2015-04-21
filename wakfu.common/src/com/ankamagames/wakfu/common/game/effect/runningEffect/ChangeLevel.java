@@ -5,9 +5,10 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -37,7 +38,7 @@ public final class ChangeLevel extends WakfuRunningEffect
             re = new ChangeLevel();
             re.m_pool = null;
             re.m_isStatic = false;
-            ChangeLevel.m_logger.error((Object)("Erreur lors d'un checkOut sur un ChangeLevel : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ChangeLevel : " + e.getMessage());
         }
         return re;
     }
@@ -82,7 +83,7 @@ public final class ChangeLevel extends WakfuRunningEffect
         final int newHpMax = caster.getCharacteristicMax(FighterCharacteristicType.HP);
         final int hpDiff = newHpMax - previousHpMax;
         final int newHpValue = previousHpValue + hpDiff;
-        caster.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).set(newHpValue);
+        caster.getCharacteristic(FighterCharacteristicType.HP).set(newHpValue);
     }
     
     @Override

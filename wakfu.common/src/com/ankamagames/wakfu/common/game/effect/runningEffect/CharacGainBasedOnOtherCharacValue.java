@@ -1,13 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -63,7 +67,7 @@ public final class CharacGainBasedOnOtherCharacValue extends CharacModification
             re = new CharacGainBasedOnOtherCharacValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacGainBasedOnOtherCharacValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGainBasedOnOtherCharacValue : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGainBasedOnOtherCharacValue : " + e.getMessage());
         }
         re.m_applyOnCaster = false;
         return re;
@@ -79,16 +83,16 @@ public final class CharacGainBasedOnOtherCharacValue extends CharacModification
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 3) {
+        if (this.m_genericEffect.getParamsCount() < 3) {
             return;
         }
         if (this.getEffectExecutionTarget() == null || this.m_target == null) {
             return;
         }
-        final byte targetedCharac = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final byte referenceCharac = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int percentOfReferenceCharac = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_applyOnCaster = (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4 && ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        final byte targetedCharac = (byte)this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final byte referenceCharac = (byte)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int percentOfReferenceCharac = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_applyOnCaster = (this.m_genericEffect.getParamsCount() >= 4 && this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         if (!this.getEffectExecutionTarget().hasCharacteristic(FighterCharacteristicType.getCharacteristicTypeFromId(targetedCharac)) || !this.m_target.hasCharacteristic(FighterCharacteristicType.getCharacteristicTypeFromId(referenceCharac))) {
             return;
         }
@@ -112,7 +116,7 @@ public final class CharacGainBasedOnOtherCharacValue extends CharacModification
             return null;
         }
         if (this.m_charac == null) {
-            final byte targetedCharac = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            final byte targetedCharac = (byte)this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             this.m_charac = FighterCharacteristicType.getCharacteristicTypeFromId(targetedCharac);
         }
         if (this.m_charac.getCharacteristicType() == 0) {

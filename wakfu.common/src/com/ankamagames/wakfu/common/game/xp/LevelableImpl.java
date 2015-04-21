@@ -64,7 +64,7 @@ public class LevelableImpl
     
     public XpModification addXp(final long xpAdded) {
         if (xpAdded < 0L) {
-            LevelableImpl.m_logger.error((Object)("Impossible d'ajouter une exp\u00e9rience n\u00e9gative (" + xpAdded + "). Il faut plut\u00f4t utiliser Levelable.removeXp"));
+            LevelableImpl.m_logger.error("Impossible d'ajouter une exp\u00e9rience n\u00e9gative (" + xpAdded + "). Il faut plut\u00f4t utiliser Levelable.removeXp");
             return XpModification.NONE;
         }
         if (xpAdded == 0L) {
@@ -80,7 +80,7 @@ public class LevelableImpl
     
     public XpModification removeXp(final long xpRemoved) {
         if (xpRemoved < 0L) {
-            LevelableImpl.m_logger.error((Object)("Impossible de supprimer une exp\u00e9rience n\u00e9gative (" + xpRemoved + "). Il faut plut\u00f4t utiliser Levelable.addXp"));
+            LevelableImpl.m_logger.error("Impossible de supprimer une exp\u00e9rience n\u00e9gative (" + xpRemoved + "). Il faut plut\u00f4t utiliser Levelable.addXp");
             return XpModification.NONE;
         }
         if (xpRemoved == 0L) {
@@ -115,6 +115,6 @@ public class LevelableImpl
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LevelableImpl.class);
+        m_logger = Logger.getLogger(LevelableImpl.class);
     }
 }

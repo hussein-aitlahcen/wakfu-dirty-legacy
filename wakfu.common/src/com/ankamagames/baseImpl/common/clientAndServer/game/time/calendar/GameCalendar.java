@@ -138,7 +138,7 @@ public abstract class GameCalendar extends GregorianCalendar implements GameDate
         if (!this.m_synchronized) {
             return;
         }
-        for (CalendarEvent event = this.m_eventManager.getFirstEvent(); event != null && event.getDate().compareTo((GameDateConst)this.m_date) < 0; event = this.m_eventManager.getFirstEvent()) {
+        for (CalendarEvent event = this.m_eventManager.getFirstEvent(); event != null && event.getDate().compareTo(this.m_date) < 0; event = this.m_eventManager.getFirstEvent()) {
             this.tryToRunEvent(event);
             this.notifyToExecutionListeners(event);
             this.removeEventAndReaddIfCyclic(event);
@@ -151,7 +151,7 @@ public abstract class GameCalendar extends GregorianCalendar implements GameDate
             event.runEvent(this);
         }
         catch (Exception e) {
-            GameCalendar.m_logger.error((Object)"Exception levee lors de l'execution d'un evenement", (Throwable)e);
+            GameCalendar.m_logger.error("Exception levee lors de l'execution d'un evenement", e);
         }
     }
     
@@ -161,7 +161,7 @@ public abstract class GameCalendar extends GregorianCalendar implements GameDate
                 this.m_eventExecutionListeners.get(i).onCalendarEventExecution(event);
             }
             catch (Exception e) {
-                GameCalendar.m_logger.error((Object)"Exception levee lors de la notification d'un evenement aux observers", (Throwable)e);
+                GameCalendar.m_logger.error("Exception levee lors de la notification d'un evenement aux observers", e);
             }
         }
     }
@@ -170,7 +170,7 @@ public abstract class GameCalendar extends GregorianCalendar implements GameDate
         this.m_eventManager.removeEvent(event);
         if (event instanceof CyclicCalendarEvent) {
             final CyclicCalendarEvent e = (CyclicCalendarEvent)event;
-            if (e.getPeriodicity() != null && (e.getEndDate().isNull() || e.getEndDate().compareTo((GameDateConst)this.m_date) > 0)) {
+            if (e.getPeriodicity() != null && (e.getEndDate().isNull() || e.getEndDate().compareTo(this.m_date) > 0)) {
                 this.m_eventManager.addEvent(event.addToDate(e.getPeriodicity()));
             }
         }
@@ -182,7 +182,7 @@ public abstract class GameCalendar extends GregorianCalendar implements GameDate
                 this.m_eventListeners.get(i).onCalendarEvent(GameCalendarEventListener.CalendarEventType.EVENT_RUNNED, this);
             }
             catch (Exception e) {
-                GameCalendar.m_logger.error((Object)"Exception levee lors de la notification d'un evenement aux observers", (Throwable)e);
+                GameCalendar.m_logger.error("Exception levee lors de la notification d'un evenement aux observers", e);
             }
         }
     }
@@ -233,6 +233,6 @@ public abstract class GameCalendar extends GregorianCalendar implements GameDate
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GameCalendar.class);
+        m_logger = Logger.getLogger(GameCalendar.class);
     }
 }

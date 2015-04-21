@@ -21,7 +21,7 @@ public abstract class SecondaryCharacsCalculator
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SecondaryCharacsCalculator.class);
+        m_logger = Logger.getLogger(SecondaryCharacsCalculator.class);
         NULL_CALCULATOR = new SecondaryCharacsCalculator() {
             @Override
             protected void calculateFor(final CharacteristicManager<FighterCharacteristic> characteristics, final short oldLevel, final short newLevel) {

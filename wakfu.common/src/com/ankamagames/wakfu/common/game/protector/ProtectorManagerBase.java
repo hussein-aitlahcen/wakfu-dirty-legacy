@@ -39,11 +39,11 @@ public abstract class ProtectorManagerBase<TProtector extends ProtectorBase>
         final int id = protector.getId();
         final TProtector p = this.m_protectors.get(id);
         if (p != null && p != protector) {
-            ProtectorManagerBase.m_logger.error((Object)("Un protecteur avec cet ID (" + id + ") est d\u00e9j\u00e0 pr\u00e9sent enregistr\u00e9, et n'est pas celui-ci."));
+            ProtectorManagerBase.m_logger.error("Un protecteur avec cet ID (" + id + ") est d\u00e9j\u00e0 pr\u00e9sent enregistr\u00e9, et n'est pas celui-ci.");
             return false;
         }
         if (protector.getTerritory() == null) {
-            ProtectorManagerBase.m_logger.error((Object)("Tentative d'enregistrement d'un protecteur avec des donn\u00e9es incorrectes : " + protector));
+            ProtectorManagerBase.m_logger.error("Tentative d'enregistrement d'un protecteur avec des donn\u00e9es incorrectes : " + protector);
             return false;
         }
         this.m_protectors.put(id, protector);
@@ -55,7 +55,7 @@ public abstract class ProtectorManagerBase<TProtector extends ProtectorBase>
             this.processRemoveObservers();
         }
         catch (Exception e) {
-            ProtectorManagerBase.m_logger.error((Object)("Exception lev\u00e9e par un observer lors de l'enregistrement d'un protecteur (ID=" + id + ')'), (Throwable)e);
+            ProtectorManagerBase.m_logger.error("Exception lev\u00e9e par un observer lors de l'enregistrement d'un protecteur (ID=" + id + ')', e);
         }
         return true;
     }
@@ -88,7 +88,7 @@ public abstract class ProtectorManagerBase<TProtector extends ProtectorBase>
                             observer.onProtectorUnregistered(protector);
                         }
                         catch (Exception e) {
-                            ProtectorManagerBase.m_logger.error((Object)("Exception lev\u00e9e lors du d\u00e9-enregitrement d'un protecteur ID=" + protector.getId()));
+                            ProtectorManagerBase.m_logger.error("Exception lev\u00e9e lors du d\u00e9-enregitrement d'un protecteur ID=" + protector.getId());
                         }
                     }
                     return true;
@@ -109,6 +109,6 @@ public abstract class ProtectorManagerBase<TProtector extends ProtectorBase>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ProtectorManagerBase.class);
+        m_logger = Logger.getLogger(ProtectorManagerBase.class);
     }
 }

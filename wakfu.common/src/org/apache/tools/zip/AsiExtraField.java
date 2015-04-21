@@ -23,19 +23,23 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable
         this.crc = new CRC32();
     }
     
-    public ZipShort getHeaderId() {
+    @Override
+	public ZipShort getHeaderId() {
         return AsiExtraField.HEADER_ID;
     }
     
-    public ZipShort getLocalFileDataLength() {
+    @Override
+	public ZipShort getLocalFileDataLength() {
         return new ZipShort(14 + this.getLinkedFile().getBytes().length);
     }
     
-    public ZipShort getCentralDirectoryLength() {
+    @Override
+	public ZipShort getCentralDirectoryLength() {
         return this.getLocalFileDataLength();
     }
     
-    public byte[] getLocalFileDataData() {
+    @Override
+	public byte[] getLocalFileDataData() {
         final byte[] data = new byte[this.getLocalFileDataLength().getValue() - 4];
         System.arraycopy(ZipShort.getBytes(this.getMode()), 0, data, 0, 2);
         final byte[] linkArray = this.getLinkedFile().getBytes();
@@ -52,7 +56,8 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable
         return result;
     }
     
-    public byte[] getCentralDirectoryData() {
+    @Override
+	public byte[] getCentralDirectoryData() {
         return this.getLocalFileDataData();
     }
     
@@ -102,7 +107,8 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable
         return this.dirFlag && !this.isLink();
     }
     
-    public void parseFromLocalFileData(final byte[] data, final int offset, final int length) throws ZipException {
+    @Override
+	public void parseFromLocalFileData(final byte[] data, final int offset, final int length) throws ZipException {
         final long givenChecksum = ZipLong.getValue(data, offset);
         final byte[] tmp = new byte[length - 4];
         System.arraycopy(data, offset + 4, tmp, 0, length - 4);
@@ -138,7 +144,8 @@ public class AsiExtraField implements ZipExtraField, UnixStat, Cloneable
         return type | (mode & 0xFFF);
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         try {
             final AsiExtraField cloned = (AsiExtraField)super.clone();
             cloned.crc = new CRC32();

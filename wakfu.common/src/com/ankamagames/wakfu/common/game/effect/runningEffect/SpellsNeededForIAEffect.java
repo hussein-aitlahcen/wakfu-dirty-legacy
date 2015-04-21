@@ -3,13 +3,15 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.xp.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.wakfu.common.rawData.*;
+
 import java.nio.*;
 
 abstract class SpellsNeededForIAEffect extends WakfuRunningEffect
@@ -35,27 +37,27 @@ abstract class SpellsNeededForIAEffect extends WakfuRunningEffect
         Collections.sort(availableSupportSpells, LevelableComparator.getInstance());
         List<AbstractSpellLevel> spellLevels;
         if (availableSupportSpells.size() > 0) {
-            spellLevels = (List<AbstractSpellLevel>)availableSupportSpells.subList(0, Math.min(availableSupportSpells.size(), 2));
+            spellLevels = availableSupportSpells.subList(0, Math.min(availableSupportSpells.size(), 2));
         }
         else {
             spellLevels = new LinkedList<AbstractSpellLevel>();
         }
         spellLevels.addAll(availableSpells.subList(0, Math.min(availableSpells.size(), 8 - spellLevels.size())));
-        this.m_spellInventoryForNewControllerUse = new SpellInventory<AbstractSpellLevel>((short)8, (InventoryContentProvider<AbstractSpellLevel, RawSpellLevel>)targetSpellInventory.getContentProvider(), (InventoryContentChecker<AbstractSpellLevel>)targetSpellInventory.getContentChecker(), false, false, false);
+        this.m_spellInventoryForNewControllerUse = new SpellInventory<AbstractSpellLevel>((short)8, targetSpellInventory.getContentProvider(), targetSpellInventory.getContentChecker(), false, false, false);
         for (final AbstractSpellLevel abstractSpellLevel : spellLevels) {
             try {
                 if (this.m_spellInventoryForNewControllerUse.contains(abstractSpellLevel)) {
-                    SpellsNeededForIAEffect.m_logger.warn((Object)("Le sort est deja contenu dans l'inventaire, il faut v\u00e9rifier si son \u00e9l\u00e9ment n'est pas PHYSICAL id : " + abstractSpellLevel.getReferenceId()));
+                    RunningEffect.m_logger.warn("Le sort est deja contenu dans l'inventaire, il faut v\u00e9rifier si son \u00e9l\u00e9ment n'est pas PHYSICAL id : " + abstractSpellLevel.getReferenceId());
                 }
                 else {
                     this.m_spellInventoryForNewControllerUse.add(abstractSpellLevel);
                 }
             }
             catch (InventoryCapacityReachedException e) {
-                SpellsNeededForIAEffect.m_logger.error((Object)"Exception", (Throwable)e);
+                RunningEffect.m_logger.error("Exception", e);
             }
             catch (ContentAlreadyPresentException e2) {
-                SpellsNeededForIAEffect.m_logger.error((Object)"Exception", (Throwable)e2);
+                RunningEffect.m_logger.error("Exception", e2);
             }
         }
     }

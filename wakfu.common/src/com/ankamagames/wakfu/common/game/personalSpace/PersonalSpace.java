@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.personalSpace;
 
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.personalSpace.room.content.*;
-import java.util.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 
@@ -105,7 +104,7 @@ public abstract class PersonalSpace
         for (final Room room : this.m_personalSpaceLayout) {
             final RawDimensionalBagForClient.Room rawRoom = new RawDimensionalBagForClient.Room();
             if (!room.toRaw(rawRoom.room, false)) {
-                PersonalSpace.m_logger.error((Object)("Erreur durant la s\u00e9rialisation de la salle " + room.getLayoutPosition() + " du sac " + this));
+                PersonalSpace.m_logger.error("Erreur durant la s\u00e9rialisation de la salle " + room.getLayoutPosition() + " du sac " + this);
                 return false;
             }
             raw.rooms.add(rawRoom);
@@ -116,7 +115,7 @@ public abstract class PersonalSpace
     public boolean fromRaw(final RawDimensionalBagForSave raw) {
         this.m_personalSpaceLayout.clear();
         if (raw.rooms.isEmpty()) {
-            PersonalSpace.m_logger.error((Object)("Pas de pi\u00e8ce ... probl\u00e8me de d\u00e9-serialisation du sac " + this));
+            PersonalSpace.m_logger.error("Pas de pi\u00e8ce ... probl\u00e8me de d\u00e9-serialisation du sac " + this);
         }
         for (final RawDimensionalBagForSave.Room rawRoom : raw.rooms) {
             try {
@@ -125,20 +124,20 @@ public abstract class PersonalSpace
                 if (room.fromRaw(rawRoom.room, false)) {
                     continue;
                 }
-                PersonalSpace.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this));
+                PersonalSpace.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this);
             }
             catch (Exception e) {
-                PersonalSpace.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + rawRoom), (Throwable)e);
+                PersonalSpace.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + rawRoom, e);
             }
         }
         try {
             this.m_personalSpaceLayout.checkConsistency(this.m_roomFactory);
             if (!this.m_personalSpaceLayout.update()) {
-                PersonalSpace.m_logger.error((Object)("Erreur lors de l'Update des room du Havre-sac " + this));
+                PersonalSpace.m_logger.error("Erreur lors de l'Update des room du Havre-sac " + this);
             }
         }
         catch (Exception e2) {
-            PersonalSpace.m_logger.error((Object)("Erreur durant l'update des donn\u00e9es d'une pi\u00e8ce du sac " + this), (Throwable)e2);
+            PersonalSpace.m_logger.error("Erreur durant l'update des donn\u00e9es d'une pi\u00e8ce du sac " + this, e2);
         }
         for (final RawDimensionalBagForSave.Room rawRoom : raw.rooms) {
             try {
@@ -146,10 +145,10 @@ public abstract class PersonalSpace
                 if (room.fromRaw(rawRoom.room, true)) {
                     continue;
                 }
-                PersonalSpace.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this));
+                PersonalSpace.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this);
             }
             catch (Exception e) {
-                PersonalSpace.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + rawRoom), (Throwable)e);
+                PersonalSpace.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + rawRoom, e);
             }
         }
         return true;
@@ -164,7 +163,7 @@ public abstract class PersonalSpace
             final Room room = this.m_roomFactory.newRoom();
             this.m_personalSpaceLayout.putRoom(rawRoom.room.layoutPosition, room);
             if (!room.fromRaw(rawRoom.room, false)) {
-                PersonalSpace.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this));
+                PersonalSpace.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this);
                 return false;
             }
         }
@@ -173,7 +172,7 @@ public abstract class PersonalSpace
         for (final RawDimensionalBagForClient.Room rawRoom : raw.rooms) {
             final Room room = this.m_personalSpaceLayout.getRoom(rawRoom.room.layoutPosition);
             if (!room.fromRaw(rawRoom.room, true)) {
-                PersonalSpace.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this));
+                PersonalSpace.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration des donn\u00e9es d'une pi\u00e8ce du sac " + this);
                 return false;
             }
         }
@@ -189,6 +188,6 @@ public abstract class PersonalSpace
     public abstract void updateTopology(final TopologyMapInstance p0);
     
     static {
-        m_logger = Logger.getLogger((Class)PersonalSpace.class);
+        m_logger = Logger.getLogger(PersonalSpace.class);
     }
 }

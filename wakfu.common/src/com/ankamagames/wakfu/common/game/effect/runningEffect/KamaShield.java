@@ -2,12 +2,14 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
+
 import org.apache.log4j.*;
+
 import com.ankamagames.wakfu.common.game.inventory.moderation.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
-import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -33,7 +35,7 @@ public class KamaShield extends WakfuRunningEffect
             result.m_pool = KamaShield.m_staticPool;
         }
         catch (Exception e) {
-            KamaShield.m_logger.warn((Object)("Erreur lors de newInstance sur un " + this.getClass().getSimpleName()));
+            RunningEffect.m_logger.warn("Erreur lors de newInstance sur un " + this.getClass().getSimpleName());
             result = new KamaShield();
             result.m_pool = null;
             result.m_isStatic = false;
@@ -59,10 +61,10 @@ public class KamaShield extends WakfuRunningEffect
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
-        this.m_kamaToHPRatio = ((WakfuEffect)this.m_genericEffect).getParam(0, level);
-        this.m_percentOfHPAbsorbed = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
-        this.m_maxHPLossAbsorption = (int)Math.floor(((WakfuEffect)this.m_genericEffect).getParam(2, level) / this.m_kamaToHPRatio);
-        this.m_minKamaLoss = ((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM);
+        this.m_kamaToHPRatio = this.m_genericEffect.getParam(0, level);
+        this.m_percentOfHPAbsorbed = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
+        this.m_maxHPLossAbsorption = (int)Math.floor(this.m_genericEffect.getParam(2, level) / this.m_kamaToHPRatio);
+        this.m_minKamaLoss = this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM);
     }
     
     @Override

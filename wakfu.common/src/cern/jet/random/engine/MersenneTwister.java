@@ -31,7 +31,8 @@ public class MersenneTwister extends RandomEngine
         this((int)date.getTime());
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         final MersenneTwister mersenneTwister = (MersenneTwister)super.clone();
         mersenneTwister.mt = this.mt.clone();
         return mersenneTwister;
@@ -53,7 +54,8 @@ public class MersenneTwister extends RandomEngine
         this.mti = 0;
     }
     
-    public int nextInt() {
+    @Override
+	public int nextInt() {
         if (this.mti == 624) {
             this.nextBlock();
         }

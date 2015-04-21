@@ -8,10 +8,10 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
 public enum KrosmozGame implements ExportableEnum
 {
     KROSMASTER_ARENA((byte)1, "Krosmaster Arena", true, ActivationConstants.KROZMASTER_UNLOCK_DATE, false, true, new Dimension(920, 500), false), 
-    BROWSER((byte)2, "Browser", true, (GameDateConst)new GameDate(0, 0, 0, 1, 1, 2000), true, false, new Dimension(920, 500), true), 
-    SHOP((byte)3, "Shop", true, (GameDateConst)new GameDate(0, 0, 0, 1, 1, 2000), false, true, new Dimension(920, 500), true), 
-    FULL_SCREEN_BROWSER((byte)4, "FullScreenBrowser", true, (GameDateConst)new GameDate(0, 0, 0, 1, 1, 2000), true, true, new Dimension(920, 500), true), 
-    FULL_SCREEN_BROWSER_WITHOUT_CONTROLS((byte)5, "FullScreenBrowserWithoutControls", true, (GameDateConst)new GameDate(0, 0, 0, 1, 1, 2000), false, true, new Dimension(920, 500), false);
+    BROWSER((byte)2, "Browser", true, new GameDate(0, 0, 0, 1, 1, 2000), true, false, new Dimension(920, 500), true), 
+    SHOP((byte)3, "Shop", true, new GameDate(0, 0, 0, 1, 1, 2000), false, true, new Dimension(920, 500), true), 
+    FULL_SCREEN_BROWSER((byte)4, "FullScreenBrowser", true, new GameDate(0, 0, 0, 1, 1, 2000), true, true, new Dimension(920, 500), true), 
+    FULL_SCREEN_BROWSER_WITHOUT_CONTROLS((byte)5, "FullScreenBrowserWithoutControls", true, new GameDate(0, 0, 0, 1, 1, 2000), false, true, new Dimension(920, 500), false);
     
     private final byte m_id;
     private final String m_label;

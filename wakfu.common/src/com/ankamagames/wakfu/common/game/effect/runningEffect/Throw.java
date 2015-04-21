@@ -1,16 +1,22 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -63,7 +69,7 @@ public class Throw extends WakfuRunningEffect
             wre = new Throw();
             wre.m_pool = null;
             wre.m_isStatic = false;
-            Throw.m_logger.error((Object)("Erreur lors d'un checkOut sur un Throw : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un Throw : " + e.getMessage());
         }
         return wre;
     }
@@ -93,7 +99,7 @@ public class Throw extends WakfuRunningEffect
         else {
             final FightMap fightMap = this.m_context.getFightMap();
             if (fightMap == null) {
-                Throw.m_logger.warn((Object)("pas de fightmap sur le context " + this.m_context));
+                RunningEffect.m_logger.warn("pas de fightmap sur le context " + this.m_context);
                 this.setNotified();
                 return;
             }
@@ -133,7 +139,7 @@ public class Throw extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return false;
         }
-        final AreaOfEffect areaOfEffect = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect();
+        final AreaOfEffect areaOfEffect = this.m_genericEffect.getAreaOfEffect();
         if (areaOfEffect == null) {
             return false;
         }
@@ -176,10 +182,10 @@ public class Throw extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() <= 0) {
+        if (this.m_genericEffect.getParamsCount() <= 0) {
             return;
         }
-        this.m_ignoreObstacles = (((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_ignoreObstacles = (this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
     }
     
     @Override

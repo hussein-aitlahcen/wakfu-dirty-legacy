@@ -229,7 +229,7 @@ public abstract class NationBuffsHandler extends NationHandler<NationBuffEventHa
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationBuffsHandler.class);
+        m_logger = Logger.getLogger(NationBuffsHandler.class);
     }
     
     public class ProtectorBuffsPart extends NationPart

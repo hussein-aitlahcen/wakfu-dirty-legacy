@@ -5,12 +5,13 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.HMIAction.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.collections.iterators.*;
+
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.ai.targetfinder.*;
-import com.ankamagames.framework.ai.dataProvider.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
@@ -80,10 +81,10 @@ public class WakfuStandardEffect extends StandardEffect implements WakfuEffect
         if (actionId != -1 && actionId != -2) {
             final WakfuRunningEffect runningEffect = RunningEffectConstants.getInstance().getObjectFromId(actionId);
             if (runningEffect == null) {
-                WakfuStandardEffect.m_logger.error((Object)("Impossible de cr\u00e9er l'effet " + effectId + " : action " + actionId + " inconnue"));
+                StandardEffect.m_logger.error("Impossible de cr\u00e9er l'effet " + effectId + " : action " + actionId + " inconnue");
             }
             else if (!runningEffect.getParametersListSet().mapValueCount(paramValues.length)) {
-                WakfuStandardEffect.m_logger.error((Object)("Impossible de cr\u00e9er l'effet " + effectId + " : nombre de param\u00e8tres incorrect : " + paramValues.length));
+                StandardEffect.m_logger.error("Impossible de cr\u00e9er l'effet " + effectId + " : nombre de param\u00e8tres incorrect : " + paramValues.length);
             }
         }
     }
@@ -488,7 +489,7 @@ public class WakfuStandardEffect extends StandardEffect implements WakfuEffect
         if (!this.checkEmptyCellsNeeded(launcher, context, targetCellx, targetCelly, targetCellz)) {
             return null;
         }
-        final StaticRunningEffect<Effect, EffectContainer> sre = (StaticRunningEffect<Effect, EffectContainer>)((StaticRunningEffect)constants.getObjectFromId(this.getActionId())).newInstance(context, null);
+        final StaticRunningEffect<Effect, EffectContainer> sre = ((StaticRunningEffect)constants.getObjectFromId(this.getActionId())).newInstance(context, null);
         final EffectExecutionResult executionResult = sre.run(this, cont, context, launcher, targetCellx, targetCelly, targetCellz, this.isPersonal() ? launcher : target, params);
         if (sre instanceof RunningEffect) {
             ((RunningEffect)sre).release();

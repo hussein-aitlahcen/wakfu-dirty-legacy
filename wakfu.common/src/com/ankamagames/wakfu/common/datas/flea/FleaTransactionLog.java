@@ -135,7 +135,7 @@ public final class FleaTransactionLog implements RawConvertible<RawTransactionLo
                 this.m_transactions.add(transaction);
             }
             catch (Exception e) {
-                FleaTransactionLog.m_logger.error((Object)("Exception lors de la d\u00e9-serialisation du log de transaction " + rawTransaction), (Throwable)e);
+                FleaTransactionLog.m_logger.error("Exception lors de la d\u00e9-serialisation du log de transaction " + rawTransaction, e);
             }
         }
         this.m_newTransactionsCount = raw.newTransactionsCount;
@@ -145,7 +145,7 @@ public final class FleaTransactionLog implements RawConvertible<RawTransactionLo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FleaTransactionLog.class);
+        m_logger = Logger.getLogger(FleaTransactionLog.class);
         m_antichronologicalTransactionSort = new Comparator<FleaTransaction>() {
             @Override
             public int compare(final FleaTransaction t1, final FleaTransaction t2) {

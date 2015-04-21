@@ -3,7 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -34,7 +36,7 @@ public final class SetTeamId extends WakfuRunningEffect
             re = new SetTeamId();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetTeamId.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetTeamId : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetTeamId : " + e.getMessage());
         }
         return re;
     }
@@ -46,7 +48,7 @@ public final class SetTeamId extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override

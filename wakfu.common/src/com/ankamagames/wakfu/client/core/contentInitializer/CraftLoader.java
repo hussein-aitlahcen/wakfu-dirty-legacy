@@ -1,7 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
 import org.apache.log4j.*;
-import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.common.game.craft.reference.*;
@@ -30,7 +29,7 @@ public class CraftLoader implements ContentInitializer
                     }
                 }
                 catch (Exception e) {
-                    CraftLoader.m_logger.error((Object)("[GD] Exception au chargement du m\u00e9tier " + data.getCraftId()), (Throwable)e);
+                    CraftLoader.m_logger.error("[GD] Exception au chargement du m\u00e9tier " + data.getCraftId(), e);
                 }
             }
         });
@@ -61,7 +60,7 @@ public class CraftLoader implements ContentInitializer
                     }
                 }
                 catch (Exception e) {
-                    CraftLoader.m_logger.error((Object)"", (Throwable)e);
+                    CraftLoader.m_logger.error("", e);
                 }
             }
         });
@@ -83,7 +82,7 @@ public class CraftLoader implements ContentInitializer
             }
             set.add(prop);
         }
-        final CraftRecipe recipe = new CraftRecipe(recipeBs.getId(), recipeBs.getCategoryId(), (short)recipeBs.getLevel(), recipeBs.getDuration(), recipeBs.getXpRatio(), CriteriaCompiler.compileBoolean(recipeBs.getCriteria()), /*CriteriaCompiler.compileBoolean(recipeBs.getVisibilityCriteria())*/ null, set, recipeBs.getMachinesUsingRecipe());
+        final CraftRecipe recipe = new CraftRecipe(recipeBs.getId(), recipeBs.getCategoryId(), (short)recipeBs.getLevel(), recipeBs.getDuration(), recipeBs.getXpRatio(), /*CriteriaCompiler.compileBoolean(recipeBs.getCriteria())*/ null, /*CriteriaCompiler.compileBoolean(recipeBs.getVisibilityCriteria())*/ null, set, recipeBs.getMachinesUsingRecipe());
         for (final RecipeBinaryData.RecipeIngredient ingredient : recipeBs.getIngredients()) {
             if (recipe.containsIngredient(ingredient.getItemId())) {
                 throw new Exception("Duplication d'ingredient " + ingredient.getItemId() + " sur la recette " + recipeBs.getId());
@@ -103,6 +102,6 @@ public class CraftLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CraftLoader.class);
+        m_logger = Logger.getLogger(CraftLoader.class);
     }
 }

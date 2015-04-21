@@ -170,11 +170,11 @@ public class PropertiesReaderWriter
             if (url != null) {
                 return this.load(url.openStream());
             }
-            PropertiesReaderWriter.m_logger.error((Object)"url nulle au load.");
+            PropertiesReaderWriter.m_logger.error("url nulle au load.");
             return false;
         }
         catch (IOException e) {
-            PropertiesReaderWriter.m_logger.error((Object)"Exception", (Throwable)e);
+            PropertiesReaderWriter.m_logger.error("Exception", e);
             return false;
         }
     }
@@ -189,7 +189,7 @@ public class PropertiesReaderWriter
             if (url != null) {
                 return this.load(url);
             }
-            PropertiesReaderWriter.m_logger.error((Object)("Impossible de trouver le fichier de propri\u00e9t\u00e9 " + fileName));
+            PropertiesReaderWriter.m_logger.error("Impossible de trouver le fichier de propri\u00e9t\u00e9 " + fileName);
             return false;
         }
         catch (FileNotFoundException e) {
@@ -239,6 +239,6 @@ public class PropertiesReaderWriter
     }
     
     static {
-        PropertiesReaderWriter.m_logger = Logger.getLogger((Class)PropertiesReaderWriter.class);
+        PropertiesReaderWriter.m_logger = Logger.getLogger(PropertiesReaderWriter.class);
     }
 }

@@ -42,7 +42,7 @@ class DescriptionChange implements GuildChange
             controller.changeDescription(this.m_description);
         }
         catch (GuildException e) {
-            DescriptionChange.m_logger.error((Object)"Impossible de changer la description", (Throwable)e);
+            DescriptionChange.m_logger.error("Impossible de changer la description", e);
         }
     }
     
@@ -57,6 +57,6 @@ class DescriptionChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DescriptionChange.class);
+        m_logger = Logger.getLogger(DescriptionChange.class);
     }
 }

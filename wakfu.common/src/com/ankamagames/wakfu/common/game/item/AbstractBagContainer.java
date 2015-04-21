@@ -49,7 +49,7 @@ public abstract class AbstractBagContainer
     
     public AbstractBag getFirstContainerWithFreePlaceFor(final Item item) {
         for (final AbstractBag bag : this.getOrderedBags(AbstractBagContainer.BAG_SORTER_TYPED_FIRST)) {
-            if (bag.m_inventory.getContentChecker().canAddItem((Inventory<Item>)bag.m_inventory, item) >= 0) {
+            if (bag.m_inventory.getContentChecker().canAddItem(bag.m_inventory, item) >= 0) {
                 return bag;
             }
         }
@@ -102,10 +102,10 @@ public abstract class AbstractBagContainer
             return null;
         }
         catch (InventoryCapacityReachedException e) {
-            AbstractBagContainer.m_logger.error((Object)"Capacit\u00e9 de l'inventaire cible atteinte. Erreur, on a r\u00e9cup\u00e9r\u00e9 ce sac comme disponible pour cet objet !", (Throwable)e);
+            AbstractBagContainer.m_logger.error("Capacit\u00e9 de l'inventaire cible atteinte. Erreur, on a r\u00e9cup\u00e9r\u00e9 ce sac comme disponible pour cet objet !", e);
         }
         catch (ContentAlreadyPresentException e2) {
-            AbstractBagContainer.m_logger.error((Object)"L'item \u00e9tait d\u00e9ja pr\u00e9sent dans le sac de destination. ID Dupliqu\u00e9 ?", (Throwable)e2);
+            AbstractBagContainer.m_logger.error("L'item \u00e9tait d\u00e9ja pr\u00e9sent dans le sac de destination. ID Dupliqu\u00e9 ?", e2);
         }
         finally {
             if (visitor != null) {
@@ -335,7 +335,7 @@ public abstract class AbstractBagContainer
         while (it.hasNext()) {
             it.advance();
             final InventoryContentChecker<Item> contentChecker = it.value().m_inventory.getContentChecker();
-            if (contentChecker != null && contentChecker.canAddItem((Inventory<Item>)it.value().m_inventory, item) >= 0) {
+            if (contentChecker != null && contentChecker.canAddItem(it.value().m_inventory, item) >= 0) {
                 return true;
             }
         }
@@ -474,7 +474,7 @@ public abstract class AbstractBagContainer
             final Item item = items.value();
             for (final AbstractBag bag : this.getOrderedBags(AbstractBagContainer.BAG_SORTER_TYPED_FIRST)) {
                 final InventoryContentChecker<Item> contentChecker = bag.getContentChecker();
-                if (contentChecker != null && contentChecker.canAddItem((Inventory<Item>)bag.m_inventory, item) != 0) {
+                if (contentChecker != null && contentChecker.canAddItem(bag.m_inventory, item) != 0) {
                     continue;
                 }
                 final byte bagPosition = bag.getPosition();
@@ -518,10 +518,10 @@ public abstract class AbstractBagContainer
                 ++possibleDestinations;
             }
             catch (InventoryCapacityReachedException e) {
-                AbstractBagContainer.m_logger.warn((Object)"L'inventaire de destination est plein, erreur de simulateAdd", (Throwable)e);
+                AbstractBagContainer.m_logger.warn("L'inventaire de destination est plein, erreur de simulateAdd", e);
             }
             catch (ContentAlreadyPresentException e2) {
-                AbstractBagContainer.m_logger.error((Object)"l'item test\u00e9 est d\u00e9ja pr\u00e9sent dans l'inventaire cible. Erreur, ID Dupliqu\u00e9 ? ", (Throwable)e2);
+                AbstractBagContainer.m_logger.error("l'item test\u00e9 est d\u00e9ja pr\u00e9sent dans l'inventaire cible. Erreur, ID Dupliqu\u00e9 ? ", e2);
             }
         }
         return possibleDestinations;
@@ -593,7 +593,7 @@ public abstract class AbstractBagContainer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractBagContainer.class);
+        m_logger = Logger.getLogger(AbstractBagContainer.class);
         BAG_SORTER = new Comparator<AbstractBag>() {
             @Override
             public int compare(final AbstractBag o1, final AbstractBag o2) {

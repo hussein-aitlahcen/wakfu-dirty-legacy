@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.nation.Laws.impl;
 
 import com.ankamagames.wakfu.common.game.nation.Laws.impl.events.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.global.group.*;
@@ -32,12 +34,12 @@ public class JoinFightNotGroupedLaw extends NationLaw<JoinFightLawEvent>
         final BasicCharacterInfo joiningCharacter = (BasicCharacterInfo)event.getCitizen();
         final BasicCharacterInfo attacker = event.getAttacker();
         if (attacker == null) {
-            JoinFightNotGroupedLaw.m_logger.error("Attacker null lors du test de loi d'incruste !!!");
+            NationLaw.m_logger.error("Attacker null lors du test de loi d'incruste !!!");
             return false;
         }
         final BasicCharacterInfo defender = event.getDefender();
         if (defender == null) {
-            JoinFightNotGroupedLaw.m_logger.error("Defender null lors du test de loi d'incruste !!!");
+            NationLaw.m_logger.error("Defender null lors du test de loi d'incruste !!!");
             return false;
         }
         final BasicCharacterInfo teamLeader = (joiningCharacter.getTeamId() == attacker.getTeamId()) ? attacker : defender;

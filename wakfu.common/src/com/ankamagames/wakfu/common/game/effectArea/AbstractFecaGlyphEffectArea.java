@@ -4,7 +4,6 @@ import com.ankamagames.wakfu.common.game.characteristics.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.ai.targetfinder.*;

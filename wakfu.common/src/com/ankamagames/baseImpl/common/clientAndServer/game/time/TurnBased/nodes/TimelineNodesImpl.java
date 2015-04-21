@@ -6,7 +6,6 @@ import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timeevents.*;
 import java.nio.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
-import java.io.*;
 
 public class TimelineNodesImpl implements TimelineNodes
 {
@@ -65,7 +64,7 @@ public class TimelineNodesImpl implements TimelineNodes
     @Override
     public void remove(final long fighterId) {
         if (!this.contains(fighterId)) {
-            TimelineNodesImpl.m_logger.error((Object)("On tente de retirer un fighter absent de la timeline (" + fighterId + ')'));
+            TimelineNodesImpl.m_logger.error("On tente de retirer un fighter absent de la timeline (" + fighterId + ')');
             return;
         }
         final TLongArrayList turnOrder = this.getOrderThisTurn();
@@ -174,7 +173,7 @@ public class TimelineNodesImpl implements TimelineNodes
     
     void dumpState() {
         final String stringValue = this.toString();
-        TimelineNodesImpl.m_logger.error((Object)(stringValue + ExceptionFormatter.currentStackTrace(1, 5)));
+        TimelineNodesImpl.m_logger.error(stringValue + ExceptionFormatter.currentStackTrace(1, 5));
     }
     
     @Override
@@ -312,6 +311,6 @@ public class TimelineNodesImpl implements TimelineNodes
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TimelineNodesImpl.class);
+        m_logger = Logger.getLogger(TimelineNodesImpl.class);
     }
 }

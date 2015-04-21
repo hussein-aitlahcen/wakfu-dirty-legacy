@@ -194,14 +194,14 @@ public class ItemTracker
         if (iceServerId != null && iceServerId.length() == 0) {
             iceServerId = null;
         }
-        ItemTracker.LOGGER.log((Priority)logLevel, (Object)String.format("%s,%s,%d,%d,%d,%d,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d", iceServerId, simpleDateFormat.format(date.toJavaDate()), (accountFrom == -1L) ? null : accountFrom, (characterFrom == -1L) ? null : characterFrom, (accountTo == -1L) ? null : accountTo, (characterTo == -1L) ? null : characterTo, ipFrom, ipTo, type, (externalId == -1L) ? null : externalId, (instanceId == -1) ? null : instanceId, (itemRefId == -1) ? null : itemRefId, (itemFromUid == -1L) ? null : itemFromUid, (itemToUid == -1L) ? null : itemToUid, (quantity == 32767) ? null : quantity, (kamas == Long.MAX_VALUE) ? null : kamas));
+        ItemTracker.LOGGER.log(logLevel, String.format("%s,%s,%d,%d,%d,%d,%s,%s,%s,%d,%d,%d,%d,%d,%d,%d", iceServerId, simpleDateFormat.format(date.toJavaDate()), (accountFrom == -1L) ? null : accountFrom, (characterFrom == -1L) ? null : characterFrom, (accountTo == -1L) ? null : accountTo, (characterTo == -1L) ? null : characterTo, ipFrom, ipTo, type, (externalId == -1L) ? null : externalId, (instanceId == -1) ? null : instanceId, (itemRefId == -1) ? null : itemRefId, (itemFromUid == -1L) ? null : itemFromUid, (itemToUid == -1L) ? null : itemToUid, (quantity == 32767) ? null : quantity, (kamas == Long.MAX_VALUE) ? null : kamas));
     }
     
     public static void logInventoryAction(final InventoryAction inventoryAction, final String inventoryActionHandler, final long handlerId, final BasicCharacterInfo character) {
         switch (inventoryAction.getType()) {
             case ADD_ITEM: {
                 final InventoryAddItemAction inventoryAddItemAction = (InventoryAddItemAction)inventoryAction;
-                log(Level.INFO, (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), "AddTo" + inventoryActionHandler, handlerId, (short)((character == null) ? null : character.getInstanceId()), -1, inventoryAddItemAction.getItemId(), inventoryAddItemAction.getItemId(), (short)(-inventoryAddItemAction.getQuantity()));
+                log(Level.INFO, (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), "AddTo" + inventoryActionHandler, handlerId, (character == null) ? null : character.getInstanceId(), -1, inventoryAddItemAction.getItemId(), inventoryAddItemAction.getItemId(), (short)(-inventoryAddItemAction.getQuantity()));
                 break;
             }
             case GAME_ADD_ITEM: {}
@@ -211,7 +211,7 @@ public class ItemTracker
             }
             case REMOVE_ITEM: {
                 final InventoryRemoveItemAction inventoryRemoveItemAction = (InventoryRemoveItemAction)inventoryAction;
-                log(Level.INFO, (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), "RemoveFrom" + inventoryActionHandler, handlerId, (short)((character == null) ? null : character.getInstanceId()), -1, inventoryRemoveItemAction.getItemId(), inventoryRemoveItemAction.getItemId(), inventoryRemoveItemAction.getQuantity());
+                log(Level.INFO, (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), (character == null) ? null : character.getOwnerId(), (character == null) ? null : character.getId(), "RemoveFrom" + inventoryActionHandler, handlerId, (character == null) ? null : character.getInstanceId(), -1, inventoryRemoveItemAction.getItemId(), inventoryRemoveItemAction.getItemId(), inventoryRemoveItemAction.getQuantity());
                 break;
             }
         }
@@ -236,7 +236,7 @@ public class ItemTracker
             ItemTracker.LOGGER.removeAppender(fullName);
         }
         else {
-            ItemTracker.LOGGER.addAppender((Appender)new ItemTrackerViewer(name));
+            ItemTracker.LOGGER.addAppender(new ItemTrackerViewer(name));
         }
     }
     

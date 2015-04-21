@@ -44,7 +44,7 @@ public abstract class AbstractAptitudeBonusInventory
                 listener.onLevelChanged(bonusId, level);
             }
             catch (Exception e) {
-                AbstractAptitudeBonusInventory.m_logger.error((Object)"Exception levee", (Throwable)e);
+                AbstractAptitudeBonusInventory.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -160,6 +160,6 @@ public abstract class AbstractAptitudeBonusInventory
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractAptitudeBonusInventory.class);
+        m_logger = Logger.getLogger(AbstractAptitudeBonusInventory.class);
     }
 }

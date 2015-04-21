@@ -21,9 +21,9 @@ public class LightWeightMap<K, V>
     
     public boolean ensureCapacity(final int newCapacity) {
         if (newCapacity > this.m_indexes.length) {
-            final K[] indexes = (K[])this.m_indexes;
+            final K[] indexes = this.m_indexes;
             System.arraycopy(indexes, 0, this.m_indexes = (K[]) new Object[newCapacity], 0, indexes.length);
-            final V[] values = (V[])this.m_values;
+            final V[] values = this.m_values;
             System.arraycopy(values, 0, this.m_values = (V[]) new Object[newCapacity], 0, values.length);
             return true;
         }
@@ -74,7 +74,7 @@ public class LightWeightMap<K, V>
     }
     
     public final K getQuickKey(final int index) {
-        return (K)this.m_indexes[index];
+        return this.m_indexes[index];
     }
     
     public void put(final K key, final V value) {
@@ -98,7 +98,7 @@ public class LightWeightMap<K, V>
         if (index < 0) {
             return null;
         }
-        final V removed = (V)this.m_values[index];
+        final V removed = this.m_values[index];
         if (index < this.m_size - 1) {
             this.m_indexes[index] = this.m_indexes[this.m_size - 1];
             this.m_values[index] = this.m_values[this.m_size - 1];
@@ -118,16 +118,16 @@ public class LightWeightMap<K, V>
         if (index < 0) {
             return null;
         }
-        return (V)this.m_values[index];
+        return this.m_values[index];
     }
     
     public final V getQuickValue(final int index) {
-        return (V)this.m_values[index];
+        return this.m_values[index];
     }
     
     public final void foreachValue(final TObjectProcedure<V> procedure) {
         for (int i = 0; i < this.m_size; ++i) {
-            procedure.execute((V)this.m_values[i]);
+            procedure.execute(this.m_values[i]);
         }
     }
     

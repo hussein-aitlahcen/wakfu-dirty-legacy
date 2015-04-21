@@ -2,10 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -31,7 +31,7 @@ public class SplitTriggerEffect extends WakfuRunningEffect
             re = new SplitTriggerEffect();
             re.m_isStatic = false;
             re.m_pool = null;
-            SplitTriggerEffect.m_logger.error((Object)("Erreur lors d'un checkOut sur un SplitTriggerEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SplitTriggerEffect : " + e.getMessage());
         }
         re.m_capAtCurrentHp = this.m_capAtCurrentHp;
         return re;
@@ -79,14 +79,14 @@ public class SplitTriggerEffect extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect.getParamsCount() == 0) {
             this.m_value = 100;
         }
         else {
-            this.m_value = Math.min(((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM), 100);
+            this.m_value = Math.min(this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM), 100);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_capAtCurrentHp = (((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_capAtCurrentHp = (this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     

@@ -44,7 +44,7 @@ public abstract class HMIAction
     public static HMIAction fromString(final String hmiAction) {
         final String[] params = hmiAction.split("\\|", -1);
         if (params.length % 2 != 0) {
-            HMIAction.m_logger.error((Object)("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: pair "));
+            HMIAction.m_logger.error("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: pair ");
             return null;
         }
         Byte hmiType = 0;
@@ -73,7 +73,7 @@ public abstract class HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIAction.class);
+        m_logger = Logger.getLogger(HMIAction.class);
         HMIAction.m_nextFreeId = 1;
     }
 }

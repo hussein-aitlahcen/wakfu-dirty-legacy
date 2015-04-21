@@ -7,7 +7,6 @@ import org.xml.sax.*;
 import javax.xml.transform.dom.*;
 import javax.xml.transform.stream.*;
 import javax.xml.transform.*;
-import java.util.*;
 import org.w3c.dom.*;
 import java.io.*;
 import com.ankamagames.framework.fileFormat.document.*;
@@ -31,7 +30,7 @@ public class XMLDocumentAccessor implements DocumentAccessor<XMLDocumentContaine
             this.m_documentBuilder = DocumentBuilderFactory.newInstance().newDocumentBuilder();
         }
         catch (ParserConfigurationException e) {
-            XMLDocumentAccessor.m_logger.error((Object)"Exception", (Throwable)e);
+            XMLDocumentAccessor.m_logger.error("Exception", e);
         }
     }
     
@@ -87,7 +86,7 @@ public class XMLDocumentAccessor implements DocumentAccessor<XMLDocumentContaine
     public void read(final XMLDocumentContainer container, final DocumentEntryParser... parsers) {
         try {
             if (this.m_document == null) {
-                XMLDocumentAccessor.m_logger.error((Object)"read() invoqu\u00e9 sur un document non ouvert ( voir : open() )");
+                XMLDocumentAccessor.m_logger.error("read() invoqu\u00e9 sur un document non ouvert ( voir : open() )");
                 return;
             }
             container.notifyOnLoadBegin();
@@ -101,7 +100,7 @@ public class XMLDocumentAccessor implements DocumentAccessor<XMLDocumentContaine
         }
         catch (Exception e) {
             container.notifyOnLoadError("Exception : " + e.getMessage());
-            XMLDocumentAccessor.m_logger.error((Object)"Exception", (Throwable)e);
+            XMLDocumentAccessor.m_logger.error("Exception", e);
         }
     }
     
@@ -166,7 +165,7 @@ public class XMLDocumentAccessor implements DocumentAccessor<XMLDocumentContaine
             }
         }
         catch (TransformerException e) {
-            XMLDocumentAccessor.m_logger.error((Object)"Probleme pendant la sauvegarde d'un fichier XML.", (Throwable)e);
+            XMLDocumentAccessor.m_logger.error("Probleme pendant la sauvegarde d'un fichier XML.", e);
         }
         xmlContainer.notifyOnSaveComplete();
     }
@@ -228,7 +227,7 @@ public class XMLDocumentAccessor implements DocumentAccessor<XMLDocumentContaine
         }
         catch (Exception e) {
             xmlContainer.notifyOnLoadError("Exception : " + e.getMessage());
-            XMLDocumentAccessor.m_logger.error((Object)"Exception", (Throwable)e);
+            XMLDocumentAccessor.m_logger.error("Exception", e);
         }
     }
     
@@ -361,14 +360,14 @@ public class XMLDocumentAccessor implements DocumentAccessor<XMLDocumentContaine
         }
         catch (Exception e) {
             xmlContainer.notifyOnLoadError("Exception : " + e.getMessage());
-            XMLDocumentAccessor.m_logger.error((Object)"Exception", (Throwable)e);
+            XMLDocumentAccessor.m_logger.error("Exception", e);
             return;
         }
         xmlContainer.notifyOnSaveComplete();
     }
     
     static {
-        m_logger = Logger.getLogger((Class)XMLDocumentAccessor.class);
+        m_logger = Logger.getLogger(XMLDocumentAccessor.class);
         m_instance = new XMLDocumentAccessor();
     }
 }

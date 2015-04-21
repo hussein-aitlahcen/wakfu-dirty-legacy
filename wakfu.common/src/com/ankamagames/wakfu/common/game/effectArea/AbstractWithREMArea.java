@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.effectArea;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import java.util.*;
 import org.apache.commons.lang3.*;

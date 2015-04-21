@@ -46,7 +46,7 @@ public class AsyncMapLoader
                 Thread.sleep(3L);
             }
             catch (InterruptedException e) {
-                AsyncMapLoader.m_logger.error((Object)"", (Throwable)e);
+                AsyncMapLoader.m_logger.error("", e);
             }
         }
     }
@@ -69,6 +69,6 @@ public class AsyncMapLoader
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AsyncMapLoader.class);
+        m_logger = Logger.getLogger(AsyncMapLoader.class);
     }
 }

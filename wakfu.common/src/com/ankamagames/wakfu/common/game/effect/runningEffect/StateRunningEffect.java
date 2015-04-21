@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
@@ -9,8 +11,8 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.wakfu.common.game.fighter.specialEvent.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timeevents.*;
@@ -85,7 +87,7 @@ public class StateRunningEffect extends WakfuRunningEffect
         re.m_mustBeExecuted = true;
         final boolean stateExists = re.checkForStateCreation();
         if (!stateExists) {
-            StateRunningEffect.m_logger.error((Object)("Unable to checkout a state with id " + stateId + " : unknown ID"));
+            RunningEffect.m_logger.error("Unable to checkout a state with id " + stateId + " : unknown ID");
             return null;
         }
         re.m_remainingTimeInMs = re.m_state.getMsDuration();
@@ -207,7 +209,7 @@ public class StateRunningEffect extends WakfuRunningEffect
                         for (final WakfuEffect effect : this.m_state) {
                             final WakfuRunningEffect re = (WakfuRunningEffect)RunningEffectConstants.getInstance().getObjectFromId(effect.getActionId()).newParameterizedInstance();
                             if (this.m_target == null) {
-                                StateRunningEffect.m_logger.error((Object)("Impossible d'executer l'effet " + effect.getEffectId() + " on a plus de cible"));
+                                RunningEffect.m_logger.error("Impossible d'executer l'effet " + effect.getEffectId() + " on a plus de cible");
                                 return;
                             }
                             (re).setParameters(effect, this.m_state, this.m_context, this.m_caster, null, this.m_target.getWorldCellX(), this.m_target.getWorldCellY(), this.m_target.getWorldCellAltitude(), this.getParams());
@@ -230,7 +232,7 @@ public class StateRunningEffect extends WakfuRunningEffect
                     }
                 }
                 else {
-                    StateRunningEffect.m_logger.error((Object)"State inconnu pour le client, mais vraisemblablement pas pour le serveur");
+                    RunningEffect.m_logger.error("State inconnu pour le client, mais vraisemblablement pas pour le serveur");
                 }
             }
             this.m_mustBeExecuted = false;

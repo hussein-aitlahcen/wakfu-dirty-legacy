@@ -112,7 +112,8 @@ public class ControlPoint
         }
     }
     
-    public ControlPoint clone() {
+    @Override
+	public ControlPoint clone() {
         final ControlPoint pt = new ControlPoint(this.getX(), this.getY());
         if (this.hasInTangent()) {
             pt.setInTangent(this.getInX(), this.getInY());

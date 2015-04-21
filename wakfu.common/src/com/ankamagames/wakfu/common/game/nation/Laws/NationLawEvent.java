@@ -45,13 +45,13 @@ public abstract class NationLawEvent
             travellingNation.getLawManager().onEvent(this);
         }
         catch (Exception e) {
-            NationLawEvent.m_logger.error((Object)"Exception levee", (Throwable)e);
+            NationLawEvent.m_logger.error("Exception levee", e);
         }
     }
     
     public abstract NationLawEventType getEventType();
     
     static {
-        m_logger = Logger.getLogger((Class)NationLawEvent.class);
+        m_logger = Logger.getLogger(NationLawEvent.class);
     }
 }

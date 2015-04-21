@@ -144,14 +144,14 @@ public final class PartyRequester extends AbstractPartyRequester
     public PartySearchFeedbackEnum isValidOccupationsForRegister() {
         this.computeMinLevel();
         if (this.m_occupations.isEmpty()) {
-            PartyRequester.m_logger.error((Object)("[PartySearch] PartyRequester sans occupation " + this.getId()));
+            PartyRequester.m_logger.error("[PartySearch] PartyRequester sans occupation " + this.getId());
             return PartySearchFeedbackEnum.REMOVED_FOR_VOID_OCCUPATION;
         }
         for (int i = this.m_occupations.size() - 1; i >= 0; --i) {
             final PartyOccupation partyOccupation = this.m_occupations.get(i);
             final long id = partyOccupation.getId();
             if (PartyOccupationManager.INSTANCE.getPartyOccupation(id) == null) {
-                PartyRequester.m_logger.error((Object)"[PartySearch] Tentative d'enregistrement d'une occupation inconnue du manager");
+                PartyRequester.m_logger.error("[PartySearch] Tentative d'enregistrement d'une occupation inconnue du manager");
                 return PartySearchFeedbackEnum.REMOVED_FOR_INVALID_OCCUPATION;
             }
             if ((partyOccupation.getOccupationType() == PartyOccupationType.DUNGEON || partyOccupation.getOccupationType() == PartyOccupationType.MONSTER) && ((PvePartyOccupation)partyOccupation).getLevel() > this.m_minLevel) {
@@ -159,11 +159,11 @@ public final class PartyRequester extends AbstractPartyRequester
             }
         }
         if (this.m_occupations.isEmpty()) {
-            PartyRequester.m_logger.error((Object)("[PartySearch] PartyRequester sans occupation " + this.getId()));
+            PartyRequester.m_logger.error("[PartySearch] PartyRequester sans occupation " + this.getId());
             return PartySearchFeedbackEnum.REMOVED_FOR_VOID_OCCUPATION;
         }
         if (this.m_occupations.size() > 20) {
-            PartyRequester.m_logger.error((Object)("[PartySearch] Le PartyRequester contient trop d'occupations " + this.getId()));
+            PartyRequester.m_logger.error("[PartySearch] Le PartyRequester contient trop d'occupations " + this.getId());
             return PartySearchFeedbackEnum.TOO_MUCH_OCCUPATIONS;
         }
         return PartySearchFeedbackEnum.NO_ERROR;
@@ -179,6 +179,6 @@ public final class PartyRequester extends AbstractPartyRequester
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PartyRequester.class);
+        m_logger = Logger.getLogger(PartyRequester.class);
     }
 }

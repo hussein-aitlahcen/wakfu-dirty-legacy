@@ -42,7 +42,7 @@ public class QuestInventorySerializer
                 inventory.add(item);
             }
             catch (QuestInventoryException e) {
-                QuestInventorySerializer.m_logger.error((Object)("Probl\u00e8me \u00e0 la d\u00e9-serialisation de l'item " + raw), (Throwable)e);
+                QuestInventorySerializer.m_logger.error("Probl\u00e8me \u00e0 la d\u00e9-serialisation de l'item " + raw, e);
             }
         }
     }
@@ -63,7 +63,7 @@ public class QuestInventorySerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)QuestInventorySerializer.class);
+        m_logger = Logger.getLogger(QuestInventorySerializer.class);
     }
     
     private static class ToRawProcedure implements TObjectProcedure<QuestItem>

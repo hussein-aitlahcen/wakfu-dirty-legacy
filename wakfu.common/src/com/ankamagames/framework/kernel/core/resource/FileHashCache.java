@@ -46,7 +46,7 @@ public abstract class FileHashCache<T> implements FileLoader
         final byte[] data = readFile(name);
         Reference ref;
         if (data.length == 0) {
-            FileHashCache.m_logger.error((Object)("Impossible d'ouvrir un stream pour le fichier " + name));
+            FileHashCache.m_logger.error("Impossible d'ouvrir un stream pour le fichier " + name);
             ref = this.EmptyReference;
         }
         else {
@@ -67,7 +67,7 @@ public abstract class FileHashCache<T> implements FileLoader
             data = ContentFileHelper.readFile(name);
         }
         catch (IOException e) {
-            FileHashCache.m_logger.error((Object)"", (Throwable)e);
+            FileHashCache.m_logger.error("", e);
             data = PrimitiveArrays.EMPTY_BYTE_ARRAY;
         }
         return data;
@@ -151,7 +151,7 @@ public abstract class FileHashCache<T> implements FileLoader
                     }
                 }
                 catch (Exception e) {
-                    FileHashCache.m_logger.error((Object)"Exception", (Throwable)e);
+                    FileHashCache.m_logger.error("Exception", e);
                 }
                 if (jarFile != null) {
                     jarFile.close();
@@ -159,7 +159,7 @@ public abstract class FileHashCache<T> implements FileLoader
             }
         }
         catch (Exception e3) {
-            FileHashCache.m_logger.error((Object)("Impossible de pr\u00e9charger le contenu de " + this.m_path + " depuis une URL(tentative depuis un fichier"));
+            FileHashCache.m_logger.error("Impossible de pr\u00e9charger le contenu de " + this.m_path + " depuis une URL(tentative depuis un fichier");
             try {
                 final File dir2 = new File(this.m_path + File.separator);
                 final String[] listNames2 = dir2.list(this.getFilenameFilter());
@@ -168,10 +168,10 @@ public abstract class FileHashCache<T> implements FileLoader
                 }
             }
             catch (Exception e2) {
-                FileHashCache.m_logger.error((Object)"Exception", (Throwable)e2);
+                FileHashCache.m_logger.error("Exception", e2);
             }
         }
-        FileHashCache.m_logger.info((Object)("PRELOAD " + this));
+        FileHashCache.m_logger.info("PRELOAD " + this);
     }
     
     @Override
@@ -200,7 +200,7 @@ public abstract class FileHashCache<T> implements FileLoader
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FileHashCache.class);
+        m_logger = Logger.getLogger(FileHashCache.class);
     }
     
     protected abstract class Reference

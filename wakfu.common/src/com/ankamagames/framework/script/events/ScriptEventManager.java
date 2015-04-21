@@ -56,7 +56,7 @@ public class ScriptEventManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ScriptEventManager.class);
+        m_logger = Logger.getLogger(ScriptEventManager.class);
         m_instance = new ScriptEventManager();
     }
 }

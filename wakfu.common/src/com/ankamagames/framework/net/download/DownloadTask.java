@@ -23,14 +23,14 @@ class DownloadTask implements Callable<DownloadInfo>
             this.m_downloadInfo.setState(DownloadState.FINISHED);
             return this.m_downloadInfo;
         }
-        DownloadTask.m_logger.info((Object)("Downloading " + this.m_downloadInfo));
+        DownloadTask.m_logger.info("Downloading " + this.m_downloadInfo);
         this.m_downloadInfo.setState(DownloadState.RUNNING);
         OutputStream outputStream;
         try {
             outputStream = this.m_downloadInfo.createOutputStream();
         }
         catch (IOException e) {
-            DownloadTask.m_logger.error((Object)("Unable to create outputStream for download " + this.m_downloadInfo), (Throwable)e);
+            DownloadTask.m_logger.error("Unable to create outputStream for download " + this.m_downloadInfo, e);
             this.m_downloadInfo.setState(DownloadState.ERROR);
             return this.m_downloadInfo;
         }
@@ -39,13 +39,13 @@ class DownloadTask implements Callable<DownloadInfo>
             inputStream = new BufferedInputStream(this.m_downloadInfo.getRemoteURL().openStream(), 8192);
         }
         catch (FileNotFoundException e5) {
-            DownloadTask.m_logger.error((Object)("Unable to download " + this.m_downloadInfo + " : file not found (404)"));
+            DownloadTask.m_logger.error("Unable to download " + this.m_downloadInfo + " : file not found (404)");
             this.m_downloadInfo.closeStream(false);
             this.m_downloadInfo.setState(DownloadState.ERROR);
             return this.m_downloadInfo;
         }
         catch (IOException e2) {
-            DownloadTask.m_logger.error((Object)("Unable to open url connection for " + this.m_downloadInfo), (Throwable)e2);
+            DownloadTask.m_logger.error("Unable to open url connection for " + this.m_downloadInfo, e2);
             this.m_downloadInfo.closeStream(false);
             this.m_downloadInfo.setState(DownloadState.ERROR);
             return this.m_downloadInfo;
@@ -58,21 +58,21 @@ class DownloadTask implements Callable<DownloadInfo>
             }
             if (this.m_downloadInfo.closeStream(true)) {
                 this.m_downloadInfo.setState(DownloadState.FINISHED);
-                DownloadTask.m_logger.info((Object)("Download finished : " + this.m_downloadInfo));
+                DownloadTask.m_logger.info("Download finished : " + this.m_downloadInfo);
             }
             else {
                 this.m_downloadInfo.setState(DownloadState.ERROR);
-                DownloadTask.m_logger.error((Object)("Error while closing stream for " + this.m_downloadInfo));
+                DownloadTask.m_logger.error("Error while closing stream for " + this.m_downloadInfo);
             }
         }
         catch (IOException e3) {
-            DownloadTask.m_logger.error((Object)("Error while downloading " + this.m_downloadInfo), (Throwable)e3);
+            DownloadTask.m_logger.error("Error while downloading " + this.m_downloadInfo, e3);
             this.m_downloadInfo.closeStream(false);
             this.m_downloadInfo.setState(DownloadState.ERROR);
             return this.m_downloadInfo;
         }
         catch (Throwable e4) {
-            DownloadTask.m_logger.error((Object)("Error while downloading " + this.m_downloadInfo), e4);
+            DownloadTask.m_logger.error("Error while downloading " + this.m_downloadInfo, e4);
         }
         finally {
             inputStream.close();
@@ -81,6 +81,6 @@ class DownloadTask implements Callable<DownloadInfo>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DownloadTask.class);
+        m_logger = Logger.getLogger(DownloadTask.class);
     }
 }

@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.game.characteristics;
 
-import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import gnu.trove.*;
 import com.ankamagames.wakfu.common.rawData.*;

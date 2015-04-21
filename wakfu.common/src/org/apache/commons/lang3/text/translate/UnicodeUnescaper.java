@@ -4,7 +4,8 @@ import java.io.*;
 
 public class UnicodeUnescaper extends CharSequenceTranslator
 {
-    public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+    @Override
+	public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
         if (input.charAt(index) != '\\' || index + 1 >= input.length() || input.charAt(index + 1) != 'u') {
             return 0;
         }
@@ -20,10 +21,10 @@ public class UnicodeUnescaper extends CharSequenceTranslator
                 out.write((char)value);
             }
             catch (NumberFormatException nfe) {
-                throw new IllegalArgumentException("Unable to parse unicode value: " + (Object)unicode, nfe);
+                throw new IllegalArgumentException("Unable to parse unicode value: " + unicode, nfe);
             }
             return i + 4;
         }
-        throw new IllegalArgumentException("Less than 4 hex digits in unicode value: '" + (Object)input.subSequence(index, input.length()) + "' due to end of CharSequence");
+        throw new IllegalArgumentException("Less than 4 hex digits in unicode value: '" + input.subSequence(index, input.length()) + "' due to end of CharSequence");
     }
 }

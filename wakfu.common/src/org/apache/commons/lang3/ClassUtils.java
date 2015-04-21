@@ -59,7 +59,7 @@ public class ClassUtils
         if (innerIdx != -1) {
             out = out.replace('$', '.');
         }
-        return out + (Object)arrayPrefix;
+        return out + arrayPrefix;
     }
     
     public static String getSimpleName(final Class<?> cls) {
@@ -130,7 +130,7 @@ public class ClassUtils
     private static void getAllInterfaces(Class<?> cls, final HashSet<Class<?>> interfacesFound) {
         while (cls != null) {
             final Class[] arr$;
-            final Class<?>[] interfaces = (Class<?>[])(arr$ = cls.getInterfaces());
+            final Class<?>[] interfaces = arr$ = cls.getInterfaces();
             for (final Class<?> i : arr$) {
                 if (interfacesFound.add(i)) {
                     getAllInterfaces(i, interfacesFound);
@@ -267,7 +267,7 @@ public class ClassUtils
         if (classes.length == 0) {
             return classes;
         }
-        final Class<?>[] convertedClasses = (Class<?>[])new Class[classes.length];
+        final Class<?>[] convertedClasses = new Class[classes.length];
         for (int i = 0; i < classes.length; ++i) {
             convertedClasses[i] = primitiveToWrapper(classes[i]);
         }
@@ -285,7 +285,7 @@ public class ClassUtils
         if (classes.length == 0) {
             return classes;
         }
-        final Class<?>[] convertedClasses = (Class<?>[])new Class[classes.length];
+        final Class<?>[] convertedClasses = new Class[classes.length];
         for (int i = 0; i < classes.length; ++i) {
             convertedClasses[i] = wrapperToPrimitive(classes[i]);
         }
@@ -390,7 +390,7 @@ public class ClassUtils
         if (array.length == 0) {
             return ArrayUtils.EMPTY_CLASS_ARRAY;
         }
-        final Class<?>[] classes = (Class<?>[])new Class[array.length];
+        final Class<?>[] classes = new Class[array.length];
         for (int i = 0; i < array.length; ++i) {
             classes[i] = ((array[i] == null) ? null : array[i].getClass());
         }

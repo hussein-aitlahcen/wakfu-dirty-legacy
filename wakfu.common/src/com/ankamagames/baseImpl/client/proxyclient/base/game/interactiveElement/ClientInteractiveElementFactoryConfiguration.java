@@ -2,6 +2,7 @@ package com.ankamagames.baseImpl.client.proxyclient.base.game.interactiveElement
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.interactiveElement.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import gnu.trove.*;
 
 public abstract class ClientInteractiveElementFactoryConfiguration<T extends ClientMapInteractiveElement> extends InteractiveElementFactoryConfiguration<T>
@@ -41,13 +42,13 @@ public abstract class ClientInteractiveElementFactoryConfiguration<T extends Cli
     public final ObjectFactory<ClientInteractiveElementView> getViewFactory(final int viewModelId) {
         final Properties properties = this.m_viewProperties.get(viewModelId);
         if (properties == null) {
-            ClientInteractiveElementFactoryConfiguration.m_logger.error((Object)("Aucune d\u00e9finition pour la vue de viewModelId=" + viewModelId));
+            InteractiveElementFactoryConfiguration.m_logger.error("Aucune d\u00e9finition pour la vue de viewModelId=" + viewModelId);
             return null;
         }
         final short viewTypeId = properties.m_viewType;
         final ObjectFactory<ClientInteractiveElementView> factory = this.m_viewFactories.get(viewTypeId);
         if (factory == null) {
-            ClientInteractiveElementFactoryConfiguration.m_logger.error((Object)("Aucune factory d'enregistr\u00e9e pour le viewTypeId=" + viewTypeId));
+            InteractiveElementFactoryConfiguration.m_logger.error("Aucune factory d'enregistr\u00e9e pour le viewTypeId=" + viewTypeId);
         }
         return factory;
     }

@@ -30,7 +30,8 @@ public class LookupTranslator extends CharSequenceTranslator
         this.longest = _longest;
     }
     
-    public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+    @Override
+	public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
         int max = this.longest;
         if (index + this.longest > input.length()) {
             max = input.length() - index;

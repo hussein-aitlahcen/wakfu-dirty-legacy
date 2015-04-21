@@ -76,6 +76,6 @@ public class TopologyMapC extends TopologyMapBlockedCells
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyMapC.class);
+        m_logger = Logger.getLogger(TopologyMapC.class);
     }
 }

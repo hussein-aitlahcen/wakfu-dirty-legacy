@@ -5,7 +5,6 @@ import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.framework.script.*;
 import com.ankamagames.framework.script.action.*;
 import com.ankamagames.framework.kernel.core.common.message.scheduler.clock.*;
-import com.ankamagames.framework.kernel.core.common.message.*;
 import java.util.*;
 
 final class ExecutionForcedActionGroup implements ActionGroup
@@ -154,7 +153,7 @@ final class ExecutionForcedActionGroup implements ActionGroup
             action.run();
         }
         catch (Exception e) {
-            ExecutionForcedActionGroup.m_logger.error((Object)("[_FL_] ACTION FAILURE (" + message + ") " + describeAction(action) + " - " + ExceptionFormatter.toString(e)));
+            ExecutionForcedActionGroup.m_logger.error("[_FL_] ACTION FAILURE (" + message + ") " + describeAction(action) + " - " + ExceptionFormatter.toString(e));
             this.onActionFinished(action);
         }
     }
@@ -172,7 +171,7 @@ final class ExecutionForcedActionGroup implements ActionGroup
     
     @Override
     public void kill() {
-        ExecutionForcedActionGroup.m_logger.info((Object)("Kill des actions de la pile (" + this.m_actions.size() + ")"));
+        ExecutionForcedActionGroup.m_logger.info("Kill des actions de la pile (" + this.m_actions.size() + ")");
         final Collection<Action> actionsToKill = new ArrayList<Action>();
         for (final Action action : this.m_actions) {
             action.removeListener(this);
@@ -224,6 +223,6 @@ final class ExecutionForcedActionGroup implements ActionGroup
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ExecutionForcedActionGroup.class);
+        m_logger = Logger.getLogger(ExecutionForcedActionGroup.class);
     }
 }

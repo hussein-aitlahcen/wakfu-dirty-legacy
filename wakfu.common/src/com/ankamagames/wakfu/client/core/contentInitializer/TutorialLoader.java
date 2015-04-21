@@ -1,13 +1,9 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import gnu.trove.*;
-import com.ankamagames.wakfu.client.core.game.tutorial.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
-import com.ankamagames.wakfu.client.core.game.events.*;
 import com.ankamagames.wakfu.client.core.*;
 
 public class TutorialLoader implements ContentInitializer
@@ -16,9 +12,8 @@ public class TutorialLoader implements ContentInitializer
     public static final TutorialLoader INSTANCE;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         this.loadFromStorage();
-        clientInstance.fireContentInitializerDone(this);
     }
     
     private boolean loadFromStorage() throws Exception {
@@ -31,10 +26,9 @@ public class TutorialLoader implements ContentInitializer
                 for (final TutorialBinaryData.Event e : eventIds) {
                     ids.add(e.getEventId());
                 }
-                TutorialManager.INSTANCE.addTutorialPage(tutorialId, ids.toNativeArray());
+//                TutorialManager.INSTANCE.addTutorialPage(tutorialId, ids.toNativeArray());
             }
         });
-        ClientGameEventManager.INSTANCE.initialize();
         return true;
     }
     
@@ -44,7 +38,7 @@ public class TutorialLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TutorialLoader.class);
+        m_logger = Logger.getLogger(TutorialLoader.class);
         INSTANCE = new TutorialLoader();
     }
 }

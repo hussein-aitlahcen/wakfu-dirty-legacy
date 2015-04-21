@@ -61,6 +61,6 @@ public class AOEPattern
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AOEPattern.class);
+        m_logger = Logger.getLogger(AOEPattern.class);
     }
 }

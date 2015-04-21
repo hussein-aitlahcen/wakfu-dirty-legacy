@@ -29,7 +29,7 @@ public class SterylCells
     public SterylCells(final SterylCells steryl) {
         super();
         this.m_cells = steryl.m_cells.clone();
-        this.m_cellAltitude = (int[])((steryl.m_cellAltitude == null) ? null : ((int[])steryl.m_cellAltitude.clone()));
+        this.m_cellAltitude = (steryl.m_cellAltitude == null) ? null : ((int[])steryl.m_cellAltitude.clone());
     }
     
     public boolean isSteryl(final byte x, final byte y, final short z) {
@@ -96,7 +96,7 @@ public class SterylCells
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SterylCells.class);
+        m_logger = Logger.getLogger(SterylCells.class);
         CELL_COUNT = (int)Math.ceil(40.5);
     }
 }

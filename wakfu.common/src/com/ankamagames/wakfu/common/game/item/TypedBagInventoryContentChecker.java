@@ -61,7 +61,7 @@ public class TypedBagInventoryContentChecker implements InventoryContentChecker<
             return true;
         }
         while (!PrimitiveArrays.contains(this.m_validItemCategory, type.getId())) {
-            type = (AbstractItemType<AbstractItemType>)type.getParentType();
+            type = type.getParentType();
             if (type == null) {
                 return false;
             }
@@ -70,6 +70,6 @@ public class TypedBagInventoryContentChecker implements InventoryContentChecker<
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TypedBagInventoryContentChecker.class);
+        m_logger = Logger.getLogger(TypedBagInventoryContentChecker.class);
     }
 }

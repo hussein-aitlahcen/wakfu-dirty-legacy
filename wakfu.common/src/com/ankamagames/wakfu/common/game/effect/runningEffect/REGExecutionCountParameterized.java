@@ -50,6 +50,6 @@ public abstract class REGExecutionCountParameterized extends UsingEffectGroupRun
     }
     
     static {
-        m_logger = Logger.getLogger((Class)REGExecutionCountParameterized.class);
+        m_logger = Logger.getLogger(REGExecutionCountParameterized.class);
     }
 }

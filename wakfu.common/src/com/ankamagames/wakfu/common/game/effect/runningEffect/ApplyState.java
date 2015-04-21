@@ -1,10 +1,15 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import gnu.trove.*;
+
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.datas.*;
@@ -13,10 +18,11 @@ import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.constants.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
@@ -75,7 +81,7 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
             re = new ApplyState();
             re.m_isStatic = false;
             re.m_pool = null;
-            ApplyState.m_logger.error((Object)("Erreur lors d'un newInstance sur un LatentState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un LatentState : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -107,7 +113,7 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
             re = new ApplyState();
             re.m_pool = null;
             re.m_isStatic = false;
-            ApplyState.m_logger.error((Object)("Erreur lors d'un checkOut sur un ApplyState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ApplyState : " + e.getMessage());
         }
         re.m_id = RunningEffectConstants.STATE_APPLY.getId();
         re.m_status = RunningEffectConstants.STATE_APPLY.getObject().getRunningEffectStatus();
@@ -151,7 +157,7 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
                 this.applyStateRunningEffect(linkedRE);
             }
             catch (Exception e) {
-                ApplyState.m_logger.error((Object)"Exception levee", (Throwable)e);
+                RunningEffect.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -178,7 +184,7 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
         }
         final RunningEffectManager rem = this.m_target.getRunningEffectManager();
         if (rem == null) {
-            ApplyState.m_logger.warn((Object)("On essaie d'appliquer un etat sur un cible qui n' pas de REM " + this.m_target + " , effet correspondant : " + this.getEffectId()));
+            RunningEffect.m_logger.warn("On essaie d'appliquer un etat sur un cible qui n' pas de REM " + this.m_target + " , effet correspondant : " + this.getEffectId());
             return false;
         }
         for (final RunningEffect effect : rem) {
@@ -256,7 +262,7 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
     
     private void applyStateRunningEffect(final RunningEffect linkedRE) {
         this.m_stateUniqueId = State.getUniqueIdFromBasicInformation(this.m_stateId, this.m_stateLevel);
-        final StateRunningEffect stateRunningEffect = StateRunningEffect.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_caster, (WakfuEffectContainer)this.m_effectContainer, this.m_stateUniqueId);
+        final StateRunningEffect stateRunningEffect = StateRunningEffect.checkOut(this.m_context, this.m_caster, this.m_effectContainer, this.m_stateUniqueId);
         if (this.m_stateInamovable) {
             stateRunningEffect.setInamovable();
         }
@@ -269,7 +275,7 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
             parameters.setDoNotNotify(true);
         }
         stateRunningEffect.setExecutionParameters(parameters);
-        (stateRunningEffect).setEffectContainer((WakfuEffectContainer)this.m_effectContainer);
+        (stateRunningEffect).setEffectContainer(this.m_effectContainer);
         (stateRunningEffect).setGenericEffect(this.getStateRunningGenericEffect());
         stateRunningEffect.addEndTriggers(this.getListeningTriggerForUnapplication());
         stateRunningEffect.setParent(linkedRE);
@@ -295,10 +301,10 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
         if (applyPercent == -2) {
             return 0;
         }
-        final short stateId = (short)((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final short stateId = (short)this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final State state = StateManager.getInstance().getState(stateId);
         if (state == null) {
-            ApplyState.m_logger.error((Object)("UNable to check application probability for state " + stateId + " : this state is unknown"));
+            RunningEffect.m_logger.error("UNable to check application probability for state " + stateId + " : this state is unknown");
             return 0;
         }
         if (this.m_target instanceof BasicCharacterInfo) {
@@ -323,8 +329,8 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
     }
     
     protected int getApplyPercent() {
-        int basicProbability = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 6) {
+        int basicProbability = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() < 6) {
             return basicProbability;
         }
         final RunningEffectManager rem = this.getConcernedManager();
@@ -332,9 +338,9 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
             return basicProbability;
         }
         final TimedRunningEffectManager runningEffectManager = (TimedRunningEffectManager)rem;
-        final int modifierStateId = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final boolean applyIfStateNotPresent = ((WakfuEffect)this.m_genericEffect).getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
-        final float incrementByStateLevel = ((WakfuEffect)this.m_genericEffect).getParam(5, this.getContainerLevel());
+        final int modifierStateId = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final boolean applyIfStateNotPresent = this.m_genericEffect.getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        final float incrementByStateLevel = this.m_genericEffect.getParam(5, this.getContainerLevel());
         final StateRunningEffect runningState = runningEffectManager.getRunningState(modifierStateId);
         if (runningState != null) {
             if (basicProbability != -1) {
@@ -349,10 +355,10 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
     }
     
     protected RunningEffectManager getConcernedManager() {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() <= 6) {
+        if (this.m_genericEffect.getParamsCount() <= 6) {
             return this.m_caster.getRunningEffectManager();
         }
-        final boolean checkOnTarget = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        final boolean checkOnTarget = this.m_genericEffect.getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
         if (checkOnTarget) {
             return this.m_target.getRunningEffectManager();
         }
@@ -365,37 +371,37 @@ public class ApplyState extends DynamicallyDefinedRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        this.m_stateId = (short)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_stateId = (short)this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.extractStateLevel(level);
         this.m_stateUniqueId = State.getUniqueIdFromBasicInformation(this.m_stateId, this.m_stateLevel);
     }
     
     protected void extractStateLevel(final short level) {
-        this.m_stateLevel = (short)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int paramsCount = ((WakfuEffect)this.m_genericEffect).getParamsCount();
+        this.m_stateLevel = (short)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int paramsCount = this.m_genericEffect.getParamsCount();
         if (paramsCount != 4 && paramsCount != 5) {
             return;
         }
         if (this.m_caster == null || !(this.m_caster instanceof BasicCharacterInfo)) {
-            ApplyState.m_logger.error((Object)"Impossible d'appliquer l'etat au niveau param\u00e9tr\u00e9, le caster n'est pas valide");
+            RunningEffect.m_logger.error("Impossible d'appliquer l'etat au niveau param\u00e9tr\u00e9, le caster n'est pas valide");
             return;
         }
-        final int spellId = ((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int spellId = this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final SpellInventory<? extends AbstractSpellLevel> spellInventory = ((BasicCharacterInfo)this.m_caster).getSpellInventory();
         if (spellInventory == null) {
-            ApplyState.m_logger.error((Object)"Impossible d'appliquer l'etat au niveau param\u00e9tr\u00e9, le caster n'a pas d'inventaire de sort");
+            RunningEffect.m_logger.error("Impossible d'appliquer l'etat au niveau param\u00e9tr\u00e9, le caster n'a pas d'inventaire de sort");
             return;
         }
         final AbstractSpellLevel spell = spellInventory.getFirstWithReferenceId(spellId);
         if (spell == null) {
-            ApplyState.m_logger.error((Object)("Impossible d'appliquer l'etat au niveau param\u00e9tr\u00e9, l'inventaire de sort ne contient pas le sort " + spellId + ", breed caster : " + ((BasicCharacterInfo)this.m_caster).getBreedId() + " effect id = " + this.getEffectId()));
+            RunningEffect.m_logger.error("Impossible d'appliquer l'etat au niveau param\u00e9tr\u00e9, l'inventaire de sort ne contient pas le sort " + spellId + ", breed caster : " + ((BasicCharacterInfo)this.m_caster).getBreedId() + " effect id = " + this.getEffectId());
             return;
         }
         this.m_stateLevel = spell.getLevel();
         if (paramsCount < 5) {
             return;
         }
-        final float factor = ((WakfuEffect)this.m_genericEffect).getParam(4, level);
+        final float factor = this.m_genericEffect.getParam(4, level);
         this.m_stateLevel *= (short)factor;
     }
     

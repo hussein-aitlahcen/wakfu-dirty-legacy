@@ -37,7 +37,7 @@ public final class TerritoryManager
         final int id = territory.getId();
         final AbstractTerritory t = this.m_territories.get(id);
         if (t != null && t != territory) {
-            TerritoryManager.m_logger.error((Object)"Tentative d'\u00e9crase de territoire.");
+            TerritoryManager.m_logger.error("Tentative d'\u00e9crase de territoire.");
             return false;
         }
         this.m_territories.put(id, territory);
@@ -62,6 +62,6 @@ public final class TerritoryManager
     
     static {
         INSTANCE = new TerritoryManager();
-        m_logger = Logger.getLogger((Class)TerritoryManager.class);
+        m_logger = Logger.getLogger(TerritoryManager.class);
     }
 }

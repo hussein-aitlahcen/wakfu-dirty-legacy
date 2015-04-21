@@ -26,7 +26,7 @@ public final class EffectTargetsComputer
     
     public List<List<EffectUser>> determineTargets(final WakfuEffect genericEffect, final Target applicant, final EffectContext<WakfuEffect> context, final int targetCellx, final int targetCelly, final short targetCellz) {
         if (context == null) {
-            EffectTargetsComputer.m_logger.error((Object)"On ne peut pas determiner les cibles sans contexte");
+            EffectTargetsComputer.m_logger.error("On ne peut pas determiner les cibles sans contexte");
             return Collections.emptyList();
         }
         final HashMap<Long, EffectUser> targets = new HashMap<Long, EffectUser>();
@@ -88,6 +88,6 @@ public final class EffectTargetsComputer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EffectTargetsComputer.class);
+        m_logger = Logger.getLogger(EffectTargetsComputer.class);
     }
 }

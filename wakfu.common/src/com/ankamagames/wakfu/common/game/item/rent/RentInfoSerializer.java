@@ -20,7 +20,7 @@ public final class RentInfoSerializer
                 break;
             }
             default: {
-                RentInfoSerializer.m_logger.error((Object)("Type de location inconnu " + type));
+                RentInfoSerializer.m_logger.error("Type de location inconnu " + type);
                 return null;
             }
         }
@@ -29,6 +29,6 @@ public final class RentInfoSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RentInfoSerializer.class);
+        m_logger = Logger.getLogger(RentInfoSerializer.class);
     }
 }

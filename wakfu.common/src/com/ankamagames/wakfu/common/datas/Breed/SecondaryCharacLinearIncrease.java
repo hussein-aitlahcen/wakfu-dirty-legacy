@@ -1,7 +1,6 @@
 package com.ankamagames.wakfu.common.datas.Breed;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 class SecondaryCharacLinearIncrease extends SecondaryCharacsCalculator
 {

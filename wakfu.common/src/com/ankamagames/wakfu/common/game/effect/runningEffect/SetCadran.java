@@ -2,15 +2,20 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.time.calendar.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -61,7 +66,7 @@ public class SetCadran extends WakfuRunningEffect
             re = new SetCadran();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetCadran.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         re.m_baseUniqueId = this.m_baseUniqueId;
         re.m_hours.clear();
@@ -77,7 +82,7 @@ public class SetCadran extends WakfuRunningEffect
         }
         AbstractHourEffectArea currentHourModel = StaticEffectAreaManager.getInstance().getHourAreas(this.m_currentHourAreaId);
         if (currentHourModel == null) {
-            SetCadran.m_logger.error((Object)("Unable to find area " + this.m_currentHourAreaId + ". Using " + this.m_value + " as the area even for the 'current' hour"));
+            RunningEffect.m_logger.error("Unable to find area " + this.m_currentHourAreaId + ". Using " + this.m_value + " as the area even for the 'current' hour");
             currentHourModel = hourModel;
         }
         this.notifyExecution(linkedRE, trigger);
@@ -88,7 +93,7 @@ public class SetCadran extends WakfuRunningEffect
     private int[][] buildCadranPattern() {
         final int[][] patternList = { { 1, -2 }, { 2, -1 }, { 3, 0 }, { 2, 1 }, { 1, 2 }, { 0, 3 }, { -1, 2 }, { -2, 1 }, { -3, 0 }, { -2, -1 }, { -1, -2 }, { 0, -3 } };
         if (this.m_caster == null) {
-            SetCadran.m_logger.error((Object)"pas de caster ");
+            RunningEffect.m_logger.error("pas de caster ");
             return patternList;
         }
         final Direction8 dir = this.m_caster.getDirection();
@@ -126,10 +131,10 @@ public class SetCadran extends WakfuRunningEffect
         byte hourcount = 0;
         if (this.m_context == null || this.m_context.getFightMap() == null) {
             if (this.m_context == null) {
-                SetCadran.m_logger.warn((Object)"Unable to spawn hours : context is null");
+                RunningEffect.m_logger.warn("Unable to spawn hours : context is null");
             }
             else {
-                SetCadran.m_logger.warn((Object)"Unable to spawn hours : context has no fightmap");
+                RunningEffect.m_logger.warn("Unable to spawn hours : context has no fightmap");
             }
             return;
         }
@@ -150,7 +155,7 @@ public class SetCadran extends WakfuRunningEffect
                     this.m_hours.add(hour);
                 }
                 else {
-                    SetCadran.m_logger.warn((Object)("La cellule [" + this.m_targetCell.getX() + pair[0] + ":" + this.m_targetCell.getY() + pair[1] + "] n'existe pas"));
+                    RunningEffect.m_logger.warn("La cellule [" + this.m_targetCell.getX() + pair[0] + ":" + this.m_targetCell.getY() + pair[1] + "] n'existe pas");
                 }
             }
         }
@@ -160,13 +165,13 @@ public class SetCadran extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            this.m_currentHourAreaId = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            this.m_currentHourAreaId = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
         }
         final long nextFreeId = this.m_context.getEffectUserInformationProvider().getNextFreeEffectUserId((byte)3);
         this.m_baseUniqueId = nextFreeId << 8;
         if (nextFreeId > 2147483647L) {
-            SetCadran.m_logger.error((Object)"probl\u00e8me possible entre les Ids des effects Users");
+            RunningEffect.m_logger.error("probl\u00e8me possible entre les Ids des effects Users");
         }
         this.m_systemHour = (byte)WakfuGameCalendar.getInstance().getDate().getHours();
     }

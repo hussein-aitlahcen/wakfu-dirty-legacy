@@ -48,6 +48,6 @@ public class EmoteHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EmoteHandler.class);
+        m_logger = Logger.getLogger(EmoteHandler.class);
     }
 }

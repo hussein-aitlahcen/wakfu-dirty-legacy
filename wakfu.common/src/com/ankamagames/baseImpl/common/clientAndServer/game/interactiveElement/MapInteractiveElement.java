@@ -203,12 +203,12 @@ public abstract class MapInteractiveElement extends BinarSerial implements Occup
                 this.m_pool.returnObject(this);
             }
             catch (Exception e) {
-                MapInteractiveElement.m_logger.error((Object)"Erreur lors du retour au pool", (Throwable)e);
+                MapInteractiveElement.m_logger.error("Erreur lors du retour au pool", e);
             }
             this.m_pool = null;
         }
         else {
-            MapInteractiveElement.m_logger.error((Object)("Double release de " + this.getClass()), (Throwable)new Exception());
+            MapInteractiveElement.m_logger.error("Double release de " + this.getClass(), new Exception());
             this.onCheckIn();
         }
     }
@@ -314,6 +314,6 @@ public abstract class MapInteractiveElement extends BinarSerial implements Occup
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MapInteractiveElement.class);
+        m_logger = Logger.getLogger(MapInteractiveElement.class);
     }
 }

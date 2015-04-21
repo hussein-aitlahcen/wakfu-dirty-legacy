@@ -41,7 +41,7 @@ public class CosmeticsInventorySerializer
                 inventory.add(item);
             }
             catch (CosmeticsInventoryException e) {
-                CosmeticsInventorySerializer.m_logger.error((Object)("Probl\u00e8me \u00e0 la d\u00e9-serialisation de l'item " + raw), (Throwable)e);
+                CosmeticsInventorySerializer.m_logger.error("Probl\u00e8me \u00e0 la d\u00e9-serialisation de l'item " + raw, e);
             }
         }
     }
@@ -61,7 +61,7 @@ public class CosmeticsInventorySerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CosmeticsInventorySerializer.class);
+        m_logger = Logger.getLogger(CosmeticsInventorySerializer.class);
     }
     
     private static class ToRawProcedure implements TObjectProcedure<CosmeticsItem>

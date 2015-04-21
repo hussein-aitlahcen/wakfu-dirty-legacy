@@ -5,6 +5,7 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class BestElementHpGain extends HPGain
@@ -33,7 +34,7 @@ public final class BestElementHpGain extends HPGain
             re = new BestElementHpGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            BestElementHpGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un BestElementHpGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un BestElementHpGain : " + e.getMessage());
         }
         return re;
     }
@@ -50,12 +51,12 @@ public final class BestElementHpGain extends HPGain
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() <= 1) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() <= 1) {
+            this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1 && this.m_caster instanceof BasicFighter) {
-            final float value = ((WakfuEffect)this.m_genericEffect).getParam(0);
+        if (this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1 && this.m_caster instanceof BasicFighter) {
+            final float value = this.m_genericEffect.getParam(0);
             final float inc = ((WakfuStandardEffect)this.m_genericEffect).getParamInc(0);
             this.m_value = RunningEffectUtils.likePreviousLevelRound(value + inc * this.getContainerLevel() * ((BasicFighter)this.m_caster).getLevel(), inc);
         }

@@ -269,7 +269,7 @@ public abstract class StandardEffect implements Effect
     
     @Override
     public EffectExecutionResult execute(final EffectContainer cont, final EffectUser launcher, final EffectContext context, final Constants<? extends StaticRunningEffect> constants, final int targetCellx, final int targetCelly, final short targetCellz, final EffectUser target, final EffectExecutionParameters params, final boolean withResult) {
-        final StaticRunningEffect<Effect, EffectContainer> sre = (StaticRunningEffect<Effect, EffectContainer>)constants.getObjectFromId(this.getActionId());
+        final StaticRunningEffect<Effect, EffectContainer> sre = constants.getObjectFromId(this.getActionId());
         final EffectExecutionResult result = sre.run(this, cont, context, launcher, targetCellx, targetCelly, targetCellz, target, params);
         if (!withResult) {
             result.clear();
@@ -322,6 +322,6 @@ public abstract class StandardEffect implements Effect
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Effect.class);
+        m_logger = Logger.getLogger(Effect.class);
     }
 }

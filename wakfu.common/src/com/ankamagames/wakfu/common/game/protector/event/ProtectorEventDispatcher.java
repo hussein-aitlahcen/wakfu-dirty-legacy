@@ -34,7 +34,7 @@ public final class ProtectorEventDispatcher
                     listener.onProtectorEvent(event);
                 }
                 catch (Exception e) {
-                    ProtectorEventDispatcher.m_logger.error((Object)("Exception lev\u00e9e lors du traitement d'un evenement de protecteur " + protector.getId() + ", par un listener : " + listener.getClass().getSimpleName()), (Throwable)e);
+                    ProtectorEventDispatcher.m_logger.error("Exception lev\u00e9e lors du traitement d'un evenement de protecteur " + protector.getId() + ", par un listener : " + listener.getClass().getSimpleName(), e);
                 }
             }
         }
@@ -42,6 +42,6 @@ public final class ProtectorEventDispatcher
     
     static {
         INSTANCE = new ProtectorEventDispatcher();
-        m_logger = Logger.getLogger((Class)ProtectorEventDispatcher.class);
+        m_logger = Logger.getLogger(ProtectorEventDispatcher.class);
     }
 }

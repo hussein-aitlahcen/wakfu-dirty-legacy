@@ -60,6 +60,6 @@ public class RespawnPointHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RespawnPointHandler.class);
+        m_logger = Logger.getLogger(RespawnPointHandler.class);
     }
 }

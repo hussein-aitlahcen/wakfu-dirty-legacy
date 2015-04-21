@@ -43,7 +43,7 @@ public abstract class AbstractPartition<PartitionType extends AbstractPartition>
     }
     
     public PartitionType[] getLayout() {
-        return (PartitionType[])this.m_layout;
+        return this.m_layout;
     }
     
     public void setLayoutArray(@NotNull final PartitionType[] partitions) {
@@ -54,7 +54,7 @@ public abstract class AbstractPartition<PartitionType extends AbstractPartition>
     
     public PartitionType getPartition(final int layoutEntry) {
         if (layoutEntry >= 0 && layoutEntry <= 8) {
-            return (PartitionType)this.m_layout[layoutEntry];
+            return this.m_layout[layoutEntry];
         }
         return null;
     }

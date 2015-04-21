@@ -6,7 +6,6 @@ import com.ankamagames.wakfu.common.configuration.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import java.math.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.part.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.datas.*;
@@ -127,7 +126,7 @@ public final class HpLossComputerImpl implements HpLossComputer
         }
         final Part part = this.m_target.getPartLocalisator().getMainPartInSightFromPosition(this.m_caster.getWorldCellX(), this.m_caster.getWorldCellY(), this.m_caster.getWorldCellAltitude());
         if (part == null) {
-            HpLossComputerImpl.m_logger.error((Object)"Impossible de r\u00e9cup\u00e9rer un partLocalisation...");
+            HpLossComputerImpl.m_logger.error("Impossible de r\u00e9cup\u00e9rer un partLocalisation...");
             return null;
         }
         return part;
@@ -399,6 +398,6 @@ public final class HpLossComputerImpl implements HpLossComputer
     }
     
     static {
-        HpLossComputerImpl.m_logger = Logger.getLogger((Class)HpLossComputerImpl.class);
+        HpLossComputerImpl.m_logger = Logger.getLogger(HpLossComputerImpl.class);
     }
 }

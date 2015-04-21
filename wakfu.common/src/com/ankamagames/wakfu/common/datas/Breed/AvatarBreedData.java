@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.datas.Breed;
 import org.apache.log4j.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import gnu.trove.*;
@@ -108,7 +107,7 @@ public class AvatarBreedData
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AvatarBreedData.class);
+        m_logger = Logger.getLogger(AvatarBreedData.class);
         DEFAULT_DATA = new AvatarBreedData(SecondaryCharacsCalculator.NULL_CALCULATOR);
     }
 }

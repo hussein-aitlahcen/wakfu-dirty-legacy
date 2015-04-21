@@ -10,9 +10,13 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.collections.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.framework.external.*;
 
@@ -90,7 +94,7 @@ public abstract class AbstractFakeFighterEffectArea extends AbstractEffectArea
                 final byte characId = (byte)this.getParams(dynamicCharacIdx);
                 final FighterCharacteristicType type = FighterCharacteristicType.getCharacteristicTypeFromId(characId);
                 if (type == null) {
-                    AbstractFakeFighterEffectArea.m_logger.error((Object)("Unable to add dynamic charac " + this.getParams(dynamicCharacIdx) + " to effectarea : unknown charac"));
+                    BasicEffectArea.m_logger.error("Unable to add dynamic charac " + this.getParams(dynamicCharacIdx) + " to effectarea : unknown charac");
                 }
                 else {
                     characteristicTypes.add(type);
@@ -105,7 +109,7 @@ public abstract class AbstractFakeFighterEffectArea extends AbstractEffectArea
                 if (type != null) {
                     final FighterCharacteristic characteristic = (FighterCharacteristic)this.getCharacteristic(type);
                     if (characteristic == null) {
-                        AbstractFakeFighterEffectArea.m_logger.error((Object)"UNable to find a newly created dynamic charac for this effect area");
+                        BasicEffectArea.m_logger.error("UNable to find a newly created dynamic charac for this effect area");
                     }
                     else {
                         final int initialValue = (int)this.getParams(dynamicCharacIdx + 1);
@@ -325,14 +329,14 @@ public abstract class AbstractFakeFighterEffectArea extends AbstractEffectArea
         parameters.add(new Parameter("P-e triggered par qqun d'autre (oui si 1, non sinon)"));
         parameters.add(new Parameter("Hauteur (NORMAL_HEIGHT si <= 0)"));
         parameters.add(new Parameter("Bonus d\u00e9gats owner recopi\u00e9s (-1:aucun 1:phys 2:Feu 4:Eau 8:Terre 16:Air 32:Stasis 64:Meca"));
-        parametersLists.add(new EffectAreaParameterList("Fake fighter sous forme d'effect area", (Parameter[])parameters.toArray(new Parameter[parameters.size()])));
+        parametersLists.add(new EffectAreaParameterList("Fake fighter sous forme d'effect area", parameters.toArray(new Parameter[parameters.size()])));
         for (int dynamicCharacIdx = 1; dynamicCharacIdx < 6; ++dynamicCharacIdx) {
             parameters.add(new Parameter("Charac#" + dynamicCharacIdx + " : id"));
             parameters.add(new Parameter("Charac#" + dynamicCharacIdx + " : valeur initiale"));
             parameters.add(new Parameter("Charac#" + dynamicCharacIdx + " : valeur min (-1 = default min, -2 = lower bound)"));
             parameters.add(new Parameter("Charac#" + dynamicCharacIdx + " : valeur max (-1 = default max, -2 = upper bound)"));
-            parametersLists.add(new EffectAreaParameterList("Fake fighter avec " + dynamicCharacIdx + " charac dynamique", (Parameter[])parameters.toArray(new Parameter[parameters.size()])));
+            parametersLists.add(new EffectAreaParameterList("Fake fighter avec " + dynamicCharacIdx + " charac dynamique", parameters.toArray(new Parameter[parameters.size()])));
         }
-        PARAMETER_LIST_SET = new EffectAreaParameterListSet((ParameterList[])parametersLists.toArray(new EffectAreaParameterList[parametersLists.size()]));
+        PARAMETER_LIST_SET = new EffectAreaParameterListSet(parametersLists.toArray(new EffectAreaParameterList[parametersLists.size()]));
     }
 }

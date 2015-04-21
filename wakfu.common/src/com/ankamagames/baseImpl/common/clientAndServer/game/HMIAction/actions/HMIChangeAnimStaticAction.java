@@ -14,14 +14,14 @@ public class HMIChangeAnimStaticAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 1) {
-                HMIChangeAnimStaticAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 1 : Animstatix) : " + parameters));
+                HMIChangeAnimStaticAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 1 : Animstatix) : " + parameters);
                 return false;
             }
             this.m_animStaticKey = array[0];
             return true;
         }
         catch (NumberFormatException e) {
-            HMIChangeAnimStaticAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMIChangeAnimStaticAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -36,6 +36,6 @@ public class HMIChangeAnimStaticAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

@@ -20,7 +20,7 @@ public final class OldTackleComputer
         TackleResult result = TackleResult.NO_TRY;
         final Iterator<? extends BasicCharacterInfo> iterator = potentialTacklers.iterator();
         while (iterator.hasNext()) {
-            this.m_tackler = (BasicCharacterInfo)iterator.next();
+            this.m_tackler = iterator.next();
             this.m_tackleComputer.setTackler(this.m_tackler);
             this.m_tackleComputer.setMoverPos(moverPos);
             this.m_tackleComputer.testTackle();

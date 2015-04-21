@@ -702,7 +702,7 @@ public final class Nation
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Nation.class);
+        m_logger = Logger.getLogger(Nation.class);
         VOID_NATION = new Nation(0, NullHandlersFactory.getInstance());
         NationManager.INSTANCE.registerNation(Nation.VOID_NATION);
         Nation.m_handlersFactory = null;

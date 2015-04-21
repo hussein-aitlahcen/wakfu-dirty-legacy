@@ -77,6 +77,6 @@ public final class ZoneBuff implements WakfuEffectContainer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ZoneBuff.class);
+        m_logger = Logger.getLogger(ZoneBuff.class);
     }
 }

@@ -5,7 +5,9 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -30,7 +32,7 @@ public class SpellAttack extends WakfuRunningEffect
             wre = new SpellAttack();
             wre.m_pool = null;
             wre.m_isStatic = false;
-            SpellAttack.m_logger.error((Object)("Erreur lors d'un checkOut sur un SpellAttack : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SpellAttack : " + e.getMessage());
         }
         return wre;
     }
@@ -39,7 +41,7 @@ public class SpellAttack extends WakfuRunningEffect
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         if (this.m_target != null) {
             if (this.m_caster instanceof BasicCharacterInfo) {
-                final int spellId = ((WakfuEffect)this.m_genericEffect).getParam(0, (short)1, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+                final int spellId = this.m_genericEffect.getParam(0, (short)1, RoundingMethod.LIKE_PREVIOUS_LEVEL);
                 final EffectUser target = this.getTarget();
                 ((BasicCharacterInfo)this.m_caster).castSpellEffects(spellId, new Point3(target.getWorldCellX(), target.getWorldCellY(), target.getWorldCellAltitude()));
             }

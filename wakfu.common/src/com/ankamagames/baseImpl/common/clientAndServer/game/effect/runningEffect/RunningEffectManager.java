@@ -58,7 +58,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
                     effect.unapply(false);
                 }
                 catch (Exception e) {
-                    RunningEffectManager.m_logger.error((Object)"Exception levee lors de la d\u00e9spplication d'un effet", (Throwable)e);
+                    RunningEffectManager.m_logger.error("Exception levee lors de la d\u00e9spplication d'un effet", e);
                 }
             }
         }
@@ -124,7 +124,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     public Iterable<RunningEffect> getEffectsWithContainerType(final int containerType) {
         final ArrayList<RunningEffect> result = new ArrayList<RunningEffect>();
         if (this.m_effects != null && !this.m_effects.isEmpty()) {
-            this.m_effects.forEachValue((TObjectProcedure<RunningEffect>)new TObjectProcedure<RunningEffect>() {
+            this.m_effects.forEachValue(new TObjectProcedure<RunningEffect>() {
                 @Override
                 public boolean execute(final RunningEffect effect) {
                     if (effect.getEffectContainer() != null && effect.getEffectContainer().getContainerType() == containerType) {
@@ -142,7 +142,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
             return new ArrayList<RunningEffect>();
         }
         final List<RunningEffect> result = new ArrayList<RunningEffect>();
-        this.m_effects.forEachValue((TObjectProcedure<RunningEffect>)new TObjectProcedure<RunningEffect>() {
+        this.m_effects.forEachValue(new TObjectProcedure<RunningEffect>() {
             @Override
             public boolean execute(final RunningEffect effect) {
                 final Effect genericEffect = effect.getGenericEffect();
@@ -158,7 +158,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     public Iterable<RunningEffect> getEffectsWithEffectId(final int effectId) {
         final ArrayList<RunningEffect> result = new ArrayList<RunningEffect>();
         if (this.m_effects != null && !this.m_effects.isEmpty()) {
-            this.m_effects.forEachValue((TObjectProcedure<RunningEffect>)new TObjectProcedure<RunningEffect>() {
+            this.m_effects.forEachValue(new TObjectProcedure<RunningEffect>() {
                 @Override
                 public boolean execute(final RunningEffect effect) {
                     final Effect genericEffect = effect.getGenericEffect();
@@ -173,20 +173,20 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     }
     
     protected LinkedToEffectUserIterator getLinkedToEffectUserRunningEffects(final EffectUser user) {
-        return LinkedToEffectUserIterator.checkOut(this, (TLongObjectIterator<RunningEffect>)this.m_effects.iterator(), user, false);
+        return LinkedToEffectUserIterator.checkOut(this, this.m_effects.iterator(), user, false);
     }
     
     public LinkedToEffectUserIterator getTargetingEffectUserRunningEffects(final EffectUser user) {
-        return LinkedToEffectUserIterator.checkOut(this, (TLongObjectIterator<RunningEffect>)this.m_effects.iterator(), user, true);
+        return LinkedToEffectUserIterator.checkOut(this, this.m_effects.iterator(), user, true);
     }
     
     protected LinkedToEffectContainerIterator getLinkedToContainerRunningEffects(final EffectContainer container) {
-        return new LinkedToEffectContainerIterator(this, (TLongObjectIterator<RunningEffect>)this.m_effects.iterator(), container);
+        return new LinkedToEffectContainerIterator(this, this.m_effects.iterator(), container);
     }
     
     public void removeChildEffect(final RunningEffect parentEffect) {
         try {
-            final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+            final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
             while (it.hasNext()) {
                 it.advance();
                 final RunningEffect re = it.value();
@@ -203,7 +203,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     
     public void removeLinkedToCaster(final EffectUser caster) {
         try {
-            final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+            final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
             while (it.hasNext()) {
                 it.advance();
                 final RunningEffect re = it.value();
@@ -220,7 +220,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     
     public void removeLinkedToContainer(final EffectContainer container, final boolean withUnapplication) {
         try {
-            final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+            final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
             while (it.hasNext()) {
                 it.advance();
                 final RunningEffect re = it.value();
@@ -244,7 +244,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     
     public void removeLinkedToContainerType(final int containerType, final boolean withUnapplication) {
         try {
-            final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+            final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
             while (it.hasNext()) {
                 it.advance();
                 final RunningEffect re = it.value();
@@ -264,7 +264,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     
     public void removeLinkedToEffect(final Effect effect) {
         try {
-            final TLongObjectIterator<RunningEffect> it = (TLongObjectIterator<RunningEffect>)this.m_effects.iterator();
+            final TLongObjectIterator<RunningEffect> it = this.m_effects.iterator();
             while (it.hasNext()) {
                 it.advance();
                 final RunningEffect re = it.value();
@@ -315,7 +315,7 @@ public class RunningEffectManager implements Iterable<RunningEffect>, Triggerabl
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RunningEffectManager.class);
+        m_logger = Logger.getLogger(RunningEffectManager.class);
         RELEASE_PROCEDURE = new TObjectProcedure<RunningEffect>() {
             @Override
             public boolean execute(final RunningEffect effect) {

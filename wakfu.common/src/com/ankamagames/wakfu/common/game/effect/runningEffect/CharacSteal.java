@@ -1,14 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -109,7 +112,7 @@ public class CharacSteal extends CharacLoss
             re = new CharacSteal();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacSteal.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacSteal : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacSteal : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_dynamicCharacteristic = this.m_dynamicCharacteristic;
@@ -125,23 +128,23 @@ public class CharacSteal extends CharacLoss
         }
         final short level = this.getContainerLevel();
         if (this.m_dynamicCharacteristic) {
-            this.m_charac = FighterCharacteristicType.getCharacteristicTypeFromId((byte)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+            this.m_charac = FighterCharacteristicType.getCharacteristicTypeFromId((byte)this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
             if (this.m_charac == null) {
                 return;
             }
         }
         final int firstParam = this.m_dynamicCharacteristic ? 1 : 0;
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(firstParam, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > firstParam + 1) {
-            this.m_buffInsteadOfGain = (((WakfuEffect)this.m_genericEffect).getParam(firstParam + 1) == 1.0f);
+        this.m_value = this.m_genericEffect.getParam(firstParam, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() > firstParam + 1) {
+            this.m_buffInsteadOfGain = (this.m_genericEffect.getParam(firstParam + 1) == 1.0f);
         }
         else {
             this.m_buffInsteadOfGain = false;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 5) {
+        if (this.m_genericEffect.getParamsCount() == 5) {
             this.m_buffInsteadOfGain = true;
-            this.m_endsAtEndOfTurn = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
-            this.m_isDurationInFullTurns = (((WakfuEffect)this.m_genericEffect).getParam(4, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+            this.m_endsAtEndOfTurn = (this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+            this.m_isDurationInFullTurns = (this.m_genericEffect.getParam(4, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         else {
             this.m_isDurationInFullTurns = false;

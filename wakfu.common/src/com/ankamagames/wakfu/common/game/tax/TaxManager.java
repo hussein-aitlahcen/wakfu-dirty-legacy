@@ -17,7 +17,7 @@ public class TaxManager
     
     public void addTaxHandler(final TaxHandler taxHandler) {
         if (this.m_taxHandlers.contains(taxHandler)) {
-            TaxManager.m_logger.error((Object)("Tentative d'ajout multiple du TaxHandler=" + taxHandler.toString() + " \u00e0 la liste des percepteurs de taxe globaux"));
+            TaxManager.m_logger.error("Tentative d'ajout multiple du TaxHandler=" + taxHandler.toString() + " \u00e0 la liste des percepteurs de taxe globaux");
             return;
         }
         this.m_taxHandlers.add(taxHandler);
@@ -54,7 +54,7 @@ public class TaxManager
             this.m_taxHandlers.remove(taxHandler);
         }
         else {
-            TaxManager.m_logger.error((Object)("Tentative de suppression du TaxHandler=" + taxHandler.toString() + " alors qu'il n'est pas pr\u00e9sent dans la liste"));
+            TaxManager.m_logger.error("Tentative de suppression du TaxHandler=" + taxHandler.toString() + " alors qu'il n'est pas pr\u00e9sent dans la liste");
         }
     }
     
@@ -64,7 +64,7 @@ public class TaxManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TaxManager.class);
+        m_logger = Logger.getLogger(TaxManager.class);
         INSTANCE = new TaxManager();
     }
 }

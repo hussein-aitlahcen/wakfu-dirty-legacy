@@ -36,7 +36,7 @@ class MoveRankChange implements GuildChange
             controller.moveRank(this.m_rank.getId(), this.m_rank.getPosition());
         }
         catch (GuildException e) {
-            MoveRankChange.m_logger.error((Object)"Impossible de modifier le rang", (Throwable)e);
+            MoveRankChange.m_logger.error("Impossible de modifier le rang", e);
         }
     }
     
@@ -51,6 +51,6 @@ class MoveRankChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MoveRankChange.class);
+        m_logger = Logger.getLogger(MoveRankChange.class);
     }
 }

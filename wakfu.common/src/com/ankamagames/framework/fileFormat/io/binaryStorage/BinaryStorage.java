@@ -4,9 +4,7 @@ import com.ankamagames.framework.fileFormat.io.binaryStorage.stream.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage.handler.*;
 import java.util.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage.descriptor.*;
-import java.lang.annotation.*;
 import java.lang.reflect.*;
-import java.nio.channels.*;
 import java.nio.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import java.util.regex.*;
@@ -68,7 +66,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
             this.start();
         }
         else {
-            BinaryStorage.m_logger.error((Object)("Echec de l'initialisation du binary storage " + this));
+            AbstractBinaryStorage.m_logger.error("Echec de l'initialisation du binary storage " + this);
         }
     }
     
@@ -101,22 +99,22 @@ public final class BinaryStorage extends AbstractBinaryStorage
     protected boolean init() {
         synchronized (this.m_mutex) {
             if (this.m_isInit) {
-                BinaryStorage.m_logger.error((Object)("Binary storage already initialize : " + this.m_workspace));
+                AbstractBinaryStorage.m_logger.error("Binary storage already initialize : " + this.m_workspace);
                 return false;
             }
             try {
                 if (this.m_workspaceDir.exists() && !this.m_workspaceDir.isDirectory()) {
-                    BinaryStorage.m_logger.error((Object)("Tentative de changement de workspace [" + this.m_workspace + "] vers un fichier [not directory] existant [Aborted & Shutdown]"));
+                    AbstractBinaryStorage.m_logger.error("Tentative de changement de workspace [" + this.m_workspace + "] vers un fichier [not directory] existant [Aborted & Shutdown]");
                     return false;
                 }
                 if (!this.m_workspaceDir.exists() && !this.m_workspaceDir.mkdirs()) {
-                    BinaryStorage.m_logger.error((Object)("Impossible de creer l'arborescence de repertoire [" + this.m_workspace + "] lors d'un changement de workspace inexistant [Aborted & Shutdown]"));
+                    AbstractBinaryStorage.m_logger.error("Impossible de creer l'arborescence de repertoire [" + this.m_workspace + "] lors d'un changement de workspace inexistant [Aborted & Shutdown]");
                     return false;
                 }
                 this.m_metadatas.clear();
                 if (!this.m_metadataFile.exists()) {
                     this.m_metadataFile.createNewFile();
-                    BinaryStorage.m_logger.info((Object)"Fichier de meta donn\u00e9es non trouv\u00e9 pour le chargement de la source binaire : Creation d'une nouvelle source");
+                    AbstractBinaryStorage.m_logger.info("Fichier de meta donn\u00e9es non trouv\u00e9 pour le chargement de la source binaire : Creation d'une nouvelle source");
                 }
                 else {
                     FileInputStream fin = null;
@@ -147,7 +145,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                                 in.close();
                             }
                             catch (IOException e) {
-                                BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                             }
                         }
                         if (fin != null) {
@@ -155,18 +153,18 @@ public final class BinaryStorage extends AbstractBinaryStorage
                                 fin.close();
                             }
                             catch (IOException e) {
-                                BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                             }
                         }
                     }
                 }
             }
             catch (FileNotFoundException e2) {
-                BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+                AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
                 return false;
             }
             catch (IOException e3) {
-                BinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+                AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
                 return false;
             }
             this.m_isInit = true;
@@ -198,7 +196,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                                     finalOut.writeInt(bfi.nbEntries);
                                 }
                                 catch (IOException e) {
-                                    AbstractBinaryStorage.m_logger.error((Object)e.getMessage(), (Throwable)e);
+                                    AbstractBinaryStorage.m_logger.error(e.getMessage(), e);
                                 }
                             }
                             return true;
@@ -212,7 +210,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         out.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
                 if (fout != null) {
@@ -220,23 +218,23 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         fout.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
             }
         }
         catch (FileNotFoundException e2) {
-            BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+            AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
         }
         catch (IOException e3) {
-            BinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+            AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
         }
     }
     
     @Override
     protected void save(final BinaryStorable bs) {
         synchronized (this.m_mutex) {
-            final ArrayList<IndexEntry> entries = this.search(BinaryStorage.DEFAULT_ID_INDEX_HASHCODE, bs.getBinaryType(), bs.getGlobalId(), 1);
+            final ArrayList<IndexEntry> entries = this.search(AbstractBinaryStorage.DEFAULT_ID_INDEX_HASHCODE, bs.getBinaryType(), bs.getGlobalId(), 1);
             if (entries.size() <= 0) {
                 this.saveNewEntry(bs);
             }
@@ -249,7 +247,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
     private void saveNewEntry(final BinaryStorable bs) {
         final byte[] data = bs.getBinaryData();
         if (data == null) {
-            BinaryStorage.m_logger.error((Object)("Tentative de sauvegarde d'un binary storable qui n'a aucun bloc de donn\u00e9es " + bs));
+            AbstractBinaryStorage.m_logger.error("Tentative de sauvegarde d'un binary storable qui n'a aucun bloc de donn\u00e9es " + bs);
             return;
         }
         final long checksum = bs.computeCheckSum(data);
@@ -276,7 +274,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         out.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
                 if (fout != null) {
@@ -284,7 +282,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         fout.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
             }
@@ -292,7 +290,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
             ++currentDataFileAccess.nbEntries;
             final BinaryDataFileInfo currentDataFileAccess2 = this.m_currentDataFileAccess;
             currentDataFileAccess2.size += size;
-            this.addIndex(BinaryStorage.DEFAULT_ID_INDEX_HASHCODE, bs.getGlobalId(), bs.getBinaryType(), this.m_currentDataFileAccess.idFile, positionInFile, checksum);
+            this.addIndex(AbstractBinaryStorage.DEFAULT_ID_INDEX_HASHCODE, bs.getGlobalId(), bs.getBinaryType(), this.m_currentDataFileAccess.idFile, positionInFile, checksum);
             final Field[] arr$;
             final Field[] fields = arr$ = bs.getClass().getDeclaredFields();
             for (final Field field : arr$) {
@@ -313,17 +311,17 @@ public final class BinaryStorage extends AbstractBinaryStorage
             this.writeMetadataFile();
         }
         catch (IOException e2) {
-            BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+            AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
         }
         catch (IllegalAccessException e3) {
-            BinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+            AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
         }
     }
     
     private void updateEntry(final BinaryStorable bs, final IndexEntry entry) {
         final byte[] data = bs.getBinaryData();
         if (data == null) {
-            BinaryStorage.m_logger.error((Object)("Tentative de sauvegarde d'un binary storable qui n'a aucun bloc de donn\u00e9es " + bs));
+            AbstractBinaryStorage.m_logger.error("Tentative de sauvegarde d'un binary storable qui n'a aucun bloc de donn\u00e9es " + bs);
             return;
         }
         if (entry.checksum != bs.computeCheckSum(data)) {
@@ -335,7 +333,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
     @Override
     protected void remove(final BinaryStorable bs) {
         synchronized (this.m_mutex) {
-            final ArrayList<IndexEntry> entries = this.search(BinaryStorage.DEFAULT_ID_INDEX_HASHCODE, bs.getBinaryType(), bs.getGlobalId(), 1);
+            final ArrayList<IndexEntry> entries = this.search(AbstractBinaryStorage.DEFAULT_ID_INDEX_HASHCODE, bs.getBinaryType(), bs.getGlobalId(), 1);
             if (!entries.isEmpty()) {
                 this.remove(bs, entries.get(0));
             }
@@ -367,7 +365,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         in.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
                 if (fin != null) {
@@ -375,7 +373,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         fin.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
                 if (fout != null) {
@@ -383,7 +381,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         fout.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
             }
@@ -401,10 +399,10 @@ public final class BinaryStorage extends AbstractBinaryStorage
             this.writeMetadataFile();
         }
         catch (FileNotFoundException e2) {
-            BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+            AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
         }
         catch (IOException e3) {
-            BinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+            AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
         }
     }
     
@@ -447,7 +445,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                                 out.close();
                             }
                             catch (IOException e) {
-                                BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                             }
                         }
                     }
@@ -459,11 +457,11 @@ public final class BinaryStorage extends AbstractBinaryStorage
                 }
             }
             else {
-                BinaryStorage.m_logger.error((Object)"Situation anormale : on met a jour des indexes qu'on a pas encore mont\u00e9 en memoire");
+                AbstractBinaryStorage.m_logger.error("Situation anormale : on met a jour des indexes qu'on a pas encore mont\u00e9 en memoire");
             }
         }
         catch (IOException e2) {
-            BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+            AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
         }
     }
     
@@ -490,7 +488,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                     fin = new FileInputStream(file);
                     in = this.m_ioStreamWrapperData.wrapInputStream(fin);
                     if (position < 0L) {
-                        BinaryStorage.m_logger.fatal((Object)"position n\u00e9gative");
+                        AbstractBinaryStorage.m_logger.fatal("position n\u00e9gative");
                         return null;
                     }
                     fin.getChannel().position(position);
@@ -503,7 +501,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                             in.close();
                         }
                         catch (IOException e) {
-                            BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                            AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                         }
                     }
                     if (fin != null) {
@@ -511,7 +509,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                             fin.close();
                         }
                         catch (IOException e) {
-                            BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                            AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                         }
                     }
                 }
@@ -519,7 +517,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                 final ByteBuffer data = ByteBuffer.wrap(ientry.getData());
                 nbs.build(data, ientry.getId(), ientry.getVersion());
                 if (data.remaining() != 0) {
-                    BinaryStorage.m_logger.warn((Object)("Objet restaur\u00e9 du binary storage : " + data.remaining() + " bytes restants non lus [type:" + bs.getBinaryType() + " | id:" + ientry.getId() + "]"));
+                    AbstractBinaryStorage.m_logger.warn("Objet restaur\u00e9 du binary storage : " + data.remaining() + " bytes restants non lus [type:" + bs.getBinaryType() + " | id:" + ientry.getId() + "]");
                 }
                 list.add(nbs);
                 for (final BinaryStorageHandler hand : this.m_handlers) {
@@ -527,7 +525,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                 }
             }
             catch (IOException e2) {
-                BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+                AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
             }
         }
         if (list.size() > 0) {
@@ -553,7 +551,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
     
     @Override
     public BinaryStorable getById(final int value, final BinaryStorable bs) {
-        final BinaryStorable[] bstab = this.getByIndex(BinaryStorage.DEFAULT_ID_INDEX_HASHCODE, value, bs, 1);
+        final BinaryStorable[] bstab = this.getByIndex(AbstractBinaryStorage.DEFAULT_ID_INDEX_HASHCODE, value, bs, 1);
         if (bstab != null && bstab.length > 0) {
             return bstab[0];
         }
@@ -568,7 +566,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                 this.loadIndexesForType(bs.getBinaryType());
                 type = this.m_indexes.get(bs.getBinaryType());
             }
-            final ArrayList<IndexEntry> entries = type.get(BinaryStorage.DEFAULT_ID_INDEX_HASHCODE);
+            final ArrayList<IndexEntry> entries = type.get(AbstractBinaryStorage.DEFAULT_ID_INDEX_HASHCODE);
             if (entries == null || entries.isEmpty()) {
                 return null;
             }
@@ -576,7 +574,8 @@ public final class BinaryStorage extends AbstractBinaryStorage
         }
     }
     
-    public void cleanUpFiles() {
+    @Override
+	public void cleanUpFiles() {
         synchronized (this.m_mutex) {
             final File[] arr$;
             final File[] files = arr$ = this.m_workspaceDir.listFiles(new FilenameFilter() {
@@ -678,7 +677,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         out.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
                 if (fout != null) {
@@ -686,7 +685,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         fout.close();
                     }
                     catch (IOException e) {
-                        BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
             }
@@ -703,7 +702,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
             entries.add(entry);
         }
         catch (IOException e2) {
-            BinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+            AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
         }
     }
     
@@ -755,7 +754,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                         indexHashCode = Integer.parseInt(m.group(1));
                     }
                     catch (NumberFormatException e4) {
-                        BinaryStorage.m_logger.error((Object)("Nom de fichier d'index mal form\u00e9 : " + file.getName()));
+                        AbstractBinaryStorage.m_logger.error("Nom de fichier d'index mal form\u00e9 : " + file.getName());
                         break Label_0426;
                     }
                     try {
@@ -784,7 +783,7 @@ public final class BinaryStorage extends AbstractBinaryStorage
                                     in.close();
                                 }
                                 catch (IOException e) {
-                                    BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                    AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                                 }
                             }
                             if (fin != null) {
@@ -792,16 +791,16 @@ public final class BinaryStorage extends AbstractBinaryStorage
                                     fin.close();
                                 }
                                 catch (IOException e) {
-                                    BinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                    AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                                 }
                             }
                         }
                     }
                     catch (FileNotFoundException e2) {
-                        BinaryStorage.m_logger.error((Object)e2.getMessage());
+                        AbstractBinaryStorage.m_logger.error(e2.getMessage());
                     }
                     catch (IOException e3) {
-                        BinaryStorage.m_logger.error((Object)e3.getMessage());
+                        AbstractBinaryStorage.m_logger.error(e3.getMessage());
                     }
                 }
             }

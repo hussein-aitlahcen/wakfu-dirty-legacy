@@ -80,7 +80,7 @@ public class Vault implements WalletHandler, ItemInventoryHandler
             return this.canAdd(item) && this.m_inventory.add(item);
         }
         catch (InventoryException e) {
-            Vault.m_logger.error((Object)"[VAULT] Impossible d'ajouter un item ? l'inventaire alors qu'on ? pourtant test? le canAdd", (Throwable)e);
+            Vault.m_logger.error("[VAULT] Impossible d'ajouter un item ? l'inventaire alors qu'on ? pourtant test? le canAdd", e);
             return false;
         }
     }
@@ -96,7 +96,7 @@ public class Vault implements WalletHandler, ItemInventoryHandler
             return this.canAdd(item, position) && this.m_inventory.addAt(item, position);
         }
         catch (InventoryException e) {
-            Vault.m_logger.error((Object)"[VAULT] Impossible d'ajouter un item ? l'inventaire alors qu'on ? pourtant test? le canAdd", (Throwable)e);
+            Vault.m_logger.error("[VAULT] Impossible d'ajouter un item ? l'inventaire alors qu'on ? pourtant test? le canAdd", e);
             return false;
         }
     }
@@ -173,7 +173,7 @@ public class Vault implements WalletHandler, ItemInventoryHandler
                 this.m_inventory.addAt(item, innerItem.position);
             }
             catch (InventoryException e) {
-                Vault.m_logger.error((Object)"[STORAGE_BOX] Probl\u00e8me de r\u00e9cup\u00e9ration d'un item de compartiment", (Throwable)e);
+                Vault.m_logger.error("[STORAGE_BOX] Probl\u00e8me de r\u00e9cup\u00e9ration d'un item de compartiment", e);
             }
         }
         this.m_amountOfCash = rawVault.money;
@@ -189,6 +189,6 @@ public class Vault implements WalletHandler, ItemInventoryHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Vault.class);
+        m_logger = Logger.getLogger(Vault.class);
     }
 }

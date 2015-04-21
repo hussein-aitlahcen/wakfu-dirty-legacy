@@ -2,10 +2,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,7 +42,7 @@ public final class EffectProbaFunctionCasterCharac extends UsingEffectGroupRunni
             re = new EffectProbaFunctionCasterCharac();
             re.m_pool = null;
             re.m_isStatic = false;
-            EffectProbaFunctionCasterCharac.m_logger.error((Object)("Erreur lors d'un checkOut sur un EffectProbaFunctionCasterCharac : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un EffectProbaFunctionCasterCharac : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -58,13 +59,13 @@ public final class EffectProbaFunctionCasterCharac extends UsingEffectGroupRunni
         if (!this.m_caster.hasCharacteristic(this.m_charac)) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 1) {
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 1) {
             final int characValue = this.m_caster.getCharacteristicValue(this.m_charac);
             this.m_value *= characValue;
         }
-        else if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            final int inc = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        else if (this.m_genericEffect.getParamsCount() == 2) {
+            final int inc = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             final int characValue2 = this.m_caster.getCharacteristicValue(this.m_charac);
             this.m_value += inc * characValue2;
         }

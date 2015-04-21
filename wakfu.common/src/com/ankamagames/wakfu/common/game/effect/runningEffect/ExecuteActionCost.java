@@ -1,12 +1,12 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -38,7 +38,7 @@ public final class ExecuteActionCost extends WakfuRunningEffect
             re = new ExecuteActionCost();
             re.m_pool = null;
             re.m_isStatic = false;
-            ExecuteActionCost.m_logger.error((Object)("Erreur lors d'un checkOut sur un ExecuteActionCost : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ExecuteActionCost : " + e.getMessage());
         }
         return re;
     }
@@ -50,11 +50,11 @@ public final class ExecuteActionCost extends WakfuRunningEffect
         if (this.m_apToConsume == 0 && this.m_mpToConsume == 0) {
             return;
         }
-        final int maxAPToConsume = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int maxAPToConsume = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (maxAPToConsume >= 0) {
             this.m_apToConsume = Math.min(this.m_apToConsume, maxAPToConsume);
         }
-        final int maxMPToConsume = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int maxMPToConsume = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (maxMPToConsume >= 0) {
             this.m_mpToConsume = Math.min(this.m_mpToConsume, maxMPToConsume);
         }
@@ -66,7 +66,7 @@ public final class ExecuteActionCost extends WakfuRunningEffect
         if (this.m_caster == null) {
             return;
         }
-        final ActionCost actionCost = ActionCost.checkOut((EffectContext<WakfuEffect>)this.m_context, new SpellCost((byte)this.m_apToConsume, (byte)this.m_mpToConsume, (byte)0), this.m_caster);
+        final ActionCost actionCost = ActionCost.checkOut(this.m_context, new SpellCost((byte)this.m_apToConsume, (byte)this.m_mpToConsume, (byte)0), this.m_caster);
         actionCost.setCaster(this.m_caster);
         actionCost.setRunningEffectStatus(RunningEffectStatus.NEUTRAL);
         actionCost.execute(null, false);

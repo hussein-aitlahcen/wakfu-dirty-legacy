@@ -62,7 +62,7 @@ public class JavaFunctionLoader
             }
         }
         catch (IOException e) {
-            JavaFunctionLoader.m_logger.error((Object)"", (Throwable)e);
+            JavaFunctionLoader.m_logger.error("", e);
         }
     }
     
@@ -83,10 +83,10 @@ public class JavaFunctionLoader
                 (functions[i] = aClass.getDeclaredConstructor(LuaState.class)).setAccessible(true);
             }
             catch (NoSuchMethodException e) {
-                JavaFunctionLoader.m_logger.error((Object)"", (Throwable)e);
+                JavaFunctionLoader.m_logger.error("", e);
             }
             catch (ClassNotFoundException e2) {
-                JavaFunctionLoader.m_logger.error((Object)"", (Throwable)e2);
+                JavaFunctionLoader.m_logger.error("", e2);
             }
         }
         return functions;
@@ -107,7 +107,7 @@ public class JavaFunctionLoader
             return true;
         }
         catch (IOException e) {
-            JavaFunctionLoader.m_logger.error((Object)"", (Throwable)e);
+            JavaFunctionLoader.m_logger.error("", e);
             return false;
         }
     }
@@ -163,7 +163,7 @@ public class JavaFunctionLoader
     }
     
     static {
-        m_logger = Logger.getLogger((Class)JavaFunctionLoader.class);
+        m_logger = Logger.getLogger(JavaFunctionLoader.class);
         INSTANCE = new JavaFunctionLoader();
     }
     
@@ -236,7 +236,7 @@ public class JavaFunctionLoader
                 b.close();
             }
             catch (IOException e) {
-                JavaFunctionLoader.m_logger.error((Object)"", (Throwable)e);
+                JavaFunctionLoader.m_logger.error("", e);
                 return null;
             }
             return functions;
@@ -247,7 +247,7 @@ public class JavaFunctionLoader
         }
         
         private void getFunctionInLine(final String line, final Collection<Function> functions) {
-            this.m_availableFunctions.forEachEntry((TObjectObjectProcedure<String, Class>)new TObjectObjectProcedure<String, Class>() {
+            this.m_availableFunctions.forEachEntry(new TObjectObjectProcedure<String, Class>() {
                 @Override
                 public boolean execute(final String funcName, final Class c) {
                     if (StringUtils.contains(line, funcName)) {
@@ -288,7 +288,7 @@ public class JavaFunctionLoader
         
         private static boolean isExportable(final JavaFunctionsLibrary lib) {
             try {
-                lib.getClass().getDeclaredConstructor((Class<?>[])new Class[0]);
+                lib.getClass().getDeclaredConstructor(new Class[0]);
                 return true;
             }
             catch (NoSuchMethodException e) {
@@ -340,13 +340,13 @@ public class JavaFunctionLoader
                     functions[i] = (JavaFunctionEx) constructors[i].newInstance(luaState);
                 }
                 catch (InstantiationException e) {
-                    CustomJavaFunctionLib.m_logger.error((Object)"", (Throwable)e);
+                    JavaFunctionsLibrary.m_logger.error("", e);
                 }
                 catch (IllegalAccessException e2) {
-                    CustomJavaFunctionLib.m_logger.error((Object)"", (Throwable)e2);
+                    JavaFunctionsLibrary.m_logger.error("", e2);
                 }
                 catch (InvocationTargetException e3) {
-                    CustomJavaFunctionLib.m_logger.error((Object)"", (Throwable)e3);
+                    JavaFunctionsLibrary.m_logger.error("", e3);
                 }
             }
             return functions;

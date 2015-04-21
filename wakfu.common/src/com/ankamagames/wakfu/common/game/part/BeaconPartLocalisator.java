@@ -43,7 +43,7 @@ public class BeaconPartLocalisator implements PartLocalisator<BeaconPart>
     @Override
     public BeaconPart getMainPartInSightFromPosition(final int x, final int y, final short z) {
         if (this.m_direction == null) {
-            BeaconPartLocalisator.m_logger.error((Object)"direction ou position null : update partLocalisator first");
+            BeaconPartLocalisator.m_logger.error("direction ou position null : update partLocalisator first");
             return null;
         }
         if (this.m_posx == x && this.m_posy == y && this.m_posz == z) {
@@ -74,14 +74,14 @@ public class BeaconPartLocalisator implements PartLocalisator<BeaconPart>
         if (angle >= BeaconPartLocalisator.ANGLE_BACKLEFT) {
             return BeaconPartLocalisator.m_parts.get(2);
         }
-        BeaconPartLocalisator.m_logger.warn((Object)("angle non trait\u00e9 " + angle));
+        BeaconPartLocalisator.m_logger.warn("angle non trait\u00e9 " + angle);
         return BeaconPartLocalisator.m_parts.get(0);
     }
     
     @Override
     public BeaconPart getMainPartInSightFromVector(Vector3 vector) {
         if (this.m_direction == null) {
-            BeaconPartLocalisator.m_logger.error((Object)"direction null : update partLocalisator first");
+            BeaconPartLocalisator.m_logger.error("direction null : update partLocalisator first");
             return null;
         }
         if (vector.getX() == 0.0f && vector.getY() == 0.0f) {
@@ -132,7 +132,7 @@ public class BeaconPartLocalisator implements PartLocalisator<BeaconPart>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BeaconPartLocalisator.class);
+        m_logger = Logger.getLogger(BeaconPartLocalisator.class);
         BeaconPartLocalisator.PRECISION = 10000;
         BeaconPartLocalisator.PI = (int)(3.141592653589793 * BeaconPartLocalisator.PRECISION);
         BeaconPartLocalisator.ANGLE_BACKRIGHT = (int)(0.7853981633974483 * BeaconPartLocalisator.PRECISION);

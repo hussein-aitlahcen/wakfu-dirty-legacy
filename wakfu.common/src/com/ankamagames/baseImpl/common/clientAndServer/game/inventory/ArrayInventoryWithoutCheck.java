@@ -45,7 +45,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
     @Override
     public final boolean setMaximumSize(final short maxSize) {
         if (maxSize < this.getMaximumSize()) {
-            ArrayInventoryWithoutCheck.m_logger.error((Object)"Can't decrease the size of an ArrayInventory");
+            ArrayInventoryWithoutCheck.m_logger.error("Can't decrease the size of an ArrayInventory");
             return false;
         }
         if (this.m_contents != null && maxSize == this.getMaximumSize()) {
@@ -86,7 +86,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
             return false;
         }
         if (item.getQuantity() <= 0) {
-            ArrayInventoryWithoutCheck.m_logger.error((Object)("On essaye d'ajouter un item avec une quantit\u00e9 de " + item.getQuantity()), (Throwable)new Exception());
+            ArrayInventoryWithoutCheck.m_logger.error("On essaye d'ajouter un item avec une quantit\u00e9 de " + item.getQuantity(), new Exception());
             return false;
         }
         if (this.isFull()) {
@@ -114,12 +114,12 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
     @Override
     public boolean updateQuantity(final long uniqueId, final short quantityUpdate) {
         if (!this.m_stacking) {
-            ArrayInventoryWithoutCheck.m_logger.error((Object)"Cannot update quantity of a not stackable inventory");
+            ArrayInventoryWithoutCheck.m_logger.error("Cannot update quantity of a not stackable inventory");
             return false;
         }
         final short idx = this.m_idxByUniqueId.get(uniqueId);
         if (idx != -1) {
-            final C item = (C)this.m_contents[idx];
+            final C item = this.m_contents[idx];
             if (item != null) {
                 if (item.getQuantity() + quantityUpdate <= 0) {
                     return this.destroy(item);
@@ -132,7 +132,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
                 return true;
             }
         }
-        ArrayInventoryWithoutCheck.m_logger.error((Object)"Item Not found");
+        ArrayInventoryWithoutCheck.m_logger.error("Item Not found");
         return false;
     }
     
@@ -147,11 +147,11 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
     
     public boolean addAt(final C item, final short position) throws InventoryCapacityReachedException, ContentAlreadyPresentException, PositionAlreadyUsedException {
         if (item == null) {
-            ArrayInventoryWithoutCheck.m_logger.info((Object)"Impossible d'ajouter un item null");
+            ArrayInventoryWithoutCheck.m_logger.info("Impossible d'ajouter un item null");
             return false;
         }
         if (position < 0 || position >= this.m_maximumSize) {
-            ArrayInventoryWithoutCheck.m_logger.info((Object)("Impossible d'ajouter un item : position en dehors des limites : " + position));
+            ArrayInventoryWithoutCheck.m_logger.info("Impossible d'ajouter un item : position en dehors des limites : " + position);
             return false;
         }
         if (this.m_contents[position] != null) {
@@ -182,7 +182,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
         }
         final short idx = this.m_idxByUniqueId.get(item.getUniqueId());
         if (this.m_contents[idx] != item) {
-            ArrayInventoryWithoutCheck.m_logger.error((Object)("Probl\u00e8me de logique : table d'index et tableau incoh\u00e9rents. Item attendu \u00e0 la position " + idx + " : " + item + " item trouv\u00e9 : " + this.m_contents[idx]));
+            ArrayInventoryWithoutCheck.m_logger.error("Probl\u00e8me de logique : table d'index et tableau incoh\u00e9rents. Item attendu \u00e0 la position " + idx + " : " + item + " item trouv\u00e9 : " + this.m_contents[idx]);
             return false;
         }
         this.m_contents[idx] = null;
@@ -210,7 +210,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
         if (position < 0 || position >= this.m_maximumSize) {
             return null;
         }
-        final C item = (C)this.m_contents[position];
+        final C item = this.m_contents[position];
         if (item == null) {
             return null;
         }
@@ -299,7 +299,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
     
     @Override
     public Iterator<C> iterator() {
-        return new ArrayIterator<C>((C[])this.m_contents, false);
+        return new ArrayIterator<C>(this.m_contents, false);
     }
     
     @Override
@@ -312,7 +312,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
         else {
             for (int i = 0, size = this.m_contents.length; i < size; ++i) {
                 result.append(i).append(':');
-                final C content = (C)this.m_contents[i];
+                final C content = this.m_contents[i];
                 if (content == null) {
                     result.append("<null>");
                 }
@@ -365,7 +365,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
         if (position < 0 || position >= this.m_maximumSize) {
             return null;
         }
-        return (C)this.m_contents[position];
+        return this.m_contents[position];
     }
     
     @Nullable
@@ -375,7 +375,7 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
             return null;
         }
         final short idx = this.m_idxByUniqueId.get(uniqueId);
-        return (C)this.m_contents[idx];
+        return this.m_contents[idx];
     }
     
     @Nullable
@@ -476,6 +476,6 @@ public class ArrayInventoryWithoutCheck<C extends InventoryContent, R> extends I
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ArrayInventoryWithoutCheck.class);
+        m_logger = Logger.getLogger(ArrayInventoryWithoutCheck.class);
     }
 }

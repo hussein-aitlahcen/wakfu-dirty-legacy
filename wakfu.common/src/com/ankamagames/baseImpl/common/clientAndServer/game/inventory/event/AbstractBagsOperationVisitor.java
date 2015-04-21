@@ -40,6 +40,6 @@ public abstract class AbstractBagsOperationVisitor<Item extends InventoryContent
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractBagsOperationVisitor.class);
+        m_logger = Logger.getLogger(AbstractBagsOperationVisitor.class);
     }
 }

@@ -254,7 +254,7 @@ public abstract class AbstractHavenWorldTopology
     public AbstractBuildingStruct equipBuilding(final long buildingUid, final int equippedItemId) {
         final AbstractBuildingStruct b = this.m_buildings.get(buildingUid);
         if (b == null) {
-            AbstractHavenWorldTopology.m_logger.error((Object)("le batiment " + buildingUid + " n'existe pas"));
+            AbstractHavenWorldTopology.m_logger.error("le batiment " + buildingUid + " n'existe pas");
             return null;
         }
         b.setItemId(equippedItemId);
@@ -266,6 +266,6 @@ public abstract class AbstractHavenWorldTopology
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractHavenWorldTopology.class);
+        m_logger = Logger.getLogger(AbstractHavenWorldTopology.class);
     }
 }

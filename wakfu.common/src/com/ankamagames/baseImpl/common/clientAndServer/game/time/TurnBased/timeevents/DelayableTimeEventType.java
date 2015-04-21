@@ -4,19 +4,19 @@ import java.nio.*;
 
 enum DelayableTimeEventType
 {
-    RUNNING_EFFECT_ACTIVATION((byte)0, (Class)RunningEffectActivationEvent.class) {
+    RUNNING_EFFECT_ACTIVATION((byte)0, RunningEffectActivationEvent.class) {
         @Override
         DelayableTimeEvent createTimeEvent() {
             return new RunningEffectActivationEvent();
         }
     }, 
-    RUNNING_EFFECT_DEACTIVATION((byte)1, (Class)RunningEffectDeactivationEvent.class) {
+    RUNNING_EFFECT_DEACTIVATION((byte)1, RunningEffectDeactivationEvent.class) {
         @Override
         DelayableTimeEvent createTimeEvent() {
             return new RunningEffectDeactivationEvent();
         }
     }, 
-    EFFECT_AREA_ACTIVATION((byte)2, (Class)EffectAreaActivationEvent.class) {
+    EFFECT_AREA_ACTIVATION((byte)2, EffectAreaActivationEvent.class) {
         @Override
         DelayableTimeEvent createTimeEvent() {
             return new EffectAreaActivationEvent();

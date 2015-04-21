@@ -66,13 +66,13 @@ public enum WakfuInteractiveElementProperty implements InteractiveElementPropert
                 properties.add(prop);
             }
             else {
-                WakfuInteractiveElementProperty.m_logger.warn((Object)("propri\u00e9t\u00e9 incoonu " + propId));
+                WakfuInteractiveElementProperty.m_logger.warn("propri\u00e9t\u00e9 incoonu " + propId);
             }
         }
         return properties;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuInteractiveElementProperty.class);
+        m_logger = Logger.getLogger(WakfuInteractiveElementProperty.class);
     }
 }

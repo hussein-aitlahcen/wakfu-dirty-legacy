@@ -1,7 +1,6 @@
 package com.ankamagames.wakfu.common.game.fighter.FighterCharacteristicProcedures;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 public final class CharacRatioFromAnotherCharacProcedure implements FighterCharacteristicProcedure
 {

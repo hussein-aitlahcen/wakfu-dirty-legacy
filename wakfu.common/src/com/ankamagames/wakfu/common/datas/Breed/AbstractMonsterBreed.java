@@ -6,7 +6,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.movement.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import com.ankamagames.wakfu.common.game.wakfu.*;
 import java.util.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import org.jetbrains.annotations.*;
 import gnu.trove.*;
@@ -60,7 +59,7 @@ public abstract class AbstractMonsterBreed<TCollect extends AbstractCollectActio
             this.m_naturalStates = naturalStates;
         }
         else {
-            AbstractMonsterBreed.m_logger.error((Object)("INITIALISATION ERROR : the natural states array is not well built (%3 != 0 : all entries are not a stateId/level pair) sur la breed " + breedId));
+            AbstractMonsterBreed.m_logger.error("INITIALISATION ERROR : the natural states array is not well built (%3 != 0 : all entries are not a stateId/level pair) sur la breed " + breedId);
             this.m_naturalStates = null;
         }
         this.m_defeatScriptId = defeatScriptId;
@@ -109,7 +108,7 @@ public abstract class AbstractMonsterBreed<TCollect extends AbstractCollectActio
     
     @Nullable
     public TCollect getCollectAction(final int collectId) {
-        return (TCollect)((this.m_collectActions == null) ? null : ((TCollect)this.m_collectActions.get(collectId)));
+        return (this.m_collectActions == null) ? null : ((TCollect)this.m_collectActions.get(collectId));
     }
     
     public TIntObjectIterator<TCollect> collectActionIterator() {
@@ -234,7 +233,7 @@ public abstract class AbstractMonsterBreed<TCollect extends AbstractCollectActio
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractMonsterBreed.class);
+        m_logger = Logger.getLogger(AbstractMonsterBreed.class);
         EMPTY_COLLECTS = new TIntObjectHashMap();
     }
 }

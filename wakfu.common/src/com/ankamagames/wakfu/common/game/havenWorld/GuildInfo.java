@@ -38,7 +38,7 @@ public class GuildInfo
     
     public static long getGuildId(final HavenWorld world) {
         if (world.getGuildInfo() == null) {
-            GuildInfo.m_logger.error((Object)"Demande d'info de guild sur un monde qui n'appartient pas \u00e0 une guilde");
+            GuildInfo.m_logger.error("Demande d'info de guild sur un monde qui n'appartient pas \u00e0 une guilde");
             return 0L;
         }
         return world.getGuildInfo().getGuildId();
@@ -58,7 +58,7 @@ public class GuildInfo
     
     public static void encode(final GuildInfo guildInfo, final ByteArray bb) {
         if (guildInfo == null) {
-            GuildInfo.m_logger.error((Object)"serialisation d'un HM qui n'appartient \u00e0 personne");
+            GuildInfo.m_logger.error("serialisation d'un HM qui n'appartient \u00e0 personne");
             bb.putLong(0L);
             return;
         }
@@ -77,6 +77,6 @@ public class GuildInfo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildInfo.class);
+        m_logger = Logger.getLogger(GuildInfo.class);
     }
 }

@@ -1,6 +1,7 @@
 package com.ankamagames.baseImpl.client.proxyclient.base.game.interactiveElement;
 
 import gnu.trove.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.interactiveElement.*;
 
 public class ClientInteractiveElementFactory<T extends ClientMapInteractiveElement, C extends ClientInteractiveElementFactoryConfiguration<T>> extends InteractiveElementFactory<T, C>
@@ -23,8 +24,8 @@ public class ClientInteractiveElementFactory<T extends ClientMapInteractiveEleme
         assert viewIds != null : "element interactif " + element.getId() + " n'a pas de vue";
         for (int i = 0; i < viewIds.length; ++i) {
             final int viewId = viewIds[i];
-            if (ClientInteractiveElementFactory.m_logger.isTraceEnabled()) {
-                ClientInteractiveElementFactory.m_logger.trace((Object)("Adding view " + viewId + " to element " + element.getId()));
+            if (InteractiveElementFactory.m_logger.isTraceEnabled()) {
+                InteractiveElementFactory.m_logger.trace("Adding view " + viewId + " to element " + element.getId());
             }
             final ClientInteractiveElementView view = this.createView(viewId);
             if (view != null) {

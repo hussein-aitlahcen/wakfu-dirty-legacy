@@ -97,7 +97,8 @@ public class XpTableFactory
             return (this.m_maxLevel == null) ? (this.m_minLevel + this.m_table.length - 1) : this.m_maxLevel;
         }
         
-        public long[] getTable() {
+        @Override
+		public long[] getTable() {
             return this.m_table;
         }
     }

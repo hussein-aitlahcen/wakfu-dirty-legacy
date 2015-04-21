@@ -61,7 +61,7 @@ public class GuildLevelManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildLevelManager.class);
+        m_logger = Logger.getLogger(GuildLevelManager.class);
         INSTANCE = new GuildLevelManager();
     }
 }

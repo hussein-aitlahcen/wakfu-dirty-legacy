@@ -20,7 +20,7 @@ public class MonsterFamilyManager
             this.m_monsterFamilies.put(familyId, monsterFamily);
         }
         else {
-            MonsterFamilyManager.m_logger.warn((Object)"tentative de surchage de la d\u00e9finition d'une famille dans le MonsterFamilyManager");
+            MonsterFamilyManager.m_logger.warn("tentative de surchage de la d\u00e9finition d'une famille dans le MonsterFamilyManager");
         }
     }
     
@@ -61,7 +61,7 @@ public class MonsterFamilyManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MonsterFamilyManager.class);
+        m_logger = Logger.getLogger(MonsterFamilyManager.class);
         m_instance = new MonsterFamilyManager();
     }
 }

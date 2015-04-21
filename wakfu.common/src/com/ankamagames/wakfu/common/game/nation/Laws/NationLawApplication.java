@@ -1,7 +1,5 @@
 package com.ankamagames.wakfu.common.game.nation.Laws;
 
-import java.util.*;
-
 public enum NationLawApplication
 {
     CITIZEN, 

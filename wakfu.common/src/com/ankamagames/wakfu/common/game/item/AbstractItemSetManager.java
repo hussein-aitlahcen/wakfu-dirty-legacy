@@ -32,6 +32,6 @@ public class AbstractItemSetManager<ReferenceItem extends AbstractReferenceItem,
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractItemSetManager.class);
+        m_logger = Logger.getLogger(AbstractItemSetManager.class);
     }
 }

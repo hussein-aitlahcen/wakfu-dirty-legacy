@@ -34,7 +34,7 @@ public class DecurseStandardEffect extends WakfuRunningEffect
         catch (Exception e) {
             re = new DecurseStandardEffect();
             re.m_pool = null;
-            DecurseStandardEffect.m_logger.error((Object)("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ArenaRunningEffect : " + e.getMessage());
         }
         return re;
     }
@@ -46,10 +46,10 @@ public class DecurseStandardEffect extends WakfuRunningEffect
             return;
         }
         final List<WakfuRunningEffect> reToUnapply = new ArrayList<WakfuRunningEffect>();
-        final boolean removeByActionID = ((WakfuEffect)this.m_genericEffect).getParamsCount() == 2;
+        final boolean removeByActionID = this.m_genericEffect.getParamsCount() == 2;
         int effectToRemoveId;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-            effectToRemoveId = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() > 0) {
+            effectToRemoveId = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM);
         }
         else {
             effectToRemoveId = Integer.MIN_VALUE;

@@ -2,10 +2,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,7 +36,7 @@ public final class HpGainRandomPercentOfValue extends HPGain
             re = new HpGainRandomPercentOfValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpGainRandomPercentOfValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpGainRandomPercentOfValue : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpGainRandomPercentOfValue : " + e.getMessage());
         }
         return re;
     }
@@ -46,9 +47,9 @@ public final class HpGainRandomPercentOfValue extends HPGain
             return;
         }
         final short level = this.getContainerLevel();
-        final int nbDices = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int diceValue = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int constant = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int nbDices = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int diceValue = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int constant = this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.m_value = 0;
         for (int i = 0; i < nbDices; ++i) {
             this.m_value += DiceRoll.roll(diceValue);

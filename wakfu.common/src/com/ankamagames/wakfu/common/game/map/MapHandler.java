@@ -42,6 +42,6 @@ public class MapHandler
     }
     
     static {
-        MapHandler.m_logger = Logger.getLogger((Class)MapHandler.class);
+        MapHandler.m_logger = Logger.getLogger(MapHandler.class);
     }
 }

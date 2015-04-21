@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.game.craft.reference;
 
-import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.account.*;
 import gnu.trove.*;

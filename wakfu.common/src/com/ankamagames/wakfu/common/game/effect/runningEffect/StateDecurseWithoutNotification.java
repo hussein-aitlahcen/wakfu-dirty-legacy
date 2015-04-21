@@ -1,7 +1,7 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class StateDecurseWithoutNotification extends StateDecurse
@@ -18,7 +18,7 @@ public final class StateDecurseWithoutNotification extends StateDecurse
         catch (Exception e) {
             re = new StateDecurseWithoutNotification();
             re.m_pool = null;
-            StateDecurseWithoutNotification.m_logger.error((Object)("Erreur lors d'un newInstance sur un StateDecurseWithoutNotification : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un newInstance sur un StateDecurseWithoutNotification : " + e.getMessage());
         }
         return re;
     }

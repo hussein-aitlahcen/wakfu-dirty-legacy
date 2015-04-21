@@ -3,10 +3,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -38,7 +39,7 @@ public class HPGainPercentOfValue extends HPGain
             re = new HPGainPercentOfValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            HPGainPercentOfValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPGain : " + e.getMessage());
         }
         return re;
     }
@@ -86,22 +87,22 @@ public class HPGainPercentOfValue extends HPGain
             this.m_value = 0;
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_percent = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_percent = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_useTriggeringEffect = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_useTriggeringEffect = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         else {
             this.m_useTriggeringEffect = true;
         }
         boolean functionOfCaster = false;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            functionOfCaster = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            functionOfCaster = (this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         boolean useVirtualHp = false;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            useVirtualHp = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            useVirtualHp = (this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         final EffectUser reference = functionOfCaster ? this.m_caster : this.m_target;
         if (reference != null && reference.hasCharacteristic(FighterCharacteristicType.HP)) {

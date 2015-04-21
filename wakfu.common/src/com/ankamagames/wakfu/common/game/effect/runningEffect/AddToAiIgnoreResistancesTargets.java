@@ -3,7 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -33,7 +35,7 @@ public final class AddToAiIgnoreResistancesTargets extends WakfuRunningEffect
             re = new AddToAiIgnoreResistancesTargets();
             re.m_pool = null;
             re.m_isStatic = false;
-            AddToAiIgnoreResistancesTargets.m_logger.error((Object)("Erreur lors d'un checkOut sur un AddToAiIgnoreResistancesTargets : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un AddToAiIgnoreResistancesTargets : " + e.getMessage());
         }
         return re;
     }

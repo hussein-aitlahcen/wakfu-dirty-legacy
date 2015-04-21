@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.datas;
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import java.nio.*;
-import java.util.*;
 
 public class CharacterSerializedScenarioManager extends CharacterSerializedPart implements VersionableObject
 {

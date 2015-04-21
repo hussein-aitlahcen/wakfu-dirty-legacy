@@ -60,6 +60,6 @@ public class LinkedToEffectContainerIterator implements Iterator<RunningEffect>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LinkedToEffectContainerIterator.class);
+        m_logger = Logger.getLogger(LinkedToEffectContainerIterator.class);
     }
 }

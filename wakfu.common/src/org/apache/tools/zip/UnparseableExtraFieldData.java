@@ -6,31 +6,38 @@ public final class UnparseableExtraFieldData implements CentralDirectoryParsingZ
     private byte[] localFileData;
     private byte[] centralDirectoryData;
     
-    public ZipShort getHeaderId() {
+    @Override
+	public ZipShort getHeaderId() {
         return UnparseableExtraFieldData.HEADER_ID;
     }
     
-    public ZipShort getLocalFileDataLength() {
+    @Override
+	public ZipShort getLocalFileDataLength() {
         return new ZipShort((this.localFileData == null) ? 0 : this.localFileData.length);
     }
     
-    public ZipShort getCentralDirectoryLength() {
+    @Override
+	public ZipShort getCentralDirectoryLength() {
         return (this.centralDirectoryData == null) ? this.getLocalFileDataLength() : new ZipShort(this.centralDirectoryData.length);
     }
     
-    public byte[] getLocalFileDataData() {
+    @Override
+	public byte[] getLocalFileDataData() {
         return ZipUtil.copy(this.localFileData);
     }
     
-    public byte[] getCentralDirectoryData() {
+    @Override
+	public byte[] getCentralDirectoryData() {
         return (this.centralDirectoryData == null) ? this.getLocalFileDataData() : ZipUtil.copy(this.centralDirectoryData);
     }
     
-    public void parseFromLocalFileData(final byte[] buffer, final int offset, final int length) {
+    @Override
+	public void parseFromLocalFileData(final byte[] buffer, final int offset, final int length) {
         System.arraycopy(buffer, offset, this.localFileData = new byte[length], 0, length);
     }
     
-    public void parseFromCentralDirectoryData(final byte[] buffer, final int offset, final int length) {
+    @Override
+	public void parseFromCentralDirectoryData(final byte[] buffer, final int offset, final int length) {
         System.arraycopy(buffer, offset, this.centralDirectoryData = new byte[length], 0, length);
         if (this.localFileData == null) {
             this.parseFromLocalFileData(buffer, offset, length);

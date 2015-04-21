@@ -38,7 +38,7 @@ public class BagInventoryContentChecker implements InventoryContentChecker<Item>
             return -3;
         }
         if (!(inventory instanceof ArrayInventory)) {
-            BagInventoryContentChecker.m_logger.warn((Object)"Utilisation du BagInventoryChecker sur un inventaire qui ne contient pas un ArrayInventory", (Throwable)new IllegalArgumentException("Utilisation du BagInventoryChecker sur un inventaire qui ne contient pas un ArrayInventory"));
+            BagInventoryContentChecker.m_logger.warn("Utilisation du BagInventoryChecker sur un inventaire qui ne contient pas un ArrayInventory", new IllegalArgumentException("Utilisation du BagInventoryChecker sur un inventaire qui ne contient pas un ArrayInventory"));
             return this.canAddItem(inventory, item);
         }
         final InventoryContent it = ((ArrayInventory)inventory).getFromPosition(position);
@@ -78,7 +78,7 @@ public class BagInventoryContentChecker implements InventoryContentChecker<Item>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BagInventoryContentChecker.class);
+        m_logger = Logger.getLogger(BagInventoryContentChecker.class);
         INSTANCE = new BagInventoryContentChecker();
     }
 }

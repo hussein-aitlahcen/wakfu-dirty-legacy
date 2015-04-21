@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.xp.*;
 import com.ankamagames.wakfu.common.game.skill.*;
 import com.ankamagames.framework.kernel.core.common.*;
@@ -32,7 +31,7 @@ public class BoostSkillWithSpell extends WakfuRunningEffect
         catch (Exception e) {
             re = new BoostSkillWithSpell();
             re.m_pool = null;
-            BoostSkillWithSpell.m_logger.error((Object)("Erreur lors d'un checkOut sur un BoostSkillWithSpell : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un BoostSkillWithSpell : " + e.getMessage());
         }
         return re;
     }
@@ -56,7 +55,7 @@ public class BoostSkillWithSpell extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
         }
     }
     

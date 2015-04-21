@@ -41,7 +41,8 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
         this.addAll(array);
     }
     
-    public Iterator<Long> iterator() {
+    @Override
+	public Iterator<Long> iterator() {
         return (Iterator<Long>) new TLongIterator(this);
     }
     
@@ -57,7 +58,8 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
         return true;
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final long[] oldSet = this._set;
         final byte[] oldStates = this._states;
@@ -88,7 +90,8 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
         return result;
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
         final long[] set = this._set;
         final byte[] states = this._states;
@@ -99,19 +102,22 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
         }
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof TLongHashSet)) {
             return false;
         }
         final TLongHashSet that = (TLongHashSet)other;
         return that.size() == this.size() && this.forEach(new TLongProcedure() {
-            public final boolean execute(final long value) {
+            @Override
+			public final boolean execute(final long value) {
                 return that.contains(value);
             }
         });
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEach(p);
         return p.getHashCode();
@@ -173,7 +179,8 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
         return changed;
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(0);
         out.writeInt(this._size);
         final SerializationProcedure writeProcedure = new SerializationProcedure(out);
@@ -182,7 +189,8 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         in.readByte();
         int size = in.readInt();
         this.setUp(size);
@@ -205,7 +213,8 @@ public class TLongHashSet extends TLongHash implements Externalizable, Iterable<
             return this.h;
         }
         
-        public final boolean execute(final long key) {
+        @Override
+		public final boolean execute(final long key) {
             this.h += TLongHashSet.this._hashingStrategy.computeHashCode(key);
             return true;
         }

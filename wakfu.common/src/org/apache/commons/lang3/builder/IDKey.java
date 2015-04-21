@@ -11,11 +11,13 @@ final class IDKey
         this.value = _value;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.id;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof IDKey)) {
             return false;
         }

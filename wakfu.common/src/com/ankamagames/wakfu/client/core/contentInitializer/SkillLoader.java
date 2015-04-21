@@ -1,12 +1,12 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
+
 import com.ankamagames.wakfu.client.binaryStorage.*;
-import com.ankamagames.wakfu.client.core.game.skill.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.core.*;
+import com.ankamagames.wakfu.client.core.game.skill.ReferenceSkill;
+import com.ankamagames.wakfu.client.core.game.skill.ReferenceSkillManager;
 import com.ankamagames.wakfu.common.game.skill.*;
 
 public class SkillLoader implements ContentInitializer
@@ -14,7 +14,7 @@ public class SkillLoader implements ContentInitializer
     private static final Logger m_logger;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         BinaryDocumentManager.getInstance().foreach(new SkillBinaryData(), new LoadProcedure<SkillBinaryData>() {
             @Override
             public void load(final SkillBinaryData data) {
@@ -22,7 +22,6 @@ public class SkillLoader implements ContentInitializer
                 ReferenceSkillManager.getInstance().addReferenceSkill(skill);
             }
         });
-        clientInstance.fireContentInitializerDone(this);
     }
     
     @Override
@@ -40,12 +39,12 @@ public class SkillLoader implements ContentInitializer
         final int maxLevel = bs.getMaxLevel();
         final SkillType skillType = SkillType.getFromId(skillTypeId);
         if (skillType == null) {
-            SkillLoader.m_logger.error((Object)("Impossible de cr\u00e9er un skill de type " + skillTypeId + " : id de skill inconnu"));
+            SkillLoader.m_logger.error("Impossible de cr\u00e9er un skill de type " + skillTypeId + " : id de skill inconnu");
         }
         return new ReferenceSkill(skillId, skillType, associatedItemTypes, associatedItems, maxLevel, skillInnate, scriptId);
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SkillLoader.class);
+        m_logger = Logger.getLogger(SkillLoader.class);
     }
 }

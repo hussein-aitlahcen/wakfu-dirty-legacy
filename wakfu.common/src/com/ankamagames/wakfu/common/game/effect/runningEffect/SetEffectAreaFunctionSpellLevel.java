@@ -4,7 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -34,7 +36,7 @@ public final class SetEffectAreaFunctionSpellLevel extends SetEffectArea
             re = new SetEffectAreaFunctionSpellLevel();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetEffectAreaFunctionSpellLevel.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetEffectAreaFunctionSpellLevel : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetEffectAreaFunctionSpellLevel : " + e.getMessage());
         }
         return re;
     }
@@ -43,15 +45,15 @@ public final class SetEffectAreaFunctionSpellLevel extends SetEffectArea
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         this.m_newTargetId = this.m_context.getEffectUserInformationProvider().getNextFreeEffectUserId((byte)2);
         this.extractZoneLevel(level);
-        this.m_shouldBeInfinite = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_shouldBeInfinite = (this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
     }
     
     private void extractZoneLevel(final short level) {
-        final short spellId = (short)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final short spellId = (short)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.m_caster == null || !(this.m_caster instanceof BasicCharacterInfo)) {
             this.m_zoneLevel = 0;
             return;

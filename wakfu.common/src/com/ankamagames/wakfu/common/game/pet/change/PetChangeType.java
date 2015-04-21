@@ -5,15 +5,15 @@ import org.jetbrains.annotations.*;
 
 public enum PetChangeType
 {
-    NAME((SimpleObjectFactory<? extends PetChange>)new NameFactory()), 
-    HEALTH((SimpleObjectFactory<? extends PetChange>)new HealthFactory()), 
-    XP((SimpleObjectFactory<? extends PetChange>)new XpFactory()), 
-    LAST_MEAL_DATE((SimpleObjectFactory<? extends PetChange>)new LasMealDateFactory()), 
-    LAST_HUNGRY_DATE((SimpleObjectFactory<? extends PetChange>)new LastHungryDateFactory()), 
-    COLOR((SimpleObjectFactory<? extends PetChange>)new ColorFactory()), 
-    EQUIPMENT((SimpleObjectFactory<? extends PetChange>)new EquipmentFactory()), 
-    SLEEP_DATE((SimpleObjectFactory<? extends PetChange>)new SleepDateFactory()), 
-    SLEEP_ITEM((SimpleObjectFactory<? extends PetChange>)new SleepItemFactory());
+    NAME(new NameFactory()), 
+    HEALTH(new HealthFactory()), 
+    XP(new XpFactory()), 
+    LAST_MEAL_DATE(new LasMealDateFactory()), 
+    LAST_HUNGRY_DATE(new LastHungryDateFactory()), 
+    COLOR(new ColorFactory()), 
+    EQUIPMENT(new EquipmentFactory()), 
+    SLEEP_DATE(new SleepDateFactory()), 
+    SLEEP_ITEM(new SleepItemFactory());
     
     public final byte idx;
     private final SimpleObjectFactory<? extends PetChange> factory;
@@ -24,7 +24,7 @@ public enum PetChangeType
     }
     
     public PetChange createNew() {
-        return (PetChange)this.factory.createNew();
+        return this.factory.createNew();
     }
     
     @Nullable

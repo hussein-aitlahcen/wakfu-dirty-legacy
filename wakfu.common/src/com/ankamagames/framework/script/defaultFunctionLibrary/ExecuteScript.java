@@ -73,7 +73,7 @@ public final class ExecuteScript extends JavaFunctionEx
             this.addReturnValue((long)executionTime.getValue());
         }
         catch (AssertionError e) {
-            ExecuteScript.m_logger.error((Object)"ERREUR CRITIQUE DANS UN SCRIPT", (Throwable)e);
+            ExecuteScript.m_logger.error("ERREUR CRITIQUE DANS UN SCRIPT", e);
         }
     }
     
@@ -95,7 +95,7 @@ public final class ExecuteScript extends JavaFunctionEx
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ExecuteScript.class);
+        m_logger = Logger.getLogger(ExecuteScript.class);
         PARAMS = new LuaScriptParameterDescriptor[] { new LuaScriptParameterDescriptor("ScriptName", null, LuaScriptParameterType.INTEGER, false), new LuaScriptParameterDescriptor("Params", null, LuaScriptParameterType.TABLE, false) };
         RESULT = new LuaScriptParameterDescriptor[] { new LuaScriptParameterDescriptor("executionTime", null, LuaScriptParameterType.LONG, false) };
     }

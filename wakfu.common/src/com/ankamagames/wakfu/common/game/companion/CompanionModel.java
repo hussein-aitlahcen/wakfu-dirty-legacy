@@ -144,7 +144,7 @@ public final class CompanionModel
             equipmentInventory.unserializeVersion(ByteBuffer.wrap(companion.m_serializedEquipment.clone()), this.m_serializationVersion);
         }
         catch (Exception e) {
-            CompanionModel.m_logger.error((Object)"Exception levee", (Throwable)e);
+            CompanionModel.m_logger.error("Exception levee", e);
         }
         return !equipmentInventory.equipment.contents.isEmpty();
     }
@@ -155,7 +155,7 @@ public final class CompanionModel
             equipmentInventory.unserializeVersion(ByteBuffer.wrap(this.m_serializedEquipment.clone()), this.m_serializationVersion);
         }
         catch (Exception e) {
-            CompanionModel.m_logger.error((Object)"Exception levee", (Throwable)e);
+            CompanionModel.m_logger.error("Exception levee", e);
             return false;
         }
         return true;
@@ -228,6 +228,6 @@ public final class CompanionModel
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CompanionModel.class);
+        m_logger = Logger.getLogger(CompanionModel.class);
     }
 }

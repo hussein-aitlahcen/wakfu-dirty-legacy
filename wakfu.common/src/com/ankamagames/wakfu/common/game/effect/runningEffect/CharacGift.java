@@ -5,7 +5,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -42,7 +44,7 @@ public class CharacGift extends CharacBuff
             re = new CharacGift();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacGift.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacGift : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacGift : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_swapCasterAndTarget = this.m_swapCasterAndTarget;
@@ -86,9 +88,9 @@ public class CharacGift extends CharacBuff
         this.m_swapCasterAndTarget = false;
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-                this.m_swapCasterAndTarget = (((WakfuEffect)this.m_genericEffect).getParam(1) == 1.0f);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            if (this.m_genericEffect.getParamsCount() >= 2) {
+                this.m_swapCasterAndTarget = (this.m_genericEffect.getParam(1) == 1.0f);
             }
         }
     }

@@ -111,7 +111,7 @@ public final class BarrierManager
     
     static {
         INSTANCE = new BarrierManager();
-        m_logger = Logger.getLogger((Class)BarrierManager.class);
+        m_logger = Logger.getLogger(BarrierManager.class);
     }
     
     private static class Barrier

@@ -13,27 +13,33 @@ public final class JarMarker implements ZipExtraField
         return JarMarker.DEFAULT;
     }
     
-    public ZipShort getHeaderId() {
+    @Override
+	public ZipShort getHeaderId() {
         return JarMarker.ID;
     }
     
-    public ZipShort getLocalFileDataLength() {
+    @Override
+	public ZipShort getLocalFileDataLength() {
         return JarMarker.NULL;
     }
     
-    public ZipShort getCentralDirectoryLength() {
+    @Override
+	public ZipShort getCentralDirectoryLength() {
         return JarMarker.NULL;
     }
     
-    public byte[] getLocalFileDataData() {
+    @Override
+	public byte[] getLocalFileDataData() {
         return JarMarker.NO_BYTES;
     }
     
-    public byte[] getCentralDirectoryData() {
+    @Override
+	public byte[] getCentralDirectoryData() {
         return JarMarker.NO_BYTES;
     }
     
-    public void parseFromLocalFileData(final byte[] data, final int offset, final int length) throws ZipException {
+    @Override
+	public void parseFromLocalFileData(final byte[] data, final int offset, final int length) throws ZipException {
         if (length != 0) {
             throw new ZipException("JarMarker doesn't expect any data");
         }

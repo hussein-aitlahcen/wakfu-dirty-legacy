@@ -7,7 +7,6 @@ import java.nio.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage.handler.*;
 import java.util.*;
 import java.nio.channels.*;
-import java.lang.annotation.*;
 import java.io.*;
 import java.lang.reflect.*;
 
@@ -41,7 +40,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
     @Override
     public BinaryStorable getById(final int value, final BinaryStorable instanceType) {
         if (!this.isInit()) {
-            AbstractSimpleBinaryStorage.m_logger.error((Object)"Tentative d'acces au (Simple)BinaryStorage alors qu'il n'est pas initialis\u00e9");
+            AbstractBinaryStorage.m_logger.error("Tentative d'acces au (Simple)BinaryStorage alors qu'il n'est pas initialis\u00e9");
             return null;
         }
         final BinaryStorable[] bstab = this.getByIndex("id", value, instanceType);
@@ -54,7 +53,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
     @Override
     public BinaryStorable[] getByIndex(final String indexname, final Object indexvalue, final BinaryStorable instanceType) {
         if (!this.isInit()) {
-            AbstractSimpleBinaryStorage.m_logger.error((Object)"Tentative d'acces au (Simple)BinaryStorage alors qu'il n'est pas initialis\u00e9");
+            AbstractBinaryStorage.m_logger.error("Tentative d'acces au (Simple)BinaryStorage alors qu'il n'est pas initialis\u00e9");
             return AbstractSimpleBinaryStorage.EMPTY_STORABLES;
         }
         final LinkedList<BinaryStorable> list = new LinkedList<BinaryStorable>();
@@ -87,7 +86,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                             final ByteBuffer data = ByteBuffer.wrap(dentry.getData());
                             nbs.build(data, dentry.getId(), dentry.getVersion());
                             if (data.remaining() != 0) {
-                                AbstractSimpleBinaryStorage.m_logger.warn((Object)("Objet restaur\u00e9 du simple binary storage : " + data.remaining() + " bytes restants non lus [type:" + instanceType.getBinaryType() + " | id:" + dentry.getId() + "]"));
+                                AbstractBinaryStorage.m_logger.warn("Objet restaur\u00e9 du simple binary storage : " + data.remaining() + " bytes restants non lus [type:" + instanceType.getBinaryType() + " | id:" + dentry.getId() + "]");
                             }
                             list.add(nbs);
                             for (final BinaryStorageHandler hand : this.m_handlers) {
@@ -100,7 +99,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                                     in.close();
                                 }
                                 catch (IOException e) {
-                                    AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                    AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                                 }
                             }
                             if (fin != null) {
@@ -108,7 +107,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                                     fin.close();
                                 }
                                 catch (IOException e) {
-                                    AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                    AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                                 }
                             }
                         }
@@ -116,10 +115,10 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                 }
             }
             catch (FileNotFoundException e2) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+                AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
             }
             catch (IOException e3) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+                AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
             }
         }
         if (!list.isEmpty()) {
@@ -132,7 +131,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
     public BinaryStorable[] getAll(final BinaryStorable instanceType) {
         final long time = System.nanoTime();
         if (!this.isInit()) {
-            AbstractSimpleBinaryStorage.m_logger.error((Object)"Tentative d'acces au (Simple)BinaryStorage alors qu'il n'est pas initialis\u00e9");
+            AbstractBinaryStorage.m_logger.error("Tentative d'acces au (Simple)BinaryStorage alors qu'il n'est pas initialis\u00e9");
             return AbstractSimpleBinaryStorage.EMPTY_STORABLES;
         }
         final LinkedList<BinaryStorable> list = new LinkedList<BinaryStorable>();
@@ -163,7 +162,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                                 in.close();
                             }
                             catch (IOException e) {
-                                AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                             }
                         }
                         if (fin != null) {
@@ -171,7 +170,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                                 fin.close();
                             }
                             catch (IOException e) {
-                                AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                                AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                             }
                         }
                     }
@@ -179,7 +178,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                     final ByteBuffer data = ByteBuffer.wrap(dataentry.getData());
                     nbs.build(data, dataentry.getId(), dataentry.getVersion());
                     if (data.remaining() != 0) {
-                        AbstractSimpleBinaryStorage.m_logger.warn((Object)("Objet restaur\u00e9 du simple binary storage : " + data.remaining() + " bytes restants non lus [type:" + instanceType.getBinaryType() + " | id:" + dataentry.getId() + "]"));
+                        AbstractBinaryStorage.m_logger.warn("Objet restaur\u00e9 du simple binary storage : " + data.remaining() + " bytes restants non lus [type:" + instanceType.getBinaryType() + " | id:" + dataentry.getId() + "]");
                     }
                     list.add(nbs);
                     for (final BinaryStorageHandler hand : this.m_handlers) {
@@ -188,10 +187,10 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                 }
             }
             catch (FileNotFoundException e2) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+                AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
             }
             catch (IOException e3) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+                AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
             }
         }
         if (!list.isEmpty()) {
@@ -215,7 +214,8 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
         return this.m_isInit;
     }
     
-    public boolean init() {
+    @Override
+	public boolean init() {
         assert this.m_baseWorkspace != null : "Il faut initialiser m_baseWorkspace";
         synchronized (this.m_fileAccessMutex) {
             try {
@@ -230,7 +230,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                 final File file = new File(this.m_baseWorkspace + this.m_indexFile);
                 if (!file.exists()) {
                     file.createNewFile();
-                    AbstractSimpleBinaryStorage.m_logger.info((Object)"Fichier d'index non trouv\u00e9 pour le chargement de la source binaire : Creation d'une nouvelle source");
+                    AbstractBinaryStorage.m_logger.info("Fichier d'index non trouv\u00e9 pour le chargement de la source binaire : Creation d'une nouvelle source");
                     this.initialisationDone();
                     return true;
                 }
@@ -252,16 +252,16 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                             in.close();
                         }
                         catch (IOException e) {
-                            AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                            AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                         }
                     }
                 }
             }
             catch (FileNotFoundException e2) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+                AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
             }
             catch (IOException e3) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+                AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
             }
             this.initialisationDone();
             return true;
@@ -291,7 +291,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
     
     @Override
     protected void remove(final BinaryStorable bs) {
-        AbstractSimpleBinaryStorage.m_logger.error((Object)"Remove call on a ReadOnlyBinaryStorage");
+        AbstractBinaryStorage.m_logger.error("Remove call on a ReadOnlyBinaryStorage");
     }
     
     @Override
@@ -299,7 +299,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
         synchronized (this.m_fileAccessMutex) {
             final byte[] data = bs.getBinaryData();
             if (data == null) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)("Tentative de sauvegarde d'un binary storable qui n'a aucun bloc de donn\u00e9es " + bs));
+                AbstractBinaryStorage.m_logger.error("Tentative de sauvegarde d'un binary storable qui n'a aucun bloc de donn\u00e9es " + bs);
                 return;
             }
             try {
@@ -323,7 +323,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                             out.close();
                         }
                         catch (IOException e) {
-                            AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                            AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                         }
                     }
                     if (fout != null) {
@@ -331,7 +331,7 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                             fout.close();
                         }
                         catch (IOException e) {
-                            AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                            AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                         }
                     }
                 }
@@ -355,10 +355,10 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                 }
             }
             catch (IOException e2) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e2.getMessage(), (Throwable)e2);
+                AbstractBinaryStorage.m_logger.error(e2.getMessage(), e2);
             }
             catch (IllegalAccessException e3) {
-                AbstractSimpleBinaryStorage.m_logger.error((Object)e3.getMessage(), (Throwable)e3);
+                AbstractBinaryStorage.m_logger.error(e3.getMessage(), e3);
             }
         }
     }
@@ -378,13 +378,13 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
                         out.close();
                     }
                     catch (IOException e) {
-                        AbstractSimpleBinaryStorage.m_logger.fatal((Object)"Impossible de fermer le descripteur ouvert sur un fichier !", (Throwable)e);
+                        AbstractBinaryStorage.m_logger.fatal("Impossible de fermer le descripteur ouvert sur un fichier !", e);
                     }
                 }
             }
         }
         catch (IOException e2) {
-            AbstractSimpleBinaryStorage.m_logger.error((Object)e2.getMessage());
+            AbstractBinaryStorage.m_logger.error(e2.getMessage());
         }
     }
     
@@ -393,7 +393,8 @@ public class AbstractSimpleBinaryStorage extends AbstractBinaryStorage
         return this.m_baseWorkspace;
     }
     
-    public void cleanUpFiles() {
+    @Override
+	public void cleanUpFiles() {
         synchronized (this.m_fileAccessMutex) {
             System.out.println("cleanUpFiles m_baseWorkspace " + this.m_baseWorkspace);
             final File indexFile = new File(this.m_baseWorkspace + this.m_indexFile);

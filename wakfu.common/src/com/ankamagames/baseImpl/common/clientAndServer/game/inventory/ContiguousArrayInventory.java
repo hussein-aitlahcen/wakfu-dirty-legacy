@@ -86,15 +86,15 @@ public class ContiguousArrayInventory<C extends InventoryContent, R> extends Arr
     
     public boolean insertAt(final C item, short position) throws InventoryCapacityReachedException, ContentAlreadyPresentException, LastPositionAlreadyUsedException, PositionAlreadyUsedException {
         if (item == null) {
-            ContiguousArrayInventory.m_logger.info((Object)"Impossible d'ajouter un item null");
+            ContiguousArrayInventory.m_logger.info("Impossible d'ajouter un item null");
             return false;
         }
         if (position < 0 || position >= this.m_maximumSize) {
-            ContiguousArrayInventory.m_logger.info((Object)("Impossible d'ajouter un item : position en dehors des limites : " + position));
+            ContiguousArrayInventory.m_logger.info("Impossible d'ajouter un item : position en dehors des limites : " + position);
             return false;
         }
-        if (this.m_contentChecker != null && this.m_contentChecker.canAddItem((Inventory<C>)this, item, position) < 0) {
-            ContiguousArrayInventory.m_logger.info((Object)"Position refus\u00e9e par le checker");
+        if (this.m_contentChecker != null && this.m_contentChecker.canAddItem(this, item, position) < 0) {
+            ContiguousArrayInventory.m_logger.info("Position refus\u00e9e par le checker");
             return false;
         }
         if (this.isFull()) {
@@ -128,6 +128,6 @@ public class ContiguousArrayInventory<C extends InventoryContent, R> extends Arr
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ContiguousArrayInventory.class);
+        m_logger = Logger.getLogger(ContiguousArrayInventory.class);
     }
 }

@@ -4,7 +4,8 @@ import java.io.*;
 
 public abstract class CodePointTranslator extends CharSequenceTranslator
 {
-    public final int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+    @Override
+	public final int translate(final CharSequence input, final int index, final Writer out) throws IOException {
         final int codepoint = Character.codePointAt(input, index);
         final boolean consumed = this.translate(codepoint, out);
         if (consumed) {

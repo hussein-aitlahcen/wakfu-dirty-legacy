@@ -116,7 +116,7 @@ public class StaticEffectAreaManager
             this.addGateEffectArea((AbstractGateEffectArea)area);
         }
         else {
-            StaticEffectAreaManager.m_logger.error((Object)("Type de zone d'effet inconnue du manager " + area.getClass().getSimpleName()));
+            StaticEffectAreaManager.m_logger.error("Type de zone d'effet inconnue du manager " + area.getClass().getSimpleName());
         }
     }
     
@@ -273,7 +273,7 @@ public class StaticEffectAreaManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StaticEffectAreaManager.class);
+        m_logger = Logger.getLogger(StaticEffectAreaManager.class);
         StaticEffectAreaManager.m_instance = new StaticEffectAreaManager();
     }
 }

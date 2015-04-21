@@ -7,7 +7,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.exception.
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.wakfu.common.game.companion.freeCompanion.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 public class CompanionController
 {
@@ -45,15 +44,15 @@ public class CompanionController
         }
         catch (InventoryCapacityReachedException e) {
             error = true;
-            CompanionController.m_logger.error((Object)"Exception levee", (Throwable)e);
+            CompanionController.m_logger.error("Exception levee", e);
         }
         catch (ContentAlreadyPresentException e2) {
             error = true;
-            CompanionController.m_logger.error((Object)"Exception levee", (Throwable)e2);
+            CompanionController.m_logger.error("Exception levee", e2);
         }
         catch (PositionAlreadyUsedException e3) {
             error = true;
-            CompanionController.m_logger.error((Object)"Exception levee", (Throwable)e3);
+            CompanionController.m_logger.error("Exception levee", e3);
         }
         if (error) {
             (companionEquipment).remove(itemToAdd);
@@ -81,15 +80,15 @@ public class CompanionController
         }
         catch (InventoryCapacityReachedException e) {
             error = true;
-            CompanionController.m_logger.error((Object)"Exception levee", (Throwable)e);
+            CompanionController.m_logger.error("Exception levee", e);
         }
         catch (ContentAlreadyPresentException e2) {
             error = true;
-            CompanionController.m_logger.error((Object)"Exception levee", (Throwable)e2);
+            CompanionController.m_logger.error("Exception levee", e2);
         }
         catch (PositionAlreadyUsedException e3) {
             error = true;
-            CompanionController.m_logger.error((Object)"Exception levee", (Throwable)e3);
+            CompanionController.m_logger.error("Exception levee", e3);
         }
         if (error) {
             throw new CompanionException("Erreur lors de l'ajout de l'objet " + item + " \u00e0 la position donn\u00e9e " + destPosition + " dans le sac " + bag);
@@ -107,6 +106,6 @@ public class CompanionController
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CompanionController.class);
+        m_logger = Logger.getLogger(CompanionController.class);
     }
 }

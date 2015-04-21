@@ -1,23 +1,25 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.framework.kernel.core.maths.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
-import java.util.*;
 
 abstract class SummonDouble extends WakfuRunningEffect
 {
@@ -63,7 +65,7 @@ abstract class SummonDouble extends WakfuRunningEffect
             this.setNotified();
             return;
         }
-        SummonDouble.m_logger.info((Object)("Instanciation d'une nouvelle invocation avec un id de " + this.m_newTargetId));
+        RunningEffect.m_logger.info("Instanciation d'une nouvelle invocation avec un id de " + this.m_newTargetId);
         final SummonDoubleParams doubleParams = this.getDoubleParams();
         final BasicCharacterInfo summoner = this.getSummoner();
         final BasicCharacterInfo monster = summoner.summonMonster(this.m_newTargetId, this.getCellForSummon(), doubleParams.getBreedId(), this.m_doubleCharacteristics, doubleParams.isDoubleIndependant(), null);
@@ -108,8 +110,8 @@ abstract class SummonDouble extends WakfuRunningEffect
     
     protected final int getDoublePower() {
         final short level = this.getContainerLevel();
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-            return ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() > 0) {
+            return this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         return 100;
     }

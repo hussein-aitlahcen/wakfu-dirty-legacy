@@ -31,7 +31,7 @@ public class ActionVisualManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ActionVisualManager.class);
+        m_logger = Logger.getLogger(ActionVisualManager.class);
         m_uniqueInstance = new ActionVisualManager();
     }
 }

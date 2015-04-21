@@ -25,7 +25,7 @@ public class WakfuRunningEffectUIDGenerator implements RunningEffectUIDGenerator
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuRunningEffectUIDGenerator.class);
+        m_logger = Logger.getLogger(WakfuRunningEffectUIDGenerator.class);
         WakfuRunningEffectUIDGenerator.m_counter = 16777216L;
     }
 }

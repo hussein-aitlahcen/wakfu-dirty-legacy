@@ -2,10 +2,12 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import java.util.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -40,7 +42,7 @@ public final class RunningEffectGroupLevelFunctionState extends RunningEffectGro
             re = new RunningEffectGroupLevelFunctionState();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupLevelFunctionState.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFuntionState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFuntionState : " + e.getMessage());
         }
         return re;
     }
@@ -51,18 +53,18 @@ public final class RunningEffectGroupLevelFunctionState extends RunningEffectGro
             return;
         }
         super.effectiveComputeValue(triggerRE);
-        this.m_stateId = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 8) {
-            this.m_checkOnCaster = (((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_stateId = this.m_genericEffect.getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 8) {
+            this.m_checkOnCaster = (this.m_genericEffect.getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 9) {
-            this.m_stateLevelFactor = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel());
+        if (this.m_genericEffect.getParamsCount() >= 9) {
+            this.m_stateLevelFactor = this.m_genericEffect.getParam(8, this.getContainerLevel());
         }
         else {
             this.m_stateLevelFactor = 1.0f;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 10) {
-            final boolean inverseFactor = ((WakfuEffect)this.m_genericEffect).getParam(9, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        if (this.m_genericEffect.getParamsCount() >= 10) {
+            final boolean inverseFactor = this.m_genericEffect.getParam(9, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
             if (inverseFactor) {
                 this.m_stateLevelFactor = 1.0f / this.m_stateLevelFactor;
             }

@@ -45,14 +45,14 @@ public class AbstractItemSet<R extends AbstractReferenceItem> implements Iterabl
     
     public void addReferenceItem(final R item) {
         if (item == null) {
-            AbstractItemSet.m_logger.warn((Object)("ajout d'un item null dans le set " + this.getId()));
+            AbstractItemSet.m_logger.warn("ajout d'un item null dans le set " + this.getId());
             return;
         }
         this.m_referenceItems.add(item);
     }
     
     public void addAllReferenceItems(final Collection<R> items) {
-        this.m_referenceItems.addAll((Collection<? extends R>)items);
+        this.m_referenceItems.addAll(items);
     }
     
     public void addEffect(final int nbElements, final WakfuEffect effect) {
@@ -135,6 +135,6 @@ public class AbstractItemSet<R extends AbstractReferenceItem> implements Iterabl
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractItemSet.class);
+        m_logger = Logger.getLogger(AbstractItemSet.class);
     }
 }

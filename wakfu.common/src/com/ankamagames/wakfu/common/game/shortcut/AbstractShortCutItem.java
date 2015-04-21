@@ -33,7 +33,7 @@ public abstract class AbstractShortCutItem implements InventoryContent, Releasab
                 this.m_pool.returnObject(this);
             }
             catch (Exception e) {
-                AbstractShortCutItem.m_logger.error((Object)("Exception dans le release de " + this.getClass().toString() + ". Normalement impossible"));
+                AbstractShortCutItem.m_logger.error("Exception dans le release de " + this.getClass().toString() + ". Normalement impossible");
             }
             this.m_pool = null;
         }
@@ -131,6 +131,6 @@ public abstract class AbstractShortCutItem implements InventoryContent, Releasab
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractShortCutItem.class);
+        m_logger = Logger.getLogger(AbstractShortCutItem.class);
     }
 }

@@ -1,9 +1,12 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,7 +38,7 @@ public final class ChangeSpellTargetCell extends WakfuRunningEffect
             re = new ChangeSpellTargetCell();
             re.m_pool = null;
             re.m_isStatic = false;
-            ChangeSpellTargetCell.m_logger.error((Object)("Erreur lors d'un checkOut sur un ChangeSpellTargetCell : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ChangeSpellTargetCell : " + e.getMessage());
         }
         return re;
     }

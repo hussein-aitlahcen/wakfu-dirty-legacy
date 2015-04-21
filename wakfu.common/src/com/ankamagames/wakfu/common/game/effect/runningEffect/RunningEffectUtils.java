@@ -1,10 +1,8 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import org.jetbrains.annotations.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.effect.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
 import com.ankamagames.framework.kernel.core.maths.*;

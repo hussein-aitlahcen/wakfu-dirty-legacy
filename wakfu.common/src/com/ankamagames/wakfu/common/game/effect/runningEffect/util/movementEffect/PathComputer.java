@@ -10,8 +10,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-
 import java.util.*;
 
 public final class PathComputer
@@ -59,7 +57,7 @@ public final class PathComputer
         final int sourceNumZ = this.m_topologyMap.getPathData(x, y, PathComputer.m_sourceCellPathData, 0);
         final int sourceIndex = TopologyChecker.getIndexFromZ(0, sourceNumZ, PathComputer.m_sourceCellPathData, z);
         if (sourceIndex == -32768) {
-            PathComputer.m_logger.error((Object)("Unable to find the cell (" + x + "; " + y + ") with z value = " + z));
+            PathComputer.m_logger.error("Unable to find the cell (" + x + "; " + y + ") with z value = " + z);
             return false;
         }
         return true;
@@ -70,7 +68,7 @@ public final class PathComputer
         final int y = this.m_mover.getWorldCellY();
         this.m_topologyMap = this.m_fightMap.getTopologyMapFromCell(x, y);
         if (this.m_topologyMap == null) {
-            PathComputer.m_logger.error((Object)("The cell (" + x + "; " + y + ") is not in the fightMap"));
+            PathComputer.m_logger.error("The cell (" + x + "; " + y + ") is not in the fightMap");
             return false;
         }
         return true;
@@ -78,7 +76,7 @@ public final class PathComputer
     
     public PathComputationResult computeMovement() {
         if (!this.init()) {
-            PathComputer.m_logger.error((Object)"Impossible d'initialiser correctement le computer");
+            PathComputer.m_logger.error("Impossible d'initialiser correctement le computer");
             return null;
         }
         int x = this.m_mover.getWorldCellX();
@@ -136,7 +134,7 @@ public final class PathComputer
         res.setValid(false);
         res.setError(false);
         if (!this.hasTopologyMapForCell(destX, destY)) {
-            PathComputer.m_logger.error((Object)("The cell (" + destX + "; " + destY + ") is not in the fightMap"));
+            PathComputer.m_logger.error("The cell (" + destX + "; " + destY + ") is not in the fightMap");
             res.setError(true);
             return res;
         }
@@ -174,7 +172,7 @@ public final class PathComputer
     private boolean nextAltitudeReachable(final int destNumZ, final short previousZ) {
         final int currentIndex = TopologyChecker.getIndexFromZ(this.m_sourceIndex, this.m_numSourceZ, PathComputer.m_sourceCellPathData, previousZ);
         if (currentIndex == -32768) {
-            PathComputer.m_logger.error((Object)"Pas d'altitude valide trouv\u00e9e pour la prochaine cellule");
+            PathComputer.m_logger.error("Pas d'altitude valide trouv\u00e9e pour la prochaine cellule");
             return false;
         }
         final int validIndexesCount = this.m_pathChecker.getValidIndexesOnNextCell(currentIndex + this.m_sourceIndex, this.m_sourceIndex, this.m_numSourceZ, PathComputer.m_sourceCellPathData, 0, destNumZ, PathComputer.m_destCellPathData);
@@ -217,7 +215,7 @@ public final class PathComputer
             return false;
         }
         if (activeEffectAreas != null) {
-            final Iterator<BasicEffectArea> effectAreaIterator = (Iterator<BasicEffectArea>)activeEffectAreas.iterator();
+            final Iterator<BasicEffectArea> effectAreaIterator = activeEffectAreas.iterator();
             boolean grip = false;
             while (effectAreaIterator.hasNext()) {
                 final AbstractEffectArea basicEffectArea = (AbstractEffectArea) effectAreaIterator.next();
@@ -242,7 +240,7 @@ public final class PathComputer
     }
     
     static {
-        PathComputer.m_logger = Logger.getLogger((Class)PathComputer.class);
+        PathComputer.m_logger = Logger.getLogger(PathComputer.class);
         PathComputer.m_sourceCellPathData = new CellPathData[32];
         for (int i = 0; i < PathComputer.m_sourceCellPathData.length; ++i) {
             PathComputer.m_sourceCellPathData[i] = new CellPathData();

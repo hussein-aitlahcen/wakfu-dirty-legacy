@@ -98,7 +98,7 @@ public abstract class Node
                     }
                     if (subNodes.size() == 0) {
                         if (Node.DEBUG) {
-                            Node.m_logger.error((Object)("Aucun noeud au niveau " + level));
+                            Node.m_logger.error("Aucun noeud au niveau " + level);
                         }
                         return NodeSet.EMPTY;
                     }
@@ -116,7 +116,7 @@ public abstract class Node
                         subNodes2.add(node);
                     }
                     if (subNodes2.size() == 0) {
-                        Node.m_logger.error((Object)("Aucun noeud au niveau " + level));
+                        Node.m_logger.error("Aucun noeud au niveau " + level);
                         return NodeSet.EMPTY;
                     }
                     potentialNodes = subNodes2;
@@ -131,7 +131,7 @@ public abstract class Node
                     }
                     if (subNodes.size() == 0) {
                         if (Node.DEBUG) {
-                            Node.m_logger.error((Object)("Aucun noeud " + aPackage + " au niveau " + level));
+                            Node.m_logger.error("Aucun noeud " + aPackage + " au niveau " + level);
                         }
                         return NodeSet.EMPTY;
                     }
@@ -168,7 +168,7 @@ public abstract class Node
             }
         }
         catch (Exception e) {
-            Node.m_logger.error((Object)"Exception lev\u00e9e lors de la r\u00e9cup\u00e9ration des noeuds", (Throwable)e);
+            Node.m_logger.error("Exception lev\u00e9e lors de la r\u00e9cup\u00e9ration des noeuds", e);
         }
         return null;
     }
@@ -192,7 +192,7 @@ public abstract class Node
     
     static {
         Node.DEBUG = true;
-        m_logger = Logger.getLogger((Class)Node.class);
+        m_logger = Logger.getLogger(Node.class);
         SUBPACKAGE_PATTERN = Pattern.compile("\\A(([\\w\\d-]+|\\?)\\.)*([\\w\\d-]+|\\?|\\*)?(\\.([\\w\\d-]+|\\?))*\\z");
     }
 }

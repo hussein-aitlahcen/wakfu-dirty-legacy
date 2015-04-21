@@ -146,7 +146,7 @@ public class TopologyMapDi extends TopologyMapBlockedCells
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyMapDi.class);
+        m_logger = Logger.getLogger(TopologyMapDi.class);
         _LIST = new TIntArrayList(32);
         m_mutex = new Object();
     }

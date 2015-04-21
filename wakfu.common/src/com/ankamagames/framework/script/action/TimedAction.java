@@ -27,7 +27,7 @@ public abstract class TimedAction extends Action implements MessageHandler
     public final void run() {
         long runTime = this.onRun();
         if (runTime > 30000L) {
-            TimedAction.m_logger.error((Object)("Attention ! Une action " + this.getClass().getSimpleName() + " dure plus d'une minute : " + runTime + " ms \u00e7a parait long, il y a peut etre un probleme"));
+            Action.m_logger.error("Attention ! Une action " + this.getClass().getSimpleName() + " dure plus d'une minute : " + runTime + " ms \u00e7a parait long, il y a peut etre un probleme");
             runTime = 0L;
         }
         if (runTime == 0L) {

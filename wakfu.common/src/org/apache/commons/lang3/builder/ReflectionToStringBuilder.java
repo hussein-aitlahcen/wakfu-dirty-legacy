@@ -28,7 +28,7 @@ public class ReflectionToStringBuilder extends ToStringBuilder
     }
     
     public static <T> String toString(final T object, final ToStringStyle style, final boolean outputTransients, final boolean outputStatics, final Class<? super T> reflectUpToClass) {
-        return new ReflectionToStringBuilder((T)object, style, null, (Class<? super T>)reflectUpToClass, outputTransients, outputStatics).toString();
+        return new ReflectionToStringBuilder(object, style, null, (Class<? super T>)reflectUpToClass, outputTransients, outputStatics).toString();
     }
     
     public static String toStringExclude(final Object object, final Collection<String> excludeFieldNames) {
@@ -165,7 +165,8 @@ public class ReflectionToStringBuilder extends ToStringBuilder
         this.upToClass = clazz;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         if (this.getObject() == null) {
             return this.getStyle().getNullText();
         }

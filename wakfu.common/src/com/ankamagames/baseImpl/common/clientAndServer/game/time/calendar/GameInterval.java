@@ -38,7 +38,7 @@ public class GameInterval implements GameIntervalConst
     
     public void set(final GameIntervalConst interval) {
         if (interval == null) {
-            this.set(GameInterval.EMPTY_INTERVAL);
+            this.set(GameIntervalConst.EMPTY_INTERVAL);
             return;
         }
         this.m_seconds = interval.getSeconds();

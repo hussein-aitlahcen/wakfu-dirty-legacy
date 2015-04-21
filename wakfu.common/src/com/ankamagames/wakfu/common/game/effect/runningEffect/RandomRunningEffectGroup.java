@@ -1,17 +1,18 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class RandomRunningEffectGroup extends RunningEffectGroup
@@ -35,7 +36,7 @@ public class RandomRunningEffectGroup extends RunningEffectGroup
         catch (Exception e) {
             re = new RandomRunningEffectGroup();
             re.m_pool = null;
-            RandomRunningEffectGroup.m_logger.error((Object)("Erreur lors d'un newInstance sur un RandomRunningEffectGroup : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un RandomRunningEffectGroup : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -54,7 +55,7 @@ public class RandomRunningEffectGroup extends RunningEffectGroup
             return;
         }
         if (this.m_effectGroup == null) {
-            RandomRunningEffectGroup.m_logger.error((Object)("Groupe d'effets inexistant " + this.getEffectId()));
+            RunningEffect.m_logger.error("Groupe d'effets inexistant " + this.getEffectId());
             return;
         }
         final List<WakfuEffect> selectedEffects = this.selectEffectToExecute();
@@ -67,7 +68,7 @@ public class RandomRunningEffectGroup extends RunningEffectGroup
                 e.execute(this.getEffectContainer(), this.getCaster(), this.getContext(), RunningEffectConstants.getInstance(), this.m_target.getWorldCellX(), this.m_target.getWorldCellY(), this.m_target.getWorldCellAltitude(), this.m_transmitOriginalTarget ? this.m_target : null, params, false);
             }
             else {
-                if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getAreaOfEffect() == null) {
+                if (this.m_genericEffect == null || this.m_genericEffect.getAreaOfEffect() == null) {
                     return;
                 }
                 this.executeEffectsOnArea(params, e);
@@ -78,11 +79,11 @@ public class RandomRunningEffectGroup extends RunningEffectGroup
     private void executeEffectsOnArea(final WakfuEffectExecutionParameters params, final WakfuEffect e) {
         final FightMap fightMap = this.m_context.getFightMap();
         if (fightMap == null) {
-            RandomRunningEffectGroup.m_logger.warn((Object)("pas de fightmap sur le context " + this.m_context));
+            RunningEffect.m_logger.warn("pas de fightmap sur le context " + this.m_context);
             return;
         }
         final Point3 targetCell = new Point3(this.getTargetCell());
-        final AreaOfEffect area = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect();
+        final AreaOfEffect area = this.m_genericEffect.getAreaOfEffect();
         final Iterable<int[]> iterable = area.getCells(this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), this.m_caster.getWorldCellX(), this.m_caster.getWorldCellY(), this.m_caster.getWorldCellAltitude(), this.m_caster.getDirection());
         for (final int[] ints : iterable) {
             targetCell.setX(ints[0]);
@@ -150,13 +151,13 @@ public class RandomRunningEffectGroup extends RunningEffectGroup
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup != null) {
             this.m_effectGroup = effectGroup.instanceAnother(level);
         }
-        this.m_maxEffectToExecute = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_transmitOriginalTarget = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM) == 1);
+        this.m_maxEffectToExecute = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_transmitOriginalTarget = (this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM) == 1);
         }
     }
     
@@ -167,12 +168,12 @@ public class RandomRunningEffectGroup extends RunningEffectGroup
     
     @Override
     public boolean useTarget() {
-        return this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() < 2 || ((WakfuEffect)this.m_genericEffect).getParam(1) == 1.0f;
+        return this.m_genericEffect == null || this.m_genericEffect.getParamsCount() < 2 || this.m_genericEffect.getParam(1) == 1.0f;
     }
     
     @Override
     public boolean useTargetCell() {
-        return this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2 && ((WakfuEffect)this.m_genericEffect).getParam(1) == 0.0f;
+        return this.m_genericEffect != null && this.m_genericEffect.getParamsCount() >= 2 && this.m_genericEffect.getParam(1) == 0.0f;
     }
     
     @Override

@@ -1,10 +1,11 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -34,7 +35,7 @@ public final class ApplyStatePercentFunctionAreaHp extends ApplyState
             re = new ApplyStatePercentFunctionAreaHp();
             re.m_pool = null;
             re.m_isStatic = false;
-            ApplyStatePercentFunctionAreaHp.m_logger.error((Object)("Erreur lors d'un checkOut sur un ApplyStatePercentFunctionAreaHp : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ApplyStatePercentFunctionAreaHp : " + e.getMessage());
         }
         return re;
     }
@@ -42,7 +43,7 @@ public final class ApplyStatePercentFunctionAreaHp extends ApplyState
     @Override
     protected int getApplyPercent() {
         if (this.m_caster.hasCharacteristic(FighterCharacteristicType.AREA_HP) && this.m_genericEffect != null) {
-            return ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) * this.m_caster.getCharacteristicValue(FighterCharacteristicType.AREA_HP);
+            return this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) * this.m_caster.getCharacteristicValue(FighterCharacteristicType.AREA_HP);
         }
         return 0;
     }

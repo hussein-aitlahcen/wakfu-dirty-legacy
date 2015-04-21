@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -68,7 +72,7 @@ public class SetCharac extends WakfuRunningEffect
         catch (Exception e) {
             re = new SetCharac();
             re.m_pool = null;
-            SetCharac.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetCharac : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetCharac : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -103,15 +107,15 @@ public class SetCharac extends WakfuRunningEffect
         final short level = this.getContainerLevel();
         this.m_casterValue = true;
         this.m_setMax = false;
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getParamsCount() == 0) {
             return;
         }
         this.m_casterValue = false;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_setMax = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_setMax = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     

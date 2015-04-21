@@ -97,7 +97,7 @@ public class BuildingDefinitionHelper
     
     public static GameIntervalConst getIndividualDelay(final AbstractBuildingDefinition building) {
         final BuildingEvolution evolution = HavenWorldDefinitionManager.INSTANCE.getEvolutionFromBuilding(building.getId());
-        return (evolution != null) ? evolution.getDelay() : GameInterval.EMPTY_INTERVAL;
+        return (evolution != null) ? evolution.getDelay() : GameIntervalConst.EMPTY_INTERVAL;
     }
     
     @Nullable
@@ -196,7 +196,7 @@ public class BuildingDefinitionHelper
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BuildingDefinitionHelper.class);
+        m_logger = Logger.getLogger(BuildingDefinitionHelper.class);
         m_buildingsByEntry = new TShortObjectHashMap<ArrayList<AbstractBuildingDefinition>>();
         m_entryByBuilding = new TShortObjectHashMap<BuildingCatalogEntry>();
     }

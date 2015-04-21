@@ -15,7 +15,7 @@ public class HMILinkMobileAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || (array.length != 1 && array.length != 2)) {
-                HMILinkMobileAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 2 : AppearanceId;AnimName(facultatif)) : " + parameters));
+                HMILinkMobileAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 2 : AppearanceId;AnimName(facultatif)) : " + parameters);
                 return false;
             }
             this.m_gfxId = array[0];
@@ -25,7 +25,7 @@ public class HMILinkMobileAction extends HMIAction
             return true;
         }
         catch (Exception e) {
-            HMILinkMobileAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas valide"));
+            HMILinkMobileAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + " : " + parameters + " n'est pas valide");
             return false;
         }
     }
@@ -44,6 +44,6 @@ public class HMILinkMobileAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMILinkMobileAction.class);
+        m_logger = Logger.getLogger(HMILinkMobileAction.class);
     }
 }

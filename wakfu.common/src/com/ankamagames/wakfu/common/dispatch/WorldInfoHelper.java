@@ -37,7 +37,7 @@ public class WorldInfoHelper
                     communities.add(com);
                 }
             }
-            return (ImmutableList<Community>)ImmutableList.copyOf((Collection)communities);
+            return ImmutableList.copyOf((Collection)communities);
         }
         final TIntHashSet required = config.getIntHashSet(SystemConfigurationType.COMMUNITY_REQUIRED);
         if (!required.isEmpty()) {
@@ -48,7 +48,7 @@ public class WorldInfoHelper
                     communities.add(com2);
                 }
             }
-            return (ImmutableList<Community>)ImmutableList.copyOf((Collection)communities);
+            return ImmutableList.copyOf((Collection)communities);
         }
         final TIntHashSet forbidden = config.getIntHashSet(SystemConfigurationType.COMMUNITY_FORBIDDEN);
         for (final Community com3 : Community.values()) {
@@ -56,6 +56,6 @@ public class WorldInfoHelper
                 communities.add(com3);
             }
         }
-        return (ImmutableList<Community>)ImmutableList.copyOf((Collection)communities);
+        return ImmutableList.copyOf((Collection)communities);
     }
 }

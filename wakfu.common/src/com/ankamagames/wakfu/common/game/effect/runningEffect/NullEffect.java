@@ -2,7 +2,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -26,7 +28,7 @@ public class NullEffect extends WakfuRunningEffect
         catch (Exception e) {
             re = new NullEffect();
             re.m_pool = null;
-            NullEffect.m_logger.error((Object)("Erreur lors d'un checkOut sur un NullEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un NullEffect : " + e.getMessage());
         }
         return re;
     }
@@ -42,8 +44,8 @@ public class NullEffect extends WakfuRunningEffect
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-            this.setExecutionStatus((byte)((WakfuEffect)this.m_genericEffect).getParam(0, (short)0, RoundingMethod.RANDOM));
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() > 0) {
+            this.setExecutionStatus((byte)this.m_genericEffect.getParam(0, (short)0, RoundingMethod.RANDOM));
         }
     }
     
@@ -67,7 +69,8 @@ public class NullEffect extends WakfuRunningEffect
         super.unapplyOverride();
     }
     
-    public boolean canBeExecutedOnKO() {
+    @Override
+	public boolean canBeExecutedOnKO() {
         return true;
     }
     

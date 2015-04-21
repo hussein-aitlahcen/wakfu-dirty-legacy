@@ -1,16 +1,20 @@
 package com.ankamagames.wakfu.common.game.fight.time;
 
 import com.ankamagames.wakfu.common.datas.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.nodes.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timeevents.*;
+
 import java.nio.*;
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
 import com.ankamagames.wakfu.common.game.fight.time.timescore.*;
+
 import gnu.trove.*;
-import java.io.*;
 
 public abstract class AbstractTimeline<F extends BasicCharacterInfo> extends TurnBasedTimeline
 {
@@ -27,7 +31,7 @@ public abstract class AbstractTimeline<F extends BasicCharacterInfo> extends Tur
         this.m_dynamicTimePointGap = false;
         this.m_storedOffPlayFighterTokens = new TLongObjectHashMap<FighterToken>();
         this.m_timeScoreGauges = timeScoreGauges;
-        this.m_fightersInformationProvider = (FightersInformationProvider<F>)owner;
+        this.m_fightersInformationProvider = owner;
         this.m_initProvider = initProvider;
     }
     
@@ -63,7 +67,7 @@ public abstract class AbstractTimeline<F extends BasicCharacterInfo> extends Tur
     @Override
     public void addFighter(final long fighterIdToAdd, final boolean playThisTurn) {
         if (this.m_storedOffPlayFighterTokens.containsKey(fighterIdToAdd)) {
-            AbstractTimeline.m_logger.error((Object)this.withFightIdAndState("\u00c9chec de l'ajout \u00e0 la Timeline de " + fighterIdToAdd + " (pr\u00e9sent dans les fighters stock\u00e9s)"));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("\u00c9chec de l'ajout \u00e0 la Timeline de " + fighterIdToAdd + " (pr\u00e9sent dans les fighters stock\u00e9s)"));
             this.unShelveFighter(fighterIdToAdd);
             return;
         }
@@ -73,7 +77,7 @@ public abstract class AbstractTimeline<F extends BasicCharacterInfo> extends Tur
     @Override
     public void shelveFighter(final long fighterId) {
         if (!this.m_nodes.contains(fighterId)) {
-            AbstractTimeline.m_logger.error((Object)this.withFightIdAndState("\u00c9chec du stockage des \u00e9v\u00e9nements pour " + fighterId + " : fighter absent"));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("\u00c9chec du stockage des \u00e9v\u00e9nements pour " + fighterId + " : fighter absent"));
             return;
         }
         short lastTurnPlayed = this.m_nodes.getLastTurnPlayed(fighterId);
@@ -88,7 +92,7 @@ public abstract class AbstractTimeline<F extends BasicCharacterInfo> extends Tur
     
     public void unShelveFighter(final long fighterId) {
         if (!this.m_storedOffPlayFighterTokens.containsKey(fighterId)) {
-            AbstractTimeline.m_logger.error((Object)this.withFightIdAndState("\u00c9chec de restauration des \u00e9v\u00e9nements pour " + fighterId + " : absent des fighters stock\u00e9s"));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("\u00c9chec de restauration des \u00e9v\u00e9nements pour " + fighterId + " : absent des fighters stock\u00e9s"));
             return;
         }
         this.m_timelineEvents.fighterUnshelved(fighterId);
@@ -99,7 +103,7 @@ public abstract class AbstractTimeline<F extends BasicCharacterInfo> extends Tur
     @Override
     public void removeFighter(final long fighterId) {
         if (!this.m_storedOffPlayFighterTokens.containsKey(fighterId)) {
-            AbstractTimeline.m_logger.error((Object)this.withFightIdAndState("\u00c9chec du retrait de la Timeline de " + fighterId + " : absent des fighters stock\u00e9s"));
+            TurnBasedTimeline.m_logger.error(this.withFightIdAndState("\u00c9chec du retrait de la Timeline de " + fighterId + " : absent des fighters stock\u00e9s"));
             return;
         }
         this.m_storedOffPlayFighterTokens.remove(fighterId);

@@ -46,7 +46,7 @@ public class WeaponAttack extends WakfuRunningEffect
             wre = new WeaponAttack();
             wre.m_pool = null;
             wre.m_isStatic = false;
-            WeaponAttack.m_logger.error((Object)("Erreur lors d'un checkOut sur un WeaponAttack : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un WeaponAttack : " + e.getMessage());
         }
         return wre;
     }
@@ -77,8 +77,8 @@ public class WeaponAttack extends WakfuRunningEffect
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() > 0) {
-            this.m_equipementPos = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() > 0) {
+            this.m_equipementPos = (byte)this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
         }
         else {
             this.m_equipementPos = EquipmentPosition.FIRST_WEAPON.getId();

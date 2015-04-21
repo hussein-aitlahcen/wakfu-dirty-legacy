@@ -996,7 +996,7 @@ public class StringUtils
     }
     
     public static <T> String join(final T... elements) {
-        return join((Object[])elements, null);
+        return join(elements, null);
     }
     
     public static String join(final Object[] array, final char separator) {
@@ -1855,7 +1855,7 @@ public class StringUtils
         }
         final String[] strs = split(str, separatorChar);
         ArrayUtils.reverse(strs);
-        return join((Object[])strs, separatorChar);
+        return join(strs, separatorChar);
     }
     
     public static String abbreviate(final String str, final int maxWidth) {
@@ -1986,7 +1986,7 @@ public class StringUtils
         if (strs == null || strs.length == 0) {
             return "";
         }
-        final int smallestIndexOfDiff = indexOfDifference((CharSequence[])strs);
+        final int smallestIndexOfDiff = indexOfDifference(strs);
         if (smallestIndexOfDiff == -1) {
             if (strs[0] == null) {
                 return "";

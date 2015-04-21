@@ -3,8 +3,8 @@ package com.ankamagames.wakfu.common.datas.specific;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.listener.*;
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
+
 import gnu.trove.*;
-import java.util.*;
 
 public class PropertyManager<T extends PropertyType> extends AbstractPropertyManager<T>
 {
@@ -37,7 +37,7 @@ public class PropertyManager<T extends PropertyType> extends AbstractPropertyMan
                 break;
             }
             default: {
-                PropertyManager.m_logger.fatal((Object)"type de manager de propri\u00e9t\u00e9 inconnu");
+                AbstractPropertyManager.m_logger.fatal("type de manager de propri\u00e9t\u00e9 inconnu");
                 return null;
             }
         }
@@ -67,7 +67,7 @@ public class PropertyManager<T extends PropertyType> extends AbstractPropertyMan
     
     private void dispatchUpdate(final T prop) {
         if (this.m_listenerNotifier.property != null) {
-            PropertyManager.m_logger.error((Object)"Attention, \u00e9crasement de propri\u00e9t\u00e9 dans le notifier", (Throwable)new Exception());
+            AbstractPropertyManager.m_logger.error("Attention, \u00e9crasement de propri\u00e9t\u00e9 dans le notifier", new Exception());
         }
         this.m_listenerNotifier.property = prop;
         this.m_listeners.notifyListeners();

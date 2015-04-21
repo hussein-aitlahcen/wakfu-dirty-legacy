@@ -36,7 +36,8 @@ public abstract class JavaFunctionEx extends JavaFunction
         super.register(this.getName());
     }
     
-    public final int execute() throws LuaException {
+    @Override
+	public final int execute() throws LuaException {
         this.m_returnValueCount = 0;
         final int paramCount = this.checkParam();
         Label_0069: {
@@ -70,7 +71,7 @@ public abstract class JavaFunctionEx extends JavaFunction
             return this.getScriptObject().getCurrentLine();
         }
         catch (Exception e) {
-            JavaFunctionEx.m_logger.error((Object)"Exception levee", (Throwable)e);
+            JavaFunctionEx.m_logger.error("Exception levee", e);
             return "-1";
         }
     }
@@ -85,13 +86,13 @@ public abstract class JavaFunctionEx extends JavaFunction
             fileName = this.getScriptObject().getSource();
         }
         catch (Exception ex) {
-            JavaFunctionEx.m_logger.warn((Object)"pas de script associ? a cette fonction");
+            JavaFunctionEx.m_logger.warn("pas de script associ? a cette fonction");
         }
         return "fichier=" + fileName + " ligne=" + this.getLineNumber() + " " + msg;
     }
     
     protected final void writeError(final Logger logger, final String msg) {
-        logger.error((Object)this.getStringError(msg));
+        logger.error(this.getStringError(msg));
     }
     
     protected abstract void run(final int p0) throws LuaException;
@@ -219,7 +220,7 @@ public abstract class JavaFunctionEx extends JavaFunction
         final int tableIndex = i + 2;
         final LuaValue[] field = new LuaValue[this.L.objLen(tableIndex)];
         for (int k = 0; k < field.length; ++k) {
-            this.L.pushNumber((double)(k + 1));
+            this.L.pushNumber(k + 1);
             this.L.getTable(tableIndex);
             field[k] = LuaValue.createFrom(this.L, -1);
             this.L.pop(1);
@@ -289,7 +290,7 @@ public abstract class JavaFunctionEx extends JavaFunction
     
     protected final void addReturnValue(final int i) throws LuaException {
         this.checkReturnValued(LuaScriptParameterType.INTEGER);
-        this.L.pushNumber((double)i);
+        this.L.pushNumber(i);
         ++this.m_returnValueCount;
     }
     
@@ -301,13 +302,13 @@ public abstract class JavaFunctionEx extends JavaFunction
     
     protected final void addReturnValue(final float f) throws LuaException {
         this.checkReturnValued(LuaScriptParameterType.NUMBER);
-        this.L.pushNumber((double)f);
+        this.L.pushNumber(f);
         ++this.m_returnValueCount;
     }
     
     protected final void addReturnValue(final long l) throws LuaException {
         this.checkReturnValued(LuaScriptParameterType.LONG);
-        this.L.pushObjectValue((Object)l);
+        this.L.pushObjectValue(l);
         ++this.m_returnValueCount;
     }
     
@@ -343,6 +344,6 @@ public abstract class JavaFunctionEx extends JavaFunction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)JavaFunctionEx.class);
+        m_logger = Logger.getLogger(JavaFunctionEx.class);
     }
 }

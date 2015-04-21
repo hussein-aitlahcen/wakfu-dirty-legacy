@@ -44,7 +44,7 @@ public class InsertBuildingValidator extends ModificationValidator<AbstractHaven
                     final short mapx = (short)MapConstants.getMapCoordFromCellX(cellX);
                     final short mapy = (short)MapConstants.getMapCoordFromCellY(cellY);
                     if (buildingsInMap == null || lastMapX != mapx || lastMapY != mapy) {
-                        buildingsInMap = ((AbstractHavenWorldTopology)this.m_dataProvider).getBuildingsInMap(mapx, mapy);
+                        buildingsInMap = this.m_dataProvider.getBuildingsInMap(mapx, mapy);
                         lastMapX = mapx;
                         lastMapY = mapy;
                     }
@@ -76,11 +76,11 @@ public class InsertBuildingValidator extends ModificationValidator<AbstractHaven
             for (int cellX = rect.m_xMin; cellX < rect.m_xMax; ++cellX) {
                 final short patchX = AbstractHavenWorldTopology.patchXFromCellX(cellX);
                 final short patchY = AbstractHavenWorldTopology.patchYFromCellY(cellY);
-                final short patchId = ((AbstractHavenWorldTopology)this.m_dataProvider).getPatchId(patchX, patchY);
-                if (!((AbstractHavenWorldTopology)this.m_dataProvider).isEditablePatch(patchX, patchY)) {
+                final short patchId = this.m_dataProvider.getPatchId(patchX, patchY);
+                if (!this.m_dataProvider.isEditablePatch(patchX, patchY)) {
                     this.addConflict(patchId, patchX, patchY);
                 }
-                else if (InsertPatchValidator.patchIsBlocking(this.m_patchLibrary, (AbstractHavenWorldTopology)this.m_dataProvider, cellX, cellY)) {
+                else if (InsertPatchValidator.patchIsBlocking(this.m_patchLibrary, this.m_dataProvider, cellX, cellY)) {
                     this.addConflict(patchId, patchX, patchY);
                 }
             }
@@ -93,6 +93,6 @@ public class InsertBuildingValidator extends ModificationValidator<AbstractHaven
     }
     
     static {
-        m_logger = Logger.getLogger((Class)InsertBuildingValidator.class);
+        m_logger = Logger.getLogger(InsertBuildingValidator.class);
     }
 }

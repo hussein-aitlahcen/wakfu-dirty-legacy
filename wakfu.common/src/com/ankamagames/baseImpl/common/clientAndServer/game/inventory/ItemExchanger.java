@@ -35,7 +35,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     }
     
     protected void init(final User user1, final User user2) {
-        ItemExchanger.m_logger.info((Object)("[Trade] Initialisation d'un \u00e9change entre " + user1.getName() + "(id=" + user1.getId() + ") et " + user2.getName() + " (id=" + user2.getId() + ")"));
+        ItemExchanger.m_logger.info("[Trade] Initialisation d'un \u00e9change entre " + user1.getName() + "(id=" + user1.getId() + ") et " + user2.getName() + " (id=" + user2.getId() + ")");
         if (user1 == null) {
             throw new NullPointerException("[Trade] First user of an ItemExchanger can't be null");
         }
@@ -120,7 +120,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     }
     
     protected void finishExchange() {
-        ItemExchanger.m_logger.info((Object)("[Trade] Fin de l'\u00e9change entre " + this.m_requester.getName() + " (id=" + this.m_requester.getId() + " et " + this.m_target.getName() + " (id=" + this.m_target.getId() + ")"));
+        ItemExchanger.m_logger.info("[Trade] Fin de l'\u00e9change entre " + this.m_requester.getName() + " (id=" + this.m_requester.getId() + " et " + this.m_target.getName() + " (id=" + this.m_target.getId() + ")");
         this.m_currentState = ItemExchangeState.FINISHED;
         this.m_requester.clear();
         this.m_target.clear();
@@ -154,7 +154,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
                 event.release();
             }
             catch (Exception e) {
-                ItemExchanger.m_logger.error((Object)"[Trade] Exception lors de la notification d'un \u00e9v\u00e8nement aux utilisateurs d'un ItemExchanger: ", (Throwable)e);
+                ItemExchanger.m_logger.error("[Trade] Exception lors de la notification d'un \u00e9v\u00e8nement aux utilisateurs d'un ItemExchanger: ", e);
             }
         }
     }
@@ -170,7 +170,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     protected void notifyUser(final long userId, final ItemExchangerEvent event, final boolean releaseEvent) {
         final User user = this.getUserById(userId);
         if (user == null) {
-            ItemExchanger.m_logger.error((Object)("[Trade] Impossible d'envoyer un \u00e9v\u00e8nement \u00e0 l'utilisateur d'id " + userId));
+            ItemExchanger.m_logger.error("[Trade] Impossible d'envoyer un \u00e9v\u00e8nement \u00e0 l'utilisateur d'id " + userId);
             return;
         }
         this.notifyUser(user, event, releaseEvent);
@@ -185,7 +185,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
                 event.release();
             }
             catch (Exception e) {
-                ItemExchanger.m_logger.error((Object)"[Trade] Exception lors de la notification d'un \u00e9v\u00e8nement \u00e0 un user d'un ItemExchanger: ", (Throwable)e);
+                ItemExchanger.m_logger.error("[Trade] Exception lors de la notification d'un \u00e9v\u00e8nement \u00e0 un user d'un ItemExchanger: ", e);
             }
         }
     }
@@ -231,7 +231,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     
     public void cancelExchangeUserBusy(final User userBusy) {
         if (!this.isUserConcerned(userBusy)) {
-            ItemExchanger.m_logger.warn((Object)("[Trade] Impossible d'annuler l'\u00e9change, " + userBusy.getName() + " n'est pas concern\u00e9"));
+            ItemExchanger.m_logger.warn("[Trade] Impossible d'annuler l'\u00e9change, " + userBusy.getName() + " n'est pas concern\u00e9");
             return;
         }
         this.m_currentState = ItemExchangeState.FINISHED;
@@ -249,7 +249,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     
     public void cancelExchange(final User user) {
         if (!this.isUserConcerned(user)) {
-            ItemExchanger.m_logger.error((Object)("[Trade] Impossible de retirer l'utilisateur (\"" + user.getName() + "\", " + user.getId() + ") de l'ExchangerUser : Il n'est pas concern\u00e9 par cet \u00e9change (\"" + this.m_requester.getName() + "\", " + this.m_requester.getId() + "/\"" + this.m_target.getName() + "\", " + this.m_target.getId() + ")."));
+            ItemExchanger.m_logger.error("[Trade] Impossible de retirer l'utilisateur (\"" + user.getName() + "\", " + user.getId() + ") de l'ExchangerUser : Il n'est pas concern\u00e9 par cet \u00e9change (\"" + this.m_requester.getName() + "\", " + this.m_requester.getId() + "/\"" + this.m_target.getName() + "\", " + this.m_target.getId() + ").");
             return;
         }
         final User otherUser = this.getOtherUser(user);
@@ -261,7 +261,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     
     public void acceptExchange(final User user) {
         if (!this.isUserConcerned(user)) {
-            ItemExchanger.m_logger.error((Object)("[Trade] Impossible de finir l'\u00e9change " + user + " de l'ExchangerUser n'est pas concern\u00e9 par cet \u00e9change"));
+            ItemExchanger.m_logger.error("[Trade] Impossible de finir l'\u00e9change " + user + " de l'ExchangerUser n'est pas concern\u00e9 par cet \u00e9change");
             return;
         }
         if (this.isExchangeValid()) {
@@ -281,7 +281,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     
     public void setUserReady(final User user, final boolean ready) {
         if (!this.isUserConcerned(user)) {
-            ItemExchanger.m_logger.error((Object)("[Trade] Impossible de continuer l'\u00e9change " + user + " de l'ExchangerUser n'est pas concern\u00e9 par cet \u00e9change"));
+            ItemExchanger.m_logger.error("[Trade] Impossible de continuer l'\u00e9change " + user + " de l'ExchangerUser n'est pas concern\u00e9 par cet \u00e9change");
             return;
         }
         if (this.needsWaitingUsersReady()) {
@@ -298,7 +298,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
             return;
         }
         if (quantity < 1) {
-            ItemExchanger.m_logger.error((Object)"[Trade] On essaye d'ajouter une quantit\u00e9 n\u00e9gative ou nulle d'objets \u00e0 l'\u00e9change");
+            ItemExchanger.m_logger.error("[Trade] On essaye d'ajouter une quantit\u00e9 n\u00e9gative ou nulle d'objets \u00e0 l'\u00e9change");
             return;
         }
         this.m_requester.setReady(false);
@@ -306,14 +306,14 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
         final ContentType exchangeContent = user.getInExchangeList(referenceContent.getUniqueId());
         if (exchangeContent != null) {
             if (this.isCheckQuantityNeeded() && exchangeContent.getQuantity() + quantity > referenceContent.getQuantity()) {
-                ItemExchanger.m_logger.info((Object)"[Trade] On essaye d'ajouter plus de carte qu'il n'en a de disponible dans un \u00e9change");
+                ItemExchanger.m_logger.info("[Trade] On essaye d'ajouter plus de carte qu'il n'en a de disponible dans un \u00e9change");
                 return;
             }
             exchangeContent.updateQuantity(quantity);
         }
         else {
             if (this.isCheckQuantityNeeded() && quantity > referenceContent.getQuantity()) {
-                ItemExchanger.m_logger.error((Object)"[Trade] On essaye d'\u00e9changer plus de carte qu'il n'en a de disponible");
+                ItemExchanger.m_logger.error("[Trade] On essaye d'\u00e9changer plus de carte qu'il n'en a de disponible");
                 return;
             }
             final ContentType clonedContent = (ContentType)referenceContent.getClone();
@@ -329,22 +329,22 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     
     public void removeItemToExchange(final User user, final ContentType referenceContent, final short quantity) {
         if (!this.isUserConcerned(user)) {
-            ItemExchanger.m_logger.error((Object)"[Trade] On essaye de retirer un objet de la liste d'un utilisateur non valide");
+            ItemExchanger.m_logger.error("[Trade] On essaye de retirer un objet de la liste d'un utilisateur non valide");
             return;
         }
         if (quantity < 1) {
-            ItemExchanger.m_logger.error((Object)"[Trade] On essaye de retirer une quantit\u00e9 n\u00e9gative ou nulle d'objets \u00e0 l'\u00e9change");
+            ItemExchanger.m_logger.error("[Trade] On essaye de retirer une quantit\u00e9 n\u00e9gative ou nulle d'objets \u00e0 l'\u00e9change");
             return;
         }
         this.m_requester.setReady(false);
         this.m_target.setReady(false);
         final ContentType exchangeContent = user.getInExchangeList(referenceContent.getUniqueId());
         if (exchangeContent == null) {
-            ItemExchanger.m_logger.error((Object)"[Trade] On essaye de retirer un objet de l'\u00e9change qui n'existe pas");
+            ItemExchanger.m_logger.error("[Trade] On essaye de retirer un objet de l'\u00e9change qui n'existe pas");
             return;
         }
         if (exchangeContent.getQuantity() < quantity) {
-            ItemExchanger.m_logger.error((Object)"[Trade] On essaie de retirer plus d'objets qu'il n'y en a dans l'\u00e9change");
+            ItemExchanger.m_logger.error("[Trade] On essaie de retirer plus d'objets qu'il n'y en a dans l'\u00e9change");
         }
         else if (exchangeContent.getQuantity() == quantity) {
             exchangeContent.release();
@@ -370,7 +370,7 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     
     public void cancel(final User user) {
         if (!this.isUserConcerned(user)) {
-            ItemExchanger.m_logger.warn((Object)("[Trade] Impossible d'annuler l'\u00e9change, " + user.getName() + " n'est pas concern\u00e9"));
+            ItemExchanger.m_logger.warn("[Trade] Impossible d'annuler l'\u00e9change, " + user.getName() + " n'est pas concern\u00e9");
             return;
         }
         switch (this.m_currentState) {
@@ -386,6 +386,6 @@ public abstract class ItemExchanger<ContentType extends InventoryContent, User e
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemExchanger.class);
+        m_logger = Logger.getLogger(ItemExchanger.class);
     }
 }

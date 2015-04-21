@@ -3,9 +3,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,7 +37,7 @@ public class SpellGain extends WakfuRunningEffect
         catch (Exception e) {
             re = new SpellGain();
             re.m_pool = null;
-            SpellGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un " + SpellGain.class + " : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un " + SpellGain.class + " : " + e.getMessage());
         }
         re.m_spellId = this.m_spellId;
         return re;
@@ -71,7 +73,7 @@ public class SpellGain extends WakfuRunningEffect
     private AbstractSpellLevel<?> getFirstWithReferenceId(final Iterable<? extends AbstractSpellLevel> spellInventory) {
         for (final AbstractSpellLevel spellLevel : spellInventory) {
             if (spellLevel.getSpellId() == this.m_spellId) {
-                return (AbstractSpellLevel<?>)spellLevel;
+                return spellLevel;
             }
         }
         return null;
@@ -81,8 +83,8 @@ public class SpellGain extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_spellId = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_spellId = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

@@ -36,7 +36,7 @@ public final class REGExecutionCountFunctionAlliesCount extends REGExecutionCoun
             re = new REGExecutionCountFunctionAlliesCount();
             re.m_pool = null;
             re.m_isStatic = false;
-            REGExecutionCountFunctionAlliesCount.m_logger.error((Object)("Erreur lors d'un checkOut sur un REGExecutionCountFunctionCharac : " + e.getMessage()));
+            REGExecutionCountParameterized.m_logger.error("Erreur lors d'un checkOut sur un REGExecutionCountFunctionCharac : " + e.getMessage());
         }
         return re;
     }

@@ -51,7 +51,7 @@ public final class ProtectorBuffManager
                     effects.add(effect);
                 }
                 else {
-                    ProtectorBuffManager.m_logger.error((Object)("L'effet n'existe pas (ID=" + effectId + "), ou n'a pas pu etre charg\u00e9 pour le buff ID=" + buffId));
+                    ProtectorBuffManager.m_logger.error("L'effet n'existe pas (ID=" + effectId + "), ou n'a pas pu etre charg\u00e9 pour le buff ID=" + buffId);
                 }
             }
         }
@@ -79,6 +79,6 @@ public final class ProtectorBuffManager
     
     static {
         INSTANCE = new ProtectorBuffManager();
-        m_logger = Logger.getLogger((Class)ProtectorBuffManager.class);
+        m_logger = Logger.getLogger(ProtectorBuffManager.class);
     }
 }

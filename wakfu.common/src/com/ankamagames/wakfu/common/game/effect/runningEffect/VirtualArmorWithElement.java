@@ -1,14 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -52,7 +55,7 @@ public final class VirtualArmorWithElement extends WakfuRunningEffect
             re = new VirtualArmorWithElement();
             re.m_pool = null;
             re.m_isStatic = false;
-            VirtualArmorWithElement.m_logger.error((Object)("Erreur lors d'un checkOut sur un VirutalArmorFlat : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un VirutalArmorFlat : " + e.getMessage());
         }
         re.m_armorLeft = this.m_armorLeft;
         re.m_percentToAbsorb = this.m_percentToAbsorb;
@@ -61,14 +64,14 @@ public final class VirtualArmorWithElement extends WakfuRunningEffect
     
     private void initialiseArmor() {
         final short level = this.getContainerLevel();
-        this.m_armorLeft = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (this.m_caster == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() <= 1) {
+        this.m_armorLeft = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_caster == null || this.m_genericEffect.getParamsCount() <= 1) {
             return;
         }
-        final byte elementId = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final byte elementId = (byte)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final Elements element = Elements.getElementFromId(elementId);
         if (element == null) {
-            VirtualArmorWithElement.m_logger.error((Object)("L'element specifie n'existe pas : " + elementId));
+            RunningEffect.m_logger.error("L'element specifie n'existe pas : " + elementId);
             return;
         }
         this.m_armorLeft = ValueRounder.randomRound(this.m_armorLeft * (1.0f + this.getBonusModificator(element)));
@@ -92,8 +95,8 @@ public final class VirtualArmorWithElement extends WakfuRunningEffect
             this.m_armorLeft = ((VirtualArmorWithElement)this.getParent()).m_armorLeft;
         }
         this.m_percentToAbsorb = 100;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_percentToAbsorb = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_percentToAbsorb = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

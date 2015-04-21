@@ -20,7 +20,7 @@ final class WakfuTriggerHandler extends TriggerHandler
     protected void executeTriggeredEffects(final RunningEffect linkedRE, final byte check) {
         final TLongArrayList effectToDeactivate = new TLongArrayList(this.m_effectToDeactivate.toNativeArray());
         final TLongArrayList effectToActivate = new TLongArrayList(this.m_effectToActivate.toNativeArray());
-        final TLongObjectHashMap<RunningEffect> effectToUse = (TLongObjectHashMap<RunningEffect>)this.m_effectToUse.clone();
+        final TLongObjectHashMap<RunningEffect> effectToUse = this.m_effectToUse.clone();
         this.m_effectToDeactivate.clear();
         this.m_effectToActivate.clear();
         this.m_effectToUse.clear();

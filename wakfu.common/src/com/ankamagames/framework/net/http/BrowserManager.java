@@ -36,7 +36,7 @@ public final class BrowserManager
                     else {
                         nSWorkspace = Class.forName("com.apple.cocoa.application.NSWorkspace");
                     }
-                    final Method sharedWorkspace = nSWorkspace.getMethod("sharedWorkspace", (Class[])new Class[0]);
+                    final Method sharedWorkspace = nSWorkspace.getMethod("sharedWorkspace", new Class[0]);
                     final Object workspace = sharedWorkspace.invoke(null, new Object[0]);
                     final Method openURL = nSWorkspace.getMethod("openURL", Class.forName("java.net.URL"));
                     success = (boolean)openURL.invoke(workspace, new URL(url));
@@ -117,7 +117,7 @@ public final class BrowserManager
             }
         }
         catch (Exception e) {
-            BrowserManager.m_logger.error((Object)("Impossible d'ouvrir l'url " + url + " dans un browser"), (Throwable)e);
+            BrowserManager.m_logger.error("Impossible d'ouvrir l'url " + url + " dans un browser", e);
             return false;
         }
         return true;
@@ -144,7 +144,7 @@ public final class BrowserManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BrowserManager.class);
+        m_logger = Logger.getLogger(BrowserManager.class);
         m_instance = new BrowserManager();
         BrowserManager.exec = null;
         switch (OS.getCurrentOS()) {

@@ -201,6 +201,6 @@ public abstract class AbstractMerchantInventoryCollection<IT extends AbstractMer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractMerchantInventoryCollection.class);
+        m_logger = Logger.getLogger(AbstractMerchantInventoryCollection.class);
     }
 }

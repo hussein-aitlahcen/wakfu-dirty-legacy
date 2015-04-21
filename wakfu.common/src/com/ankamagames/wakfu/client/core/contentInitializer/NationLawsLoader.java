@@ -1,17 +1,13 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.parameter.*;
-import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.nation.Laws.*;
 import java.util.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.common.game.nation.*;
-import com.ankamagames.wakfu.common.game.ai.antlrcriteria.system.*;
 import com.ankamagames.wakfu.client.core.*;
 
 public final class NationLawsLoader implements ContentInitializer
@@ -24,7 +20,7 @@ public final class NationLawsLoader implements ContentInitializer
     }
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         BinaryDocumentManager.getInstance().foreach(new NationLawBinaryData(), new LoadProcedure<NationLawBinaryData>() {
             @Override
             public void load(final NationLawBinaryData bs) {
@@ -44,11 +40,11 @@ public final class NationLawsLoader implements ContentInitializer
                     nationLawApplications.add(NationLawApplication.NEUTRAL_FOREIGNER);
                 }
                 final String[] lawModelParams = bs.getParams();
-                final NationLaw law = (NationLaw)lawModel.model.createNewLaw(lawId, citizenPointCost, lawPointCost, lawLocked, nationLawApplications);
+                final NationLaw law = lawModel.model.createNewLaw(lawId, citizenPointCost, lawPointCost, lawLocked, nationLawApplications);
                 law.setPercentPointsModification(bs.getPercentPointsModification());
                 final ArrayList<ParserObject> lawParams = computeLawParameters(lawModelParams);
                 if (!ParametersChecker.checkType(lawModel, lawParams)) {
-                    NationLawsLoader.m_logger.error((Object)("La loi " + lawModel + " n'a pas des param\u00e8tres du bon type"));
+                    NationLawsLoader.m_logger.error("La loi " + lawModel + " n'a pas des param\u00e8tres du bon type");
                     return;
                 }
                 law.initialize(lawParams);
@@ -63,14 +59,13 @@ public final class NationLawsLoader implements ContentInitializer
             }
         });
         NationManager.INSTANCE.addObserver(ReferenceLawManager.INSTANCE);
-        clientInstance.fireContentInitializerDone(this);
     }
     
     private static ArrayList<ParserObject> computeLawParameters(final String[] params) {
         final ArrayList<ParserObject> lawParams = new ArrayList<ParserObject>(params.length);
         for (int k = 0; k < params.length; ++k) {
             try {
-                final ArrayList<ParserObject> objects = CriteriaCompiler.compileList(params[k]);
+                final ArrayList<ParserObject> objects = new ArrayList<ParserObject>();//CriteriaCompiler.compileList(params[k]);
                 if (objects != null) {
                     lawParams.addAll(objects);
                 }
@@ -79,7 +74,7 @@ public final class NationLawsLoader implements ContentInitializer
                 }
             }
             catch (Exception e) {
-                NationLawsLoader.m_logger.error((Object)("Erreur lors de la compilation de Param\u00e8tres sur une loi : " + params[k]), (Throwable)e);
+                NationLawsLoader.m_logger.error("Erreur lors de la compilation de Param\u00e8tres sur une loi : " + params[k], e);
             }
         }
         return lawParams;
@@ -91,7 +86,7 @@ public final class NationLawsLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationLawsLoader.class);
+        m_logger = Logger.getLogger(NationLawsLoader.class);
         INSTANCE = new NationLawsLoader();
     }
 }

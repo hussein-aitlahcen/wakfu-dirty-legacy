@@ -18,7 +18,7 @@ public class ItemExchangerEndEvent extends ItemExchangerEvent implements Poolabl
             event.m_pool = ItemExchangerEndEvent.m_staticPool;
         }
         catch (Exception e) {
-            ItemExchangerEndEvent.LOGGER.error((Object)("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage()));
+            ItemExchangerEndEvent.LOGGER.error("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage());
             event = new ItemExchangerEndEvent();
         }
         event.init(itemExchanger, reason);
@@ -43,7 +43,7 @@ public class ItemExchangerEndEvent extends ItemExchangerEvent implements Poolabl
             this.m_pool = null;
         }
         else {
-            ItemExchangerEndEvent.LOGGER.error((Object)("Double release de " + this.getClass().toString()));
+            ItemExchangerEndEvent.LOGGER.error("Double release de " + this.getClass().toString());
             this.onCheckIn();
         }
     }
@@ -64,7 +64,7 @@ public class ItemExchangerEndEvent extends ItemExchangerEvent implements Poolabl
     }
     
     static {
-        LOGGER = Logger.getLogger((Class)ItemExchangerEndEvent.class);
+        LOGGER = Logger.getLogger(ItemExchangerEndEvent.class);
         m_staticPool = new MonitoredPool(new ObjectFactory<ItemExchangerEndEvent>() {
             @Override
             public ItemExchangerEndEvent makeObject() {

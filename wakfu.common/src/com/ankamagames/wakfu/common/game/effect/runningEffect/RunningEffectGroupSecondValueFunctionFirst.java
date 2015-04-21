@@ -7,7 +7,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -43,7 +45,7 @@ public final class RunningEffectGroupSecondValueFunctionFirst extends WakfuRunni
             re = new RunningEffectGroupSecondValueFunctionFirst();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupSecondValueFunctionFirst.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupSecondValueFunctionFirst : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupSecondValueFunctionFirst : " + e.getMessage());
         }
         return re;
     }
@@ -57,17 +59,17 @@ public final class RunningEffectGroupSecondValueFunctionFirst extends WakfuRunni
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_percentToTransmit = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_percentToTransmit = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2) {
-            this.m_secondEffectMinValue = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 2) {
+            this.m_secondEffectMinValue = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_useCasterForSecondEffect = (((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 0);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_useCasterForSecondEffect = (this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 0);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            this.m_roundingType = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            this.m_roundingType = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     
@@ -80,14 +82,14 @@ public final class RunningEffectGroupSecondValueFunctionFirst extends WakfuRunni
             this.setNotified();
             return;
         }
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null) {
-            RunningEffectGroupSecondValueFunctionFirst.m_logger.error((Object)("Groupe d'effet inconnu" + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("Groupe d'effet inconnu" + this.m_genericEffect.getEffectId());
             this.setNotified();
             return;
         }
         if (effectGroup.getEffectsCount() != 2) {
-            RunningEffectGroupSecondValueFunctionFirst.m_logger.error((Object)("On ne peut pas avoir plus ou moins de deux effets dans un groupe d'effet de ce type " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("On ne peut pas avoir plus ou moins de deux effets dans un groupe d'effet de ce type " + this.m_genericEffect.getEffectId());
             this.setNotified();
             return;
         }

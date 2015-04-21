@@ -9,13 +9,16 @@ public interface FightChallenge extends Dropable
     public static final short REWARD_XP_STATE_ID = 2214;
     public static final short REWARD_DROP_STATE_ID = 2428;
     
-    int getId();
+    @Override
+	int getId();
     
-    short getDropWeight();
+    @Override
+	short getDropWeight();
     
     int getGfxId();
     
-    SimpleCriterion getCriterion();
+    @Override
+	SimpleCriterion getCriterion();
     
     int getStateId();
     

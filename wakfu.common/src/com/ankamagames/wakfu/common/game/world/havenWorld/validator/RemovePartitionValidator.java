@@ -18,7 +18,7 @@ public class RemovePartitionValidator extends ModificationValidator<AbstractHave
     public boolean validate(final int patchX, final int patchY) {
         final short mapX = AbstractHavenWorldTopology.patchCoordXToPartition(patchX);
         final short mapY = AbstractHavenWorldTopology.patchCoordYToPartition(patchY);
-        for (final AbstractBuildingStruct b : ((AbstractHavenWorldTopology)this.m_dataProvider).getBuildingsInMap(mapX, mapY)) {
+        for (final AbstractBuildingStruct b : this.m_dataProvider.getBuildingsInMap(mapX, mapY)) {
             this.addConflict(new BuildingItem(b));
         }
         this.checkPatchId(patchX, patchY);
@@ -29,7 +29,7 @@ public class RemovePartitionValidator extends ModificationValidator<AbstractHave
     }
     
     private void checkPatchId(final int patchX, final int patchY) {
-        final short patchId = ((AbstractHavenWorldTopology)this.m_dataProvider).getPatchId(patchX, patchY);
+        final short patchId = this.m_dataProvider.getPatchId(patchX, patchY);
         if (patchId != 0) {
             final PatchCatalogEntry catalogEntry = HavenWorldDefinitionManager.INSTANCE.getPatchCatalogEntry(patchId);
             this.addConflict(new PatchItem(catalogEntry, patchX, patchY));
@@ -37,6 +37,6 @@ public class RemovePartitionValidator extends ModificationValidator<AbstractHave
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RemovePartitionValidator.class);
+        m_logger = Logger.getLogger(RemovePartitionValidator.class);
     }
 }

@@ -1,15 +1,18 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -66,7 +69,7 @@ public final class ApplyStateForFecaArmor extends ApplyState
             re = new ApplyStateForFecaArmor();
             re.m_pool = null;
             re.m_isStatic = false;
-            ApplyStateForFecaArmor.m_logger.error((Object)("Erreur lors d'un checkOut sur un ApplyStateForFecaArmor : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ApplyStateForFecaArmor : " + e.getMessage());
         }
         re.m_plateCount = this.m_plateCount;
         return re;
@@ -101,11 +104,11 @@ public final class ApplyStateForFecaArmor extends ApplyState
             return;
         }
         final short level = this.getContainerLevel();
-        this.m_stateId = (short)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_stateId = (short)this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.extractStateLevel(level);
         this.m_stateUniqueId = State.getUniqueIdFromBasicInformation(this.m_stateId, this.m_stateLevel);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
-            this.m_plateCount = (byte)((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 3) {
+            this.m_plateCount = (byte)this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
         else {
             this.m_plateCount = 0;
@@ -120,7 +123,7 @@ public final class ApplyStateForFecaArmor extends ApplyState
         EffectUser neutralArmorCaster = this.m_caster;
         final StateRunningEffect state = ((TimedRunningEffectManager)this.m_target.getRunningEffectManager()).getRunningState(1139);
         if (state == null) {
-            ApplyStateForFecaArmor.m_logger.error((Object)"L'\u00e9tat marqueur de l'armure neutre n'est pas present sur la cible");
+            RunningEffect.m_logger.error("L'\u00e9tat marqueur de l'armure neutre n'est pas present sur la cible");
         }
         else {
             neutralArmorCaster = state.getCaster();

@@ -62,7 +62,7 @@ public class ProtectorWalletHandler<Protector extends ProtectorBase> extends Wal
     
     public void prepareWalletPart(final RawProtector.Wallet part) {
         part.cashAmount = this.getAmountOfCash();
-        final TByteObjectIterator<AbstractProtectorMerchantClient> it = (TByteObjectIterator<AbstractProtectorMerchantClient>)this.m_merchantClients.iterator();
+        final TByteObjectIterator<AbstractProtectorMerchantClient> it = this.m_merchantClients.iterator();
         while (it.hasNext()) {
             it.advance();
             final RawProtector.Wallet.Content content = new RawProtector.Wallet.Content();

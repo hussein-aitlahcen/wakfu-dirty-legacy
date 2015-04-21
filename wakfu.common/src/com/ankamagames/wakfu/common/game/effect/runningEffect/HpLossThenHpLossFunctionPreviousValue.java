@@ -1,10 +1,11 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +40,7 @@ public final class HpLossThenHpLossFunctionPreviousValue extends HPLoss
             re = new HpLossThenHpLossFunctionPreviousValue();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossThenHpLossFunctionPreviousValue.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossThenHpLossFunctionPreviousValue : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossThenHpLossFunctionPreviousValue : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -52,8 +53,8 @@ public final class HpLossThenHpLossFunctionPreviousValue extends HPLoss
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_percentOfPreviousValue = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_percentOfPreviousValue = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
@@ -67,7 +68,7 @@ public final class HpLossThenHpLossFunctionPreviousValue extends HPLoss
         if (secondDamageValue == 0) {
             return;
         }
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.getElement(), ComputeMode.CLASSIC, secondDamageValue, this.m_target);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.getElement(), ComputeMode.CLASSIC, secondDamageValue, this.m_target);
         hpLoss.disableValueComputation();
         (hpLoss).setGenericEffect(DefaultFightInstantEffectWithChatNotif.getInstance());
         hpLoss.setCaster(this.m_caster);

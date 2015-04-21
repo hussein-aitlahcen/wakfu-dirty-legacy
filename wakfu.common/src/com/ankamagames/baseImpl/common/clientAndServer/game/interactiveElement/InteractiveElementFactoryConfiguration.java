@@ -25,6 +25,6 @@ public abstract class InteractiveElementFactoryConfiguration<T extends MapIntera
     }
     
     static {
-        m_logger = Logger.getLogger((Class)InteractiveElementFactoryConfiguration.class);
+        m_logger = Logger.getLogger(InteractiveElementFactoryConfiguration.class);
     }
 }

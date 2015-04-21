@@ -5,9 +5,13 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.fight.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,7 +45,7 @@ public final class CharacGainForOsaFusion extends CharacGain
             re = new CharacGainForOsaFusion();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacGainForOsaFusion.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuffForOsaFusion : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuffForOsaFusion : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -57,7 +61,7 @@ public final class CharacGainForOsaFusion extends CharacGain
             return;
         }
         final AbstractFight fight = ((WakfuFightEffectContext)this.m_context).getFight();
-        final Collection<BasicCharacterInfo> casterControlled = (Collection<BasicCharacterInfo>)fight.getFightersControlledBy((BasicCharacterInfo)this.m_caster);
+        final Collection<BasicCharacterInfo> casterControlled = fight.getFightersControlledBy((BasicCharacterInfo)this.m_caster);
         short gobgobLevel = -1;
         for (final BasicCharacterInfo controlled : casterControlled) {
             if (controlled.getBreedId() == 1620) {
@@ -68,11 +72,11 @@ public final class CharacGainForOsaFusion extends CharacGain
         if (gobgobLevel == -1) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 4) {
-            final float incrementByGobGobLevel = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            final boolean percentOfCurrentValue = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
-            final boolean upperRound = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
-            final float valueCap = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 4) {
+            final float incrementByGobGobLevel = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            final boolean percentOfCurrentValue = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+            final boolean upperRound = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+            final float valueCap = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             final float baseValue = gobgobLevel / incrementByGobGobLevel;
             if (upperRound) {
                 this.m_value = MathHelper.fastCeil(baseValue);

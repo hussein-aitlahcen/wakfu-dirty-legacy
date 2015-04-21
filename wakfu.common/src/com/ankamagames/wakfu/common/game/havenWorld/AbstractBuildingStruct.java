@@ -60,14 +60,14 @@ public abstract class AbstractBuildingStruct<T extends AbstractEditorGroupMap>
         this.m_itemId = itemId;
         this.m_map = this.m_library.getEditorGroup(this.getEditorGroupId());
         if (this.m_map == null) {
-            AbstractBuildingStruct.m_logger.error((Object)("pas de group d'id " + this.getEditorGroupId()));
+            AbstractBuildingStruct.m_logger.error("pas de group d'id " + this.getEditorGroupId());
         }
     }
     
     public int getEditorGroupId() {
         final AbstractBuildingDefinition def = this.getDefinition();
         if (def == null) {
-            AbstractBuildingStruct.m_logger.error((Object)("pas de d\u00e9finition de batiment " + this.m_buildingDefinitionId));
+            AbstractBuildingStruct.m_logger.error("pas de d\u00e9finition de batiment " + this.m_buildingDefinitionId);
             return 0;
         }
         return def.getEditorGroupId(this.m_itemId);
@@ -107,7 +107,7 @@ public abstract class AbstractBuildingStruct<T extends AbstractEditorGroupMap>
     public int getBuildingType() {
         final BuildingCatalogEntry entry = this.getCatalogEntry();
         if (entry == null) {
-            AbstractBuildingStruct.m_logger.error((Object)("pas d' entr\u00e9e pour " + this));
+            AbstractBuildingStruct.m_logger.error("pas d' entr\u00e9e pour " + this);
             return -1;
         }
         return entry.getBuildingType();
@@ -188,6 +188,6 @@ public abstract class AbstractBuildingStruct<T extends AbstractEditorGroupMap>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractBuildingStruct.class);
+        m_logger = Logger.getLogger(AbstractBuildingStruct.class);
     }
 }

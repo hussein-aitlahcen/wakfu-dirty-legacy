@@ -55,7 +55,7 @@ public class AchievementsLoader implements ContentInitializer
             @Override
             public void load(final AchievementBinaryData bs) {
                 if (bs.isMercenary()) {
-                    Multimap<Byte, Integer> rankMap = (Multimap<Byte, Integer>)mercenaryMap.get(bs.getCategoryId());
+                    Multimap<Byte, Integer> rankMap = mercenaryMap.get(bs.getCategoryId());
                     if (rankMap == null) {
                         mercenaryMap.put(bs.getCategoryId(), rankMap = ArrayListMultimap.create());
                     }
@@ -75,7 +75,7 @@ public class AchievementsLoader implements ContentInitializer
                 }
                 catch (Exception e) {
                     unlockingCriterion = null;
-                    AchievementsLoader.m_logger.error((Object)"", (Throwable)e);
+                    AchievementsLoader.m_logger.error("", e);
                 }
                 final String activationCriterionAsString = AchievementsLoader.this.createCriterion(bs, mercenaryMap);
                 SimpleCriterion activationCriterion = null;
@@ -84,7 +84,7 @@ public class AchievementsLoader implements ContentInitializer
                 }
                 catch (Exception e2) {
                     activationCriterion = null;
-                    AchievementsLoader.m_logger.error((Object)"", (Throwable)e2);
+                    AchievementsLoader.m_logger.error("", e2);
                 }
                 GameDateConst periodStartDate = null;
                 GameIntervalConst period = null;
@@ -95,7 +95,7 @@ public class AchievementsLoader implements ContentInitializer
                 final int displayOnActivationDelay = bs.isNeedsUserAccept() ? -1 : bs.getDisplayOnActivationDelay();
                 final boolean ok = AchievementsModel.INSTANCE.registerAchievement(achievementId, bs.getCategoryId(), isVisible, bs.isNotifyOnPass(), null, null, unlockingCriterion, bs.getDuration() * 1000, bs.getCooldown() * 1000L, bs.isShareable(), bs.isRepeatable(), bs.isNeedsUserAccept(), bs.getRecommandedLevel(), bs.getRecommandedPlayers(), bs.isFollowable(), displayOnActivationDelay, periodStartDate, period, bs.isActive(), bs.isAutoCompass(), bs.getGfxId(), bs.getMercenaryRank(), activationCriterion, bs.getOrder());
                 if (!ok) {
-                    AchievementsLoader.m_logger.error((Object)"[STOP] Erreur durant l'enregistrement d'un achievement");
+                    AchievementsLoader.m_logger.error("[STOP] Erreur durant l'enregistrement d'un achievement");
                 }
                 this.loadGoals(bs, achievementId);
                 this.loadRewards(bs, achievementId);
@@ -114,8 +114,8 @@ public class AchievementsLoader implements ContentInitializer
                     final short y = goal.getPositionY();
                     final short z = goal.getPositionZ();
                     final short worldId = goal.getPositionWorldId();
-                    if (!AchievementsModel.INSTANCE.registerObjective(goal.getId(), achievementId, (int[])(variables.isEmpty() ? null : variables.toNativeArray()), null, null, feedback, hasPositionFeedback, x, y, z, worldId)) {
-                        AchievementsLoader.m_logger.error((Object)"[STOP] Erreur durant l'enregistrement d'un objectif");
+                    if (!AchievementsModel.INSTANCE.registerObjective(goal.getId(), achievementId, variables.isEmpty() ? null : variables.toNativeArray(), null, null, feedback, hasPositionFeedback, x, y, z, worldId)) {
+                        AchievementsLoader.m_logger.error("[STOP] Erreur durant l'enregistrement d'un objectif");
                     }
                 }
             }
@@ -124,7 +124,7 @@ public class AchievementsLoader implements ContentInitializer
                 for (final AchievementBinaryData.AchievementReward reward : bs.getRewards()) {
                     final AchievementRewardType type = AchievementRewardType.fromId(reward.getType());
                     if (!AchievementsModel.INSTANCE.registerReward(reward.getId(), achievementId, type, reward.getParams())) {
-                        AchievementsLoader.m_logger.error((Object)"[STOP] Erreur durant l'enregistrement d'une r\u00e9compense d'achievement");
+                        AchievementsLoader.m_logger.error("[STOP] Erreur durant l'enregistrement d'une r\u00e9compense d'achievement");
                     }
                 }
             }
@@ -190,7 +190,7 @@ public class AchievementsLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AchievementsLoader.class);
+        m_logger = Logger.getLogger(AchievementsLoader.class);
         INSTANCE = new AchievementsLoader();
     }
     

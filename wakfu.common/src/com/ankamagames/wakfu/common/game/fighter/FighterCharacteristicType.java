@@ -283,14 +283,14 @@ public enum FighterCharacteristicType implements CharacteristicType, ExportableE
             int max = 0;
             for (final FighterCharacteristicType charac : values) {
                 if (charac.getId() < 0) {
-                    throw new AssertionError((Object)"Utiliser une hashMap plut\u00f4t (id <0)");
+                    throw new AssertionError("Utiliser une hashMap plut\u00f4t (id <0)");
                 }
                 if (charac.getId() > max) {
                     max = charac.getId();
                 }
             }
             if (max > values.length * 1.5f) {
-                throw new AssertionError((Object)"Utiliser une hashMap plut\u00f4t (tableau avec trop de vide)");
+                throw new AssertionError("Utiliser une hashMap plut\u00f4t (tableau avec trop de vide)");
             }
             FighterCharacteristicType.MAX_INDEX = max;
         }

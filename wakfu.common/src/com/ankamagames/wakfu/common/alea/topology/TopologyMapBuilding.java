@@ -20,11 +20,13 @@ public class TopologyMapBuilding extends TopologyMapDi
         this.m_height = (stream.readByte() & 0xFF);
     }
     
-    public int getMapWidth() {
+    @Override
+	public int getMapWidth() {
         return this.m_width;
     }
     
-    public int getMapHeight() {
+    @Override
+	public int getMapHeight() {
         return this.m_height;
     }
     
@@ -34,7 +36,7 @@ public class TopologyMapBuilding extends TopologyMapDi
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyMapBuilding.class);
+        m_logger = Logger.getLogger(TopologyMapBuilding.class);
         CHECK_GROUP_CELLS = CellPathData.createCellPathDataTab();
     }
 }

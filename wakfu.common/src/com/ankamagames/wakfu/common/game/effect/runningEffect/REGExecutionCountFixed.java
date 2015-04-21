@@ -32,22 +32,22 @@ public final class REGExecutionCountFixed extends REGExecutionCountParameterized
             re = new REGExecutionCountFixed();
             re.m_pool = null;
             re.m_isStatic = false;
-            REGExecutionCountFixed.m_logger.error((Object)("Erreur lors d'un checkOut sur un REGExecutionCountFunctionCharac : " + e.getMessage()));
+            REGExecutionCountParameterized.m_logger.error("Erreur lors d'un checkOut sur un REGExecutionCountFunctionCharac : " + e.getMessage());
         }
         return re;
     }
     
     @Override
     protected int computeExecutionsCountParameter(final RunningEffect triggerRE) {
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() < 1) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getParamsCount() < 1) {
             return 0;
         }
-        return ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        return this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
     protected boolean computeShouldStopOnEffectNotExecuted(final RunningEffect triggerRE) {
-        return this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2 && ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        return this.m_genericEffect != null && this.m_genericEffect.getParamsCount() >= 2 && this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
     }
     
     @Override

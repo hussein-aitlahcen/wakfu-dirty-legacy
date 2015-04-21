@@ -72,7 +72,7 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DefaultFunctionsLibrary.class);
+        m_logger = Logger.getLogger(DefaultFunctionsLibrary.class);
         GET_TIMER_RESULTS = new LuaScriptParameterDescriptor[] { new LuaScriptParameterDescriptor("time", "Dur?e d'execution du script en milliseconds", LuaScriptParameterType.INTEGER, false) };
         INVOKE_PARAMS = new LuaScriptParameterDescriptor[] { new LuaScriptParameterDescriptor("time", "Temps d'attente avant l'appel de la fonction (en ms)", LuaScriptParameterType.INTEGER, false), new LuaScriptParameterDescriptor("loopCount", "Nombre de fois ou la m?thode doit ?tre appel?e (doit ?tre = 1)", LuaScriptParameterType.INTEGER, false), new LuaScriptParameterDescriptor("funcName", "Fonction ? appeler", LuaScriptParameterType.STRING, false), new LuaScriptParameterDescriptor("funcParams", "Param?tres de la fonction ? appeler", LuaScriptParameterType.BLOOPS, true) };
         INVOKE_RESULTS = new LuaScriptParameterDescriptor[] { new LuaScriptParameterDescriptor("taskId", "Id de la t?che", LuaScriptParameterType.INTEGER, false) };
@@ -136,7 +136,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.GET_TIMER_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             this.addReturnValue(this.getScriptObject().getTime());
         }
     }
@@ -167,7 +168,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.INVOKE_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final LuaScript script = this.getScriptObject();
             final int time = this.getParamInt(0);
             final int loopCount = this.getParamInt(1);
@@ -241,7 +243,7 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
         
         @Override
         protected void run(final int paramCount) throws LuaException {
-            DefaultFunctionsLibrary.m_logger.warn((Object)"'import' ne devrait plus ?tre appel?");
+            DefaultFunctionsLibrary.m_logger.warn("'import' ne devrait plus ?tre appel?");
         }
     }
     
@@ -271,7 +273,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.SET_INTERVAL_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final LuaScript script = this.getScriptObject();
             final int time = this.getParamInt(0);
             final String funcName = this.getParamString(1);
@@ -308,7 +311,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return null;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final LuaScript script = this.getScriptObject();
             if (script != null) {
                 if (paramCount == 1) {
@@ -348,13 +352,14 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return null;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final StringBuilder builder = new StringBuilder("[ligne: " + this.getLineNumber() + ']');
             for (int i = 0; i < paramCount; ++i) {
                 final String param = this.getParamForcedAsString(i);
                 builder.append(", ").append((param != null) ? param : null);
             }
-            DefaultFunctionsLibrary.m_logger.info((Object)builder.toString());
+            DefaultFunctionsLibrary.m_logger.info(builder.toString());
         }
     }
     
@@ -379,7 +384,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.IS_EQUAL_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final long param1 = this.getParamLong(0);
             final long param2 = this.getParamLong(1);
             final boolean result = param1 == param2;
@@ -408,7 +414,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.IS_GREATER_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final long param1 = this.getParamLong(0);
             final long param2 = this.getParamLong(1);
             final boolean result = param1 > param2;
@@ -437,7 +444,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.IS_LOWER_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final boolean result = this.getParamLong(0) < this.getParamLong(1);
             this.addReturnValue(result);
         }
@@ -464,7 +472,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.SUBSTRACT_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final long param1 = this.getParamLong(0);
             final long param2 = this.getParamLong(1);
             final long result = param1 - param2;
@@ -493,7 +502,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.ABSOLUTE_VALUE_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final long param = this.getParamLong(0);
             this.addReturnValue(Math.abs(param));
         }
@@ -520,7 +530,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.MAX_VALUE_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final long param1 = this.getParamLong(0);
             final long param2 = this.getParamLong(1);
             this.addReturnValue(Math.max(param1, param2));
@@ -548,7 +559,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.RANDOM_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final long param1 = this.getParamLong(0);
             final long param2 = this.getParamLong(1);
             final long result = MathHelper.random(param1, param2);
@@ -577,7 +589,8 @@ public class DefaultFunctionsLibrary extends JavaFunctionsLibrary
             return DefaultFunctionsLibrary.RANDOM_FLOAT_RESULTS;
         }
         
-        public final void run(final int paramCount) throws LuaException {
+        @Override
+		public final void run(final int paramCount) throws LuaException {
             final float param1 = this.getParamFloat(0);
             final float param2 = this.getParamFloat(1);
             final float result = MathHelper.random(param1, param2);

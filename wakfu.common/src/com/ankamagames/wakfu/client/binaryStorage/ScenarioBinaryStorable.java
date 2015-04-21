@@ -1,12 +1,17 @@
 package com.ankamagames.wakfu.client.binaryStorage;
 
 import com.ankamagames.framework.fileFormat.io.binaryStorage.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
+
 import java.io.*;
+
 import com.ankamagames.wakfu.common.binaryStorage.*;
+
 import java.util.*;
-import org.apache.log4j.*;
+
 import com.ankamagames.framework.kernel.utils.*;
 
 public final class ScenarioBinaryStorable extends BinaryStorable
@@ -70,7 +75,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
                 this.m_params = new String(bytes, "UTF-8").intern();
             }
             catch (UnsupportedEncodingException e) {
-                ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+                BinaryStorable.m_logger.error("Exception", e);
             }
             try {
                 final int mappingLen = bb.getInt();
@@ -82,7 +87,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
                 }
             }
             catch (UnsupportedEncodingException e) {
-                ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+                BinaryStorable.m_logger.error("Exception", e);
             }
             try {
                 final byte[] bytes = new byte[bb.getInt()];
@@ -93,7 +98,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
                 this.m_rewardEligibilityCriterion = new String(rewardEligibilityCriterion, "UTF-8").intern();
             }
             catch (UnsupportedEncodingException e) {
-                ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+                BinaryStorable.m_logger.error("Exception", e);
             }
             for (int glen = bb.getInt(), i = 0; i < glen; ++i) {
                 final byte[] gdata = new byte[bb.getInt()];
@@ -111,7 +116,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             }
         }
         else {
-            ScenarioBinaryStorable.m_logger.error((Object)"Tentative de d\u00e9s\u00e9rialisation d'un objet avec une version non prise en charge");
+            BinaryStorable.m_logger.error("Tentative de d\u00e9s\u00e9rialisation d'un objet avec une version non prise en charge");
         }
     }
     
@@ -144,7 +149,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             }
         }
         catch (Exception e) {
-            ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+            BinaryStorable.m_logger.error("Exception", e);
         }
         try {
             presize += 8;
@@ -152,7 +157,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             presize += ((this.m_rewardEligibilityCriterion != null) ? this.m_rewardEligibilityCriterion.getBytes("UTF-8").length : 0);
         }
         catch (Exception e) {
-            ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+            BinaryStorable.m_logger.error("Exception", e);
         }
         for (final ActionGroupStorable g : this.m_actionGroups) {
             final byte[] bin = g.serialize();
@@ -169,7 +174,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             presize += ((this.m_params != null) ? this.m_params.getBytes("UTF-8").length : 0);
         }
         catch (Exception e) {
-            ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+            BinaryStorable.m_logger.error("Exception", e);
         }
         final ByteBuffer bb = ByteBuffer.allocate(31 + presize);
         bb.putInt(this.m_id);
@@ -198,7 +203,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             }
         }
         catch (Exception e2) {
-            ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e2);
+            BinaryStorable.m_logger.error("Exception", e2);
         }
         try {
             bb.putInt(this.m_varMapping.length);
@@ -209,7 +214,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             }
         }
         catch (Exception e2) {
-            ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e2);
+            BinaryStorable.m_logger.error("Exception", e2);
         }
         try {
             if (this.m_joinCriterion != null) {
@@ -230,7 +235,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
             }
         }
         catch (Exception e2) {
-            ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e2);
+            BinaryStorable.m_logger.error("Exception", e2);
         }
         bb.putInt(binGroups.size());
         for (final byte[] gdata : binGroups) {
@@ -415,7 +420,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
                 bb.put(jaugeVarName);
             }
             catch (UnsupportedEncodingException e) {
-                ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+                BinaryStorable.m_logger.error("Exception", e);
             }
             return bb.array();
         }
@@ -459,7 +464,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
                 this.m_jaugeVarName = new String(jaugeVarName, "UTF-8").intern();
             }
             catch (UnsupportedEncodingException e) {
-                ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+                BinaryStorable.m_logger.error("Exception", e);
             }
         }
     }
@@ -586,7 +591,7 @@ public final class ScenarioBinaryStorable extends BinaryStorable
                 this.m_criterion = new String(cdata, "UTF-8").intern();
             }
             catch (UnsupportedEncodingException e) {
-                ScenarioBinaryStorable.m_logger.error((Object)"Exception", (Throwable)e);
+                BinaryStorable.m_logger.error("Exception", e);
             }
             this.m_success = (bb.get() == 1);
             this.m_itemId = bb.getInt();

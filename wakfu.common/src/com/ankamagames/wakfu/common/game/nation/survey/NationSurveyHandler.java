@@ -43,15 +43,15 @@ public class NationSurveyHandler
         if (resultCode != 0) {
             switch (resultCode) {
                 case 2: {
-                    NationSurveyHandler.m_logger.error((Object)("[Nation] Impossible de prendre en compte l'opinion du joueur " + citizen + " car il n'a pas vot\u00e9"));
+                    NationSurveyHandler.m_logger.error("[Nation] Impossible de prendre en compte l'opinion du joueur " + citizen + " car il n'a pas vot\u00e9");
                     break;
                 }
                 case 1: {
-                    NationSurveyHandler.m_logger.error((Object)("[Nation] Impossible de prendre en compte l'opinion du joueur " + citizen + " car un vote est en cours"));
+                    NationSurveyHandler.m_logger.error("[Nation] Impossible de prendre en compte l'opinion du joueur " + citizen + " car un vote est en cours");
                     break;
                 }
                 case 3: {
-                    NationSurveyHandler.m_logger.error((Object)("[Nation] Impossible de prendre en compte l'opinion du joueur " + citizen + " car il n'y a pas de gouverneur"));
+                    NationSurveyHandler.m_logger.error("[Nation] Impossible de prendre en compte l'opinion du joueur " + citizen + " car il n'y a pas de gouverneur");
                     break;
                 }
             }
@@ -147,7 +147,7 @@ public class NationSurveyHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationSurveyHandler.class);
+        m_logger = Logger.getLogger(NationSurveyHandler.class);
     }
     
     private static class SetOpinion implements TByteIntProcedure

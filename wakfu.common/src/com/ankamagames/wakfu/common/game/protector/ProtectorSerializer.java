@@ -192,7 +192,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onAppearancePartChanged(protector, appearance);
             }
             catch (Exception e) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e);
+                ProtectorSerializer.m_logger.error("Exception", e);
             }
         }
         final RawProtector.Challenges challenges = this.m_rawProtector.challenges;
@@ -201,7 +201,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onChallengePartChanged(protector, challenges);
             }
             catch (Exception e2) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e2);
+                ProtectorSerializer.m_logger.error("Exception", e2);
             }
         }
         final RawProtector.ReferenceMerchantInventories referenceMerchantInventories = this.m_rawProtector.referenceMerchantInventories;
@@ -210,7 +210,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onReferenceInventoriesPartChanged(protector, referenceMerchantInventories);
             }
             catch (Exception e3) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e3);
+                ProtectorSerializer.m_logger.error("Exception", e3);
             }
         }
         final RawProtector.NationMerchantInventories inventories = this.m_rawProtector.nationMerchantInventories;
@@ -219,7 +219,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onMerchantInventoriesPartChanged(protector, inventories);
             }
             catch (Exception e4) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e4);
+                ProtectorSerializer.m_logger.error("Exception", e4);
             }
         }
         final RawProtector.Wallet wallet = this.m_rawProtector.wallet;
@@ -228,7 +228,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onWalletPartChanged(protector, wallet);
             }
             catch (Exception e5) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e5);
+                ProtectorSerializer.m_logger.error("Exception", e5);
             }
         }
         final RawProtector.Stake stake = this.m_rawProtector.stake;
@@ -237,7 +237,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onStakePartChange(protector, stake);
             }
             catch (Exception e6) {
-                ProtectorSerializer.m_logger.error((Object)"Exception levee", (Throwable)e6);
+                ProtectorSerializer.m_logger.error("Exception levee", e6);
             }
         }
         final RawProtector.Taxes taxes = this.m_rawProtector.taxes;
@@ -246,7 +246,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onTaxesPartChanged(protector, taxes);
             }
             catch (Exception e7) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e7);
+                ProtectorSerializer.m_logger.error("Exception", e7);
             }
         }
         final RawProtector.WeatherModifiers modifiers = this.m_rawProtector.weatherModifiers;
@@ -255,7 +255,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onWeatherModifiersChanged(protector, modifiers);
             }
             catch (Exception e8) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e8);
+                ProtectorSerializer.m_logger.error("Exception", e8);
             }
         }
         final RawProtector.Satisfaction satisfaction = this.m_rawProtector.satisfaction;
@@ -264,7 +264,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onSatisfactionChanged(protector, satisfaction);
             }
             catch (Exception e9) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e9);
+                ProtectorSerializer.m_logger.error("Exception", e9);
             }
         }
         final RawProtector.MonsterTargets monsterTargets = this.m_rawProtector.monsterTargets;
@@ -273,7 +273,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onMonsterTargetsChanged(protector, monsterTargets);
             }
             catch (Exception e10) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e10);
+                ProtectorSerializer.m_logger.error("Exception", e10);
             }
         }
         final RawProtector.ResourceTargets resourceTargets = this.m_rawProtector.resourceTargets;
@@ -282,7 +282,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onResourceTargetsChanged(protector, resourceTargets);
             }
             catch (Exception e11) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e11);
+                ProtectorSerializer.m_logger.error("Exception", e11);
             }
         }
         final RawProtector.Ecosystem ecosystem = this.m_rawProtector.ecosystem;
@@ -291,7 +291,7 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
                 this.onEcosystemPartChanged(protector, ecosystem);
             }
             catch (Exception e12) {
-                ProtectorSerializer.m_logger.error((Object)"Exception", (Throwable)e12);
+                ProtectorSerializer.m_logger.error("Exception", e12);
             }
         }
         this.onProtectorUnserialized(protector);
@@ -352,6 +352,6 @@ public abstract class ProtectorSerializer<P extends ProtectorBase>
     protected abstract void onProtectorUnserialized(final P p0);
     
     static {
-        m_logger = Logger.getLogger((Class)ProtectorSerializer.class);
+        m_logger = Logger.getLogger(ProtectorSerializer.class);
     }
 }

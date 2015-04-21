@@ -10,7 +10,7 @@ public final class DiceRoll
     
     public static int roll(final int diceValue) {
         if (diceValue <= 0) {
-            DiceRoll.m_logger.error((Object)("DiceRoll.roll appel\u00e9 avec une valeur de d\u00e9 de " + diceValue + "\n" + ExceptionFormatter.toString(new RuntimeException("StackTrace de DiceRoll"))));
+            DiceRoll.m_logger.error("DiceRoll.roll appel\u00e9 avec une valeur de d\u00e9 de " + diceValue + "\n" + ExceptionFormatter.toString(new RuntimeException("StackTrace de DiceRoll")));
             return 1;
         }
         return MersenneTwister.getInstance().nextInt(diceValue) + 1;
@@ -18,7 +18,7 @@ public final class DiceRoll
     
     public static long roll(final long diceValue) {
         if (diceValue <= 0L) {
-            DiceRoll.m_logger.error((Object)("DiceRoll.roll appel\u00e9 avec une valeur de d\u00e9 de " + diceValue + "\n" + ExceptionFormatter.toString(new RuntimeException("StackTrace de DiceRoll"))));
+            DiceRoll.m_logger.error("DiceRoll.roll appel\u00e9 avec une valeur de d\u00e9 de " + diceValue + "\n" + ExceptionFormatter.toString(new RuntimeException("StackTrace de DiceRoll")));
             return 1L;
         }
         return MersenneTwister.getInstance().nextLong(diceValue) + 1L;
@@ -26,7 +26,7 @@ public final class DiceRoll
     
     public static int roll(final int diceCount, final int diceValue, final int moderator) {
         if (diceValue <= 0) {
-            DiceRoll.m_logger.error((Object)("DiceRoll.roll appel\u00e9 avec une valeur de d\u00e9 de " + diceValue + "\n" + ExceptionFormatter.toString(new RuntimeException("StackTrace de DiceRoll"))));
+            DiceRoll.m_logger.error("DiceRoll.roll appel\u00e9 avec une valeur de d\u00e9 de " + diceValue + "\n" + ExceptionFormatter.toString(new RuntimeException("StackTrace de DiceRoll")));
             return 1;
         }
         int total = moderator + diceCount;
@@ -49,6 +49,6 @@ public final class DiceRoll
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DiceRoll.class);
+        m_logger = Logger.getLogger(DiceRoll.class);
     }
 }

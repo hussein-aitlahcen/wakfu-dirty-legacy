@@ -14,13 +14,13 @@ public class WakfuFightMap extends FightMap
         }
         final byte obstacleId = obstacle.getObstacleId();
         if (!this.m_obstaclesPosition.contains(obstacleId)) {
-            WakfuFightMap.m_logger.warn((Object)("On ne retrouve pas l'index de la cellule ou est situ\u00e9 l'obstacle " + obstacleId));
+            WakfuFightMap.m_logger.warn("On ne retrouve pas l'index de la cellule ou est situ\u00e9 l'obstacle " + obstacleId);
             return -1;
         }
         return this.m_obstaclesPosition.getLastKnownCellIndex(obstacleId);
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WakfuFightMap.class);
+        m_logger = Logger.getLogger(WakfuFightMap.class);
     }
 }

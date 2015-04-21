@@ -53,7 +53,7 @@ public class NationProtectorInfoManager
     private void onSatisfactionChanged(final int protectorId, final int satisfaction) {
         final NationProtectorInfo protectorInfo = this.m_protectors.get(protectorId);
         if (protectorInfo == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Mise a jour de la satisfaction d'un protecteur inconnu " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Mise a jour de la satisfaction d'un protecteur inconnu " + protectorId);
             return;
         }
         protectorInfo.setSatisfaction(satisfaction);
@@ -125,35 +125,35 @@ public class NationProtectorInfoManager
         final int protectorId = info.getId();
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
         final NationProtectorInfo oldProtector = manager.m_protectors.get(protectorId);
         if (oldProtector != null) {
-            NationProtectorInfoManager.m_logger.warn((Object)("Demande de remplacement des informations du protecteur " + oldProtector));
+            NationProtectorInfoManager.m_logger.warn("Demande de remplacement des informations du protecteur " + oldProtector);
             manager.removeProtector(oldProtector);
             return;
         }
-        NationProtectorInfoManager.m_logger.info((Object)("Enregistrement du protecteur " + info));
+        NationProtectorInfoManager.m_logger.info("Enregistrement du protecteur " + info);
         manager.registerProtector(info);
     }
     
     public static void registerNewProtector(final int protectorId, final int nationId, final boolean inChaos, final int cash, final float fleaTaxValue, final float marketTaxValue, final int currentSatisfaction, final int totalSatisfaction, final String idString) {
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
         final NationProtectorInfo oldProtector = manager.m_protectors.get(protectorId);
         if (oldProtector != null) {
-            NationProtectorInfoManager.m_logger.warn((Object)("Demande de remplacement des informations du protecteur " + oldProtector));
+            NationProtectorInfoManager.m_logger.warn("Demande de remplacement des informations du protecteur " + oldProtector);
             manager.removeProtector(oldProtector);
             return;
         }
         final NationProtectorInfo protector = new NationProtectorInfo(protectorId, nation, inChaos, cash, fleaTaxValue, marketTaxValue, currentSatisfaction, totalSatisfaction, idString);
-        NationProtectorInfoManager.m_logger.info((Object)("Enregistrement du protecteur " + protector));
+        NationProtectorInfoManager.m_logger.info("Enregistrement du protecteur " + protector);
         manager.registerProtector(protector);
     }
     
@@ -161,11 +161,11 @@ public class NationProtectorInfoManager
         final int nationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Achat d'un item de type " + itemType + " au prix de " + itemPrice + " sur le protecteur " + protectorId));
+        NationProtectorInfoManager.m_logger.info("Achat d'un item de type " + itemType + " au prix de " + itemPrice + " sur le protecteur " + protectorId);
         manager.onMerchantItemSold(protectorId, itemType, itemPrice);
     }
     
@@ -173,11 +173,11 @@ public class NationProtectorInfoManager
         final int nationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Taxes de type " + taxContext + " d'un montant de " + taxAmount + " pr\u00e9lev\u00e9es pour le protecteur " + protectorId));
+        NationProtectorInfoManager.m_logger.info("Taxes de type " + taxContext + " d'un montant de " + taxAmount + " pr\u00e9lev\u00e9es pour le protecteur " + protectorId);
         manager.onCheckInTax(protectorId, taxContext, taxAmount);
     }
     
@@ -185,11 +185,11 @@ public class NationProtectorInfoManager
         final int nationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Update de wallet du protecteur " + protectorId + " pour un montant de " + deltaAmount));
+        NationProtectorInfoManager.m_logger.info("Update de wallet du protecteur " + protectorId + " pour un montant de " + deltaAmount);
         manager.onWalletUpdate(protectorId, deltaAmount);
     }
     
@@ -197,11 +197,11 @@ public class NationProtectorInfoManager
         final int nationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Update de chaos du protecteur " + protectorId + ", chaos = " + inChaos));
+        NationProtectorInfoManager.m_logger.info("Update de chaos du protecteur " + protectorId + ", chaos = " + inChaos);
         manager.onChaosUpdate(protectorId, inChaos);
     }
     
@@ -209,11 +209,11 @@ public class NationProtectorInfoManager
         final int nationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Update de la satisfaction du protecteur " + protectorId + ". Nouvelle satisfaction : " + satisfaction));
+        NationProtectorInfoManager.m_logger.info("Update de la satisfaction du protecteur " + protectorId + ". Nouvelle satisfaction : " + satisfaction);
         manager.onSatisfactionChanged(protectorId, satisfaction);
     }
     
@@ -221,11 +221,11 @@ public class NationProtectorInfoManager
         final int nationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(nationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + nationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + nationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Update de la valeur de taxe " + taxContext + " \u00e0 une valeur de " + taxValue + " pour le protecteur " + protectorId));
+        NationProtectorInfoManager.m_logger.info("Update de la valeur de taxe " + taxContext + " \u00e0 une valeur de " + taxValue + " pour le protecteur " + protectorId);
         manager.onTaxChanged(protectorId, taxContext, taxValue);
     }
     
@@ -233,11 +233,11 @@ public class NationProtectorInfoManager
         final int oldNationId = NationProtectorInfoManager.PROTECTOR_NATIONS.get(protectorId);
         final Nation nation = NationManager.INSTANCE.getNationById(oldNationId);
         if (nation == null) {
-            NationProtectorInfoManager.m_logger.error((Object)("Nation " + oldNationId + " inconnue pour le protecteur " + protectorId));
+            NationProtectorInfoManager.m_logger.error("Nation " + oldNationId + " inconnue pour le protecteur " + protectorId);
             return;
         }
         final NationProtectorInfoManager manager = nation.getProtectorInfoManager();
-        NationProtectorInfoManager.m_logger.info((Object)("Update de la nation du protecteur " + protectorId + ". Nouvelle nation : " + nationId));
+        NationProtectorInfoManager.m_logger.info("Update de la nation du protecteur " + protectorId + ". Nouvelle nation : " + nationId);
         manager.onNationChanged(protectorId, NationManager.INSTANCE.getNationById(nationId));
     }
     
@@ -246,7 +246,7 @@ public class NationProtectorInfoManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationProtectorInfoManager.class);
+        m_logger = Logger.getLogger(NationProtectorInfoManager.class);
         PROTECTOR_NATIONS = new TIntIntHashMap();
     }
 }

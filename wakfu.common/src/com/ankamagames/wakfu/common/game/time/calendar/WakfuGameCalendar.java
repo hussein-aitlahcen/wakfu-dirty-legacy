@@ -26,7 +26,7 @@ public class WakfuGameCalendar extends GameCalendar implements TimeProvider
     protected void loadEvents() {
         this.addEvent(new NewDayNightCycleEvent(this.getDate(), new EventPeriod(WakfuCalendarConstants.WAKFU_DAY_CYCLE_DURATION)));
         final EventPeriod period = new EventPeriod(WakfuCalendarConstants.WAKFU_DAY_CYCLE_UPDATE_FREQUENCY);
-        WakfuGameCalendar.m_logger.info((Object)("WakfuGameCalendar : adding periodic DayNightCycleUpdateEvent event, period=" + period));
+        WakfuGameCalendar.m_logger.info("WakfuGameCalendar : adding periodic DayNightCycleUpdateEvent event, period=" + period);
         this.addEvent(new DayNightCycleUpdateEvent(this.getDate(), period));
         final int thisYear = getInstance().getDate().getYear();
         for (final Season s : Season.values()) {
@@ -164,7 +164,7 @@ public class WakfuGameCalendar extends GameCalendar implements TimeProvider
     
     static {
         (m_instance = new WakfuGameCalendar()).setFirstDayOfWeek(2);
-        m_logger = Logger.getLogger((Class)WakfuGameCalendar.class);
+        m_logger = Logger.getLogger(WakfuGameCalendar.class);
     }
     
     public interface SunStatutChangeListener

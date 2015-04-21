@@ -72,10 +72,10 @@ public abstract class BinarSerial
                 size = buffer.limit() - offset - 1;
             }
             if (size <= 0) {
-                BinarSerial.m_logger.warn((Object)("Part " + index + "(offset=" + offset + ") is empty for " + this + " ! (voir log serveur)"), (Throwable)new Exception());
+                BinarSerial.m_logger.warn("Part " + index + "(offset=" + offset + ") is empty for " + this + " ! (voir log serveur)", new Exception());
             }
             else if (size > 10485760) {
-                BinarSerial.m_logger.error((Object)("Part " + index + "(offset=" + offset + ") exceeds max limit (" + size + " > " + 10485760 + " bytes)"), (Throwable)new Exception());
+                BinarSerial.m_logger.error("Part " + index + "(offset=" + offset + ") exceeds max limit (" + size + " > " + 10485760 + " bytes)", new Exception());
             }
             else {
                 final ByteBufferPool pool = BinarSerialBuilder.getInstance().getPool(size);
@@ -86,11 +86,11 @@ public abstract class BinarSerial
                 if (index >= 0 && index < parts.length) {
                     final BinarSerialPart part = parts[index];
                     if (part == BinarSerialPart.EMPTY) {
-                        BinarSerial.m_logger.warn((Object)("Don't know how to unserialise part #" + index + " (EMPTY)."));
+                        BinarSerial.m_logger.warn("Don't know how to unserialise part #" + index + " (EMPTY).");
                         continue;
                     }
                     if (part == null) {
-                        BinarSerial.m_logger.error((Object)("Part " + index + " of " + this + " is null"), (Throwable)new Exception());
+                        BinarSerial.m_logger.error("Part " + index + " of " + this + " is null", new Exception());
                         continue;
                     }
                     try {
@@ -104,7 +104,7 @@ public abstract class BinarSerial
                         part.markAsError("Exception lev\u00e9e lors de la d\u00e9serialisation de " + this + ", part :" + index, e);
                     }
                     if (partBuffer.remaining() > 0) {
-                        BinarSerial.m_logger.warn((Object)("Part " + index + " of " + this + " still have " + partBuffer.remaining() + " byte(s) left !"), (Throwable)new Exception());
+                        BinarSerial.m_logger.warn("Part " + index + " of " + this + " still have " + partBuffer.remaining() + " byte(s) left !", new Exception());
                     }
                 }
                 pool.returnBuffer(partBuffer);
@@ -138,7 +138,7 @@ public abstract class BinarSerial
                     }
                 }
                 catch (Exception e) {
-                    BinarSerial.m_logger.error((Object)("Exception lev\u00e9e lors de la d\u00e9serialisation de la part :" + index), (Throwable)e);
+                    BinarSerial.m_logger.error("Exception lev\u00e9e lors de la d\u00e9serialisation de la part :" + index, e);
                 }
                 return;
             }
@@ -147,6 +147,6 @@ public abstract class BinarSerial
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinarSerial.class);
+        m_logger = Logger.getLogger(BinarSerial.class);
     }
 }

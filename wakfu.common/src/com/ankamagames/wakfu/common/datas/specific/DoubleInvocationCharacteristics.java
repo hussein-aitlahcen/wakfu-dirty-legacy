@@ -4,7 +4,6 @@ import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import java.util.*;
@@ -76,32 +75,32 @@ public class DoubleInvocationCharacteristics extends BasicInvocationCharacterist
         final CharacteristicManager modelCharacManager = (doubleCharacteristics != null) ? doubleCharacteristics : model.getCharacteristics();
         for (final FighterCharacteristicType type : FighterCharacteristicType.values()) {
             if (type.isExpandable()) {
-                this.m_doubleCharac.getCharacteristic((CharacteristicType)type).setMax(modelCharacManager.getCharacteristicMaxValue(type));
+                this.m_doubleCharac.getCharacteristic(type).setMax(modelCharacManager.getCharacteristicMaxValue(type));
             }
             else {
-                this.m_doubleCharac.getCharacteristic((CharacteristicType)type).set(modelCharacManager.getCharacteristicValue(type));
+                this.m_doubleCharac.getCharacteristic(type).set(modelCharacManager.getCharacteristicValue(type));
             }
         }
         if (modelBreed instanceof AvatarBreed) {
             ((AvatarBreed)modelBreed).getSecondaryCharacsCalculator().applyForInitialize(this.m_doubleCharac, level);
         }
-        this.m_doubleCharac.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).toMax();
-        this.m_doubleCharac.getCharacteristic((CharacteristicType)FighterCharacteristicType.WP).set(model.getCharacteristicValue(FighterCharacteristicType.WP));
-        this.m_doubleCharac.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).toMax();
-        this.m_doubleCharac.getCharacteristic((CharacteristicType)FighterCharacteristicType.KO_TIME_BEFORE_DEATH).setMax(0);
+        this.m_doubleCharac.getCharacteristic(FighterCharacteristicType.AP).toMax();
+        this.m_doubleCharac.getCharacteristic(FighterCharacteristicType.WP).set(model.getCharacteristicValue(FighterCharacteristicType.WP));
+        this.m_doubleCharac.getCharacteristic(FighterCharacteristicType.MP).toMax();
+        this.m_doubleCharac.getCharacteristic(FighterCharacteristicType.KO_TIME_BEFORE_DEATH).setMax(0);
         for (final CharacBoundByLevel characBoundByLevel : CharacBoundByLevelTable.getInstance().getCharacBoundsByLevel()) {
             final byte characId = characBoundByLevel.getCharacId();
             final int bound = characBoundByLevel.getBound(level);
             final FighterCharacteristicType characType = FighterCharacteristicType.getCharacteristicTypeFromId(characId);
-            if (characType != null && this.m_doubleCharac.getCharacteristic((CharacteristicType)characType) != null) {
-                this.m_doubleCharac.getCharacteristic((CharacteristicType)characType).setUpperBound(bound);
+            if (characType != null && this.m_doubleCharac.getCharacteristic(characType) != null) {
+                this.m_doubleCharac.getCharacteristic(characType).setUpperBound(bound);
             }
         }
         if (powerRatio != 1.0) {
             for (final FighterCharacteristicType type : FighterCharacteristicType.values()) {
                 if (type != FighterCharacteristicType.AP && type != FighterCharacteristicType.MP) {
                     if (type != FighterCharacteristicType.WP) {
-                        final FighterCharacteristic characteristic = this.m_doubleCharac.getCharacteristic((CharacteristicType)type);
+                        final FighterCharacteristic characteristic = this.m_doubleCharac.getCharacteristic(type);
                         if (type.isExpandable()) {
                             characteristic.setMax((int)Math.ceil(characteristic.max() * powerRatio));
                         }
@@ -112,8 +111,8 @@ public class DoubleInvocationCharacteristics extends BasicInvocationCharacterist
                 }
             }
         }
-        this.m_doubleCharac.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).set(model.getCharacteristicValue(FighterCharacteristicType.HP));
-        this.m_doubleCharac.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).setMax((int)(modelCharacManager.getCharacteristicMaxValue(FighterCharacteristicType.HP) * powerRatio));
+        this.m_doubleCharac.getCharacteristic(FighterCharacteristicType.HP).set(model.getCharacteristicValue(FighterCharacteristicType.HP));
+        this.m_doubleCharac.getCharacteristic(FighterCharacteristicType.HP).setMax((int)(modelCharacManager.getCharacteristicMaxValue(FighterCharacteristicType.HP) * powerRatio));
     }
     
     @Override
@@ -126,7 +125,7 @@ public class DoubleInvocationCharacteristics extends BasicInvocationCharacterist
     private void initializeDoubleCharacteristics(final BasicCharacterInfo summoning) {
         summoning.getCharacteristics().copy(this.m_doubleCharac);
         if (this.getCurrentHp() > 0) {
-            summoning.getCharacteristic((CharacteristicType)FighterCharacteristicType.HP).set(this.getCurrentHp());
+            summoning.getCharacteristic(FighterCharacteristicType.HP).set(this.getCurrentHp());
         }
     }
     
@@ -143,10 +142,10 @@ public class DoubleInvocationCharacteristics extends BasicInvocationCharacterist
                 spellInventory.add(summonningSpellLevel);
             }
             catch (InventoryCapacityReachedException e) {
-                DoubleInvocationCharacteristics.m_logger.error((Object)"InventoryCapacityReachedException lors de l'initialisation des sorts d'un double : ", (Throwable)e);
+                DoubleInvocationCharacteristics.m_logger.error("InventoryCapacityReachedException lors de l'initialisation des sorts d'un double : ", e);
             }
             catch (ContentAlreadyPresentException e2) {
-                DoubleInvocationCharacteristics.m_logger.error((Object)"ContentAlreadyPresentException lors de l'initialisation des sorts d'un double : ", (Throwable)e2);
+                DoubleInvocationCharacteristics.m_logger.error("ContentAlreadyPresentException lors de l'initialisation des sorts d'un double : ", e2);
             }
         }
     }
@@ -237,6 +236,6 @@ public class DoubleInvocationCharacteristics extends BasicInvocationCharacterist
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DoubleInvocationCharacteristics.class);
+        m_logger = Logger.getLogger(DoubleInvocationCharacteristics.class);
     }
 }

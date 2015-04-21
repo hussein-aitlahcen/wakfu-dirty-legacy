@@ -24,7 +24,8 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
         this.value = Integer.parseInt(value);
     }
     
-    public Integer getValue() {
+    @Override
+	public Integer getValue() {
         return this.value;
     }
     
@@ -32,7 +33,8 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
         this.value = value;
     }
     
-    public void setValue(final Number value) {
+    @Override
+	public void setValue(final Number value) {
         this.value = value.intValue();
     }
     
@@ -60,19 +62,23 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
         this.value -= operand.intValue();
     }
     
-    public int intValue() {
+    @Override
+	public int intValue() {
         return this.value;
     }
     
-    public long longValue() {
+    @Override
+	public long longValue() {
         return this.value;
     }
     
-    public float floatValue() {
+    @Override
+	public float floatValue() {
         return this.value;
     }
     
-    public double doubleValue() {
+    @Override
+	public double doubleValue() {
         return this.value;
     }
     
@@ -80,20 +86,24 @@ public class MutableInt extends Number implements Comparable<MutableInt>, Mutabl
         return this.intValue();
     }
     
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         return obj instanceof MutableInt && this.value == ((MutableInt)obj).intValue();
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.value;
     }
     
-    public int compareTo(final MutableInt other) {
+    @Override
+	public int compareTo(final MutableInt other) {
         final int anotherVal = other.value;
         return (this.value < anotherVal) ? -1 : ((this.value == anotherVal) ? 0 : 1);
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return String.valueOf(this.value);
     }
 }

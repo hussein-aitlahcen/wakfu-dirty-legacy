@@ -160,7 +160,7 @@ public final class NodeSet
     
     static {
         EMPTY = new NodeSet();
-        m_logger = Logger.getLogger((Class)NodeSet.class);
+        m_logger = Logger.getLogger(NodeSet.class);
         NODE_COMPARATOR = new Comparator<Node>() {
             @Override
             public int compare(final Node o1, final Node o2) {

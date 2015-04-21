@@ -144,7 +144,7 @@ public class GameDateFormatter
                         break;
                     }
                     default: {
-                        GameDateFormatter.m_logger.warn((Object)("Caract\u00e8re de formattage inconnu '" + nextChar + "' dans la chaine " + format));
+                        GameDateFormatter.m_logger.warn("Caract\u00e8re de formattage inconnu '" + nextChar + "' dans la chaine " + format);
                         break;
                     }
                 }
@@ -157,6 +157,6 @@ public class GameDateFormatter
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GameDateFormatter.class);
+        m_logger = Logger.getLogger(GameDateFormatter.class);
     }
 }

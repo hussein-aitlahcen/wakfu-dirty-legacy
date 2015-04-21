@@ -5,7 +5,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
 import com.ankamagames.framework.kernel.core.common.*;
-import org.apache.commons.pool.*;
 import gnu.trove.*;
 
 public class LinkedToEffectUserIterator implements Iterator<RunningEffect>, Poolable
@@ -53,7 +52,7 @@ public class LinkedToEffectUserIterator implements Iterator<RunningEffect>, Pool
             }
             catch (Exception e) {
                 iterator = new LinkedToEffectUserIterator();
-                LinkedToEffectUserIterator.m_logger.error((Object)("erreur dans le checkOut de " + iterator.getClass()));
+                LinkedToEffectUserIterator.m_logger.error("erreur dans le checkOut de " + iterator.getClass());
             }
             iterator.m_runningEffectManagerCreator = creator;
             iterator.m_iterator = effects;
@@ -104,7 +103,7 @@ public class LinkedToEffectUserIterator implements Iterator<RunningEffect>, Pool
                 LinkedToEffectUserIterator.m_iteratorPool.returnObject(this);
             }
             catch (Exception e) {
-                LinkedToEffectUserIterator.m_logger.error((Object)"impossible");
+                LinkedToEffectUserIterator.m_logger.error("impossible");
             }
         }
         else {
@@ -113,7 +112,7 @@ public class LinkedToEffectUserIterator implements Iterator<RunningEffect>, Pool
     }
     
     static {
-        m_logger = Logger.getLogger((Class)LinkedToEffectUserIterator.class);
+        m_logger = Logger.getLogger(LinkedToEffectUserIterator.class);
         m_iteratorPool = new MonitoredPool(new ObjectFactory<LinkedToEffectUserIterator>() {
             @Override
             public LinkedToEffectUserIterator makeObject() {

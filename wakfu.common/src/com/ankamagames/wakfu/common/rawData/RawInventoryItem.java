@@ -1,7 +1,6 @@
 package com.ankamagames.wakfu.common.rawData;
 
 import java.nio.*;
-import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 
 public class RawInventoryItem implements VersionableObject

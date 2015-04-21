@@ -5,7 +5,8 @@ import java.util.*;
 
 public interface GameDateConst extends Comparable<GameDateConst>
 {
-    String toString();
+    @Override
+	String toString();
     
     boolean isNull();
     
@@ -19,7 +20,8 @@ public interface GameDateConst extends Comparable<GameDateConst>
     
     boolean afterOrEquals(@NotNull GameDateConst p0);
     
-    int compareTo(GameDateConst p0);
+    @Override
+	int compareTo(GameDateConst p0);
     
     GameInterval timeTo(GameDateConst p0);
     

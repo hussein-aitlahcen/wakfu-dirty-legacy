@@ -8,8 +8,6 @@ import java.util.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fight.time.buff.*;
 import com.ankamagames.wakfu.common.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 
 public class TimeScoreGaugesImpl implements TimeScoreGauges
@@ -263,6 +261,6 @@ public class TimeScoreGaugesImpl implements TimeScoreGauges
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TimeScoreGaugesImpl.class);
+        m_logger = Logger.getLogger(TimeScoreGaugesImpl.class);
     }
 }

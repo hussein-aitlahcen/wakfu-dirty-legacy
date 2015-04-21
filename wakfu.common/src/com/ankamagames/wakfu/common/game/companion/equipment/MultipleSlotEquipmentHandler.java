@@ -72,13 +72,13 @@ public final class MultipleSlotEquipmentHandler implements InventoryObserver
                     (equipment).addAt(item.getInactiveCopy(), linkedPosition.getId());
                 }
                 catch (InventoryCapacityReachedException e) {
-                    MultipleSlotEquipmentHandler.m_logger.error((Object)"Exception levee", (Throwable)e);
+                    MultipleSlotEquipmentHandler.m_logger.error("Exception levee", e);
                 }
                 catch (ContentAlreadyPresentException e2) {
-                    MultipleSlotEquipmentHandler.m_logger.error((Object)"Exception levee", (Throwable)e2);
+                    MultipleSlotEquipmentHandler.m_logger.error("Exception levee", e2);
                 }
                 catch (PositionAlreadyUsedException e3) {
-                    MultipleSlotEquipmentHandler.m_logger.error((Object)"Exception levee", (Throwable)e3);
+                    MultipleSlotEquipmentHandler.m_logger.error("Exception levee", e3);
                 }
             }
             else {

@@ -12,7 +12,8 @@ public class RandomByteBufferReader extends Randomizer
         this.m_buffer = buffer;
     }
     
-    public long position() {
+    @Override
+	public long position() {
         return this.m_buffer.position();
     }
     

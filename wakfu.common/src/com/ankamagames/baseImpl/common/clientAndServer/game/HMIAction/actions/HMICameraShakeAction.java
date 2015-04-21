@@ -29,7 +29,7 @@ public class HMICameraShakeAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length > 6) {
-                HMICameraShakeAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut au maximum: startDuration, midDuration, endDuration, amplitude, period, [X,Y,BOTH]) : " + parameters));
+                HMICameraShakeAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut au maximum: startDuration, midDuration, endDuration, amplitude, period, [X,Y,BOTH]) : " + parameters);
                 return false;
             }
             final int paramCount = array.length;
@@ -57,7 +57,7 @@ public class HMICameraShakeAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMICameraShakeAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMICameraShakeAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -92,6 +92,6 @@ public class HMICameraShakeAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMICameraShakeAction.class);
+        m_logger = Logger.getLogger(HMICameraShakeAction.class);
     }
 }

@@ -1,7 +1,6 @@
 package com.ankamagames.wakfu.common.account.admin;
 
 import com.google.gson.annotations.*;
-import com.google.common.base.*;
 import com.google.common.base.Optional;
 
 import java.util.*;

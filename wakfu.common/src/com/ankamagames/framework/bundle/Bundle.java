@@ -66,7 +66,7 @@ public class Bundle
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Bundle.class);
+        m_logger = Logger.getLogger(Bundle.class);
     }
     
     static class LineReader extends InputStreamReader
@@ -112,7 +112,7 @@ public class Bundle
                         this.m_bufferLimit = this.read(this.m_buffer);
                     }
                     catch (IOException e) {
-                        Bundle.m_logger.error((Object)"Exception", (Throwable)e);
+                        Bundle.m_logger.error("Exception", e);
                     }
                     this.m_currentOffset = 0;
                     if (this.m_bufferLimit <= 0) {
@@ -179,7 +179,7 @@ public class Bundle
                             this.m_bufferLimit = this.read(this.m_buffer);
                         }
                         catch (IOException e) {
-                            Bundle.m_logger.error((Object)"Exception", (Throwable)e);
+                            Bundle.m_logger.error("Exception", e);
                         }
                         this.m_currentOffset = 0;
                         if (this.m_bufferLimit <= 0) {

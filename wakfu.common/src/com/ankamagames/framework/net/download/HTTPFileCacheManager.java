@@ -49,10 +49,10 @@ public class HTTPFileCacheManager
                 istream.close();
             }
             catch (FileNotFoundException e2) {
-                HTTPFileCacheManager.m_logger.info((Object)"No cache data file");
+                HTTPFileCacheManager.m_logger.info("No cache data file");
             }
             catch (IOException e) {
-                HTTPFileCacheManager.m_logger.warn((Object)("Probl\u00e8me \u00e0 l'ouverture des donn\u00e9es de cache : " + e.getMessage()), (Throwable)e);
+                HTTPFileCacheManager.m_logger.warn("Probl\u00e8me \u00e0 l'ouverture des donn\u00e9es de cache : " + e.getMessage(), e);
             }
         }
     }
@@ -72,13 +72,13 @@ public class HTTPFileCacheManager
                 fileOutputStream.close();
             }
             catch (IOException e) {
-                HTTPFileCacheManager.m_logger.warn((Object)("Probl\u00e8me \u00e0 la sauvegarde des donn\u00e9es de cache :" + e.getMessage()));
+                HTTPFileCacheManager.m_logger.warn("Probl\u00e8me \u00e0 la sauvegarde des donn\u00e9es de cache :" + e.getMessage());
             }
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HTTPFileCacheManager.class);
+        m_logger = Logger.getLogger(HTTPFileCacheManager.class);
         INSTANCE = new HTTPFileCacheManager();
     }
 }

@@ -37,7 +37,7 @@ public final class CompanionManager
     public List<CompanionModel> getCompanions(final long clientId) {
         final TLongObjectHashMap<CompanionModel> companions = this.m_companionLists.get(clientId);
         if (companions == null) {
-            return (List<CompanionModel>)Collections.EMPTY_LIST;
+            return Collections.EMPTY_LIST;
         }
         final List<CompanionModel> res = new ArrayList<CompanionModel>();
         companions.forEachValue(new TObjectProcedure<CompanionModel>() {
@@ -111,7 +111,7 @@ public final class CompanionManager
     public List<CompanionModel> getActiveCompanions(final long clientId) {
         final TLongObjectHashMap<CompanionModel> companions = this.m_companionLists.get(clientId);
         if (companions == null) {
-            return (List<CompanionModel>)Collections.EMPTY_LIST;
+            return Collections.EMPTY_LIST;
         }
         final List<CompanionModel> res = new ArrayList<CompanionModel>();
         companions.forEachValue(new TObjectProcedure<CompanionModel>() {
@@ -132,7 +132,7 @@ public final class CompanionManager
                 listener.companionRemoved(companion);
             }
             catch (Exception e) {
-                CompanionManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                CompanionManager.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -143,7 +143,7 @@ public final class CompanionManager
                 listener.companionAdded(companion);
             }
             catch (Exception e) {
-                CompanionManager.m_logger.error((Object)"Exception levee", (Throwable)e);
+                CompanionManager.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -173,7 +173,7 @@ public final class CompanionManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CompanionManager.class);
+        m_logger = Logger.getLogger(CompanionManager.class);
         INSTANCE = new CompanionManager();
     }
 }

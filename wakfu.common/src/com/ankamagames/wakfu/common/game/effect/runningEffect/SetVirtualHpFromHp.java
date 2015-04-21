@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -54,7 +58,7 @@ public final class SetVirtualHpFromHp extends WakfuRunningEffect
             re = new SetVirtualHpFromHp();
             re.m_pool = null;
             re.m_isStatic = false;
-            SetVirtualHpFromHp.m_logger.error((Object)("Erreur lors d'un checkOut sur un SetVirtualHpFromHp : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SetVirtualHpFromHp : " + e.getMessage());
         }
         return re;
     }
@@ -64,7 +68,7 @@ public final class SetVirtualHpFromHp extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final int referenceValue = this.m_target.getCharacteristic(FighterCharacteristicType.HP).max();
         this.m_value = referenceValue * this.m_value / 100;
     }

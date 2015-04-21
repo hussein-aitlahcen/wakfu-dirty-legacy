@@ -30,7 +30,8 @@ final class GetNextActionWithSpecialIdTarget extends ActionGroupFunction
         return GetNextActionWithSpecialIdTarget.RESULTS;
     }
     
-    public void run(final int paramCount) throws LuaException {
+    @Override
+	public void run(final int paramCount) throws LuaException {
         final int id = this.getParamInt(0);
         final Action action = this.m_actionGroup.getActionsBySpecialId(id);
         if (action != null) {

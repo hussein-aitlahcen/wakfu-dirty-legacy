@@ -166,7 +166,7 @@ public final class BombCombinationComputerImpl implements BombCombinationCompute
             }
         }
         catch (Exception e) {
-            BombCombinationComputerImpl.m_logger.error((Object)"Exception levee", (Throwable)e);
+            BombCombinationComputerImpl.m_logger.error("Exception levee", e);
         }
         finally {
             this.m_notifyUpdate = false;
@@ -174,6 +174,6 @@ public final class BombCombinationComputerImpl implements BombCombinationCompute
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BombCombinationComputerImpl.class);
+        m_logger = Logger.getLogger(BombCombinationComputerImpl.class);
     }
 }

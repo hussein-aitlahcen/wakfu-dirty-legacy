@@ -11,12 +11,14 @@ abstract class THashIterator<V> extends TIterator implements Iterator<V>
         this._object_hash = hash;
     }
     
-    public V next() {
+    @Override
+	public V next() {
         this.moveToNextIndex();
         return this.objectAtIndex(this._index);
     }
     
-    protected final int nextIndex() {
+    @Override
+	protected final int nextIndex() {
         if (this._expectedSize != this._hash.size()) {
             throw new ConcurrentModificationException();
         }

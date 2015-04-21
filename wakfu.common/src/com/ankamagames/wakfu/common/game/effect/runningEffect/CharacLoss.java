@@ -1,12 +1,13 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
+import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.RunningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class CharacLoss extends CharacModification
@@ -36,7 +37,7 @@ public class CharacLoss extends CharacModification
             re = new CharacLoss();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacLoss.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacLoss : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacLoss : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_valuePerCentOfCurrentValue = this.m_valuePerCentOfCurrentValue;
@@ -90,8 +91,8 @@ public class CharacLoss extends CharacModification
     
     protected int getApplicationProbability() {
         int initialProbability;
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            initialProbability = ((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.RANDOM);
+        if (this.m_genericEffect != null && this.m_genericEffect.getParamsCount() >= 4) {
+            initialProbability = this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.RANDOM);
         }
         else {
             initialProbability = -1;

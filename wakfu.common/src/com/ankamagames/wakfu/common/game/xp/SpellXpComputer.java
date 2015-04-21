@@ -4,7 +4,6 @@ import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import java.util.*;
 import org.jetbrains.annotations.*;
 import com.ankamagames.wakfu.common.game.xp.character.*;
 import com.ankamagames.wakfu.common.constants.*;
@@ -141,7 +140,7 @@ public class SpellXpComputer
     
     public static long getPlayerVirtualXpMissing(@NotNull final BasicCharacterInfo character) {
         if (!(character instanceof PlayerCharacterLevelable)) {
-            SpellXpComputer.m_logger.error((Object)("Trying to lock spell for a characterInfo without xp : " + character));
+            SpellXpComputer.m_logger.error("Trying to lock spell for a characterInfo without xp : " + character);
             return 0L;
         }
         final long characterXp = ((PlayerCharacterLevelable)character).getCurrentXp();
@@ -158,7 +157,7 @@ public class SpellXpComputer
     
     public static SpellLockValidity getPlayerSpellLockValidity(@NotNull final BasicCharacterInfo character) {
         if (!(character instanceof SpellXpLocker)) {
-            SpellXpComputer.m_logger.error((Object)("Trying to lock spell for a characterInfo which is not a SpellXpLocker : " + character));
+            SpellXpComputer.m_logger.error("Trying to lock spell for a characterInfo which is not a SpellXpLocker : " + character);
             return SpellLockValidity.CAP_NOT_REACHED;
         }
         if (character.isOnFight()) {
@@ -213,7 +212,7 @@ public class SpellXpComputer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)SpellXpComputer.class);
+        m_logger = Logger.getLogger(SpellXpComputer.class);
         CHARACTER_XP_TO_SPELL_XP_RATIO_BY_CHARACTER_LEVEL = initializeCharacterXpToSpellXpRatio();
     }
 }

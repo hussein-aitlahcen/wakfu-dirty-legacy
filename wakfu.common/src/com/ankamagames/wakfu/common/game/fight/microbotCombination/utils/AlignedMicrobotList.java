@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.fight.microbotCombination.utils;
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import org.apache.log4j.*;
-import java.util.*;
 
 public class AlignedMicrobotList extends SortedList<AbstractFakeFighterEffectArea>
 {
@@ -15,7 +14,7 @@ public class AlignedMicrobotList extends SortedList<AbstractFakeFighterEffectAre
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AlignedMicrobotList.class);
+        m_logger = Logger.getLogger(AlignedMicrobotList.class);
         staticComparator = new MicrobotPositionComparator();
     }
 }

@@ -62,7 +62,7 @@ public final class ClientAchievementsContext implements AchievementsContext
                             objectivesByVar.add(objective.getId());
                         }
                     }
-                    final Objective newObjective = new Objective(objective, newAchievement, (Variable[])((variables != null) ? newVariables : null));
+                    final Objective newObjective = new Objective(objective, newAchievement, (variables != null) ? newVariables : null);
                     newAchievement.addObjective(newObjective);
                     ClientAchievementsContext.this.m_objectives.put(newObjective.getId(), newObjective);
                 }
@@ -272,10 +272,10 @@ public final class ClientAchievementsContext implements AchievementsContext
             if (this.m_listener != null) {
                 this.m_listener.onObjectiveCompleted(objective);
             }
-            ClientAchievementsContext.m_logger.info((Object)("Achievement objective completed : " + id));
+            ClientAchievementsContext.m_logger.info("Achievement objective completed : " + id);
         }
         else {
-            ClientAchievementsContext.m_logger.error((Object)("Impossible de trouver l'objectif " + id + " dans le contexte du joueur"));
+            ClientAchievementsContext.m_logger.error("Impossible de trouver l'objectif " + id + " dans le contexte du joueur");
         }
     }
     
@@ -283,13 +283,13 @@ public final class ClientAchievementsContext implements AchievementsContext
         final Achievement achievement = this.m_achievements.get(id);
         if (achievement != null) {
             achievement.activate(this);
-            ClientAchievementsContext.m_logger.info((Object)("Achievement activated : " + id));
+            ClientAchievementsContext.m_logger.info("Achievement activated : " + id);
             if (this.m_listener != null) {
                 this.m_listener.onAchievementActivated(achievement);
             }
         }
         else {
-            ClientAchievementsContext.m_logger.error((Object)("Impossible de trouver l'achievement " + id + " dans le contexte du joueur"));
+            ClientAchievementsContext.m_logger.error("Impossible de trouver l'achievement " + id + " dans le contexte du joueur");
         }
     }
     
@@ -297,7 +297,7 @@ public final class ClientAchievementsContext implements AchievementsContext
         final Achievement achievement = this.m_achievements.get(id);
         if (achievement != null) {
             achievement.complete(this);
-            ClientAchievementsContext.m_logger.info((Object)("! Achievement unlocked ! : " + id + " on " + new Date(unlockTime) + " (server time)"));
+            ClientAchievementsContext.m_logger.info("! Achievement unlocked ! : " + id + " on " + new Date(unlockTime) + " (server time)");
             this.m_history.add(new AchievementHistoryEntry(id, unlockTime));
             final int historyLen = this.m_history.size();
             if (historyLen > 0 && historyLen > 5) {
@@ -312,7 +312,7 @@ public final class ClientAchievementsContext implements AchievementsContext
             }
         }
         else {
-            ClientAchievementsContext.m_logger.error((Object)("Impossible de trouver l'achievement " + id + " dans le contexte du joueur"));
+            ClientAchievementsContext.m_logger.error("Impossible de trouver l'achievement " + id + " dans le contexte du joueur");
         }
     }
     
@@ -346,7 +346,7 @@ public final class ClientAchievementsContext implements AchievementsContext
     
     public void unserialize(final byte[] data) {
         final ByteBuffer buffer = ByteBuffer.wrap(data);
-        ClientAchievementsContext.m_logger.info((Object)("D\u00e9serialisation des achievements : size=" + data.length));
+        ClientAchievementsContext.m_logger.info("D\u00e9serialisation des achievements : size=" + data.length);
         this.m_version = buffer.getInt();
         for (int historyLength = buffer.get() & 0xFF, i = 0; i < historyLength; ++i) {
             final int achievementId = buffer.getInt();
@@ -375,7 +375,7 @@ public final class ClientAchievementsContext implements AchievementsContext
                 achievement.setStartTime(startTime);
             }
             else {
-                ClientAchievementsContext.m_logger.error((Object)("Achievement inexistant : Id=" + id2));
+                ClientAchievementsContext.m_logger.error("Achievement inexistant : Id=" + id2);
             }
         }
         for (int nbObjectives = buffer.getInt(), l = 0; l < nbObjectives; ++l) {
@@ -385,7 +385,7 @@ public final class ClientAchievementsContext implements AchievementsContext
                 objective.setCompleted(true);
             }
             else {
-                ClientAchievementsContext.m_logger.error((Object)("Objectif inexistant : Id=" + id3));
+                ClientAchievementsContext.m_logger.error("Objectif inexistant : Id=" + id3);
             }
         }
         for (int numFollowed = buffer.get() & 0xFF, m = 0; m < numFollowed; ++m) {
@@ -431,6 +431,6 @@ public final class ClientAchievementsContext implements AchievementsContext
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ClientAchievementsContext.class);
+        m_logger = Logger.getLogger(ClientAchievementsContext.class);
     }
 }

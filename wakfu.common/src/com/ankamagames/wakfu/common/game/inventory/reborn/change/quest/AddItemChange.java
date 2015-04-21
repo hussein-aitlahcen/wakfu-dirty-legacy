@@ -38,7 +38,7 @@ class AddItemChange implements QuestInventoryChange
             this.m_item = QuestInventorySerializer.itemFromRaw(raw, ReferenceItemManager.getInstance());
         }
         catch (QuestInventoryException e) {
-            AddItemChange.m_logger.error((Object)("Impossible de d\u00e9-s\u00e9rialiser l'item " + raw), (Throwable)e);
+            AddItemChange.m_logger.error("Impossible de d\u00e9-s\u00e9rialiser l'item " + raw, e);
         }
     }
     
@@ -48,7 +48,7 @@ class AddItemChange implements QuestInventoryChange
             controller.addItem(this.m_item);
         }
         catch (QuestInventoryException e) {
-            AddItemChange.m_logger.error((Object)"Impossible d'ajouter l'item", (Throwable)e);
+            AddItemChange.m_logger.error("Impossible d'ajouter l'item", e);
         }
     }
     
@@ -63,6 +63,6 @@ class AddItemChange implements QuestInventoryChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AddItemChange.class);
+        m_logger = Logger.getLogger(AddItemChange.class);
     }
 }

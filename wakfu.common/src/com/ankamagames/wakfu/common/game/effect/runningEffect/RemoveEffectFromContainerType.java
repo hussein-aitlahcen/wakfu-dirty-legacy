@@ -3,7 +3,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +41,7 @@ public final class RemoveEffectFromContainerType extends WakfuRunningEffect
             re = new RemoveEffectFromContainerType();
             re.m_pool = null;
             re.m_isStatic = false;
-            RemoveEffectFromContainerType.m_logger.error((Object)("Erreur lors d'un checkOut sur un RemoveEffectFromContainerType : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RemoveEffectFromContainerType : " + e.getMessage());
         }
         re.m_containerType = this.m_containerType;
         return re;

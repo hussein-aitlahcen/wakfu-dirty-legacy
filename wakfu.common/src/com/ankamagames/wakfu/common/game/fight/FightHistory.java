@@ -25,6 +25,6 @@ public abstract class FightHistory
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightHistory.class);
+        m_logger = Logger.getLogger(FightHistory.class);
     }
 }

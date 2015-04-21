@@ -45,7 +45,8 @@ public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPoo
         }
     }
     
-    public synchronized Object borrowObject() throws Exception {
+    @Override
+	public synchronized Object borrowObject() throws Exception {
         this.assertOpen();
         Object obj;
         for (obj = null; null == obj; obj = null) {
@@ -70,7 +71,8 @@ public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPoo
         return obj;
     }
     
-    public synchronized void returnObject(final Object obj) throws Exception {
+    @Override
+	public synchronized void returnObject(final Object obj) throws Exception {
         this.assertOpen();
         boolean success = true;
         if (!this._factory.validateObject(obj)) {
@@ -98,31 +100,36 @@ public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPoo
         }
     }
     
-    public synchronized void invalidateObject(final Object obj) throws Exception {
+    @Override
+	public synchronized void invalidateObject(final Object obj) throws Exception {
         this.assertOpen();
         --this._numActive;
         this._factory.destroyObject(obj);
         this.notifyAll();
     }
     
-    public synchronized void addObject() throws Exception {
+    @Override
+	public synchronized void addObject() throws Exception {
         this.assertOpen();
         final Object obj = this._factory.makeObject();
         ++this._numActive;
         this.returnObject(obj);
     }
     
-    public synchronized int getNumIdle() {
+    @Override
+	public synchronized int getNumIdle() {
         this.assertOpen();
         return this._pool.size();
     }
     
-    public synchronized int getNumActive() {
+    @Override
+	public synchronized int getNumActive() {
         this.assertOpen();
         return this._numActive;
     }
     
-    public synchronized void clear() {
+    @Override
+	public synchronized void clear() {
         this.assertOpen();
         if (null != this._factory) {
             final Iterator iter = this._pool.iterator();
@@ -140,14 +147,16 @@ public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPoo
         this._pool.clear();
     }
     
-    public synchronized void close() throws Exception {
+    @Override
+	public synchronized void close() throws Exception {
         this.clear();
         this._pool = null;
         this._factory = null;
         super.close();
     }
     
-    public synchronized void setFactory(final PoolableObjectFactory factory) throws IllegalStateException {
+    @Override
+	public synchronized void setFactory(final PoolableObjectFactory factory) throws IllegalStateException {
         this.assertOpen();
         if (0 < this.getNumActive()) {
             throw new IllegalStateException("Objects are already active");

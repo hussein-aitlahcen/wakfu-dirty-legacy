@@ -45,7 +45,7 @@ public class AsyncLoader extends Thread
                 }
             }
             catch (IOException e) {
-                AsyncLoader.m_logger.error((Object)("An error occurs while streaming the url " + this.m_asyncURL.getURL().getPath()), (Throwable)e);
+                AsyncLoader.m_logger.error("An error occurs while streaming the url " + this.m_asyncURL.getURL().getPath(), e);
                 this.m_asyncURL.failed();
                 this.m_asyncURL = null;
             }
@@ -64,7 +64,7 @@ public class AsyncLoader extends Thread
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AsyncLoader.class);
+        m_logger = Logger.getLogger(AsyncLoader.class);
         m_instance = new AsyncLoader();
     }
 }

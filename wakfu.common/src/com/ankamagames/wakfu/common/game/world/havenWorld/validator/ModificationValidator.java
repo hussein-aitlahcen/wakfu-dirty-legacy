@@ -61,6 +61,6 @@ public abstract class ModificationValidator<T>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ModificationValidator.class);
+        m_logger = Logger.getLogger(ModificationValidator.class);
     }
 }

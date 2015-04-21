@@ -54,7 +54,8 @@ public class ItemTrackerViewer extends AppenderSkeleton
         return "ItemTrackerViewer" + localName;
     }
     
-    protected void append(final LoggingEvent event) {
+    @Override
+	protected void append(final LoggingEvent event) {
         final String message = (String)event.getMessage();
         final String[] split = message.split(",");
         final String[] data = new String[split.length + 1];
@@ -108,11 +109,13 @@ public class ItemTrackerViewer extends AppenderSkeleton
         this.m_frame.setLocation(location);
     }
     
-    public void close() {
+    @Override
+	public void close() {
         this.m_frame.dispose();
     }
     
-    public boolean requiresLayout() {
+    @Override
+	public boolean requiresLayout() {
         return false;
     }
 }

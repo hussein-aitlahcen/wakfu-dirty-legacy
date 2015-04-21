@@ -30,15 +30,15 @@ public abstract class ClientMapInteractiveElement extends MapInteractiveElement 
             
             @Override
             public void unserialize(final ByteBuffer buffer, final int version) {
-                ClientMapInteractiveElement.m_logger.trace((Object)("D\u00e9codage des donn\u00e9es globales (len=" + buffer.remaining() + ")"));
+                ClientMapInteractiveElement.m_logger.trace("D\u00e9codage des donn\u00e9es globales (len=" + buffer.remaining() + ")");
                 if (buffer.remaining() > 0) {
                     if (buffer.remaining() < 1) {
-                        ClientMapInteractiveElement.m_logger.error((Object)"Impossible de d\u00e9s\u00e9rialiser une partie vide");
+                        ClientMapInteractiveElement.m_logger.error("Impossible de d\u00e9s\u00e9rialiser une partie vide");
                         return;
                     }
                     final int nActions = buffer.get() & 0xFF;
                     if (buffer.remaining() != nActions * 6) {
-                        ClientMapInteractiveElement.m_logger.error((Object)("Impossible de d\u00e9s\u00e9rialiser " + nActions + " actions dans un buffer de " + buffer.remaining() + " octets"));
+                        ClientMapInteractiveElement.m_logger.error("Impossible de d\u00e9s\u00e9rialiser " + nActions + " actions dans un buffer de " + buffer.remaining() + " octets");
                         return;
                     }
                     for (int i = 0; i < nActions; ++i) {
@@ -49,7 +49,7 @@ public abstract class ClientMapInteractiveElement extends MapInteractiveElement 
                             ClientMapInteractiveElement.this.m_actionScripts.put(action, Integer.valueOf(scriptId));
                         }
                         else {
-                            ClientMapInteractiveElement.m_logger.error((Object)("Pas de InteractiveElementAction d'ID=" + actionId));
+                            ClientMapInteractiveElement.m_logger.error("Pas de InteractiveElementAction d'ID=" + actionId);
                         }
                     }
                 }
@@ -68,7 +68,7 @@ public abstract class ClientMapInteractiveElement extends MapInteractiveElement 
         }
         final boolean executed = this.onAction(action, user);
         if (!executed) {
-            ClientMapInteractiveElement.m_logger.warn((Object)("Action non prise en compte par le ModelControler (ClientMapInteractiveElement) : " + action.toString()));
+            ClientMapInteractiveElement.m_logger.warn("Action non prise en compte par le ModelControler (ClientMapInteractiveElement) : " + action.toString());
         }
         return executed;
     }
@@ -118,7 +118,8 @@ public abstract class ClientMapInteractiveElement extends MapInteractiveElement 
         return BinarSerialPart.EMPTY;
     }
     
-    public TopologyMapInstance getTopologyMap() {
+    @Override
+	public TopologyMapInstance getTopologyMap() {
         final Point3 position = this.getPosition();
         return TopologyMapManager.getMapFromCell(position.getX(), position.getY());
     }

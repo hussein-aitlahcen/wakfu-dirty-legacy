@@ -37,7 +37,7 @@ class RemoveItemChange implements CosmeticsInventoryChange
             controller.removeItem(this.m_itemId);
         }
         catch (CosmeticsInventoryException e) {
-            RemoveItemChange.m_logger.error((Object)"Impossible d'ajouter l'item", (Throwable)e);
+            RemoveItemChange.m_logger.error("Impossible d'ajouter l'item", e);
         }
     }
     
@@ -52,6 +52,6 @@ class RemoveItemChange implements CosmeticsInventoryChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RemoveItemChange.class);
+        m_logger = Logger.getLogger(RemoveItemChange.class);
     }
 }

@@ -7,15 +7,18 @@ import com.ankamagames.wakfu.common.game.fight.bombCombination.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 
@@ -195,7 +198,7 @@ public abstract class AbstractBombEffectArea extends AbstractCarriableEffectArea
                 this.m_positionChangedListener.onBombPositionChanged(this);
             }
             catch (Exception e) {
-                AbstractBombEffectArea.m_logger.error((Object)"Exception levee", (Throwable)e);
+                BasicEffectArea.m_logger.error("Exception levee", e);
             }
         }
     }

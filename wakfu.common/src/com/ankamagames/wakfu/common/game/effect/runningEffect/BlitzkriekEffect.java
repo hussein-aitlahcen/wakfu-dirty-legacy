@@ -5,13 +5,16 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -47,23 +50,23 @@ public final class BlitzkriekEffect extends UsingEffectGroupRunningEffect
             re = new BlitzkriekEffect();
             re.m_pool = null;
             re.m_isStatic = false;
-            BlitzkriekEffect.m_logger.error((Object)("Erreur lors d'un checkOut sur un BlitzkriegEffect : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un BlitzkriegEffect : " + e.getMessage());
         }
         return re;
     }
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getParamsCount() == 0) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            this.m_element = Elements.getElementFromId((byte)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 2) {
+            this.m_element = Elements.getElementFromId((byte)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
-            this.m_stateId = (short)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            this.m_stateLevel = (short)((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 3) {
+            this.m_stateId = (short)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_stateLevel = (short)this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     
@@ -94,12 +97,12 @@ public final class BlitzkriekEffect extends UsingEffectGroupRunningEffect
     
     private void executeMovement(final RunningEffect triggerRE, final List<EffectUser> hitTargets, final Point3 arrivalCell) {
         try {
-            final TeleportCaster teleport = TeleportCaster.checkOut((EffectContext<WakfuEffect>)this.m_context, (WakfuEffect)this.m_genericEffect, this.m_caster, (WakfuEffectContainer)this.m_effectContainer, arrivalCell);
+            final TeleportCaster teleport = TeleportCaster.checkOut(this.m_context, this.m_genericEffect, this.m_caster, this.m_effectContainer, arrivalCell);
             teleport.setId(RunningEffectConstants.TELEPORT_CASTER.getId());
             teleport.askForExecution();
         }
         catch (Exception e) {
-            BlitzkriekEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
         }
     }
     
@@ -161,7 +164,7 @@ public final class BlitzkriekEffect extends UsingEffectGroupRunningEffect
     private int getDistanceMaxReachable(final Point3 castPosition, final Direction8 attackDirection) {
         final FightMap map = this.m_context.getFightMap();
         if (map == null) {
-            BlitzkriekEffect.m_logger.error((Object)("pas de fightmap sur le context " + this.m_context));
+            RunningEffect.m_logger.error("pas de fightmap sur le context " + this.m_context);
             return 0;
         }
         final BasicCharacterInfo caster = (BasicCharacterInfo)this.m_caster;

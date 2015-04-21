@@ -1,7 +1,7 @@
 package org.apache.tools.zip;
 
 import java.util.*;
-import java.util.zip.*;
+import java.util.zip.CRC32;
 import java.io.*;
 
 public abstract class ZipUtil

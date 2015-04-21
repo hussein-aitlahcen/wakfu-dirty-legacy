@@ -65,7 +65,7 @@ public abstract class BinaryStorable
             }
         }
         else {
-            BinaryStorable.m_logger.error((Object)("toggleModified sur un BinaryStorable flagg\u00e9 UNUSED " + this.getGlobalId()));
+            BinaryStorable.m_logger.error("toggleModified sur un BinaryStorable flagg\u00e9 UNUSED " + this.getGlobalId());
         }
     }
     
@@ -115,7 +115,7 @@ public abstract class BinaryStorable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinaryStorable.class);
+        m_logger = Logger.getLogger(BinaryStorable.class);
         m_crc32 = new CRC32();
     }
 }

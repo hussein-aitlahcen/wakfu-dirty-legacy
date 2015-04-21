@@ -44,7 +44,8 @@ public class StackObjectPool extends BaseObjectPool implements ObjectPool
         (this._pool = new Stack()).ensureCapacity((initcapacity > this._maxSleeping) ? this._maxSleeping : initcapacity);
     }
     
-    public synchronized Object borrowObject() throws Exception {
+    @Override
+	public synchronized Object borrowObject() throws Exception {
         this.assertOpen();
         Object obj;
         for (obj = null; null == obj; obj = null) {
@@ -68,7 +69,8 @@ public class StackObjectPool extends BaseObjectPool implements ObjectPool
         return obj;
     }
     
-    public synchronized void returnObject(Object obj) throws Exception {
+    @Override
+	public synchronized void returnObject(Object obj) throws Exception {
         this.assertOpen();
         boolean success = true;
         if (null != this._factory) {
@@ -104,7 +106,8 @@ public class StackObjectPool extends BaseObjectPool implements ObjectPool
         }
     }
     
-    public synchronized void invalidateObject(final Object obj) throws Exception {
+    @Override
+	public synchronized void invalidateObject(final Object obj) throws Exception {
         this.assertOpen();
         --this._numActive;
         if (null != this._factory) {
@@ -113,17 +116,20 @@ public class StackObjectPool extends BaseObjectPool implements ObjectPool
         this.notifyAll();
     }
     
-    public synchronized int getNumIdle() {
+    @Override
+	public synchronized int getNumIdle() {
         this.assertOpen();
         return this._pool.size();
     }
     
-    public synchronized int getNumActive() {
+    @Override
+	public synchronized int getNumActive() {
         this.assertOpen();
         return this._numActive;
     }
     
-    public synchronized void clear() {
+    @Override
+	public synchronized void clear() {
         this.assertOpen();
         if (null != this._factory) {
             final Iterator it = this._pool.iterator();
@@ -137,21 +143,24 @@ public class StackObjectPool extends BaseObjectPool implements ObjectPool
         this._pool.clear();
     }
     
-    public synchronized void close() throws Exception {
+    @Override
+	public synchronized void close() throws Exception {
         this.clear();
         this._pool = null;
         this._factory = null;
         super.close();
     }
     
-    public synchronized void addObject() throws Exception {
+    @Override
+	public synchronized void addObject() throws Exception {
         this.assertOpen();
         final Object obj = this._factory.makeObject();
         ++this._numActive;
         this.returnObject(obj);
     }
     
-    public synchronized void setFactory(final PoolableObjectFactory factory) throws IllegalStateException {
+    @Override
+	public synchronized void setFactory(final PoolableObjectFactory factory) throws IllegalStateException {
         this.assertOpen();
         if (0 < this.getNumActive()) {
             throw new IllegalStateException("Objects are already active");

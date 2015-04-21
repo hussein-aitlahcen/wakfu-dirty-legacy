@@ -38,6 +38,6 @@ public class AbstractReferenceSkillManager<ReferenceSkill extends AbstractRefere
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractReferenceSkillManager.class);
+        m_logger = Logger.getLogger(AbstractReferenceSkillManager.class);
     }
 }

@@ -20,7 +20,7 @@ public class HMILightSourceAction extends HMIAction
         try {
             final String[] array = StringUtils.split(parameters, ';');
             if (array == null || array.length != 4) {
-                HMILightSourceAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 4 : R G B Range) : " + parameters));
+                HMILightSourceAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut 4 : R G B Range) : " + parameters);
                 return false;
             }
             this.m_intensity[0] = Float.parseFloat(array[0]);
@@ -30,7 +30,7 @@ public class HMILightSourceAction extends HMIAction
             return true;
         }
         catch (NumberFormatException e) {
-            HMILightSourceAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMILightSourceAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -49,6 +49,6 @@ public class HMILightSourceAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

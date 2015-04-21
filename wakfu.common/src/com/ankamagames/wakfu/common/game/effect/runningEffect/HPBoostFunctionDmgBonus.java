@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -66,7 +70,7 @@ public class HPBoostFunctionDmgBonus extends WakfuRunningEffect
             re = new HPBoostFunctionDmgBonus();
             re.m_isStatic = false;
             re.m_pool = null;
-            HPBoostFunctionDmgBonus.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage());
         }
         return re;
     }
@@ -101,8 +105,8 @@ public class HPBoostFunctionDmgBonus extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         if (this.m_genericEffect != null) {
             final short level = this.getContainerLevel();
-            final int dmgType = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            final int valuePercent = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+            final int dmgType = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            final int valuePercent = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
             switch (dmgType) {
                 case 1: {
                     if (this.getCaster().hasCharacteristic(FighterCharacteristicType.DMG_AIR_PERCENT)) {
@@ -153,10 +157,10 @@ public class HPBoostFunctionDmgBonus extends WakfuRunningEffect
                 this.m_value += this.getCaster().getCharacteristicValue(FighterCharacteristicType.DMG_IN_PERCENT);
             }
             this.m_value = this.m_value * valuePercent / 100;
-            if (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM) == 0) {
+            if (this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM) == 0) {
                 this.m_addCurrentValue = false;
             }
-            if (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM) == 0) {
+            if (this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM) == 0) {
                 this.m_substractCurrentValue = false;
             }
         }

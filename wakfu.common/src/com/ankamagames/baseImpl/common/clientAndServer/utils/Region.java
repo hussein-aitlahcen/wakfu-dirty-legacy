@@ -17,7 +17,7 @@ public enum Region
     private Region(final String configFile, final boolean hidden, final String[] countries) {
         this.m_configFile = configFile;
         this.m_hidden = hidden;
-        this.m_countries = (Set<String>)ImmutableSet.copyOf(countries);
+        this.m_countries = ImmutableSet.copyOf(countries);
     }
     
     public static Region getRegionFromCountryCode(final String counrtyCode) {

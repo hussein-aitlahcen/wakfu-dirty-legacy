@@ -4,7 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -37,7 +39,7 @@ public final class RunningEffectGroupLevelFunctionCharacterLevel extends Running
             re = new RunningEffectGroupLevelFunctionCharacterLevel();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupLevelFunctionCharacterLevel.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionCharacteristic : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFunctionCharacteristic : " + e.getMessage());
         }
         re.m_ratio = this.m_ratio;
         re.m_checkOnCaster = this.m_checkOnCaster;
@@ -50,8 +52,8 @@ public final class RunningEffectGroupLevelFunctionCharacterLevel extends Running
             return;
         }
         super.effectiveComputeValue(triggerRE);
-        this.m_checkOnCaster = (((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
-        this.m_ratio = ((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_checkOnCaster = (this.m_genericEffect.getParam(6, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_ratio = this.m_genericEffect.getParam(7, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override

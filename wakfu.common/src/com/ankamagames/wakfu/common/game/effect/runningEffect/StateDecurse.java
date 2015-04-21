@@ -2,12 +2,16 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.effect.runningEffect.manager.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +43,7 @@ public class StateDecurse extends WakfuRunningEffect
             re = new StateDecurse();
             re.m_isStatic = false;
             re.m_pool = null;
-            StateDecurse.m_logger.error((Object)("Erreur lors d'un checkOut sur un ActionCost : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ActionCost : " + e.getMessage());
         }
         re.m_id = RunningEffectConstants.STATE_FORCE_UNAPPLY.getId();
         re.m_status = RunningEffectConstants.STATE_FORCE_UNAPPLY.getObject().getRunningEffectStatus();
@@ -62,7 +66,7 @@ public class StateDecurse extends WakfuRunningEffect
             re = new StateDecurse();
             re.m_pool = null;
             re.m_isStatic = false;
-            StateDecurse.m_logger.error((Object)("Erreur lors d'un checkOut sur un StateDecurse : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un StateDecurse : " + e.getMessage());
         }
         return re;
     }
@@ -77,7 +81,7 @@ public class StateDecurse extends WakfuRunningEffect
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
         final ArrayList<RunningEffect> effectToRemove = new ArrayList<RunningEffect>();
         if (this.m_target == null) {
-            StateDecurse.m_logger.warn((Object)"[Effect] Impossible d'appliquer un desenvoutement car la cible est null");
+            RunningEffect.m_logger.warn("[Effect] Impossible d'appliquer un desenvoutement car la cible est null");
             this.setNotified(true);
             return;
         }
@@ -117,14 +121,14 @@ public class StateDecurse extends WakfuRunningEffect
     
     private void applyNewState(final int newStateLevel, final RunningEffect linkedRE) {
         final int stateUniqueId = State.getUniqueIdFromBasicInformation((short)this.m_value, (short)newStateLevel);
-        final StateRunningEffect stateRunningEffect = StateRunningEffect.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_caster, (WakfuEffectContainer)this.m_effectContainer, stateUniqueId);
+        final StateRunningEffect stateRunningEffect = StateRunningEffect.checkOut(this.m_context, this.m_caster, this.m_effectContainer, stateUniqueId);
         if (stateRunningEffect == null) {
-            StateDecurse.m_logger.error((Object)("Etat inconnu id " + this.m_value + ", level " + newStateLevel + ", effet correspondant : " + ((this.m_genericEffect != null) ? ((WakfuEffect)this.m_genericEffect).getEffectId() : "null")));
+            RunningEffect.m_logger.error("Etat inconnu id " + this.m_value + ", level " + newStateLevel + ", effet correspondant : " + ((this.m_genericEffect != null) ? this.m_genericEffect.getEffectId() : "null"));
             return;
         }
         final WakfuEffectExecutionParameters parameters = WakfuEffectExecutionParameters.checkOut(true, false, null);
         stateRunningEffect.setExecutionParameters(parameters);
-        (stateRunningEffect).setEffectContainer((WakfuEffectContainer)this.m_effectContainer);
+        (stateRunningEffect).setEffectContainer(this.m_effectContainer);
         (stateRunningEffect).setGenericEffect(this.getStateRunningGenericEffect());
         stateRunningEffect.addEndTriggers(this.getListeningTriggerForUnapplication());
         stateRunningEffect.setParent(linkedRE);
@@ -156,9 +160,9 @@ public class StateDecurse extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
-            this.m_levelToDecrease = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParamsCount() > 1) {
+            this.m_levelToDecrease = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             this.m_decreaseLevel = true;
         }
     }

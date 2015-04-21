@@ -32,10 +32,10 @@ public class SystemConfiguration
             SystemConfiguration.INSTANCE.load(filename);
         }
         catch (IOException e) {
-            SystemConfiguration.m_logger.error((Object)("Erreur lors du chargement du fichier de propri\u00e9t\u00e9s : " + filename), (Throwable)e);
+            SystemConfiguration.m_logger.error("Erreur lors du chargement du fichier de propri\u00e9t\u00e9s : " + filename, e);
         }
         catch (RuntimeException e2) {
-            SystemConfiguration.m_logger.error((Object)("Erreur lors du chargement du fichier de propri\u00e9t\u00e9s : " + filename), (Throwable)e2);
+            SystemConfiguration.m_logger.error("Erreur lors du chargement du fichier de propri\u00e9t\u00e9s : " + filename, e2);
         }
     }
     
@@ -243,7 +243,7 @@ public class SystemConfiguration
     static {
         DISPATCH_SERIALIZATION = EnumSet.of(SystemConfigurationType.SERVER_ID, SystemConfigurationType.COMMUNITY_CHECK_ENABLE, SystemConfigurationType.COMMUNITY_REQUIRED, SystemConfigurationType.COMMUNITY_FORBIDDEN, SystemConfigurationType.AUTHORIZED_PARTNERS);
         INSTANCE = new SystemConfiguration();
-        m_logger = Logger.getLogger((Class)SystemConfiguration.class);
+        m_logger = Logger.getLogger(SystemConfiguration.class);
         SPLIT_PATTERN = Pattern.compile(";");
     }
 }

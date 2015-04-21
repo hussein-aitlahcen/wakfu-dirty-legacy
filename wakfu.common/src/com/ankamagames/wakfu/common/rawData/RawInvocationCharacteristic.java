@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.rawData;
 import com.ankamagames.baseImpl.common.clientAndServer.rawData.*;
 import java.nio.*;
 import com.ankamagames.framework.kernel.utils.*;
-import java.util.*;
 
 public class RawInvocationCharacteristic implements VersionableObject
 {

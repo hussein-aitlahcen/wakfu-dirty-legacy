@@ -255,7 +255,7 @@ public final class Matrix44 extends MemoryObject
             System.arraycopy(Matrix44.m_zeroFilledBuffer, 0, this.m_buffer, 0, 16);
         }
         catch (Exception e) {
-            Matrix44.m_logger.error((Object)"Exception", (Throwable)e);
+            Matrix44.m_logger.error("Exception", e);
         }
         final float[] buffer = this.m_buffer;
         final int n = 0;
@@ -529,7 +529,7 @@ public final class Matrix44 extends MemoryObject
     
     static {
         Factory = new ObjectFactory();
-        m_logger = Logger.getLogger((Class)Matrix44.class);
+        m_logger = Logger.getLogger(Matrix44.class);
         m_zeroFilledBuffer = new float[16];
         IDENTITY = getIdentity();
         for (int i = 0; i < 16; ++i) {

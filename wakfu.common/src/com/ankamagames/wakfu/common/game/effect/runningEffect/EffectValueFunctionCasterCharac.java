@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -40,7 +41,7 @@ public final class EffectValueFunctionCasterCharac extends UsingEffectGroupRunni
             re = new EffectValueFunctionCasterCharac();
             re.m_pool = null;
             re.m_isStatic = false;
-            EffectValueFunctionCasterCharac.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupSecondValueFunctionFirst : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupSecondValueFunctionFirst : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -51,15 +52,15 @@ public final class EffectValueFunctionCasterCharac extends UsingEffectGroupRunni
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 1) {
-            final int baseValue = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 1) {
+            final int baseValue = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             if (this.m_caster.hasCharacteristic(this.m_charac)) {
                 this.m_value = baseValue * this.m_caster.getCharacteristicValue(this.m_charac);
             }
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 2) {
-            final int baseValue = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-            final int baseValuePercent = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() == 2) {
+            final int baseValue = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            final int baseValuePercent = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
             if (this.m_caster.hasCharacteristic(this.m_charac)) {
                 final int baseValuePercentBonus = baseValuePercent * this.m_caster.getCharacteristicValue(this.m_charac);
                 this.m_value = baseValue * (1 + baseValuePercentBonus / 100);

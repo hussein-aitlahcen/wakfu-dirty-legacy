@@ -1,8 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.common.game.travel.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
@@ -15,14 +13,13 @@ public class TravelsLoader implements ContentInitializer
     private static final TravelsLoader m_instance;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         this.loadZaaps();
         this.loadZaapLinks();
         this.loadDragos();
         this.loadBoats();
         this.loadBoatLinks();
         this.loadCannons();
-        clientInstance.fireContentInitializerDone(this);
     }
     
     private void loadCannons() throws Exception {
@@ -111,7 +108,7 @@ public class TravelsLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TravelsLoader.class);
+        m_logger = Logger.getLogger(TravelsLoader.class);
         m_instance = new TravelsLoader();
     }
 }

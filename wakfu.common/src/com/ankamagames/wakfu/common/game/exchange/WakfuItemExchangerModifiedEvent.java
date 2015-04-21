@@ -3,6 +3,7 @@ package com.ankamagames.wakfu.common.game.exchange;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.event.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class WakfuItemExchangerModifiedEvent extends ItemExchangerModifiedEvent
@@ -29,7 +30,7 @@ public class WakfuItemExchangerModifiedEvent extends ItemExchangerModifiedEvent
             event.m_pool = WakfuItemExchangerModifiedEvent.m_staticPool;
         }
         catch (Exception e) {
-            WakfuItemExchangerModifiedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type WakfuItemExchangerModifiedEvent : " + e.getMessage()));
+            ItemExchangerModifiedEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type WakfuItemExchangerModifiedEvent : " + e.getMessage());
             event = new WakfuItemExchangerModifiedEvent();
         }
         event.init(itemExchanger, validity);
@@ -43,7 +44,7 @@ public class WakfuItemExchangerModifiedEvent extends ItemExchangerModifiedEvent
             event.m_pool = WakfuItemExchangerModifiedEvent.m_staticPool;
         }
         catch (Exception e) {
-            WakfuItemExchangerModifiedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage()));
+            ItemExchangerModifiedEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage());
             event = new WakfuItemExchangerModifiedEvent();
         }
         event.init(itemExchanger, modification, userId, content, contentQuantity, validity);
@@ -60,7 +61,7 @@ public class WakfuItemExchangerModifiedEvent extends ItemExchangerModifiedEvent
             event.m_pool = WakfuItemExchangerModifiedEvent.m_staticPool;
         }
         catch (Exception e) {
-            WakfuItemExchangerModifiedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage()));
+            ItemExchangerModifiedEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage());
             event = new WakfuItemExchangerModifiedEvent();
         }
         event.init(itemExchanger, modification, userId, amountOfCash, validity);
@@ -77,7 +78,7 @@ public class WakfuItemExchangerModifiedEvent extends ItemExchangerModifiedEvent
             event.m_pool = WakfuItemExchangerModifiedEvent.m_staticPool;
         }
         catch (Exception e) {
-            WakfuItemExchangerModifiedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage()));
+            ItemExchangerModifiedEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type ItemExchangerEndEvent : " + e.getMessage());
             event = new WakfuItemExchangerModifiedEvent();
         }
         event.init(itemExchanger, modification, userId, modifiedAmount, null);

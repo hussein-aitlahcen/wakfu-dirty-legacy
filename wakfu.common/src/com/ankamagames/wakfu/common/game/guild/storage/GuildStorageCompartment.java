@@ -35,7 +35,7 @@ public final class GuildStorageCompartment implements ItemInventoryHandler, Iter
             return this.canAdd(item) && this.m_inventory.add(item);
         }
         catch (InventoryException e) {
-            GuildStorageCompartment.m_logger.error((Object)"[GUILD_STORAGE] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", (Throwable)e);
+            GuildStorageCompartment.m_logger.error("[GUILD_STORAGE] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", e);
             return false;
         }
     }
@@ -51,7 +51,7 @@ public final class GuildStorageCompartment implements ItemInventoryHandler, Iter
             return this.canAdd(item, position) && this.m_inventory.addAt(item, position);
         }
         catch (InventoryException e) {
-            GuildStorageCompartment.m_logger.error((Object)"[GUILD_STORAGE] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", (Throwable)e);
+            GuildStorageCompartment.m_logger.error("[GUILD_STORAGE] Impossible d'ajouter un item \u00e0 l'inventaire alors qu'on \u00e0 pourtant test\u00e9 le canAdd", e);
             return false;
         }
     }
@@ -104,7 +104,8 @@ public final class GuildStorageCompartment implements ItemInventoryHandler, Iter
         return (byte)this.m_inventory.getPosition(uniqueId);
     }
     
-    public Iterator<Item> iterator() {
+    @Override
+	public Iterator<Item> iterator() {
         return this.m_inventory.iterator(false);
     }
     
@@ -131,7 +132,7 @@ public final class GuildStorageCompartment implements ItemInventoryHandler, Iter
     public void toRaw(final RawGuildStorageCompartment rawCompartment) {
         rawCompartment.id = this.m_id;
         rawCompartment.enabled = this.m_enabled;
-        for (final Item item : (Iterable<Item>)this) {
+        for (final Item item : this) {
             final RawGuildStorageCompartment.Item rawItem = new RawGuildStorageCompartment.Item();
             rawItem.position = this.getPosition(item.getUniqueId());
             item.toRaw(rawItem.item);
@@ -157,7 +158,7 @@ public final class GuildStorageCompartment implements ItemInventoryHandler, Iter
                 this.m_inventory.addAt(provider.unSerializeContent(rawItem.item), rawItem.position);
             }
             catch (InventoryException e) {
-                GuildStorageCompartment.m_logger.error((Object)"[GUILD_STORAGE] Probl\u00e8me de r\u00e9cup\u00e9ration d'un item de compartiment", (Throwable)e);
+                GuildStorageCompartment.m_logger.error("[GUILD_STORAGE] Probl\u00e8me de r\u00e9cup\u00e9ration d'un item de compartiment", e);
             }
         }
         this.m_buildingUid = ((rawCompartment.building == null) ? -1L : rawCompartment.building.buildingUid);
@@ -173,6 +174,6 @@ public final class GuildStorageCompartment implements ItemInventoryHandler, Iter
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildStorageCompartment.class);
+        m_logger = Logger.getLogger(GuildStorageCompartment.class);
     }
 }

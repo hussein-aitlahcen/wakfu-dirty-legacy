@@ -26,7 +26,7 @@ public class ZaapInfo extends TravelInfo
             //destinationCriterion = CriteriaCompiler.compileBoolean(criterion);
         }
         catch (Exception e) {
-            ZaapInfo.m_logger.error((Object)("Impossible de compiler le crit\u00e8re " + criterion + " sur le zaap " + id), (Throwable)e);
+            ZaapInfo.m_logger.error("Impossible de compiler le crit\u00e8re " + criterion + " sur le zaap " + id, e);
         }
         this.m_destinationCriterion = destinationCriterion;
     }
@@ -41,7 +41,7 @@ public class ZaapInfo extends TravelInfo
             //destinationCriterion = CriteriaCompiler.compileBoolean(criterion);
         }
         catch (Exception e) {
-            ZaapInfo.m_logger.error((Object)("Impossible de compiler le crit\u00e8re " + criterion + " sur le zaap " + id), (Throwable)e);
+            ZaapInfo.m_logger.error("Impossible de compiler le crit\u00e8re " + criterion + " sur le zaap " + id, e);
         }
         this.m_destinationCriterion = destinationCriterion;
     }
@@ -75,6 +75,6 @@ public class ZaapInfo extends TravelInfo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ZaapInfo.class);
+        m_logger = Logger.getLogger(ZaapInfo.class);
     }
 }

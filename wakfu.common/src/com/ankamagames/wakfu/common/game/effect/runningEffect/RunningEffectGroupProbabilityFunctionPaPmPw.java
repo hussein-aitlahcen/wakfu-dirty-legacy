@@ -1,13 +1,13 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -45,7 +45,7 @@ public final class RunningEffectGroupProbabilityFunctionPaPmPw extends RunningEf
             re = new RunningEffectGroupProbabilityFunctionPaPmPw();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupProbabilityFunctionPaPmPw.m_logger.error((Object)("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFuntionState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RunningEffectGroupLevelFuntionState : " + e.getMessage());
         }
         return re;
     }
@@ -56,10 +56,10 @@ public final class RunningEffectGroupProbabilityFunctionPaPmPw extends RunningEf
             return;
         }
         super.effectiveComputeValue(triggerRE);
-        this.m_probaPerAP = ((WakfuEffect)this.m_genericEffect).getParam(6, this.getContainerLevel());
-        this.m_probaPerMP = ((WakfuEffect)this.m_genericEffect).getParam(7, this.getContainerLevel());
-        this.m_probaPerWP = ((WakfuEffect)this.m_genericEffect).getParam(8, this.getContainerLevel());
-        this.m_executeActionCost = (1 == ((WakfuEffect)this.m_genericEffect).getParam(9, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
+        this.m_probaPerAP = this.m_genericEffect.getParam(6, this.getContainerLevel());
+        this.m_probaPerMP = this.m_genericEffect.getParam(7, this.getContainerLevel());
+        this.m_probaPerWP = this.m_genericEffect.getParam(8, this.getContainerLevel());
+        this.m_executeActionCost = (1 == this.m_genericEffect.getParam(9, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL));
     }
     
     @Override
@@ -86,7 +86,7 @@ public final class RunningEffectGroupProbabilityFunctionPaPmPw extends RunningEf
             final int remainingAP = (this.m_probaPerAP == 0.0f) ? 0 : this.m_caster.getCharacteristicValue(FighterCharacteristicType.AP);
             final int remainingMP = (this.m_probaPerMP == 0.0f) ? 0 : this.m_caster.getCharacteristicValue(FighterCharacteristicType.MP);
             final int remainingWP = (this.m_probaPerWP == 0.0f) ? 0 : this.m_caster.getCharacteristicValue(FighterCharacteristicType.WP);
-            final ActionCost actionCost = ActionCost.checkOut((EffectContext<WakfuEffect>)this.m_context, new SpellCost((byte)remainingAP, (byte)remainingMP, (byte)remainingWP), this.m_caster);
+            final ActionCost actionCost = ActionCost.checkOut(this.m_context, new SpellCost((byte)remainingAP, (byte)remainingMP, (byte)remainingWP), this.m_caster);
             actionCost.setCaster(this.m_caster);
             actionCost.setRunningEffectStatus(RunningEffectStatus.NEUTRAL);
             actionCost.execute(null, false);

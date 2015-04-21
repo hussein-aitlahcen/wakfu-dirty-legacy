@@ -33,13 +33,13 @@ public class LuaTable
         if (this.m_name.length() == 0) {
             for (final Map.Entry<String, Object> entry : this.m_fields.entrySet()) {
                 new LuaValue(entry.getValue()).pushIn(luaState);
-                luaState.setGlobal((String)entry.getKey());
+                luaState.setGlobal(entry.getKey());
             }
         }
         else {
             luaState.newTable();
             for (final Map.Entry<String, Object> entry : this.m_fields.entrySet()) {
-                luaState.pushString((String)entry.getKey());
+                luaState.pushString(entry.getKey());
                 new LuaValue(entry.getValue()).pushIn(luaState);
                 luaState.setTable(-3);
             }

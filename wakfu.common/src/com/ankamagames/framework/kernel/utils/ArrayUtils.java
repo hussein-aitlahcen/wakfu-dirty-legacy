@@ -80,6 +80,6 @@ public class ArrayUtils
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ArrayUtils.class);
+        m_logger = Logger.getLogger(ArrayUtils.class);
     }
 }

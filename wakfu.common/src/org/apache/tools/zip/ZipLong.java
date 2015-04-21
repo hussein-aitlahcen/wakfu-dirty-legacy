@@ -56,15 +56,18 @@ public final class ZipLong implements Cloneable
         return getValue(bytes, 0);
     }
     
-    public boolean equals(final Object o) {
+    @Override
+	public boolean equals(final Object o) {
         return o != null && o instanceof ZipLong && this.value == ((ZipLong)o).getValue();
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return (int)this.value;
     }
     
-    public Object clone() {
+    @Override
+	public Object clone() {
         try {
             return super.clone();
         }
@@ -73,7 +76,8 @@ public final class ZipLong implements Cloneable
         }
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return "ZipLong value: " + this.value;
     }
     

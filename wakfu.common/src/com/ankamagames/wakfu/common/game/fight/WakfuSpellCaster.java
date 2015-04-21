@@ -11,5 +11,6 @@ public interface WakfuSpellCaster extends SpellCaster
     
     byte computeMpCost();
     
-    AbstractSpellLevel getSpellLevel();
+    @Override
+	AbstractSpellLevel getSpellLevel();
 }

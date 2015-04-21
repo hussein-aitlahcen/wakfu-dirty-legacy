@@ -41,22 +41,26 @@ public abstract class TObjectHash<T> extends THash implements TObjectHashingStra
         this._hashingStrategy = strategy;
     }
     
-    public TObjectHash<T> clone() {
+    @Override
+	public TObjectHash<T> clone() {
         final TObjectHash<T> h = (TObjectHash<T>)super.clone();
         h._set = this._set.clone();
         return h;
     }
     
-    protected int capacity() {
+    @Override
+	protected int capacity() {
         return this._set.length;
     }
     
-    protected void removeAt(final int index) {
+    @Override
+	protected void removeAt(final int index) {
         this._set[index] = TObjectHash.REMOVED;
         super.removeAt(index);
     }
     
-    protected int setUp(final int initialCapacity) {
+    @Override
+	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
         Arrays.fill(this._set = new Object[capacity], TObjectHash.FREE);
         return capacity;
@@ -137,11 +141,13 @@ public abstract class TObjectHash<T> extends THash implements TObjectHashingStra
         return (cur != TObjectHash.FREE) ? (-index - 1) : index;
     }
     
-    public final int computeHashCode(final T o) {
+    @Override
+	public final int computeHashCode(final T o) {
         return (o == null) ? 0 : o.hashCode();
     }
     
-    public final boolean equals(final T o1, final T o2) {
+    @Override
+	public final boolean equals(final T o1, final T o2) {
         return (o1 == null) ? (o2 == null) : o1.equals(o2);
     }
     
@@ -149,7 +155,8 @@ public abstract class TObjectHash<T> extends THash implements TObjectHashingStra
         throw new IllegalArgumentException("Equal objects must have equal hashcodes. During rehashing, Trove discovered that the following two objects claim to be equal (as in java.lang.Object.equals()) but their hashCodes (or those calculated by your TObjectHashingStrategy) are not equal.This violates the general contract of java.lang.Object.hashCode().  See bullet point two in that method's documentation. object #1 =" + o1 + "; object #2 =" + o2);
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         super.writeExternal(out);
         out.writeByte(0);
         if (this._hashingStrategy == this) {
@@ -160,7 +167,8 @@ public abstract class TObjectHash<T> extends THash implements TObjectHashingStra
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         super.readExternal(in);
         in.readByte();
         this._hashingStrategy = (TObjectHashingStrategy<T>)in.readObject();

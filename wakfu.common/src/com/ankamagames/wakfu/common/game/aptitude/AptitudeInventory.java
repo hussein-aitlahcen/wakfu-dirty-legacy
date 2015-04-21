@@ -15,7 +15,8 @@ public interface AptitudeInventory extends Iterable<Aptitude>, RawConvertible<Ra
     
     void setWonPoints(AptitudeType p0, int p1);
     
-    Iterator<Aptitude> iterator();
+    @Override
+	Iterator<Aptitude> iterator();
     
     List<Aptitude> getAptitudes(AptitudeType p0);
     
@@ -23,9 +24,11 @@ public interface AptitudeInventory extends Iterable<Aptitude>, RawConvertible<Ra
     
     List<Aptitude> getBreedAptitudes();
     
-    boolean toRaw(RawAptitudeInventory p0);
+    @Override
+	boolean toRaw(RawAptitudeInventory p0);
     
-    boolean fromRaw(RawAptitudeInventory p0);
+    @Override
+	boolean fromRaw(RawAptitudeInventory p0);
     
     Aptitude getWithUniqueId(short p0);
     

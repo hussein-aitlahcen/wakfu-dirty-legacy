@@ -1,12 +1,12 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -36,7 +36,7 @@ public class ApplyStateFunctionPaPmPw extends WakfuRunningEffect
             re = new ApplyStateFunctionPaPmPw();
             re.m_isStatic = false;
             re.m_pool = null;
-            ApplyStateFunctionPaPmPw.m_logger.error((Object)("Erreur lors d'un newInstance sur un LatentState : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un LatentState : " + e.getMessage());
         }
         re.m_stateId = this.m_stateId;
         re.m_stateLevelPerPA = this.m_stateLevelPerPA;
@@ -68,19 +68,19 @@ public class ApplyStateFunctionPaPmPw extends WakfuRunningEffect
         final int remainingWP = (this.m_stateLevelPerPW == 0) ? 0 : this.m_caster.getCharacteristicValue(FighterCharacteristicType.WP);
         ActionCost actionCost;
         if (this.m_executeActionCost) {
-            actionCost = ActionCost.checkOut((EffectContext<WakfuEffect>)this.m_context, new SpellCost((byte)remainingAP, (byte)remainingMP, (byte)remainingWP), this.m_caster);
+            actionCost = ActionCost.checkOut(this.m_context, new SpellCost((byte)remainingAP, (byte)remainingMP, (byte)remainingWP), this.m_caster);
         }
         else {
-            actionCost = ActionCost.checkOut((EffectContext<WakfuEffect>)this.m_context, new SpellCost((byte)0, (byte)0, (byte)0), this.m_caster);
+            actionCost = ActionCost.checkOut(this.m_context, new SpellCost((byte)0, (byte)0, (byte)0), this.m_caster);
         }
         actionCost.setCaster(this.m_caster);
         actionCost.setRunningEffectStatus(RunningEffectStatus.NEUTRAL);
         actionCost.execute(null, false);
         final short stateLevel = (short)(remainingAP * this.m_stateLevelPerPA + remainingMP * this.m_stateLevelPerPM + remainingWP * this.m_stateLevelPerPW);
-        final ApplyState applyState = ApplyState.checkout((EffectContext<WakfuEffect>)this.m_context, this.m_target, this.m_stateId, stateLevel, false);
+        final ApplyState applyState = ApplyState.checkout(this.m_context, this.m_target, this.m_stateId, stateLevel, false);
         applyState.setCaster(this.m_caster);
-        (applyState).setEffectContainer((WakfuEffectContainer)this.m_effectContainer);
-        (applyState).setGenericEffect((WakfuEffect)this.m_genericEffect);
+        (applyState).setEffectContainer(this.m_effectContainer);
+        (applyState).setGenericEffect(this.m_genericEffect);
         applyState.bypassResistancesCheck();
         applyState.execute(null, false);
     }
@@ -106,15 +106,15 @@ public class ApplyStateFunctionPaPmPw extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        this.m_stateId = (short)((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_stateLevelPerPA = (short)((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_stateLevelPerPM = (short)((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_stateLevelPerPW = (short)((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 5) {
+        this.m_stateId = (short)this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_stateLevelPerPA = (short)this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_stateLevelPerPM = (short)this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_stateLevelPerPW = (short)this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() < 5) {
             this.m_executeActionCost = true;
         }
         else {
-            this.m_executeActionCost = (1 == ((WakfuEffect)this.m_genericEffect).getParam(4, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+            this.m_executeActionCost = (1 == this.m_genericEffect.getParam(4, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
         }
     }
     

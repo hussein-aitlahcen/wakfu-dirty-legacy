@@ -40,15 +40,15 @@ public class NationManager
     
     public boolean registerNation(final Nation nation) {
         if (nation.getNationId() == 0) {
-            NationManager.m_logger.info((Object)("Enregistrement d'une VOID_NATION : " + nation));
+            NationManager.m_logger.info("Enregistrement d'une VOID_NATION : " + nation);
         }
         else {
-            NationManager.m_logger.info((Object)("Enregistrement d'une nation  : " + nation));
+            NationManager.m_logger.info("Enregistrement d'une nation  : " + nation);
         }
         final int id = nation.getNationId();
         final Nation old = this.m_nations.get(id);
         if (old != null && old != nation) {
-            NationManager.m_logger.error((Object)("Tentative d'\u00e9crasement de r\u00e9f\u00e9rence de nation. ID=" + id));
+            NationManager.m_logger.error("Tentative d'\u00e9crasement de r\u00e9f\u00e9rence de nation. ID=" + id);
             return false;
         }
         this.m_nations.put(id, nation);
@@ -89,7 +89,7 @@ public class NationManager
     
     static {
         INSTANCE = new NationManager();
-        m_logger = Logger.getLogger((Class)NationManager.class);
+        m_logger = Logger.getLogger(NationManager.class);
     }
     
     private static class FilteredNationIterator extends TIntObjectIterator<Nation>
@@ -116,7 +116,7 @@ public class NationManager
         public boolean hasNext() {
             if (super.hasNext() && !this.m_hasAdvanced) {
                 super.advance();
-                while (this.m_excludedNationIds.contains((Object)super.key()) && super.hasNext()) {
+                while (this.m_excludedNationIds.contains(super.key()) && super.hasNext()) {
                     super.advance();
                 }
                 this.m_hasAdvanced = true;

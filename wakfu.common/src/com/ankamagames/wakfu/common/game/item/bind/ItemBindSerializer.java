@@ -13,6 +13,6 @@ public final class ItemBindSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ItemBindSerializer.class);
+        m_logger = Logger.getLogger(ItemBindSerializer.class);
     }
 }

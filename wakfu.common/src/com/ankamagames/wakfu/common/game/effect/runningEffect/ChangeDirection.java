@@ -4,9 +4,10 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -43,7 +44,7 @@ public class ChangeDirection extends WakfuRunningEffect
             re = new ChangeDirection();
             re.m_pool = null;
             re.m_isStatic = false;
-            ChangeDirection.m_logger.error((Object)("Erreur lors d'un newInstance sur ChangeDirection : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur ChangeDirection : " + e.getMessage());
         }
         return re;
     }
@@ -70,7 +71,7 @@ public class ChangeDirection extends WakfuRunningEffect
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
         }
         else {
             this.m_value = 5;

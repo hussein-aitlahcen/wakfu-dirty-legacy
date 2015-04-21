@@ -54,7 +54,7 @@ public class FighterState
     
     boolean setPlayState(final FighterPlayState playState) {
         if (this.m_playState != playState.required()) {
-            FighterState.m_logger.error((Object)String.format("[FIGHT_STATE] \u00c9tat incorrect pour une transition vers l'\u00e9tat %s, actuel: %s, requis: %s", playState, this.m_playState, playState.required()));
+            FighterState.m_logger.error(String.format("[FIGHT_STATE] \u00c9tat incorrect pour une transition vers l'\u00e9tat %s, actuel: %s, requis: %s", playState, this.m_playState, playState.required()));
             return false;
         }
         this.m_playState = playState;
@@ -99,6 +99,6 @@ public class FighterState
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FighterState.class);
+        m_logger = Logger.getLogger(FighterState.class);
     }
 }

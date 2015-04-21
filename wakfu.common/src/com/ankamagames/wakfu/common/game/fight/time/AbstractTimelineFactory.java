@@ -18,7 +18,7 @@ public abstract class AbstractTimelineFactory<F extends BasicCharacterInfo, TFig
     
     protected AbstractTimelineFactory(@NotNull final TFight fight) {
         super();
-        this.m_fight = (TFight)fight;
+        this.m_fight = fight;
     }
     
     @NotNull
@@ -52,6 +52,6 @@ public abstract class AbstractTimelineFactory<F extends BasicCharacterInfo, TFig
     protected abstract TTimeline createTimelineCore();
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractTimelineFactory.class);
+        m_logger = Logger.getLogger(AbstractTimelineFactory.class);
     }
 }

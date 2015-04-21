@@ -24,7 +24,7 @@ public class VaultContentChecker implements InventoryContentChecker<Item>
         final ArrayList<Item> items = inventory.getAllWithReferenceId(item.getReferenceId());
         short qty = item.getQuantity();
         Item stack;
-        for (int i = 0; i < items.size() && qty > 0; qty -= (short)(stack.canStackWith(item) ? stack.getStackFreePlace() : 0), ++i) {
+        for (int i = 0; i < items.size() && qty > 0; qty -= stack.canStackWith(item) ? stack.getStackFreePlace() : 0, ++i) {
             stack = items.get(i);
         }
         return (qty <= 0 || !inventory.isFull()) ? 0 : -1;
@@ -43,7 +43,7 @@ public class VaultContentChecker implements InventoryContentChecker<Item>
         if (position < 0) {
             return -5;
         }
-        final ArrayInventory<Item, RawInventoryItem> inv = (ArrayInventory<Item, RawInventoryItem>)(ArrayInventory)inventory;
+        final ArrayInventory<Item, RawInventoryItem> inv = (ArrayInventory)inventory;
         final Item targetItem = inv.getFromPosition(position);
         if (targetItem == null) {
             return 0;

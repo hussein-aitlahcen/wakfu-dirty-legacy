@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.game.effectArea;
 
-import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;

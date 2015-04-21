@@ -10,13 +10,13 @@ public class TopologyChecker
     
     public static short getHighestWalkableZ(final int cellFirstDataIndex, final int cellDataCount, @NotNull final CellPathData[] cellData, final short maxZ, final int heightNeeded) {
         if (heightNeeded <= 0) {
-            TopologyChecker.m_logger.error((Object)"no moverHeight defined");
+            TopologyChecker.m_logger.error("no moverHeight defined");
         }
         if (cellDataCount <= 0) {
-            TopologyChecker.m_logger.error((Object)"can't get highest height : no data for this element");
+            TopologyChecker.m_logger.error("can't get highest height : no data for this element");
         }
         if (cellFirstDataIndex + cellDataCount > cellData.length) {
-            TopologyChecker.m_logger.error((Object)"cell elements index and count are out of bounds");
+            TopologyChecker.m_logger.error("cell elements index and count are out of bounds");
         }
         if (cellDataCount != 1) {
             short latestHighestBlockingZ = 32767;
@@ -41,7 +41,7 @@ public class TopologyChecker
         }
         final CellPathData data2 = cellData[cellFirstDataIndex];
         if (data2.m_hollow) {
-            TopologyChecker.m_logger.error((Object)"data invalid : we can move through, but this element is the only one");
+            TopologyChecker.m_logger.error("data invalid : we can move through, but this element is the only one");
             return -32768;
         }
         if (data2.m_cost == -1) {
@@ -91,6 +91,6 @@ public class TopologyChecker
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyChecker.class);
+        m_logger = Logger.getLogger(TopologyChecker.class);
     }
 }

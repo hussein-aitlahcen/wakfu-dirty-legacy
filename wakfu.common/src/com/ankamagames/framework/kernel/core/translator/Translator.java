@@ -66,7 +66,7 @@ public abstract class Translator
             return StringFormatter.format(format, args);
         }
         catch (IllegalFormatException e) {
-            Translator.m_logger.warn((Object)e.getMessage());
+            Translator.m_logger.warn(e.getMessage());
             return format;
         }
     }
@@ -75,7 +75,7 @@ public abstract class Translator
     public String getStringWithoutFormat(final String key) {
         final String value = (this.m_bundle != null) ? this.m_bundle.get(key) : null;
         if (value == null) {
-            Translator.m_logger.warn((Object)("Propri\u00e9t\u00e9 introuvable dans le Translator key=" + key));
+            Translator.m_logger.warn("Propri\u00e9t\u00e9 introuvable dans le Translator key=" + key);
             final StringBuilder sb1 = new StringBuilder(key.length() + 2);
             return sb1.append('!').append(key).append('!').toString();
         }
@@ -103,7 +103,7 @@ public abstract class Translator
                 inputStream.close();
             }
             catch (Exception e) {
-                Translator.m_logger.error((Object)("Exception sur le chargement de la langue " + this.m_language), (Throwable)e);
+                Translator.m_logger.error("Exception sur le chargement de la langue " + this.m_language, e);
                 return false;
             }
         }
@@ -156,7 +156,7 @@ public abstract class Translator
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Translator.class);
+        m_logger = Logger.getLogger(Translator.class);
         Translator.m_instance = null;
         DEFAULT_TZ = TimeZone.getTimeZone("UTC");
     }

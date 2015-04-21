@@ -67,7 +67,7 @@ public class GrowingArray<T> implements Iterable<T>
         if (index < 0 || index >= this.m_elements.length) {
             return null;
         }
-        return (T)this.m_elements[index];
+        return this.m_elements[index];
     }
     
     public int size() {
@@ -80,12 +80,12 @@ public class GrowingArray<T> implements Iterable<T>
     
     @Override
     public Iterator<T> iterator() {
-        return new ArrayIterator<T>((T[])this.m_elements, false);
+        return new ArrayIterator<T>(this.m_elements, false);
     }
     
     public void foreach(final TObjectProcedure<T> procedure) {
         for (int i = 0; i < this.m_elements.length; ++i) {
-            if (!procedure.execute((T)this.m_elements[i])) {
+            if (!procedure.execute(this.m_elements[i])) {
                 return;
             }
         }

@@ -100,6 +100,6 @@ public class ActionVisual
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ActionVisual.class);
+        m_logger = Logger.getLogger(ActionVisual.class);
     }
 }

@@ -7,6 +7,7 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class TeleportCaster extends Teleport
@@ -34,7 +35,7 @@ public class TeleportCaster extends Teleport
             re = new TeleportCaster();
             re.m_pool = null;
             re.m_isStatic = false;
-            TeleportCaster.m_logger.error((Object)("Erreur lors d'un checkOut sur un Push : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un Push : " + e.getMessage());
         }
         re.m_canBeExecuted = true;
         re.m_context = context;
@@ -55,35 +56,35 @@ public class TeleportCaster extends Teleport
     
     @Override
     protected EffectUser getCharacterToTeleport() {
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getParamsCount() == 0) {
             return this.m_caster;
         }
-        final boolean canTpAreaOwner = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        final boolean canTpAreaOwner = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
         if (canTpAreaOwner && this.m_caster instanceof BasicEffectArea) {
             final BasicEffectArea area = (BasicEffectArea)this.m_caster;
             final EffectUser owner = area.getOwner();
             if (owner != null) {
                 return owner;
             }
-            TeleportCaster.m_logger.error((Object)("On cherche a t\u00e9l\u00e9porter le propri\u00e9taire d'une zone d'effet mais celui-ci est inconnu " + area.getBaseId()));
+            RunningEffect.m_logger.error("On cherche a t\u00e9l\u00e9porter le propri\u00e9taire d'une zone d'effet mais celui-ci est inconnu " + area.getBaseId());
         }
         return this.m_caster;
     }
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_byPassProperties = (((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_byPassProperties = (this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            this.m_checkFightMap = (((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            this.m_checkFightMap = (this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
         super.effectiveComputeValue(triggerRE);
     }
     
     @Override
     protected boolean canTeleportCarried() {
-        return this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getParamsCount() >= 2 && ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
+        return this.m_genericEffect != null && this.m_genericEffect.getParamsCount() >= 2 && this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1;
     }
     
     @Override

@@ -1,8 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
@@ -13,7 +11,7 @@ public final class MonsterFamilyPestLoader implements ContentInitializer
     private static final Logger m_logger;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         BinaryDocumentManager.getInstance().foreach(new MonsterTypePestBinaryData(), new LoadProcedure<MonsterTypePestBinaryData>() {
             @Override
             public void load(final MonsterTypePestBinaryData bs) {
@@ -21,13 +19,12 @@ public final class MonsterFamilyPestLoader implements ContentInitializer
                 final int pestMonsterId = bs.getPestMonsterId();
                 final MonsterFamily monsterFamily = MonsterFamilyManager.getInstance().getMonsterFamily(familyId);
                 if (monsterFamily == null) {
-                    MonsterFamilyPestLoader.m_logger.error((Object)("On ajoute un nuisible \u00e0 une famille de monstre inconnue : familyId=" + familyId));
+                    MonsterFamilyPestLoader.m_logger.error("On ajoute un nuisible \u00e0 une famille de monstre inconnue : familyId=" + familyId);
                     return;
                 }
                 monsterFamily.addPestMonster(pestMonsterId);
             }
         });
-        clientInstance.fireContentInitializerDone(this);
     }
     
     @Override
@@ -36,6 +33,6 @@ public final class MonsterFamilyPestLoader implements ContentInitializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MonsterFamilyPestLoader.class);
+        m_logger = Logger.getLogger(MonsterFamilyPestLoader.class);
     }
 }

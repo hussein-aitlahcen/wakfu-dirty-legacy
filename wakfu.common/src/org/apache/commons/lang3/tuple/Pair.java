@@ -17,19 +17,23 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
     
     public abstract R getRight();
     
-    public final L getKey() {
+    @Override
+	public final L getKey() {
         return this.getLeft();
     }
     
-    public R getValue() {
+    @Override
+	public R getValue() {
         return this.getRight();
     }
     
-    public int compareTo(final Pair<L, R> other) {
+    @Override
+	public int compareTo(final Pair<L, R> other) {
         return new CompareToBuilder().append(this.getLeft(), other.getLeft()).append(this.getRight(), other.getRight()).toComparison();
     }
     
-    public boolean equals(final Object obj) {
+    @Override
+	public boolean equals(final Object obj) {
         if (obj == this) {
             return true;
         }
@@ -40,11 +44,13 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
         return false;
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return ((this.getKey() == null) ? 0 : this.getKey().hashCode()) ^ ((this.getValue() == null) ? 0 : this.getValue().hashCode());
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return new StringBuilder().append('(').append(this.getLeft()).append(',').append(this.getRight()).append(')').toString();
     }
     

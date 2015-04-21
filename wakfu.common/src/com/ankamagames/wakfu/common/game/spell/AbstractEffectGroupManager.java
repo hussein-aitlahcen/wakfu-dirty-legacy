@@ -31,6 +31,6 @@ public abstract class AbstractEffectGroupManager<G extends AbstractEffectGroup>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractEffectGroupManager.class);
+        m_logger = Logger.getLogger(AbstractEffectGroupManager.class);
     }
 }

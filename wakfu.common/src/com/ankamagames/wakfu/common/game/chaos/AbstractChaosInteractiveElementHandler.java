@@ -30,7 +30,7 @@ public abstract class AbstractChaosInteractiveElementHandler implements Interact
     public boolean fireAction(final InteractiveElementAction action, final InteractiveElementUser user) {
         final boolean executed = this.onAction(action, user);
         if (!executed) {
-            AbstractChaosInteractiveElementHandler.m_logger.warn((Object)("L'action " + action.toString() + " n'a pas \u00e9t\u00e9 trait\u00e9e. (user = " + user.toString() + ")"));
+            AbstractChaosInteractiveElementHandler.m_logger.warn("L'action " + action.toString() + " n'a pas \u00e9t\u00e9 trait\u00e9e. (user = " + user.toString() + ")");
         }
         return executed;
     }
@@ -52,7 +52,7 @@ public abstract class AbstractChaosInteractiveElementHandler implements Interact
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractChaosInteractiveElementHandler.class);
+        m_logger = Logger.getLogger(AbstractChaosInteractiveElementHandler.class);
         NO_CHAOS = new NoChaosInteractiveElementHandler();
     }
     

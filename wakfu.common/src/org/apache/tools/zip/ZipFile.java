@@ -61,7 +61,8 @@ public class ZipFile
         this.CFH_BUF = new byte[42];
         this.SHORT_BUF = new byte[2];
         this.OFFSET_COMPARATOR = new Comparator<ZipEntry>() {
-            public int compare(final ZipEntry e1, final ZipEntry e2) {
+            @Override
+			public int compare(final ZipEntry e1, final ZipEntry e2) {
                 if (e1 == e2) {
                     return 0;
                 }
@@ -166,7 +167,8 @@ public class ZipFile
                 bis.addDummy();
                 final Inflater inflater = new Inflater(true);
                 return new InflaterInputStream(bis, inflater) {
-                    public void close() throws IOException {
+                    @Override
+					public void close() throws IOException {
                         super.close();
                         inflater.end();
                     }
@@ -178,7 +180,8 @@ public class ZipFile
         }
     }
     
-    protected void finalize() throws Throwable {
+    @Override
+	protected void finalize() throws Throwable {
         try {
             if (!this.closed) {
                 System.err.println("Cleaning up unclosed ZipFile for archive " + this.archiveName);
@@ -443,7 +446,8 @@ public class ZipFile
             this.loc = start;
         }
         
-        public int read() throws IOException {
+        @Override
+		public int read() throws IOException {
             if (this.remaining-- <= 0L) {
                 if (this.addDummyByte) {
                     this.addDummyByte = false;
@@ -459,7 +463,8 @@ public class ZipFile
             }
         }
         
-        public int read(final byte[] b, final int off, int len) throws IOException {
+        @Override
+		public int read(final byte[] b, final int off, int len) throws IOException {
             if (this.remaining <= 0L) {
                 if (this.addDummyByte) {
                     this.addDummyByte = false;
@@ -518,11 +523,13 @@ public class ZipFile
             return this.offsetEntry;
         }
         
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return 3 * super.hashCode() + (int)(this.offsetEntry.headerOffset % 2147483647L);
         }
         
-        public boolean equals(final Object other) {
+        @Override
+		public boolean equals(final Object other) {
             if (super.equals(other)) {
                 final Entry otherEntry = (Entry)other;
                 return this.offsetEntry.headerOffset == otherEntry.offsetEntry.headerOffset && this.offsetEntry.dataOffset == otherEntry.offsetEntry.dataOffset;

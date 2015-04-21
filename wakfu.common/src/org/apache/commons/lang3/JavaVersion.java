@@ -59,7 +59,8 @@ public enum JavaVersion
         return null;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         return this.name;
     }
 }

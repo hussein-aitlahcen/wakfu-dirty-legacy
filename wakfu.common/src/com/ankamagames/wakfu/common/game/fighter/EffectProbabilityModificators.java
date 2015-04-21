@@ -57,7 +57,7 @@ public class EffectProbabilityModificators
             stateMaxLevel = state.getMaxlevel();
         }
         else {
-            EffectProbabilityModificators.m_logger.error((Object)("UNable to find state " + modificator.m_stateId + " for an EffectProbabilityMOdificator"));
+            EffectProbabilityModificators.m_logger.error("UNable to find state " + modificator.m_stateId + " for an EffectProbabilityMOdificator");
             stateMaxLevel = 200;
         }
         final DefaultFightOneFullTurnEffect fakeGenericEffect = DefaultFightOneFullTurnEffect.makeWithParamsAndMaxLevel(params, stateMaxLevel);
@@ -80,7 +80,7 @@ public class EffectProbabilityModificators
     }
     
     static {
-        m_logger = Logger.getLogger((Class)EffectProbabilityModificators.class);
+        m_logger = Logger.getLogger(EffectProbabilityModificators.class);
         m_modificators = new TIntObjectHashMap<Modificator>();
         register(new Modificator(RunningEffectConstants.AP_DEBOOST, FighterCharacteristicType.AP_DEBUFF_POWER, FighterCharacteristicType.AP_DEBUFF_RES, 993, 20));
         register(new Modificator(RunningEffectConstants.AP_LOSS, FighterCharacteristicType.AP_DEBUFF_POWER, FighterCharacteristicType.AP_DEBUFF_RES, 993, 20));

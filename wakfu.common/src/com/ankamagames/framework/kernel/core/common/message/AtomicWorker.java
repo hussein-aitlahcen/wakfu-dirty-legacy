@@ -35,7 +35,7 @@ class AtomicWorker implements Runnable
                 executeMessage(message);
             }
             catch (Throwable e) {
-                AtomicWorker.m_logger.error((Object)("Error during execution of message " + message), e);
+                AtomicWorker.m_logger.error("Error during execution of message " + message, e);
             }
         }
     }
@@ -44,7 +44,7 @@ class AtomicWorker implements Runnable
         final String messageClassName = message.getClass().getSimpleName();
         final MessageHandler handler = message.getHandler();
         if (handler == null) {
-            AtomicWorker.m_logger.error((Object)("Destinataire invalide pour un message de type " + messageClassName + ", destinataire : " + "null"));
+            AtomicWorker.m_logger.error("Destinataire invalide pour un message de type " + messageClassName + ", destinataire : " + "null");
             return;
         }
         final long before = System.nanoTime();
@@ -52,7 +52,7 @@ class AtomicWorker implements Runnable
             message.execute();
         }
         catch (RuntimeException e) {
-            AtomicWorker.m_logger.error((Object)("Exception lev\u00e9e lors de l'\u00e9x\u00e9cution d'un message (id=" + message.getId() + "): "), (Throwable)e);
+            AtomicWorker.m_logger.error("Exception lev\u00e9e lors de l'\u00e9x\u00e9cution d'un message (id=" + message.getId() + "): ", e);
         }
         final int duration = (int)((System.nanoTime() - before) / 1000000L);
         if (message instanceof ClockMessage) {
@@ -113,6 +113,6 @@ class AtomicWorker implements Runnable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AtomicWorker.class);
+        m_logger = Logger.getLogger(AtomicWorker.class);
     }
 }

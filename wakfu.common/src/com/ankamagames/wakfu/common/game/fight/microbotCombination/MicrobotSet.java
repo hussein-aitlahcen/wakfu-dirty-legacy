@@ -10,7 +10,6 @@ import com.google.common.collect.*;
 import com.google.common.base.*;
 import com.ankamagames.wakfu.common.game.fight.microbotCombination.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.pathfind.*;
-import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 import gnu.trove.*;
 
 public class MicrobotSet
@@ -62,7 +61,7 @@ public class MicrobotSet
     
     boolean add(final AbstractFakeFighterEffectArea microbot, @Nullable final FightMap fightMap, final MicrobotCombinationEventListener listener) {
         if (this.m_microbotsList.contains(microbot)) {
-            MicrobotSet.m_logger.error((Object)("Trying to register a microbot already registered : " + microbot), (Throwable)new RuntimeException());
+            MicrobotSet.m_logger.error("Trying to register a microbot already registered : " + microbot, new RuntimeException());
             return false;
         }
         this.m_microbotsList.add(microbot);
@@ -113,8 +112,8 @@ public class MicrobotSet
         }
         if (listener != null && (!combinationsAdded.isEmpty() || !combinationsRemoved.isEmpty())) {
             final ArrayList<Point3> cellsNow = new ArrayList<Point3>(this.m_combinationsCells);
-            final List<Point3> cellsAdded = (List<Point3>)FluentIterable.from((Iterable)cellsNow).filter(Predicates.not(Predicates.in((Collection)cellsBefore))).toList();
-            final List<Point3> cellsRemoved = (List<Point3>)FluentIterable.from((Iterable)cellsBefore).filter(Predicates.not(Predicates.in((Collection)cellsNow))).toList();
+            final List<Point3> cellsAdded = FluentIterable.from(cellsNow).filter(Predicates.not(Predicates.in(cellsBefore))).toList();
+            final List<Point3> cellsRemoved = FluentIterable.from(cellsBefore).filter(Predicates.not(Predicates.in(cellsNow))).toList();
             listener.onCombinationsModification(this, combinationsAdded, combinationsRemoved, cellsAdded, cellsRemoved);
         }
     }
@@ -213,6 +212,6 @@ public class MicrobotSet
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MicrobotSet.class);
+        m_logger = Logger.getLogger(MicrobotSet.class);
     }
 }

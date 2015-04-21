@@ -89,7 +89,7 @@ public abstract class Room
                     raw.interactiveElements.add(rawIe);
                 }
                 catch (Exception e) {
-                    Room.m_logger.error((Object)("Erreur lors de la serialisation d'un room content ie=" + element), (Throwable)e);
+                    Room.m_logger.error("Erreur lors de la serialisation d'un room content ie=" + element, e);
                 }
             }
         }
@@ -113,7 +113,7 @@ public abstract class Room
                 space.putRoomContent(content);
             }
             catch (Exception e) {
-                Room.m_logger.error((Object)("Erreur durant la r\u00e9cup\u00e9ration du roomContent " + interactiveElement + " d'une pi\u00e8ce du sac " + rawRoom), (Throwable)e);
+                Room.m_logger.error("Erreur durant la r\u00e9cup\u00e9ration du roomContent " + interactiveElement + " d'une pi\u00e8ce du sac " + rawRoom, e);
             }
         }
         return true;
@@ -207,6 +207,6 @@ public abstract class Room
     protected abstract void setSpecificData(final RawSpecificRooms p0);
     
     static {
-        m_logger = Logger.getLogger((Class)Room.class);
+        m_logger = Logger.getLogger(Room.class);
     }
 }

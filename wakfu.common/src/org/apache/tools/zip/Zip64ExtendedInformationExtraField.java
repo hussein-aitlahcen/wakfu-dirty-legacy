@@ -29,19 +29,23 @@ public class Zip64ExtendedInformationExtraField implements CentralDirectoryParsi
         this.diskStart = diskStart;
     }
     
-    public ZipShort getHeaderId() {
+    @Override
+	public ZipShort getHeaderId() {
         return Zip64ExtendedInformationExtraField.HEADER_ID;
     }
     
-    public ZipShort getLocalFileDataLength() {
+    @Override
+	public ZipShort getLocalFileDataLength() {
         return new ZipShort((this.size != null) ? 16 : 0);
     }
     
-    public ZipShort getCentralDirectoryLength() {
+    @Override
+	public ZipShort getCentralDirectoryLength() {
         return new ZipShort(((this.size != null) ? 8 : 0) + ((this.compressedSize != null) ? 8 : 0) + ((this.relativeHeaderOffset != null) ? 8 : 0) + ((this.diskStart != null) ? 4 : 0));
     }
     
-    public byte[] getLocalFileDataData() {
+    @Override
+	public byte[] getLocalFileDataData() {
         if (this.size == null && this.compressedSize == null) {
             return Zip64ExtendedInformationExtraField.EMPTY;
         }
@@ -53,7 +57,8 @@ public class Zip64ExtendedInformationExtraField implements CentralDirectoryParsi
         return data;
     }
     
-    public byte[] getCentralDirectoryData() {
+    @Override
+	public byte[] getCentralDirectoryData() {
         final byte[] data = new byte[this.getCentralDirectoryLength().getValue()];
         int off = this.addSizes(data);
         if (this.relativeHeaderOffset != null) {
@@ -67,7 +72,8 @@ public class Zip64ExtendedInformationExtraField implements CentralDirectoryParsi
         return data;
     }
     
-    public void parseFromLocalFileData(final byte[] buffer, int offset, final int length) throws ZipException {
+    @Override
+	public void parseFromLocalFileData(final byte[] buffer, int offset, final int length) throws ZipException {
         if (length == 0) {
             return;
         }
@@ -91,7 +97,8 @@ public class Zip64ExtendedInformationExtraField implements CentralDirectoryParsi
         }
     }
     
-    public void parseFromCentralDirectoryData(final byte[] buffer, int offset, final int length) throws ZipException {
+    @Override
+	public void parseFromCentralDirectoryData(final byte[] buffer, int offset, final int length) throws ZipException {
         System.arraycopy(buffer, offset, this.rawCentralDirectoryData = new byte[length], 0, length);
         if (length >= 28) {
             this.parseFromLocalFileData(buffer, offset, length);

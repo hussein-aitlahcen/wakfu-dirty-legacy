@@ -5,8 +5,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
@@ -25,7 +23,7 @@ final class ItemCastValidator
     
     public CastValidity getItemCastValidity(final BasicCharacterInfo fighter, final Item item, final Point3 targetCell, final boolean withUseCost) {
         if (item == null || !item.isUsable()) {
-            ItemCastValidator.m_logger.error((Object)this.m_linkedFight.withFightId("cast d'un item null ou non utilisable ou cass\u00e9"));
+            ItemCastValidator.m_logger.error(this.m_linkedFight.withFightId("cast d'un item null ou non utilisable ou cass\u00e9"));
             return CastValidity.INVALID_CONTAINER;
         }
         if (item.isExpiredRent()) {
@@ -43,17 +41,17 @@ final class ItemCastValidator
             if (apCost > 0 && fighter.isActiveProperty(FightPropertyType.AP_AS_MP)) {
                 return CastValidity.NOT_ENOUGH_AP;
             }
-            if (apCost > fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).value()) {
+            if (apCost > fighter.getCharacteristic(FighterCharacteristicType.AP).value()) {
                 return CastValidity.NOT_ENOUGH_AP;
             }
-            if (refItem.getWakfuPoints() > fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.WP).value()) {
+            if (refItem.getWakfuPoints() > fighter.getCharacteristic(FighterCharacteristicType.WP).value()) {
                 return CastValidity.NOT_ENOUGH_FP;
             }
-            if (refItem.getMovementPoints() > fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).value()) {
+            if (refItem.getMovementPoints() > fighter.getCharacteristic(FighterCharacteristicType.MP).value()) {
                 return CastValidity.NOT_ENOUGH_MP;
             }
         }
-        if (!EquipmentInventoryChecker.getInstance().checkCriterion(item, (EffectUser)fighter, (EffectContext)this.m_linkedFight.getContext())) {
+        if (!EquipmentInventoryChecker.getInstance().checkCriterion(item, fighter, this.m_linkedFight.getContext())) {
             return CastValidity.CAST_CRITERIONS_NOT_VALID;
         }
         if (refItem.isUseOnlyInLine() && targetCell != null && targetCell.getX() != fighter.getPosition().getX() && targetCell.getY() != fighter.getPosition().getY()) {
@@ -67,6 +65,6 @@ final class ItemCastValidator
     }
     
     static {
-        ItemCastValidator.m_logger = Logger.getLogger((Class)SpellCastValidator.class);
+        ItemCastValidator.m_logger = Logger.getLogger(SpellCastValidator.class);
     }
 }

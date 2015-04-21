@@ -42,7 +42,7 @@ public class MonitoredPool extends SoftReferenceObjectPool
             this.returnObject(obj);
         }
         catch (Exception e) {
-            MonitoredPool.m_logger.error((Object)"Exception lev\u00e9e : ", (Throwable)e);
+            MonitoredPool.m_logger.error("Exception lev\u00e9e : ", e);
         }
     }
     
@@ -70,7 +70,7 @@ public class MonitoredPool extends SoftReferenceObjectPool
             registerPool(this.m_poolName = obj.getClass().getName(), this);
         }
         catch (Exception e) {
-            MonitoredPool.m_logger.error((Object)"Exception lev\u00e9e : ", (Throwable)e);
+            MonitoredPool.m_logger.error("Exception lev\u00e9e : ", e);
         }
     }
     
@@ -86,7 +86,7 @@ public class MonitoredPool extends SoftReferenceObjectPool
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MonitoredPool.class);
+        m_logger = Logger.getLogger(MonitoredPool.class);
         MUTEX = new Object();
         m_monitoredPools = new HashMap<String, MonitoredPool>();
     }

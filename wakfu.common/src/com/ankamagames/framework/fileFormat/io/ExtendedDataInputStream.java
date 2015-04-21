@@ -221,7 +221,7 @@ public class ExtendedDataInputStream
     
     static {
         DEFAULT_ORDERING = ByteOrder.LITTLE_ENDIAN;
-        m_logger = Logger.getLogger((Class)ExtendedDataInputStream.class);
+        m_logger = Logger.getLogger(ExtendedDataInputStream.class);
         EMPTY_BYTE_BUFFER = ByteBuffer.allocate(0);
     }
 }

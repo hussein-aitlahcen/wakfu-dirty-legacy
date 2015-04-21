@@ -18,7 +18,8 @@ public class ISO8601DateFormat extends AbsoluteTimeDateFormat
         super(timeZone);
     }
     
-    public StringBuffer format(final Date date, final StringBuffer sbuf, final FieldPosition fieldPosition) {
+    @Override
+	public StringBuffer format(final Date date, final StringBuffer sbuf, final FieldPosition fieldPosition) {
         final long now = date.getTime();
         final int millis = (int)(now % 1000L);
         if (now - millis == ISO8601DateFormat.m_lastTime) {
@@ -114,7 +115,8 @@ public class ISO8601DateFormat extends AbsoluteTimeDateFormat
         return sbuf;
     }
     
-    @Nullable
+    @Override
+	@Nullable
     public Date parse(final String s, final ParsePosition pos) {
         return null;
     }

@@ -1,7 +1,6 @@
 package com.ankamagames.framework.script.libraries.scriptedAction;
 
 import com.ankamagames.framework.script.action.*;
-import java.util.*;
 import org.keplerproject.luajava.*;
 import com.ankamagames.framework.script.*;
 
@@ -31,23 +30,24 @@ final class GetActions extends ActionGroupFunction
         return GetActions.RESULTS;
     }
     
-    public void run(final int paramCount) throws LuaException {
+    @Override
+	public void run(final int paramCount) throws LuaException {
         final int type = this.getParamInt(0);
         final int id = this.getParamInt(1);
         this.L.newTable();
         int actionNumber = 1;
         for (final Action action : this.m_actionGroup.getActions()) {
             if (action.getActionId() == id && action.getActionType() == type) {
-                this.L.pushNumber((double)(actionNumber++));
+                this.L.pushNumber((actionNumber++));
                 this.L.newTable();
                 this.L.pushString("uid");
-                this.L.pushNumber((double)action.getUniqueId());
+                this.L.pushNumber(action.getUniqueId());
                 this.L.setTable(-3);
                 this.L.pushString("from");
-                this.L.pushNumber((double)action.getInstigatorId());
+                this.L.pushNumber(action.getInstigatorId());
                 this.L.setTable(-3);
                 this.L.pushString("target");
-                this.L.pushNumber((double)action.getTargetId());
+                this.L.pushNumber(action.getTargetId());
                 this.L.setTable(-3);
                 this.L.setTable(-3);
             }

@@ -104,6 +104,6 @@ public final class FleaTransaction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FleaTransaction.class);
+        m_logger = Logger.getLogger(FleaTransaction.class);
     }
 }

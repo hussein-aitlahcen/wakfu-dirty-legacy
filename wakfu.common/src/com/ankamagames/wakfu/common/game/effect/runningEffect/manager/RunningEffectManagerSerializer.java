@@ -92,7 +92,7 @@ final class RunningEffectManagerSerializer
     }
     
     private void logTooBigData(final boolean forIa, final Map<RunningEffect, byte[]> serializedRunningEffect, final Map<RunningEffect, byte[]> serializedStateRunningEffect, final int size) {
-        RunningEffectManagerSerializer.m_logger.error((Object)("Taille du REM serialise trop grande pour \u00eatre envoy\u00e9e : " + size + " nombre d'effets dans le REM : " + this.m_manager.size() + " serialise pour l'ia : " + forIa));
+        RunningEffectManagerSerializer.m_logger.error("Taille du REM serialise trop grande pour \u00eatre envoy\u00e9e : " + size + " nombre d'effets dans le REM : " + this.m_manager.size() + " serialise pour l'ia : " + forIa);
         logSerializedEffects(serializedStateRunningEffect, serializedRunningEffect);
     }
     
@@ -105,7 +105,7 @@ final class RunningEffectManagerSerializer
         for (final Map.Entry<RunningEffect, byte[]> set : states.entrySet()) {
             final RunningEffect re = set.getKey();
             final byte[] data = set.getValue();
-            RunningEffectManagerSerializer.m_logger.error((Object)("Effet serialise : " + re.actionAndGenericEffectIdString() + " Taille de l'effet " + data.length));
+            RunningEffectManagerSerializer.m_logger.error("Effet serialise : " + re.actionAndGenericEffectIdString() + " Taille de l'effet " + data.length);
         }
     }
     
@@ -175,6 +175,6 @@ final class RunningEffectManagerSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RunningEffectManagerSerializer.class);
+        m_logger = Logger.getLogger(RunningEffectManagerSerializer.class);
     }
 }

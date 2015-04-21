@@ -16,7 +16,7 @@ public class InventoryClearedEvent extends InventoryEvent
             event.m_pool = InventoryClearedEvent.m_staticPool;
         }
         catch (Exception e) {
-            InventoryClearedEvent.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type InventoryClearedEvent : " + e.getMessage()));
+            InventoryEvent.m_logger.error("Erreur lors d'un checkOut sur un message de type InventoryClearedEvent : " + e.getMessage());
             event = new InventoryClearedEvent();
         }
         event.init(inventory, Action.CLEARED);
@@ -27,7 +27,7 @@ public class InventoryClearedEvent extends InventoryEvent
     public String getLogRepresentation() {
         final Inventory inventory = this.getInventory();
         if (!(inventory instanceof LoggableEntity)) {
-            InventoryClearedEvent.m_logger.error((Object)("Log de type  " + this.getClass().getName() + " sur un inventaire non-loggable de type " + inventory.getClass().getName()));
+            InventoryEvent.m_logger.error("Log de type  " + this.getClass().getName() + " sur un inventaire non-loggable de type " + inventory.getClass().getName());
             return null;
         }
         final String inventoryRepr = ((LoggableEntity)inventory).getLogRepresentation();

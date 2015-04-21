@@ -37,7 +37,7 @@ public class FourSidedPartLocalisator implements PartLocalisator<CharacterPart>
     @Override
     public CharacterPart getMainPartInSightFromPosition(final int x, final int y, final short z) {
         if (this.m_direction == null) {
-            FourSidedPartLocalisator.m_logger.error((Object)"direction ou position null : update partLocalisator first");
+            FourSidedPartLocalisator.m_logger.error("direction ou position null : update partLocalisator first");
             return null;
         }
         if (this.m_posx == x && this.m_posy == y && this.m_posz == z) {
@@ -59,7 +59,7 @@ public class FourSidedPartLocalisator implements PartLocalisator<CharacterPart>
     @Override
     public CharacterPart getMainPartInSightFromVector(Vector3 vector) {
         if (this.m_direction == null) {
-            FourSidedPartLocalisator.m_logger.error((Object)"direction null : update partLocalisator first");
+            FourSidedPartLocalisator.m_logger.error("direction null : update partLocalisator first");
             return null;
         }
         if (vector.getX() == 0.0f && vector.getY() == 0.0f) {
@@ -86,7 +86,7 @@ public class FourSidedPartLocalisator implements PartLocalisator<CharacterPart>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FourSidedPartLocalisator.class);
+        m_logger = Logger.getLogger(FourSidedPartLocalisator.class);
         (m_parts = new TIntObjectHashMap<CharacterPart>()).put(0, new CharacterPart(0));
         FourSidedPartLocalisator.m_parts.put(1, new CharacterPart(1));
         FourSidedPartLocalisator.m_parts.put(2, new CharacterPart(2));

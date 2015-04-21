@@ -2,7 +2,9 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -27,7 +29,7 @@ public class UpdateCasterByOther extends WakfuRunningEffect
             re = new UpdateCasterByOther();
             re.m_isStatic = false;
             re.m_pool = null;
-            UpdateCasterByOther.m_logger.error((Object)("Erreur lors d'un checkOut sur un UpdateTargetByOther : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un UpdateTargetByOther : " + e.getMessage());
         }
         return re;
     }

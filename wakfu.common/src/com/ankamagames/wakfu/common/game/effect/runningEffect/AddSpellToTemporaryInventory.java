@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -50,7 +54,7 @@ public final class AddSpellToTemporaryInventory extends WakfuRunningEffect
             re.m_pool = null;
             re.m_isStatic = false;
             re.m_spellLevel = 0;
-            AddSpellToTemporaryInventory.m_logger.error((Object)("Erreur lors d'un checkOut sur un AddSpellToTemporaryInventory : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un AddSpellToTemporaryInventory : " + e.getMessage());
         }
         return re;
     }
@@ -60,8 +64,8 @@ public final class AddSpellToTemporaryInventory extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final short level = (short)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final short level = (short)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         switch (level) {
             case -1: {
                 if (this.getTarget() != null && this.getTarget() instanceof BasicFighter) {
@@ -106,7 +110,7 @@ public final class AddSpellToTemporaryInventory extends WakfuRunningEffect
         }
         final boolean success = target.addSpellToTemporaryInventory(this.m_value, this.m_spellLevel);
         if (!success) {
-            AddSpellToTemporaryInventory.m_logger.info((Object)("Unable to add spell " + this.m_value + " to temporary inventory of " + this.m_target));
+            RunningEffect.m_logger.info("Unable to add spell " + this.m_value + " to temporary inventory of " + this.m_target);
             this.setNotified();
         }
     }

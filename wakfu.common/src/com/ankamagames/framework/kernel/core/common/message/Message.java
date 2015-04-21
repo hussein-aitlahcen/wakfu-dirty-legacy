@@ -29,11 +29,11 @@ public abstract class Message
                 handler.onMessage(this);
             }
             else {
-                Message.m_logger.warn((Object)("Le message de type " + this.getClass().getSimpleName() + " n'a pas de destinataire."));
+                Message.m_logger.warn("Le message de type " + this.getClass().getSimpleName() + " n'a pas de destinataire.");
             }
         }
         else {
-            Message.m_logger.warn((Object)("No handler validator for message " + this));
+            Message.m_logger.warn("No handler validator for message " + this);
         }
     }
     
@@ -49,12 +49,12 @@ public abstract class Message
     public boolean checkMessageSize(final int size, final int expectedSize, final boolean bExactSize) {
         if (bExactSize) {
             if (size != expectedSize) {
-                Message.m_logger.error((Object)("****************************** Message de longueur incorrecte : re\u00e7u=" + size + " octet(s), attendu=" + expectedSize + " octet(s), type : " + this.getClass().getName()), (Throwable)new Exception("TRACE"));
+                Message.m_logger.error("****************************** Message de longueur incorrecte : re\u00e7u=" + size + " octet(s), attendu=" + expectedSize + " octet(s), type : " + this.getClass().getName(), new Exception("TRACE"));
                 return false;
             }
         }
         else if (size < expectedSize) {
-            Message.m_logger.error((Object)("****************************** Message de longueur incorrecte : re\u00e7u=" + size + " octet(s), attendu >= " + expectedSize + " octet(s), type : " + this.getClass().getName()), (Throwable)new Exception("TRACE"));
+            Message.m_logger.error("****************************** Message de longueur incorrecte : re\u00e7u=" + size + " octet(s), attendu >= " + expectedSize + " octet(s), type : " + this.getClass().getName(), new Exception("TRACE"));
             return false;
         }
         return true;
@@ -74,6 +74,6 @@ public abstract class Message
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Message.class);
+        m_logger = Logger.getLogger(Message.class);
     }
 }

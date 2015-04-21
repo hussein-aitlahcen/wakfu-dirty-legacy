@@ -9,7 +9,6 @@ import java.nio.*;
 
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
-import com.ankamagames.wakfu.common.constants.*;
 import com.ankamagames.wakfu.common.constants.Version;
 import com.ankamagames.framework.kernel.core.common.*;
 
@@ -44,7 +43,7 @@ public class WakfuCalendarEventSerializer extends BinarSerial implements Poolabl
         }
         catch (Exception e) {
             res = new WakfuCalendarEventSerializer();
-            WakfuCalendarEventSerializer.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type WakfuCalendarEventSerializable : " + e.getMessage()));
+            WakfuCalendarEventSerializer.m_logger.error("Erreur lors d'un checkOut sur un message de type WakfuCalendarEventSerializable : " + e.getMessage());
         }
         return res;
     }
@@ -66,7 +65,7 @@ public class WakfuCalendarEventSerializer extends BinarSerial implements Poolabl
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                WakfuCalendarEventSerializer.m_logger.error((Object)"Exception levee", (Throwable)e);
+                WakfuCalendarEventSerializer.m_logger.error("Exception levee", e);
             }
         }
         else {
@@ -379,7 +378,7 @@ public class WakfuCalendarEventSerializer extends BinarSerial implements Poolabl
     }
     
     static {
-        WakfuCalendarEventSerializer.m_logger = Logger.getLogger((Class)WakfuCalendarEventSerializer.class);
+        WakfuCalendarEventSerializer.m_logger = Logger.getLogger(WakfuCalendarEventSerializer.class);
         POOL = new MonitoredPool(new ObjectFactory<WakfuCalendarEventSerializer>() {
             @Override
             public WakfuCalendarEventSerializer makeObject() {

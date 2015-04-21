@@ -15,7 +15,7 @@ public class StorageBoxContentChecker implements InventoryContentChecker<Item>
         final ArrayList<Item> items = inventory.getAllWithReferenceId(item.getReferenceId());
         short qty = item.getQuantity();
         Item stack;
-        for (int i = 0; i < items.size() && qty > 0; qty -= (short)(stack.canStackWith(item) ? stack.getStackFreePlace() : 0), ++i) {
+        for (int i = 0; i < items.size() && qty > 0; qty -= stack.canStackWith(item) ? stack.getStackFreePlace() : 0, ++i) {
             stack = items.get(i);
         }
         return (qty <= 0 || !inventory.isFull()) ? 0 : -1;

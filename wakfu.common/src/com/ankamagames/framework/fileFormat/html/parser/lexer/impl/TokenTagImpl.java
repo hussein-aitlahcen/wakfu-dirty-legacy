@@ -130,7 +130,7 @@ public class TokenTagImpl implements TokenTag
         if (this.isClosed) {
             strRet += "/";
         }
-        strRet += (Object)this.tagName;
+        strRet += this.tagName;
         if (this.attrs != null && this.attrs.size() > 0) {
             for (final TagAttribute attr : this.attrs) {
                 strRet = strRet + " " + attr.getAttrName() + "=\"" + attr.getAttrValue() + "\"";
@@ -152,7 +152,7 @@ public class TokenTagImpl implements TokenTag
         if (this.isClosed) {
             retString += "/";
         }
-        retString = retString + (Object)this.tagName + "(";
+        retString = retString + this.tagName + "(";
         if (this.attrs != null) {
             for (final TagAttribute tAttr : this.attrs) {
                 retString = retString + tAttr.getAttrName() + ":" + tAttr.getAttrValue() + " ";

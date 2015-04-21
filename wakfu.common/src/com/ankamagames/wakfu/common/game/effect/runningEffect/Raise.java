@@ -1,14 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -62,7 +65,7 @@ public class Raise extends WakfuRunningEffect
             re = new Raise();
             re.m_isStatic = false;
             re.m_pool = null;
-            Raise.m_logger.error((Object)("Erreur lors d'un checkOut sur un RE:Raise : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RE:Raise : " + e.getMessage());
         }
         this.m_maxExecutionCount = 1;
         re.m_checkController = this.m_checkController;
@@ -128,20 +131,20 @@ public class Raise extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() <= 0) {
+        if (this.m_genericEffect.getParamsCount() <= 0) {
             this.m_value = 1;
             return;
         }
-        this.m_percent = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_percent = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.m_withPercentLife = true;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 1) {
-            this.m_checkController = (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() > 1) {
+            this.m_checkController = (this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 2) {
-            this.m_addVirtualHp = (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() > 2) {
+            this.m_addVirtualHp = (this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() > 3) {
-            this.m_setApMpToMax = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() > 3) {
+            this.m_setApMpToMax = (this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     

@@ -5,6 +5,7 @@ import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class MakeFlee extends WakfuRunningEffect
@@ -21,7 +22,7 @@ public final class MakeFlee extends WakfuRunningEffect
         }
         catch (Exception e) {
             obj = new MakeFlee();
-            MakeFlee.m_logger.error((Object)("Erreur lors d'un checkOut sur un objet de type MakeFlee : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un objet de type MakeFlee : " + e.getMessage());
         }
         return obj;
     }
@@ -34,7 +35,7 @@ public final class MakeFlee extends WakfuRunningEffect
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                MakeFlee.m_logger.error((Object)"Exception lors du retour au pool", (Throwable)e);
+                RunningEffect.m_logger.error("Exception lors du retour au pool", e);
             }
         }
         else {
@@ -63,7 +64,7 @@ public final class MakeFlee extends WakfuRunningEffect
             re.m_pool = MakeFlee.POOL;
         }
         catch (Exception e) {
-            MakeFlee.m_logger.error((Object)("Erreur lors d'un checkOut sur un RE:Raise : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RE:Raise : " + e.getMessage());
             re = new MakeFlee();
             re.m_isStatic = false;
             re.m_pool = null;

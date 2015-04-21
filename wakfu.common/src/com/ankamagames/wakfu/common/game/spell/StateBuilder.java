@@ -85,7 +85,7 @@ public class StateBuilder<S extends State>
             //this.m_state.m_applyCriterions = CriteriaCompiler.compileBoolean(applyCriterions);
         }
         catch (Exception e) {
-            StateBuilder.m_logger.error((Object)("Erreur lors de la compilation des crit\u00e8res de l'\u00e9tat " + this.m_state.getStateBaseId()), (Throwable)e);
+            StateBuilder.m_logger.error("Erreur lors de la compilation des crit\u00e8res de l'\u00e9tat " + this.m_state.getStateBaseId(), e);
         }
     }
     
@@ -142,7 +142,7 @@ public class StateBuilder<S extends State>
         final String[] hmis = arr$ = StringUtils.split(hmiActions, '~');
         for (final String hmi : arr$) {
             if (!addHMI(hmi, this.m_state.m_HMIActions)) {
-                StateBuilder.m_logger.error((Object)("Impossible d'ajouter \u00e0 l'\u00e9tat " + this.m_state.getStateBaseId() + " l'HMIAction :" + hmi));
+                StateBuilder.m_logger.error("Impossible d'ajouter \u00e0 l'\u00e9tat " + this.m_state.getStateBaseId() + " l'HMIAction :" + hmi);
             }
         }
     }
@@ -150,7 +150,7 @@ public class StateBuilder<S extends State>
     private static boolean addHMI(final String hmi, final Collection<HMIAction> hmiActions) {
         final String[] params = hmi.split("\\|", -1);
         if (params.length % 2 != 0) {
-            StateBuilder.m_logger.error((Object)("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: pair "));
+            StateBuilder.m_logger.error("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: pair ");
             return false;
         }
         Byte hmiType = 0;
@@ -178,6 +178,6 @@ public class StateBuilder<S extends State>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StateBuilder.class);
+        m_logger = Logger.getLogger(StateBuilder.class);
     }
 }

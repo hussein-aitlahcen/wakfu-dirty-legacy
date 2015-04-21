@@ -81,7 +81,7 @@ public final class TimelineEventsSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TimelineEventsSerializer.class);
+        m_logger = Logger.getLogger(TimelineEventsSerializer.class);
     }
     
     private static class EventsListSerializer implements TShortObjectProcedure<List<DelayableTimeEvent>>
@@ -133,7 +133,7 @@ public final class TimelineEventsSerializer
                         timelineEvents.addToEvents(timeEvent, turn, events);
                     }
                     catch (Exception e) {
-                        TimelineEventsSerializer.m_logger.error((Object)"Exception levee", (Throwable)e);
+                        TimelineEventsSerializer.m_logger.error("Exception levee", e);
                     }
                 }
             }

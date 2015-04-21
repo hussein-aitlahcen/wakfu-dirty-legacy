@@ -13,7 +13,6 @@ import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
 import com.ankamagames.wakfu.common.game.fight.microbotCombination.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.pvp.*;
 import gnu.trove.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
@@ -23,7 +22,6 @@ import com.ankamagames.framework.kernel.core.common.collections.iterators.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.ai.*;
 import com.ankamagames.wakfu.common.game.fight.protagonists.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.wakfu.common.game.fight.bombCombination.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
@@ -267,7 +265,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
     @Override
     public JoinFightResult canJoinTeam(final F fighter, final byte teamId) {
         if (fighter.getCurrentFight() != null && fighter.getCurrentFight().getFighterFromId(fighter.getId()) != null) {
-            BasicFight.m_logger.error((Object)"Le personnage est deja ajout\u00e9 au combat !");
+            BasicFight.m_logger.error("Le personnage est deja ajout\u00e9 au combat !");
             return JoinFightResult.ALREADY_IN_FIGHT;
         }
         if (this.getFightersInTeam(teamId).contains(fighter)) {
@@ -376,7 +374,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
                 f.returnToOriginalController();
             }
             else {
-                BasicFight.m_logger.error((Object)"On un fighter non pr\u00e9sent en combat sous le contr\u00f4le d'un fighter en combat ");
+                BasicFight.m_logger.error("On un fighter non pr\u00e9sent en combat sous le contr\u00f4le d'un fighter en combat ");
             }
         }
         for (final F fighter : this.m_protagonists.getFighters(ProtagonistFilter.inPlay(), ProtagonistFilter.originallyControlledBy(controller))) {
@@ -439,7 +437,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
         }
         else {
             rv = false;
-            BasicFight.m_logger.error((Object)this.withFightId("\u00c9chec de la transition IN PLAY -> OFF PLAY pour " + fighter.getId()));
+            BasicFight.m_logger.error(this.withFightId("\u00c9chec de la transition IN PLAY -> OFF PLAY pour " + fighter.getId()));
         }
         fighter.onGoesOffPlay();
         return rv;
@@ -486,7 +484,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             fighter.returnToOriginalController();
         }
         else {
-            BasicFight.m_logger.error((Object)this.withFightId("\u00c9chec de la transition OFF PLAY -> IN PLAY pour " + fighter.getId()));
+            BasicFight.m_logger.error(this.withFightId("\u00c9chec de la transition OFF PLAY -> IN PLAY pour " + fighter.getId()));
         }
         fighter.onBackInPlay();
     }
@@ -498,7 +496,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
         boolean rv = true;
         try {
             if (!this.putOutOfPlayInProtagonists(fighter)) {
-                BasicFight.m_logger.error((Object)this.withFightId("\u00c9chec de la transition OFF PLAY -> OUT OF PLAY pour " + fighter.getId()));
+                BasicFight.m_logger.error(this.withFightId("\u00c9chec de la transition OFF PLAY -> OUT OF PLAY pour " + fighter.getId()));
                 rv = false;
             }
             else {
@@ -511,7 +509,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             }
         }
         catch (IllegalArgumentException e) {
-            BasicFight.m_logger.error((Object)"Exception levee", (Throwable)e);
+            BasicFight.m_logger.error("Exception levee", e);
         }
         this.onFighterOutOfPlay(fighter);
         return rv;
@@ -543,8 +541,8 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             this.endFight();
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("CHECK DE FIN DE COMBAT : On termine de force"));
-            BasicFight.m_logger.error((Object)this.withFightId("CHECK DE FIN DE COMBAT : on loggue, mais on ne fait rien, sinon on p\u00e8te un combat " + ExceptionFormatter.toString(e, 4)));
+            BasicFight.m_logger.error(this.withFightId("CHECK DE FIN DE COMBAT : On termine de force"));
+            BasicFight.m_logger.error(this.withFightId("CHECK DE FIN DE COMBAT : on loggue, mais on ne fait rien, sinon on p\u00e8te un combat " + ExceptionFormatter.toString(e, 4)));
         }
         return true;
     }
@@ -554,7 +552,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
         if (remainingTeams.size() == 1) {
             return remainingTeams.toArray()[0];
         }
-        BasicFight.m_logger.error((Object)this.withFightId("On n'a pas une seule equipe vainqueur \u00e0 la fin du combat, on ne d\u00e9clare pas de vainqueur"));
+        BasicFight.m_logger.error(this.withFightId("On n'a pas une seule equipe vainqueur \u00e0 la fin du combat, on ne d\u00e9clare pas de vainqueur"));
         return -1;
     }
     
@@ -562,7 +560,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
         final TByteHashSet remainingTeams = new TByteHashSet();
         for (final F f : this.getInPlayFighters()) {
             if (f.getTeamId() == -1) {
-                BasicFight.m_logger.error((Object)this.withFightId("[FIGHT_REFACTOR] On a un fighter inPlay avec un teamId \u00e0 -1 " + f + " - " + ExceptionFormatter.currentStackTrace(8)));
+                BasicFight.m_logger.error(this.withFightId("[FIGHT_REFACTOR] On a un fighter inPlay avec un teamId \u00e0 -1 " + f + " - " + ExceptionFormatter.currentStackTrace(8)));
             }
             else {
                 if (f.hasProperty(FightPropertyType.DONT_COUNT_AS_FIGHTER_ON_FIGHT_END)) {
@@ -585,7 +583,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             this.getTimeline().clearTimeEvents();
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Arret de la timeline ", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Arret de la timeline ", e));
         }
         try {
             for (final F f : this.getInPlayFighters()) {
@@ -594,7 +592,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             }
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Retrait des personnages inplay", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Retrait des personnages inplay", e));
         }
         try {
             for (final F f : this.m_protagonists.getFighters(ProtagonistFilter.offPlay())) {
@@ -602,7 +600,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             }
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Retrait des personnages offplay", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Retrait des personnages offplay", e));
         }
         try {
             for (final BasicEffectArea area : this.m_effectAreaManager.getEffectAreaList()) {
@@ -610,7 +608,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             }
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Retrait des zones d'effets", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Retrait des zones d'effets", e));
         }
         try {
             for (final F f : this.m_protagonists.getFighters(ProtagonistFilter.localToFight())) {
@@ -620,7 +618,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             }
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Notification de fin de combat", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Notification de fin de combat", e));
         }
         try {
             for (final F f : this.m_protagonists.getFighters(ProtagonistFilter.localToFight())) {
@@ -630,7 +628,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             }
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Retrait des fighters li\u00e9s aux combats de leur controlleur", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Retrait des fighters li\u00e9s aux combats de leur controlleur", e));
         }
         for (final F fighter : this.getAllFighters()) {
             try {
@@ -640,20 +638,20 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
                 this.onControllerRemovedFromFight(fighter);
             }
             catch (Exception e2) {
-                BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Retrait des controlleurs", e2));
+                BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Retrait des controlleurs", e2));
             }
         }
         try {
             this.onFightEnded();
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Dispatch de l'\u00e9venement de fin de combat", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Dispatch de l'\u00e9venement de fin de combat", e));
         }
         try {
             this.destroyEffectAreas();
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)this.withFightId("FIN DE COMBAT : Destruction des aires d'effet", e));
+            BasicFight.m_logger.error(this.withFightId("FIN DE COMBAT : Destruction des aires d'effet", e));
         }
         this.destroyFight();
     }
@@ -835,10 +833,10 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
         final F controlled = this.getFighterFromId(controlledId);
         final F newController = this.getFighterFromId(newControllerId);
         if (controlled == null) {
-            BasicFight.m_logger.error((Object)String.format("[FIGHT_CONTROLLERS] Fighter introuvable pour un changement de controlleur : %d", controlledId));
+            BasicFight.m_logger.error(String.format("[FIGHT_CONTROLLERS] Fighter introuvable pour un changement de controlleur : %d", controlledId));
         }
         if (newController == null) {
-            BasicFight.m_logger.error((Object)String.format("[FIGHT_CONTROLLERS] Fighter introuvable pour un changement de controlleur : %d", newControllerId));
+            BasicFight.m_logger.error(String.format("[FIGHT_CONTROLLERS] Fighter introuvable pour un changement de controlleur : %d", newControllerId));
         }
         this.m_protagonists.setCurrentController(controlled, newController);
     }
@@ -940,13 +938,13 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
             this.m_protagonists.partialRemoveController(controller);
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)"Exception levee", (Throwable)e);
+            BasicFight.m_logger.error("Exception levee", e);
         }
         try {
             controller.onControllerEvent(301, this);
         }
         catch (Exception e) {
-            BasicFight.m_logger.error((Object)"Exception levee", (Throwable)e);
+            BasicFight.m_logger.error("Exception levee", e);
         }
     }
     
@@ -973,7 +971,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
     public void onFighterJoinFight(final F f) {
         this.addFighterToMapObstacles(f);
         f.onJoinFight(this);
-        BasicFight.m_logger.info((Object)this.withFightId(f.getControllerName() + " breed = " + f.getBreedId() + " [" + f.getId() + ']' + " isControlledByAI=" + f.isControlledByAI() + " Id d'obstacle " + f.getObstacleId() + " a rejoint le combat"));
+        BasicFight.m_logger.info(this.withFightId(f.getControllerName() + " breed = " + f.getBreedId() + " [" + f.getId() + ']' + " isControlledByAI=" + f.isControlledByAI() + " Id d'obstacle " + f.getObstacleId() + " a rejoint le combat"));
     }
     
     public void areaActivationWhenJoiningFight(final BasicCharacterInfo f) {
@@ -1037,7 +1035,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
                 }
             }
             catch (Exception e) {
-                BasicFight.m_logger.error((Object)"Exception levee", (Throwable)e);
+                BasicFight.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -1123,7 +1121,7 @@ public abstract class BasicFight<F extends BasicCharacterInfo> extends BinarSeri
         public PossibleTargetsIterator() {
             super();
             this.m_hasCurrent = false;
-            this.m_possibleTargetsIterator = (Iterator<EffectUser>)BasicFight.this.possibleTargetsIterator();
+            this.m_possibleTargetsIterator = BasicFight.this.possibleTargetsIterator();
         }
         
         private boolean checkEffectUser(final EffectUser effectUser) {

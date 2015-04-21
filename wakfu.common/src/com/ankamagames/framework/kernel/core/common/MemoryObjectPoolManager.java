@@ -62,7 +62,7 @@ public final class MemoryObjectPoolManager
             return createFactoryFor(factoryName, classType.getName());
         }
         catch (Exception e) {
-            MemoryObjectPoolManager.m_logger.error((Object)e);
+            MemoryObjectPoolManager.m_logger.error(e);
             return MemoryObjectPool.createDefaultFactory(classType);
         }
     }
@@ -70,12 +70,12 @@ public final class MemoryObjectPoolManager
     public final void loadConfiguration(final XMLDocumentContainer configFile) {
         final DocumentEntry poolsNode = configFile.getRootNode().getChildByName("memoryObjectPools");
         if (poolsNode == null) {
-            MemoryObjectPoolManager.m_logger.warn((Object)"No pools configuration found");
+            MemoryObjectPoolManager.m_logger.warn("No pools configuration found");
             return;
         }
         final ArrayList<DocumentEntry> pools = poolsNode.getChildrenByName("pool");
         if (pools == null) {
-            MemoryObjectPoolManager.m_logger.warn((Object)"No pools configuration found");
+            MemoryObjectPoolManager.m_logger.warn("No pools configuration found");
             return;
         }
         for (int numPools = pools.size(), i = 0; i < numPools; ++i) {
@@ -92,7 +92,7 @@ public final class MemoryObjectPoolManager
                 this.m_factories.put(crcValue, createFactoryFor(factoryName, className));
             }
             catch (Exception e) {
-                MemoryObjectPoolManager.m_logger.error((Object)("probl\u00e8me avec la factory pour la classe " + className + "\n" + e.getMessage()));
+                MemoryObjectPoolManager.m_logger.error("probl\u00e8me avec la factory pour la classe " + className + "\n" + e.getMessage());
             }
         }
     }
@@ -106,7 +106,7 @@ public final class MemoryObjectPoolManager
             accessor.close();
         }
         catch (Exception e) {
-            MemoryObjectPoolManager.m_logger.error((Object)"Exception", (Throwable)e);
+            MemoryObjectPoolManager.m_logger.error("Exception", e);
         }
         this.loadConfiguration(configFile);
     }
@@ -135,11 +135,11 @@ public final class MemoryObjectPoolManager
             MemoryObjectPoolManager.m_lastCount.put(pool, pool.getNumUsed());
             sb.append("\n");
         }
-        MemoryObjectPoolManager.m_logger.info((Object)sb.toString());
+        MemoryObjectPoolManager.m_logger.info(sb.toString());
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MemoryObjectPoolManager.class);
+        m_logger = Logger.getLogger(MemoryObjectPoolManager.class);
         m_instance = new MemoryObjectPoolManager();
         m_lastCount = new TObjectIntHashMap<MemoryObjectPool>();
     }

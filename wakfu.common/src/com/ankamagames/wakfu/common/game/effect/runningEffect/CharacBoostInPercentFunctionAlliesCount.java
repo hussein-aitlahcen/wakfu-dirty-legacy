@@ -2,14 +2,18 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -70,7 +74,7 @@ public final class CharacBoostInPercentFunctionAlliesCount extends WakfuRunningE
             re = new CharacBoostInPercentFunctionAlliesCount();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacBoostInPercentFunctionAlliesCount.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpBoostInPercentFunctionAlliesCount : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpBoostInPercentFunctionAlliesCount : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -94,7 +98,7 @@ public final class CharacBoostInPercentFunctionAlliesCount extends WakfuRunningE
             return;
         }
         final int alliesCount = fight.getFightersPresentInTimelineInPlayInTeam(((BasicCharacterInfo)this.m_target).getTeamId()).size() - 1;
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.m_value *= alliesCount;
     }
     

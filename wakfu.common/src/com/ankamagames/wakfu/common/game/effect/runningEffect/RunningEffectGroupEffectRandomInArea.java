@@ -1,16 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.ai.criteria.antlrcriteria.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGroup
@@ -43,7 +44,7 @@ public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGro
             re = new RunningEffectGroupEffectRandomInArea();
             re.m_pool = null;
             re.m_isStatic = false;
-            RunningEffectGroupEffectRandomInArea.m_logger.error((Object)("Erreur lors d'un checkOut sur un EffectRandomInArea : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un EffectRandomInArea : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -55,13 +56,13 @@ public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGro
             return;
         }
         if (this.m_genericEffect == null) {
-            RunningEffectGroupEffectRandomInArea.m_logger.error((Object)"Pas de genericEffect, \u00e7a ne devrait pas arriver");
+            RunningEffect.m_logger.error("Pas de genericEffect, \u00e7a ne devrait pas arriver");
             this.setNotified();
             return;
         }
         final FightMap fightMap = this.m_context.getFightMap();
         if (fightMap == null) {
-            RunningEffectGroupEffectRandomInArea.m_logger.error((Object)("pas de fightmap sur le context " + this.m_context));
+            RunningEffect.m_logger.error("pas de fightmap sur le context " + this.m_context);
             return;
         }
         final List<int[]> cells = this.getCells();
@@ -98,9 +99,9 @@ public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGro
         final Direction8 dir = this.getDirectionToUse();
         final Point3 targetCell = this.getTargetCellToComputeZone();
         final Point3 sourceCell = this.getSourceCellToComputeZone();
-        final Iterable<int[]> iterable = ((WakfuEffect)this.m_genericEffect).getAreaOfEffect().getCells(targetCell.getX(), targetCell.getY(), targetCell.getZ(), sourceCell.getX(), sourceCell.getY(), sourceCell.getZ(), dir);
+        final Iterable<int[]> iterable = this.m_genericEffect.getAreaOfEffect().getCells(targetCell.getX(), targetCell.getY(), targetCell.getZ(), sourceCell.getX(), sourceCell.getY(), sourceCell.getZ(), dir);
         final ArrayList<int[]> cells = new ArrayList<int[]>();
-        final SimpleCriterion conditions = ((WakfuEffect)this.m_genericEffect).getConditions();
+        final SimpleCriterion conditions = this.m_genericEffect.getConditions();
         final Point3 temp = new Point3();
         for (final int[] next : iterable) {
             final int cellX = next[0];
@@ -128,7 +129,7 @@ public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGro
     
     private List<int[]> getCellsForEmptyArea(final FightMap fightMap) {
         final List<int[]> res = fightMap.getInsideCells();
-        final SimpleCriterion conditions = ((WakfuEffect)this.m_genericEffect).getConditions();
+        final SimpleCriterion conditions = this.m_genericEffect.getConditions();
         if (!this.m_checkCriterionOnCells || conditions == null) {
             return res;
         }
@@ -177,24 +178,24 @@ public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGro
     
     @Override
     boolean checkConditions(final RunningEffect linkedRE) {
-        return (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3 && ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1) || super.checkConditions(linkedRE);
+        return (this.m_genericEffect.getParamsCount() >= 3 && this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1) || super.checkConditions(linkedRE);
     }
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         super.effectiveComputeValue(triggerRE);
         this.m_checkCriterionOnCells = false;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_checkCriterionOnCells = (((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_checkCriterionOnCells = (this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 4) {
-            this.m_useDirectionToTargetCell = (((WakfuEffect)this.m_genericEffect).getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 4) {
+            this.m_useDirectionToTargetCell = (this.m_genericEffect.getParam(3, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 5) {
-            this.m_useCasterCellToComputeZone = (((WakfuEffect)this.m_genericEffect).getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 5) {
+            this.m_useCasterCellToComputeZone = (this.m_genericEffect.getParam(4, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 6) {
-            this.m_removeUsedCells = (((WakfuEffect)this.m_genericEffect).getParam(5, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 6) {
+            this.m_removeUsedCells = (this.m_genericEffect.getParam(5, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     
@@ -208,7 +209,7 @@ public class RunningEffectGroupEffectRandomInArea extends RandomRunningEffectGro
     }
     
     private boolean isEmptyAreaEffect() {
-        return ((WakfuEffect)this.m_genericEffect).getAreaOfEffect().getType() == AreaOfEffectEnum.EMPTY;
+        return this.m_genericEffect.getAreaOfEffect().getType() == AreaOfEffectEnum.EMPTY;
     }
     
     static {

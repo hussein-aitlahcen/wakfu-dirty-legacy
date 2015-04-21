@@ -42,7 +42,7 @@ class MessageChange implements GuildChange
             controller.changeMessage(this.m_message);
         }
         catch (GuildException e) {
-            MessageChange.m_logger.error((Object)"Impossible de changer le message", (Throwable)e);
+            MessageChange.m_logger.error("Impossible de changer le message", e);
         }
     }
     
@@ -57,6 +57,6 @@ class MessageChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MessageChange.class);
+        m_logger = Logger.getLogger(MessageChange.class);
     }
 }

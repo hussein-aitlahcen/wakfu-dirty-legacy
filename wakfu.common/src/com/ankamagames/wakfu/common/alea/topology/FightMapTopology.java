@@ -87,7 +87,7 @@ public class FightMapTopology extends TopologyMapBlockedCells
         if (altitude != 0) {
             return altitude;
         }
-        return (short)(this.m_cellsAltitude.contains(cellIndex) ? altitude : -32768);
+        return this.m_cellsAltitude.contains(cellIndex) ? altitude : -32768;
     }
     
     private short getCellIndex(final int x, final int y) {
@@ -97,6 +97,6 @@ public class FightMapTopology extends TopologyMapBlockedCells
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightMapTopology.class);
+        m_logger = Logger.getLogger(FightMapTopology.class);
     }
 }

@@ -5,10 +5,10 @@ import org.jetbrains.annotations.*;
 
 public enum TemporaryInventoryChangeType
 {
-    ADD_ITEM((SimpleObjectFactory<? extends TemporaryInventoryChange>)new AddItemFactory()), 
-    REMOVE_ITEM((SimpleObjectFactory<? extends TemporaryInventoryChange>)new RemoveItemFactory()), 
-    ITEM_QUANTITY((SimpleObjectFactory<? extends TemporaryInventoryChange>)new ItemQuantityFactory()), 
-    CLEAR((SimpleObjectFactory<? extends TemporaryInventoryChange>)new ClearChangeFactory());
+    ADD_ITEM(new AddItemFactory()), 
+    REMOVE_ITEM(new RemoveItemFactory()), 
+    ITEM_QUANTITY(new ItemQuantityFactory()), 
+    CLEAR(new ClearChangeFactory());
     
     public final byte idx;
     private final SimpleObjectFactory<? extends TemporaryInventoryChange> factory;
@@ -19,7 +19,7 @@ public enum TemporaryInventoryChangeType
     }
     
     public TemporaryInventoryChange createNew() {
-        return (TemporaryInventoryChange)this.factory.createNew();
+        return this.factory.createNew();
     }
     
     @Nullable

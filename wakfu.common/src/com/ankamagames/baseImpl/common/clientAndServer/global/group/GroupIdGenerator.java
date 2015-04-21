@@ -32,7 +32,7 @@ public class GroupIdGenerator
     
     public static long getId(final byte groupType, final long baseId) {
         if (baseId > GroupIdGenerator.GROUP_ID_MAX_VALUE) {
-            GroupIdGenerator.m_logger.fatal((Object)"[GROUP ID] D\u00e9passement de capacit\u00e9 pour les ID de groupe");
+            GroupIdGenerator.m_logger.fatal("[GROUP ID] D\u00e9passement de capacit\u00e9 pour les ID de groupe");
             return 0L;
         }
         final long l = baseId & 0xFFFFFFFFFFFFFFL;
@@ -41,7 +41,7 @@ public class GroupIdGenerator
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GroupIdGenerator.class);
+        m_logger = Logger.getLogger(GroupIdGenerator.class);
         GroupIdGenerator.GROUP_ID_MAX_VALUE = 72057594037927935L;
         GroupIdGenerator.m_currentGroupId = new TByteLongHashMap();
     }

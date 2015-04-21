@@ -34,7 +34,7 @@ public class NationGovernmentRevokeRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationGovernmentRevokeRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationGovernmentRevokeRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestGovernmentRevoke(NationRank.getById(this.m_requesterRankId), NationRank.getById(this.m_requestedRankId), this.m_reason);
@@ -79,7 +79,7 @@ public class NationGovernmentRevokeRequest extends NationActionRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationGovernmentRevokeRequest.class);
+        m_logger = Logger.getLogger(NationGovernmentRevokeRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

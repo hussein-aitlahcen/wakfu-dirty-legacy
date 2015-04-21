@@ -65,7 +65,7 @@ public class CraftHandler
         }
         final Craft craft = this.m_crafts.get(craftId);
         if (craft == null) {
-            CraftHandler.m_logger.error((Object)("Tentative d'ajout d'XP \u00e0 un m\u00e9tier inconnu " + craftId), (Throwable)new IllegalArgumentException());
+            CraftHandler.m_logger.error("Tentative d'ajout d'XP \u00e0 un m\u00e9tier inconnu " + craftId, new IllegalArgumentException());
             return 0L;
         }
         final long old = craft.getXp();
@@ -105,7 +105,7 @@ public class CraftHandler
     
     public short getLevel(final int craftId) {
         final Craft craft = this.m_crafts.get(craftId);
-        return (short)((craft != null) ? CraftXPUtil.getCurrentLevel(craft.getXp()) : 0);
+        return (craft != null) ? CraftXPUtil.getCurrentLevel(craft.getXp()) : 0;
     }
     
     public double getPercentLevelForXp(final int craftId, final long xp) {
@@ -192,7 +192,7 @@ public class CraftHandler
             final CharacterSerializedCraft.RawCraft rawCraft = it.next();
             final ReferenceCraft refCraft = CraftManager.INSTANCE.getCraft(rawCraft.refCraftId);
             if (refCraft == null) {
-                CraftHandler.m_logger.error((Object)("[SERIALISATION] Chargement d'un m\u00e9tier inconnu : " + rawCraft.refCraftId), (Throwable)new IllegalArgumentException());
+                CraftHandler.m_logger.error("[SERIALISATION] Chargement d'un m\u00e9tier inconnu : " + rawCraft.refCraftId, new IllegalArgumentException());
                 it.remove();
             }
             else {
@@ -219,6 +219,6 @@ public class CraftHandler
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CraftHandler.class);
+        m_logger = Logger.getLogger(CraftHandler.class);
     }
 }

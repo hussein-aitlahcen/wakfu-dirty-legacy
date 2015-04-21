@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.common.game.aptitudeNewVersion.listener;
 
 import com.ankamagames.wakfu.common.game.aptitudeNewVersion.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 
 public final class ReloadEffectsOnLevelUpdate implements AptitudeBonusInventoryListener
 {

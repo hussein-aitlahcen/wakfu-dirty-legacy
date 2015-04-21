@@ -67,7 +67,8 @@ public abstract class AbstractUnicodeExtraField implements ZipExtraField
         this.data = null;
     }
     
-    public byte[] getCentralDirectoryData() {
+    @Override
+	public byte[] getCentralDirectoryData() {
         if (this.data == null) {
             this.assembleData();
         }
@@ -79,22 +80,26 @@ public abstract class AbstractUnicodeExtraField implements ZipExtraField
         return b;
     }
     
-    public ZipShort getCentralDirectoryLength() {
+    @Override
+	public ZipShort getCentralDirectoryLength() {
         if (this.data == null) {
             this.assembleData();
         }
         return new ZipShort(this.data.length);
     }
     
-    public byte[] getLocalFileDataData() {
+    @Override
+	public byte[] getLocalFileDataData() {
         return this.getCentralDirectoryData();
     }
     
-    public ZipShort getLocalFileDataLength() {
+    @Override
+	public ZipShort getLocalFileDataLength() {
         return this.getCentralDirectoryLength();
     }
     
-    public void parseFromLocalFileData(final byte[] buffer, final int offset, final int length) throws ZipException {
+    @Override
+	public void parseFromLocalFileData(final byte[] buffer, final int offset, final int length) throws ZipException {
         if (length < 5) {
             throw new ZipException("UniCode path extra data must have at least 5 bytes.");
         }

@@ -36,7 +36,7 @@ class AddRankChange implements GuildChange
             controller.addRank(this.m_rank);
         }
         catch (GuildException e) {
-            AddRankChange.m_logger.error((Object)"Impossible d'ajouter le rang", (Throwable)e);
+            AddRankChange.m_logger.error("Impossible d'ajouter le rang", e);
         }
     }
     
@@ -51,6 +51,6 @@ class AddRankChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AddRankChange.class);
+        m_logger = Logger.getLogger(AddRankChange.class);
     }
 }

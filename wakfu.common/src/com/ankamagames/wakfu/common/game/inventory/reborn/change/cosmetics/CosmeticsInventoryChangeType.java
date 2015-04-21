@@ -5,8 +5,8 @@ import org.jetbrains.annotations.*;
 
 public enum CosmeticsInventoryChangeType
 {
-    ADD_ITEM((SimpleObjectFactory<? extends CosmeticsInventoryChange>)new AddItemFactory()), 
-    REMOVE_ITEM((SimpleObjectFactory<? extends CosmeticsInventoryChange>)new RemoveItemFactory());
+    ADD_ITEM(new AddItemFactory()), 
+    REMOVE_ITEM(new RemoveItemFactory());
     
     public final byte idx;
     private final SimpleObjectFactory<? extends CosmeticsInventoryChange> factory;
@@ -17,7 +17,7 @@ public enum CosmeticsInventoryChangeType
     }
     
     public CosmeticsInventoryChange createNew() {
-        return (CosmeticsInventoryChange)this.factory.createNew();
+        return this.factory.createNew();
     }
     
     @Nullable

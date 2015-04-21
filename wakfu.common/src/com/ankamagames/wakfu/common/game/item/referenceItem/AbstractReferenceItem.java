@@ -83,7 +83,7 @@ public abstract class AbstractReferenceItem<T extends AbstractItemType<T>> imple
     
     void setItemType(final AbstractItemType itemType) {
         this.checkItemType(itemType);
-        this.m_itemType = (AbstractItemType<T>)itemType;
+        this.m_itemType = itemType;
     }
     
     void setCriteria(final Map<ActionsOnItem, SimpleCriterion> criteria) {

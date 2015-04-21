@@ -1,7 +1,6 @@
 package com.ankamagames.baseImpl.common.clientAndServer.rawData;
 
 import java.nio.*;
-import java.util.*;
 
 public class RawItemOptionalInfo implements VersionableObject
 {

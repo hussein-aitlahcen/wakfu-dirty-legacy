@@ -57,7 +57,7 @@ class RemoveItemChange implements TemporaryInventoryChange
             }
         }
         catch (TemporaryInventoryException e) {
-            RemoveItemChange.m_logger.error((Object)("Impossible de retirer l'objet : " + e.getMessage()));
+            RemoveItemChange.m_logger.error("Impossible de retirer l'objet : " + e.getMessage());
         }
     }
     
@@ -72,6 +72,6 @@ class RemoveItemChange implements TemporaryInventoryChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RemoveItemChange.class);
+        m_logger = Logger.getLogger(RemoveItemChange.class);
     }
 }

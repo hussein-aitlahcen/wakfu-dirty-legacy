@@ -8,11 +8,13 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 
 public interface BasicFighter extends Poolable, Releasable, EffectUser, FightEffectUser, FightObstacle, MovementEffectUser
 {
-    void release();
+    @Override
+	void release();
     
     boolean isOnFight();
     
-    long getId();
+    @Override
+	long getId();
     
     void onSpecialFighterEvent(SpecialEvent p0);
     

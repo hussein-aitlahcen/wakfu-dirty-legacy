@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,7 +42,7 @@ public final class HpLossFunctionCharac extends HPLoss
             re = new HpLossFunctionCharac();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossFunctionCharac.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossFunctionCharac : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossFunctionCharac : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -60,7 +61,7 @@ public final class HpLossFunctionCharac extends HPLoss
         if (this.m_genericEffect == null) {
             return;
         }
-        final float fValue = ((WakfuEffect)this.m_genericEffect).getParam(0, level);
+        final float fValue = this.m_genericEffect.getParam(0, level);
         if (this.m_caster != null && this.m_caster.hasCharacteristic(this.m_charac)) {
             this.m_value = Math.round(fValue * this.m_caster.getCharacteristic(this.m_charac).max());
         }

@@ -9,13 +9,12 @@ import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import gnu.trove.*;
 import com.ankamagames.wakfu.common.game.fight.*;
-import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
 
 final class SpellCastThroughGateComputer
 {
-    private BasicFightInfo m_linkedFight;
+    private BasicFightInfo<?> m_linkedFight;
     private BasicCharacterInfo m_fighter;
-    private AbstractSpellLevel m_spellLevel;
+    private AbstractSpellLevel<?> m_spellLevel;
     private int m_rangeMin;
     private int m_boostedRangeMax;
     private Point3 m_targetCell;

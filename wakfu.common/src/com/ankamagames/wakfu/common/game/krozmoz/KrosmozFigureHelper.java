@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.krozmoz;
 import org.apache.commons.lang3.*;
 import java.nio.*;
 import com.ankamagames.wakfu.common.rawData.*;
-import java.util.*;
 
 public class KrosmozFigureHelper
 {

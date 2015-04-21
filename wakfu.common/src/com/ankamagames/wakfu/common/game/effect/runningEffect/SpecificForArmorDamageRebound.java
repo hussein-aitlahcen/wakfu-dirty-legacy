@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
@@ -8,7 +7,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.hpLoss.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -41,7 +42,7 @@ public final class SpecificForArmorDamageRebound extends WakfuRunningEffect
             re = new SpecificForArmorDamageRebound();
             re.m_pool = null;
             re.m_isStatic = false;
-            SpecificForArmorDamageRebound.m_logger.error((Object)("Erreur lors d'un checkOut sur un ElementalVirutalArmor : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ElementalVirutalArmor : " + e.getMessage());
         }
         re.m_element = this.m_element;
         re.m_baseValue = this.m_baseValue;
@@ -57,13 +58,13 @@ public final class SpecificForArmorDamageRebound extends WakfuRunningEffect
     }
     
     private void initialiseArmor() {
-        final byte elementId = (byte)((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final byte elementId = (byte)this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         this.m_element = Elements.getElementFromId(elementId);
         if (this.m_element == null) {
-            SpecificForArmorDamageRebound.m_logger.error((Object)("Element inconnu " + elementId));
+            RunningEffect.m_logger.error("Element inconnu " + elementId);
             return;
         }
-        this.m_baseValue = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_baseValue = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.getParams() == null || !((WakfuEffectExecutionParameters)this.getParams()).isValueForced()) {
             int modificator = 0;
             if (this.m_caster.hasCharacteristic(this.m_element.getDamageBonusCharacteristic())) {
@@ -129,16 +130,16 @@ public final class SpecificForArmorDamageRebound extends WakfuRunningEffect
     }
     
     private void executeSubEffect(final RunningEffect triggerRE, final int value) {
-        final AbstractEffectGroup effectGroup = (AbstractEffectGroup)AbstractEffectGroupManager.getInstance().getEffectGroup(((WakfuEffect)this.m_genericEffect).getEffectId());
+        final AbstractEffectGroup effectGroup = AbstractEffectGroupManager.getInstance().getEffectGroup(this.m_genericEffect.getEffectId());
         if (effectGroup == null) {
             return;
         }
         if (effectGroup.getEffectsCount() != 1) {
-            SpecificForArmorDamageRebound.m_logger.error((Object)("On ne peut pas qu'un seul effet dans un groupe d'effet de ce type " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+            RunningEffect.m_logger.error("On ne peut pas qu'un seul effet dans un groupe d'effet de ce type " + this.m_genericEffect.getEffectId());
             this.setNotified();
             return;
         }
-        final HpLossComputer hpLossComputer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_element, (WakfuEffect)this.m_genericEffect);
+        final HpLossComputer hpLossComputer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_element, this.m_genericEffect);
         hpLossComputer.setConditions(11);
         hpLossComputer.setValue(value);
         hpLossComputer.computeWithModificator();

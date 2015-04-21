@@ -2,11 +2,11 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -36,7 +36,7 @@ public final class LinkCasterAndTarget extends WakfuRunningEffect
             re = new LinkCasterAndTarget();
             re.m_pool = null;
             re.m_isStatic = false;
-            LinkCasterAndTarget.m_logger.error((Object)("Erreur lors d'un checkOut sur un LinkCasterAndTarget : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un LinkCasterAndTarget : " + e.getMessage());
         }
         return re;
     }

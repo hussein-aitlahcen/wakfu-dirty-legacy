@@ -4,7 +4,8 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timee
 
 public interface WakfuFightEffect extends WakfuEffect
 {
-    byte getEffectType();
+    @Override
+	byte getEffectType();
     
     RelativeFightTimeInterval getDuration(short p0);
     

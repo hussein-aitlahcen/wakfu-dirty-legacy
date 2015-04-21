@@ -7,7 +7,6 @@ import java.nio.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.wakfu.common.constants.*;
 import com.ankamagames.wakfu.common.game.companion.equipment.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.event.*;
 
 public final class CompanionModelSerializer
 {

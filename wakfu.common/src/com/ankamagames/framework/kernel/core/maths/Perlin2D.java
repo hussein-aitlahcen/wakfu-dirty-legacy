@@ -58,7 +58,7 @@ public final class Perlin2D
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Perlin2D.class);
+        m_logger = Logger.getLogger(Perlin2D.class);
     }
     
     public enum Interpolation implements Interpoler

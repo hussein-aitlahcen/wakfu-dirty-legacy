@@ -77,7 +77,8 @@ class Simple8BitZipEncoding implements ZipEncoding
         return r;
     }
     
-    public boolean canEncode(final String name) {
+    @Override
+	public boolean canEncode(final String name) {
         for (int i = 0; i < name.length(); ++i) {
             final char c = name.charAt(i);
             if (!this.canEncodeChar(c)) {
@@ -87,7 +88,8 @@ class Simple8BitZipEncoding implements ZipEncoding
         return true;
     }
     
-    public ByteBuffer encode(final String name) {
+    @Override
+	public ByteBuffer encode(final String name) {
         ByteBuffer out = ByteBuffer.allocate(name.length() + 6 + (name.length() + 1) / 2);
         for (int i = 0; i < name.length(); ++i) {
             final char c = name.charAt(i);
@@ -103,7 +105,8 @@ class Simple8BitZipEncoding implements ZipEncoding
         return out;
     }
     
-    public String decode(final byte[] data) throws IOException {
+    @Override
+	public String decode(final byte[] data) throws IOException {
         final char[] ret = new char[data.length];
         for (int i = 0; i < data.length; ++i) {
             ret[i] = this.decodeByte(data[i]);
@@ -122,15 +125,18 @@ class Simple8BitZipEncoding implements ZipEncoding
             this.unicode = unicode;
         }
         
-        public int compareTo(final Simple8BitChar a) {
+        @Override
+		public int compareTo(final Simple8BitChar a) {
             return this.unicode - a.unicode;
         }
         
-        public String toString() {
+        @Override
+		public String toString() {
             return "0x" + Integer.toHexString('\uffff' & this.unicode) + "->0x" + Integer.toHexString(0xFF & this.code);
         }
         
-        public boolean equals(final Object o) {
+        @Override
+		public boolean equals(final Object o) {
             if (o instanceof Simple8BitChar) {
                 final Simple8BitChar other = (Simple8BitChar)o;
                 return this.unicode == other.unicode && this.code == other.code;
@@ -138,7 +144,8 @@ class Simple8BitZipEncoding implements ZipEncoding
             return false;
         }
         
-        public int hashCode() {
+        @Override
+		public int hashCode() {
             return this.unicode;
         }
     }

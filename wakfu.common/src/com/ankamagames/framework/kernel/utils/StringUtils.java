@@ -2,7 +2,6 @@ package com.ankamagames.framework.kernel.utils;
 
 import com.ankamagames.framework.kernel.core.common.collections.*;
 import java.io.*;
-import org.apache.commons.lang3.*;
 import java.util.regex.*;
 import java.text.*;
 import org.jetbrains.annotations.*;
@@ -206,7 +205,7 @@ public abstract class StringUtils
     }
     
     public static int alphanumericCompare(final String s1, final String s2) {
-        return AlphanumericComparator.INSTANCE.compare((CharSequence)s1, (CharSequence)s2);
+        return AlphanumericComparator.INSTANCE.compare(s1, s2);
     }
     
     public static String forXML(final String aText) {

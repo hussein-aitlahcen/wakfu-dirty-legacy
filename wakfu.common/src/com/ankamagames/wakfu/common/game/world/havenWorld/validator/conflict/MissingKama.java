@@ -23,6 +23,6 @@ public class MissingKama extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MissingKama.class);
+        m_logger = Logger.getLogger(MissingKama.class);
     }
 }

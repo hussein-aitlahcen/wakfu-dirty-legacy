@@ -33,7 +33,7 @@ public class StateLoaderClient implements StateLoader
         final StateClient state = this.createState();
         final StateBinaryData fromId = this.m_dataLoader.createFromId(stateId);
         if (fromId == null) {
-            StateLoaderClient.m_logger.error((Object)("Impossible de charger l'\u00e9tat " + stateId));
+            StateLoaderClient.m_logger.error("Impossible de charger l'\u00e9tat " + stateId);
             return null;
         }
         fromBinary(state, fromId);
@@ -87,7 +87,7 @@ public class StateLoaderClient implements StateLoader
                 state.addEffect(effect);
             }
             else {
-                StateLoaderClient.m_logger.error((Object)("Probl\u00e8me de chargmeent de State " + data.getId()));
+                StateLoaderClient.m_logger.error("Probl\u00e8me de chargmeent de State " + data.getId());
             }
         }
     }
@@ -105,12 +105,12 @@ public class StateLoaderClient implements StateLoader
             });
         }
         catch (Exception e) {
-            StateLoaderClient.m_logger.error((Object)"", (Throwable)e);
+            StateLoaderClient.m_logger.error("", e);
         }
         return map;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StateLoaderClient.class);
+        m_logger = Logger.getLogger(StateLoaderClient.class);
     }
 }

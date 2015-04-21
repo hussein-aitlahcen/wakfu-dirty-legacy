@@ -32,7 +32,7 @@ public abstract class FullGemsDefinitionManager<R extends AbstractReferenceItem>
         }
         final Loot metaGemLoot = this.roll(list);
         if (metaGemLoot == null) {
-            FullGemsDefinitionManager.m_logger.warn((Object)"[GemsDefinitionManager] La liste de m\u00e9ta-gemmes est vide !");
+            FullGemsDefinitionManager.m_logger.warn("[GemsDefinitionManager] La liste de m\u00e9ta-gemmes est vide !");
             return null;
         }
         byte perfectionIndex;
@@ -160,6 +160,6 @@ public abstract class FullGemsDefinitionManager<R extends AbstractReferenceItem>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FullGemsDefinitionManager.class);
+        m_logger = Logger.getLogger(FullGemsDefinitionManager.class);
     }
 }

@@ -35,7 +35,7 @@ public class DragoInfo extends TravelInfo
             //simpleCriterion = CriteriaCompiler.compileBoolean(criterion);
         }
         catch (Exception e) {
-            DragoInfo.m_logger.warn((Object)("Unable to load DragoInfo for drago id " + id));
+            DragoInfo.m_logger.warn("Unable to load DragoInfo for drago id " + id);
         }
         if (simpleCriterion == null) {
             simpleCriterion = ConstantBooleanCriterion.TRUE;
@@ -73,6 +73,6 @@ public class DragoInfo extends TravelInfo
     }
     
     static {
-        m_logger = Logger.getLogger((Class)DragoInfo.class);
+        m_logger = Logger.getLogger(DragoInfo.class);
     }
 }

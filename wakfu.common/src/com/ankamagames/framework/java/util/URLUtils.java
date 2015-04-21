@@ -38,7 +38,7 @@ public final class URLUtils
         final String externalForm = context.toExternalForm();
         final String[] parts = StringUtils.split(externalForm, '/');
         if (previousDirs > parts.length - 1) {
-            URLUtils.m_logger.error((Object)("Impossible de rajouter " + previousDirs + " ../ au chemin " + context.toExternalForm()));
+            URLUtils.m_logger.error("Impossible de rajouter " + previousDirs + " ../ au chemin " + context.toExternalForm());
             return null;
         }
         final StringBuilder sb = new StringBuilder();
@@ -79,6 +79,6 @@ public final class URLUtils
     }
     
     static {
-        m_logger = Logger.getLogger((Class)URLUtils.class);
+        m_logger = Logger.getLogger(URLUtils.class);
     }
 }

@@ -6,7 +6,6 @@ import com.ankamagames.wakfu.common.datas.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.characteristics.skill.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.account.*;
 import com.ankamagames.wakfu.common.game.craft.util.*;
 import com.ankamagames.framework.kernel.core.maths.*;
@@ -172,13 +171,13 @@ public class CraftRecipe
     public void addResultItem(final int itemId, final short quantity) {
         final RecipeResultItem resultItem = new RecipeResultItem(itemId, quantity);
         if (this.m_resultItems.contains(resultItem)) {
-            CraftRecipe.m_logger.warn((Object)("Duplication d'item r\u00e9sultant " + itemId + " sur la recette " + this.getId()));
+            CraftRecipe.m_logger.warn("Duplication d'item r\u00e9sultant " + itemId + " sur la recette " + this.getId());
             return;
         }
         this.m_resultItems.add(resultItem);
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CraftRecipe.class);
+        m_logger = Logger.getLogger(CraftRecipe.class);
     }
 }

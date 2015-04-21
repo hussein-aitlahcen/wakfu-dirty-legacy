@@ -20,12 +20,12 @@ public final class BinaryLoaderFromFile<T extends BinaryData> implements BinaryL
             }
         }
         catch (Exception e) {
-            BinaryLoaderFromFile.m_logger.error((Object)("Probl\u00e8me avec " + this.m_binary.getClass().getSimpleName() + " d'id=" + id), (Throwable)e);
+            BinaryLoaderFromFile.m_logger.error("Probl\u00e8me avec " + this.m_binary.getClass().getSimpleName() + " d'id=" + id, e);
         }
         return null;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinaryLoaderFromFile.class);
+        m_logger = Logger.getLogger(BinaryLoaderFromFile.class);
     }
 }

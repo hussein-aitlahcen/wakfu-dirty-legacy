@@ -22,20 +22,20 @@ public class HMIActionManager
     
     public static HMIAction createNewAction(final HMIActionType actionType, final String parameters, final boolean isTargetOnly) {
         try {
-            final HMIAction action = (HMIAction)actionType.getRepresentationClass().newInstance();
+            final HMIAction action = actionType.getRepresentationClass().newInstance();
             action.setTargetOnly(isTargetOnly);
             if (action.initialize(parameters)) {
                 return action;
             }
-            HMIActionManager.m_logger.error((Object)("Impossible d'initialiser l'HMIAction de type " + actionType + " parametres=" + parameters));
+            HMIActionManager.m_logger.error("Impossible d'initialiser l'HMIAction de type " + actionType + " parametres=" + parameters);
             return null;
         }
         catch (InstantiationException e) {
-            HMIActionManager.m_logger.error((Object)("Erreur d'instanciation d'un actionType : " + actionType.getLabel()));
+            HMIActionManager.m_logger.error("Erreur d'instanciation d'un actionType : " + actionType.getLabel());
             return null;
         }
         catch (IllegalAccessException e2) {
-            HMIActionManager.m_logger.error((Object)("Acc\u00e8s non authoris\u00e9 pour l'instanciation d'un actionType : " + actionType.getLabel()));
+            HMIActionManager.m_logger.error("Acc\u00e8s non authoris\u00e9 pour l'instanciation d'un actionType : " + actionType.getLabel());
             return null;
         }
     }
@@ -75,7 +75,7 @@ public class HMIActionManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIActionManager.class);
+        m_logger = Logger.getLogger(HMIActionManager.class);
         m_instance = new HMIActionManager();
     }
 }

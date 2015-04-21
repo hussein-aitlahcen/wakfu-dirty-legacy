@@ -40,6 +40,6 @@ public class BuildingDependency extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BuildingDependency.class);
+        m_logger = Logger.getLogger(BuildingDependency.class);
     }
 }

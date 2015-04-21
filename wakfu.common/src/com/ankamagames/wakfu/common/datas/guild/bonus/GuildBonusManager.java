@@ -27,7 +27,7 @@ public class GuildBonusManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildBonusManager.class);
+        m_logger = Logger.getLogger(GuildBonusManager.class);
         INSTANCE = new GuildBonusManager();
     }
 }

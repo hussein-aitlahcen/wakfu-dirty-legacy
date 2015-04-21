@@ -21,20 +21,20 @@ public class GemsMergeHelper
         final AbstractReferenceItem refItem = ReferenceItemManager.getInstance().getReferenceItem(refId);
         if (refItem.getGemElementType() == GemElementType.NONE) {
             if (withLogs) {
-                GemsMergeHelper.m_logger.warn((Object)("Le joueur " + player + " demande une fusion de rune de type " + refItem.getGemElementType()));
+                GemsMergeHelper.m_logger.warn("Le joueur " + player + " demande une fusion de rune de type " + refItem.getGemElementType());
             }
             return false;
         }
         final Collection<Item> gems = player.getBags().getAllWithReferenceId(refId);
         if (gems.isEmpty()) {
             if (withLogs) {
-                GemsMergeHelper.m_logger.warn((Object)("Le joueur " + player + " essaye de fusionner comme rune l'item de refId" + refId + " qu'il ne poss\u00e8de pas"));
+                GemsMergeHelper.m_logger.warn("Le joueur " + player + " essaye de fusionner comme rune l'item de refId" + refId + " qu'il ne poss\u00e8de pas");
             }
             return false;
         }
         if (!mergeType.canMergeItem(refItem)) {
             if (withLogs) {
-                GemsMergeHelper.m_logger.warn((Object)("Le joueur " + player + " essaye d'effectuer la fusion de type " + mergeType + " sur un objet d\u00e9j\u00e0 max\u00e9."));
+                GemsMergeHelper.m_logger.warn("Le joueur " + player + " essaye d'effectuer la fusion de type " + mergeType + " sur un objet d\u00e9j\u00e0 max\u00e9.");
             }
             return false;
         }
@@ -44,7 +44,7 @@ public class GemsMergeHelper
         }
         if (totalQty < mergeType.getQuantityNeeded()) {
             if (withLogs) {
-                GemsMergeHelper.m_logger.warn((Object)("Le joueur " + player + " essayer de fusionner comme rune l'item de refId " + refId + " mais n'en poss\u00e8de pas 2"));
+                GemsMergeHelper.m_logger.warn("Le joueur " + player + " essayer de fusionner comme rune l'item de refId " + refId + " mais n'en poss\u00e8de pas 2");
             }
             return false;
         }
@@ -52,6 +52,6 @@ public class GemsMergeHelper
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GemsMergeHelper.class);
+        m_logger = Logger.getLogger(GemsMergeHelper.class);
     }
 }

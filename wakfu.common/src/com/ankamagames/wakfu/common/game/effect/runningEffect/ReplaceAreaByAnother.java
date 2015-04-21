@@ -2,10 +2,14 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
+
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +43,7 @@ public class ReplaceAreaByAnother extends WakfuRunningEffect
             re = new ReplaceAreaByAnother();
             re.m_pool = null;
             re.m_isStatic = false;
-            ReplaceAreaByAnother.m_logger.error((Object)("Erreur lors d'un checkOut sur un RemoveArea : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un RemoveArea : " + e.getMessage());
         }
         return re;
     }
@@ -49,21 +53,21 @@ public class ReplaceAreaByAnother extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 1) {
+        if (this.m_genericEffect.getParamsCount() < 1) {
             return;
         }
-        this.m_zoneToRemove = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 2) {
+        this.m_zoneToRemove = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() < 2) {
             this.m_zoneToAdd = -1;
         }
         else {
-            this.m_zoneToAdd = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_zoneToAdd = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 3) {
+        if (this.m_genericEffect.getParamsCount() < 3) {
             this.m_newZoneInfinite = true;
         }
         else {
-            this.m_newZoneInfinite = (((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+            this.m_newZoneInfinite = (this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     
@@ -109,11 +113,11 @@ public class ReplaceAreaByAnother extends WakfuRunningEffect
         if (this.m_zoneToAdd == -1) {
             return;
         }
-        final SetEffectArea setEffectArea = SetEffectArea.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_targetCell, this.m_zoneToAdd);
+        final SetEffectArea setEffectArea = SetEffectArea.checkOut(this.m_context, this.m_targetCell, this.m_zoneToAdd);
         setEffectArea.setCaster(owner);
         setEffectArea.setShouldBeInfinite(this.m_newZoneInfinite);
         setEffectArea.setZoneLevel((short)1);
-        (setEffectArea).setGenericEffect((WakfuEffect)this.m_genericEffect);
+        (setEffectArea).setGenericEffect(this.m_genericEffect);
         (setEffectArea).setEffectContainer((this).getEffectContainer());
         setEffectArea.setParent(this);
         setEffectArea.askForExecution();

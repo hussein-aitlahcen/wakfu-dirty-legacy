@@ -1,11 +1,13 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
+
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -39,7 +41,7 @@ public class HPGainEffectRebound extends AbstractEffectRebound
         catch (Exception e) {
             re = new HPGainEffectRebound();
             re.m_pool = null;
-            HPGainEffectRebound.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPLeech : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPLeech : " + e.getMessage());
         }
         return re;
     }
@@ -58,7 +60,7 @@ public class HPGainEffectRebound extends AbstractEffectRebound
     
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
-        final HPGain hpGain = HPGain.checkOut((EffectContext<WakfuEffect>)this.m_context, this.m_element);
+        final HPGain hpGain = HPGain.checkOut(this.m_context, this.m_element);
         hpGain.setCaster(this.m_caster);
         hpGain.forceValue(this.m_value);
         hpGain.setTarget(this.m_target);
@@ -75,13 +77,13 @@ public class HPGainEffectRebound extends AbstractEffectRebound
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         final short level = this.getContainerLevel();
         if (this.m_reboundCount == 0 && this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            this.m_reboundReduction = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
-            this.m_maxCellRange = ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM);
-            this.m_dispersionMax = (byte)((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            this.m_reboundReduction = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
+            this.m_maxCellRange = this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM);
+            this.m_dispersionMax = (byte)this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM);
             this.m_originalValue = this.m_value;
             this.m_alreadyTargetedTargetIds = new HashSet<Long>();
-            this.m_isDiffused = (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 5 && ((WakfuEffect)this.m_genericEffect).getParam(4, level, RoundingMethod.RANDOM) == 1);
+            this.m_isDiffused = (this.m_genericEffect.getParamsCount() >= 5 && this.m_genericEffect.getParam(4, level, RoundingMethod.RANDOM) == 1);
         }
         super.effectiveComputeValue(triggerRE);
     }

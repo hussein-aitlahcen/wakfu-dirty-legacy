@@ -2,7 +2,6 @@ package com.ankamagames.framework.kernel.gameStats;
 
 import com.ankamagames.framework.kernel.gameStats.intelligentNodes.*;
 import com.ankamagames.framework.kernel.core.common.collections.*;
-import java.util.*;
 import java.nio.*;
 import com.ankamagames.framework.kernel.utils.*;
 
@@ -81,7 +80,7 @@ public final class PackageNode extends ContainerNode
                     currentChild.unserialize(buffer, source);
                 }
                 else {
-                    PackageNode.m_logger.error((Object)("Impossible de fusionner des nodes de mergeMode diff\u00e9rents : " + currentChild.getMergeMode() + " != " + mergeMode));
+                    Node.m_logger.error("Impossible de fusionner des nodes de mergeMode diff\u00e9rents : " + currentChild.getMergeMode() + " != " + mergeMode);
                 }
             }
             else {

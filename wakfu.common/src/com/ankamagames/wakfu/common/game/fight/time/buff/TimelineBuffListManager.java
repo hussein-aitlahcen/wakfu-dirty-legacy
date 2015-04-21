@@ -40,7 +40,7 @@ public class TimelineBuffListManager
     
     public void addGfx(final int effectId, final int gfxId) {
         if (this.m_gfx.put(effectId, gfxId) != 0) {
-            TimelineBuffListManager.m_logger.error((Object)("Ajout multiple du gfx de buff de v\u00e9locit\u00e9 " + effectId), (Throwable)new UnsupportedOperationException());
+            TimelineBuffListManager.m_logger.error("Ajout multiple du gfx de buff de v\u00e9locit\u00e9 " + effectId, new UnsupportedOperationException());
         }
     }
     
@@ -80,7 +80,7 @@ public class TimelineBuffListManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TimelineBuffListManager.class);
+        m_logger = Logger.getLogger(TimelineBuffListManager.class);
         INSTANCE = new TimelineBuffListManager();
     }
 }

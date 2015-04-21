@@ -16,15 +16,18 @@ public final class ImmutablePair<L, R> extends Pair<L, R>
         this.right = right;
     }
     
-    public L getLeft() {
+    @Override
+	public L getLeft() {
         return this.left;
     }
     
-    public R getRight() {
+    @Override
+	public R getRight() {
         return this.right;
     }
     
-    public R setValue(final R value) {
+    @Override
+	public R setValue(final R value) {
         throw new UnsupportedOperationException();
     }
 }

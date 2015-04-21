@@ -2,14 +2,13 @@ package com.ankamagames.wakfu.common.game.fight;
 
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 
 public final class SpellCastValidation
 {
     public static boolean checkMp(final BasicCharacterInfo fighter, final AbstractSpellLevel spelllevel, final AbstractSpell spell) {
         final byte mpCost = spell.getMovementPoints(spelllevel, fighter, null, fighter.getEffectContext());
-        int mp = fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.MP).value();
+        int mp = fighter.getCharacteristic(FighterCharacteristicType.MP).value();
         if (mpCost > 0) {
             if (fighter.isActiveProperty(FightPropertyType.CRIPPLED_3)) {
                 mp = -1;
@@ -26,7 +25,7 @@ public final class SpellCastValidation
     
     public static boolean checkWp(final BasicCharacterInfo fighter, final AbstractSpellLevel spelllevel, final AbstractSpell spell) {
         final byte wpCost = spell.getWakfuPoints(spelllevel, fighter, null, fighter.getEffectContext());
-        int wp = fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.WP).value();
+        int wp = fighter.getCharacteristic(FighterCharacteristicType.WP).value();
         if (wpCost > 0) {
             if (fighter.isActiveProperty(FightPropertyType.STASIS_3)) {
                 wp = -1;
@@ -43,7 +42,7 @@ public final class SpellCastValidation
     
     public static boolean checkAp(final BasicCharacterInfo fighter, final AbstractSpellLevel spelllevel, final AbstractSpell spell) {
         final byte apCost = spell.getActionPoints(spelllevel, fighter, null, fighter.getEffectContext());
-        int ap = fighter.getCharacteristic((CharacteristicType)FighterCharacteristicType.AP).value();
+        int ap = fighter.getCharacteristic(FighterCharacteristicType.AP).value();
         if (apCost > 0) {
             if (fighter.isActiveProperty(FightPropertyType.AP_AS_MP)) {
                 return false;
@@ -67,7 +66,7 @@ public final class SpellCastValidation
         if (characCost == 0) {
             return true;
         }
-        final int value = fighter.getCharacteristic((CharacteristicType)charac).value();
+        final int value = fighter.getCharacteristic(charac).value();
         return characCost <= value;
     }
     

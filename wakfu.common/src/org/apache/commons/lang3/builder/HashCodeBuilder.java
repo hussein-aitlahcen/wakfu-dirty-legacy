@@ -321,11 +321,13 @@ public class HashCodeBuilder implements Builder<Integer>
         return this.iTotal;
     }
     
-    public Integer build() {
+    @Override
+	public Integer build() {
         return this.toHashCode();
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         return this.toHashCode();
     }
     

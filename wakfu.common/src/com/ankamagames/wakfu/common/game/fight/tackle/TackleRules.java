@@ -3,8 +3,6 @@ package com.ankamagames.wakfu.common.game.fight.tackle;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.wakfu.common.game.fight.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.configuration.*;
 

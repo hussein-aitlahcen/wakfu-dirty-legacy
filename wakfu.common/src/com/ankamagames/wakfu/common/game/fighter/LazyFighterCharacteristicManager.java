@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.fighter;
 import org.jetbrains.annotations.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import gnu.trove.*;
-import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 public class LazyFighterCharacteristicManager implements CharacteristicManager<FighterCharacteristic>
@@ -18,7 +17,7 @@ public class LazyFighterCharacteristicManager implements CharacteristicManager<F
         this.m_copyCharacProcedure = new TObjectProcedure<FighterCharacteristic>() {
             @Override
             public boolean execute(final FighterCharacteristic charac) {
-                LazyFighterCharacteristicManager.this.getCharacteristic((CharacteristicType)charac.getType()).copyMinMaxAndValue(charac);
+                LazyFighterCharacteristicManager.this.getCharacteristic(charac.getType()).copyMinMaxAndValue(charac);
                 return true;
             }
         };

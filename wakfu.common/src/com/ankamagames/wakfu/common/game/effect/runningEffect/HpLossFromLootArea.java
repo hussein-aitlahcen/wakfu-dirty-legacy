@@ -6,11 +6,15 @@ import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.item.loot.*;
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.wakfu.common.game.fight.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.item.referenceItem.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.account.subscription.*;
@@ -43,7 +47,7 @@ public final class HpLossFromLootArea extends WakfuRunningEffect
             re = new HpLossFromLootArea();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossFromLootArea.m_logger.error((Object)("Erreur lors d'un checkOut sur un DropFromLootArea : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un DropFromLootArea : " + e.getMessage());
         }
         return re;
     }
@@ -53,15 +57,15 @@ public final class HpLossFromLootArea extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 1) {
+        if (this.m_genericEffect.getParamsCount() < 1) {
             return;
         }
-        this.m_ratio = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 2) {
+        this.m_ratio = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() < 2) {
             this.m_improvedDrop = false;
             return;
         }
-        this.m_improvedDrop = (((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_improvedDrop = (this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
     }
     
     @Override
@@ -96,11 +100,11 @@ public final class HpLossFromLootArea extends WakfuRunningEffect
         final AbstractReferenceItem referenceItem = ReferenceItemManager.getInstance().getReferenceItem(this.m_value);
         final short itemLevel = referenceItem.getLevel();
         final int hpLossValue = this.m_ratio * itemLevel;
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, Elements.EARTH, HPLoss.ComputeMode.CLASSIC, hpLossValue, null);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, Elements.EARTH, HPLoss.ComputeMode.CLASSIC, hpLossValue, null);
         hpLoss.disableValueComputation();
         (hpLoss).setGenericEffect((this).getGenericEffect());
         hpLoss.setCaster(this.m_caster);
-        final EffectExecutionResult effectExecutionResult = hpLoss.run((this).getGenericEffect(), (WakfuEffectContainer)this.m_effectContainer, this.m_context, this.m_caster, this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), null, this.getParams());
+        final EffectExecutionResult effectExecutionResult = hpLoss.run((this).getGenericEffect(), this.m_effectContainer, this.m_context, this.m_caster, this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ(), null, this.getParams());
         if (effectExecutionResult != null) {
             effectExecutionResult.release();
         }

@@ -1,12 +1,8 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.client.core.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
-import com.ankamagames.wakfu.client.core.game.interactiveElement.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.interactiveElement.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import java.util.*;
 import com.ankamagames.framework.kernel.core.maths.*;
@@ -33,20 +29,19 @@ public final class InteractiveElementTemplatesLoader implements ContentInitializ
     }
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         try {
             BinaryDocumentManager.getInstance().foreach(new InteractiveElementTemplateBinaryData(), new LoadProcedure<InteractiveElementTemplateBinaryData>() {
                 @Override
                 public void load(final InteractiveElementTemplateBinaryData data) {
                     final byte[] serialized = InteractiveElementTemplatesLoader.this.serialized(data);
-                    WakfuClientInteractiveElementFactory.getInstance().addInfo(new InteractiveElementInfo(data.getId(), data.getModelType(), serialized), data.getViews());
+//                    WakfuClientInteractiveElementFactory.getInstance().addInfo(new InteractiveElementInfo(data.getId(), data.getModelType(), serialized), data.getViews());
                 }
             });
         }
         catch (Exception e) {
-            InteractiveElementTemplatesLoader.m_logger.error((Object)"Erreur lors de la lecture du fichier de vues d'\u00e9l\u00e9ments interactifs", (Throwable)e);
+            InteractiveElementTemplatesLoader.m_logger.error("Erreur lors de la lecture du fichier de vues d'\u00e9l\u00e9ments interactifs", e);
         }
-        clientInstance.fireContentInitializerDone(this);
     }
     
     private byte[] serialized(final InteractiveElementTemplateBinaryData data) {
@@ -59,7 +54,7 @@ public final class InteractiveElementTemplatesLoader implements ContentInitializ
     }
     
     static {
-        m_logger = Logger.getLogger((Class)InteractiveElementTemplatesLoader.class);
+        m_logger = Logger.getLogger(InteractiveElementTemplatesLoader.class);
         m_instance = new InteractiveElementTemplatesLoader();
     }
 }

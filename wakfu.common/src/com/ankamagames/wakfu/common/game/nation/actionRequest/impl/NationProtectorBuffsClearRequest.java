@@ -23,7 +23,7 @@ public class NationProtectorBuffsClearRequest extends NationActionRequest
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationProtectorBuffsClearRequest.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationProtectorBuffsClearRequest.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestClearProtectorBuffs(this.m_protectorId);
@@ -58,7 +58,7 @@ public class NationProtectorBuffsClearRequest extends NationActionRequest
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationProtectorBuffsClearRequest.class);
+        m_logger = Logger.getLogger(NationProtectorBuffsClearRequest.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

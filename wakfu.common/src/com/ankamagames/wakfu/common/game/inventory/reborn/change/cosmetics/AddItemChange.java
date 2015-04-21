@@ -5,7 +5,6 @@ import com.ankamagames.wakfu.common.game.inventory.reborn.definition.cosmetics.*
 import java.nio.*;
 import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.wakfu.common.game.item.*;
-import com.ankamagames.wakfu.common.game.inventory.reborn.definition.quest.*;
 import com.ankamagames.wakfu.common.game.inventory.reborn.exception.*;
 import com.ankamagames.wakfu.common.game.inventory.reborn.*;
 
@@ -39,7 +38,7 @@ class AddItemChange implements CosmeticsInventoryChange
             this.m_item = CosmeticsInventorySerializer.itemFromRaw(raw, ReferenceItemManager.getInstance());
         }
         catch (CosmeticsInventoryException e) {
-            AddItemChange.m_logger.error((Object)("Impossible de d\u00e9-s\u00e9rialiser l'item " + raw), (Throwable)e);
+            AddItemChange.m_logger.error("Impossible de d\u00e9-s\u00e9rialiser l'item " + raw, e);
         }
     }
     
@@ -49,7 +48,7 @@ class AddItemChange implements CosmeticsInventoryChange
             controller.addItem(this.m_item);
         }
         catch (CosmeticsInventoryException e) {
-            AddItemChange.m_logger.error((Object)"Impossible d'ajouter l'item", (Throwable)e);
+            AddItemChange.m_logger.error("Impossible d'ajouter l'item", e);
         }
     }
     
@@ -64,6 +63,6 @@ class AddItemChange implements CosmeticsInventoryChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AddItemChange.class);
+        m_logger = Logger.getLogger(AddItemChange.class);
     }
 }

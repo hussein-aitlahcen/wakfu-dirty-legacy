@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -78,7 +82,7 @@ public class CharacLeechInPercent extends CharacDebuff
             re = new CharacLeechInPercent();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacLeechInPercent.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacLeech : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacLeech : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -153,8 +157,8 @@ public class CharacLeechInPercent extends CharacDebuff
             this.m_value = initialCharacteristicValueOnTarget * this.m_value / 100;
         }
         final short level = this.getContainerLevel();
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 4) {
-            this.m_buffInsteadOfGain = (((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.RANDOM) == 0);
+        if (this.m_genericEffect.getParamsCount() == 4) {
+            this.m_buffInsteadOfGain = (this.m_genericEffect.getParam(3, level, RoundingMethod.RANDOM) == 0);
         }
         else {
             this.m_buffInsteadOfGain = false;

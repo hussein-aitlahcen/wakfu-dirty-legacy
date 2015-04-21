@@ -1,7 +1,9 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.spell.*;
@@ -39,8 +41,8 @@ abstract class SpellsWithPropertyModification extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        this.m_propertyId = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_propertyId = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override
@@ -56,7 +58,7 @@ abstract class SpellsWithPropertyModification extends WakfuRunningEffect
         }
         final SpellPropertyType propertyType = SpellPropertyType.getPropertyFromId(this.m_propertyId);
         if (propertyType == null) {
-            SpellsWithPropertyModification.m_logger.error((Object)("Propri\u00e9t\u00e9 inconnue " + this.m_propertyId + " m_effectId = " + this.getEffectId()));
+            RunningEffect.m_logger.error("Propri\u00e9t\u00e9 inconnue " + this.m_propertyId + " m_effectId = " + this.getEffectId());
             this.setNotified();
             return;
         }
@@ -70,7 +72,7 @@ abstract class SpellsWithPropertyModification extends WakfuRunningEffect
         }
         final SpellPropertyType propertyType = SpellPropertyType.getPropertyFromId(this.m_propertyId);
         if (propertyType == null) {
-            SpellsWithPropertyModification.m_logger.error((Object)("Propri\u00e9t\u00e9 inconnue " + this.m_propertyId + " m_effectId = " + this.getEffectId()));
+            RunningEffect.m_logger.error("Propri\u00e9t\u00e9 inconnue " + this.m_propertyId + " m_effectId = " + this.getEffectId());
             return;
         }
         this.unapplySpellsModification(propertyType);

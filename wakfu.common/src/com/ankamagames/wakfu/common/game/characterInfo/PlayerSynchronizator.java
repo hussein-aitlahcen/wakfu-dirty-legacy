@@ -36,7 +36,7 @@ public class PlayerSynchronizator
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PlayerSynchronizator.class);
+        m_logger = Logger.getLogger(PlayerSynchronizator.class);
         PlayerSynchronizator.INSTANCE = new PlayerSynchronizator();
     }
 }

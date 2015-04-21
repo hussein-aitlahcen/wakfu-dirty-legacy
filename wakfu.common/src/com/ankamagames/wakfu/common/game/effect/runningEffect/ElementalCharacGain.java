@@ -4,7 +4,9 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -38,7 +40,7 @@ public final class ElementalCharacGain extends CharacGain
             re = new ElementalCharacGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            ElementalCharacGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un ElementalCharacGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un ElementalCharacGain : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -50,11 +52,11 @@ public final class ElementalCharacGain extends CharacGain
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int elementId = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int elementId = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final Elements element = Elements.getElementFromId((byte)elementId);
         if (element == null) {
-            ElementalCharacGain.m_logger.error((Object)("Mauvais param element inconnu " + elementId));
+            RunningEffect.m_logger.error("Mauvais param element inconnu " + elementId);
             return;
         }
         final FighterCharacteristicType damageBonusCharacteristic = element.getDamageBonusCharacteristic();

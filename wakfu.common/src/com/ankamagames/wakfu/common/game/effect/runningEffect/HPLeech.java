@@ -1,15 +1,17 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -85,7 +87,7 @@ public class HPLeech extends HPLoss
             re = new HPLeech();
             re.m_pool = null;
             re.m_isStatic = false;
-            HPLeech.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPLeech : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPLeech : " + e.getMessage());
         }
         re.m_staticElement = this.m_staticElement;
         return re;
@@ -133,7 +135,7 @@ public class HPLeech extends HPLoss
             this.notifyExecution(linkedRE, trigger);
         }
         if (this.isValueComputationEnabled() && this.m_caster != null && this.m_caster.hasCharacteristic(FighterCharacteristicType.HP)) {
-            final HPGain hpGain = HPGain.checkOut((EffectContext<WakfuEffect>)this.m_context, this.getElement());
+            final HPGain hpGain = HPGain.checkOut(this.m_context, this.getElement());
             hpGain.setTarget(this.m_caster);
             hpGain.forceValue(this.m_lifestolen);
             hpGain.setParent(this);
@@ -148,14 +150,14 @@ public class HPLeech extends HPLoss
         this.m_lifestolen = 0;
         final short level = this.getContainerLevel();
         if (this.m_target == null || !this.m_target.hasCharacteristic(FighterCharacteristicType.HP)) {
-            HPLeech.m_logger.error((Object)"[Effects] On a essay\u00e9 de lancer un vol de vie sans cible avec des hps");
+            RunningEffect.m_logger.error("[Effects] On a essay\u00e9 de lancer un vol de vie sans cible avec des hps");
             this.setNotified(true);
             return;
         }
         float lifeStolenRate = 0.0f;
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-            lifeStolenRate = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+            this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+            lifeStolenRate = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
             if (this.m_caster.hasCharacteristic(FighterCharacteristicType.LIFE_STOLEN_BONUS)) {
                 lifeStolenRate += this.m_caster.getCharacteristicValue(FighterCharacteristicType.LIFE_STOLEN_BONUS);
             }

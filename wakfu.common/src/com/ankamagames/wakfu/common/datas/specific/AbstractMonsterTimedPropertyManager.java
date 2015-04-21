@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.datas.specific;
 import org.apache.log4j.*;
 import gnu.trove.*;
 import com.ankamagames.wakfu.common.datas.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 
 public abstract class AbstractMonsterTimedPropertyManager
 {
@@ -77,7 +76,7 @@ public abstract class AbstractMonsterTimedPropertyManager
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractMonsterTimedPropertyManager.class);
+        m_logger = Logger.getLogger(AbstractMonsterTimedPropertyManager.class);
         m_states = new TLongObjectHashMap<TByteLongHashMap>();
     }
 }

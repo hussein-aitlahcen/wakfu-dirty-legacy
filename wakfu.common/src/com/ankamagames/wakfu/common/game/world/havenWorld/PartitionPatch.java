@@ -179,7 +179,7 @@ public abstract class PartitionPatch
             return TopologyMapPatch.HEIGHT_CELLS_DATA.optimize(altitude);
         }
         catch (CompressedDataException e) {
-            PartitionPatch.m_logger.error((Object)"", (Throwable)e);
+            PartitionPatch.m_logger.error("", e);
             return null;
         }
     }
@@ -207,7 +207,7 @@ public abstract class PartitionPatch
             return TopologyMapPatch.PROPERTIES_CELLS_DATA.optimize(altitude);
         }
         catch (CompressedDataException e) {
-            PartitionPatch.m_logger.error((Object)"", (Throwable)e);
+            PartitionPatch.m_logger.error("", e);
             return null;
         }
     }
@@ -235,7 +235,7 @@ public abstract class PartitionPatch
             return TopologyMapPatch.PROPERTIES_CELLS_DATA.optimize(altitude);
         }
         catch (CompressedDataException e) {
-            PartitionPatch.m_logger.error((Object)"", (Throwable)e);
+            PartitionPatch.m_logger.error("", e);
             return null;
         }
     }
@@ -279,7 +279,7 @@ public abstract class PartitionPatch
             return EnvironmentConstants.forPartition().optimize(cellsGroundType);
         }
         catch (CompressedDataException e) {
-            PartitionPatch.m_logger.error((Object)"", (Throwable)e);
+            PartitionPatch.m_logger.error("", e);
             return null;
         }
     }
@@ -308,7 +308,7 @@ public abstract class PartitionPatch
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PartitionPatch.class);
+        m_logger = Logger.getLogger(PartitionPatch.class);
         HEIGHT_CELLS_DATA = new CellDataCompressor(9, 9, (short)(-32768));
         PROPERTIES_CELLS_DATA = new CellDataCompressor(9, 9, (short)0);
         NO_CELLS_WITH_RESOURCE = new CellWithResource[0];

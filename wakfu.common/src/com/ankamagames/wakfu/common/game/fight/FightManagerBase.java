@@ -26,6 +26,6 @@ public abstract class FightManagerBase<F extends BasicFight>
     }
     
     static {
-        m_logger = Logger.getLogger((Class)FightManagerBase.class);
+        m_logger = Logger.getLogger(FightManagerBase.class);
     }
 }

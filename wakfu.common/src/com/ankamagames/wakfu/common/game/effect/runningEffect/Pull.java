@@ -2,9 +2,10 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.movementEffect.*;
 import com.ankamagames.framework.kernel.core.maths.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,7 +36,7 @@ public class Pull extends MovementEffect
             wre = new Pull();
             wre.m_pool = null;
             wre.m_isStatic = false;
-            Pull.m_logger.error((Object)("Erreur lors d'un checkOut sur un Pull : " + e.getMessage()));
+            m_logger.error("Erreur lors d'un checkOut sur un Pull : " + e.getMessage());
         }
         return wre;
     }
@@ -90,13 +91,13 @@ public class Pull extends MovementEffect
     
     @Override
     Point3 getReferentialCell() {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() < 3) {
+        if (this.m_genericEffect.getParamsCount() < 3) {
             return this.getCellJustInFrontOfCaster();
         }
         int directionStatus = -1;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 3) {
+        if (this.m_genericEffect.getParamsCount() == 3) {
             final short level = this.getContainerLevel();
-            directionStatus = (byte)((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM);
+            directionStatus = (byte)this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM);
         }
         Direction8 dir = null;
         switch (directionStatus) {

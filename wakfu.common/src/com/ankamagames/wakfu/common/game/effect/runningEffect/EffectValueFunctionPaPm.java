@@ -1,10 +1,8 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.game.spell.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
@@ -56,14 +54,14 @@ abstract class EffectValueFunctionPaPm extends WakfuRunningEffect
     
     private void computeExecuteCost(final short containerLevel) {
         this.m_executeCost = true;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 7) {
-            this.m_executeCost = (((WakfuEffect)this.m_genericEffect).getParam(6, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        if (this.m_genericEffect.getParamsCount() >= 7) {
+            this.m_executeCost = (this.m_genericEffect.getParam(6, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         }
     }
     
     protected void computeDoubleHpLoss(final short containerLevel) {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 4) {
-            final float chancesToDoubleHPLoss = (this.m_remainingAP + this.m_remainingMP) * ((WakfuEffect)this.m_genericEffect).getParam(3, containerLevel);
+        if (this.m_genericEffect.getParamsCount() == 4) {
+            final float chancesToDoubleHPLoss = (this.m_remainingAP + this.m_remainingMP) * this.m_genericEffect.getParam(3, containerLevel);
             this.m_doubleHPLoss = (MathHelper.random(0.0f, 100.0f) <= chancesToDoubleHPLoss);
         }
         else {
@@ -72,8 +70,8 @@ abstract class EffectValueFunctionPaPm extends WakfuRunningEffect
     }
     
     protected void computeRemainingMp(final short containerLevel) {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 6) {
-            final int maxMP = ((WakfuEffect)this.m_genericEffect).getParam(5, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 6) {
+            final int maxMP = this.m_genericEffect.getParam(5, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             if (maxMP > 0) {
                 this.m_remainingMP = Math.min(this.m_remainingMP, maxMP);
             }
@@ -81,8 +79,8 @@ abstract class EffectValueFunctionPaPm extends WakfuRunningEffect
     }
     
     protected void computeRemainingAp(final short containerLevel) {
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 5) {
-            final int maxAP = ((WakfuEffect)this.m_genericEffect).getParam(4, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 5) {
+            final int maxAP = this.m_genericEffect.getParam(4, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
             if (maxAP > 0) {
                 this.m_remainingAP = Math.min(this.m_remainingAP, maxAP);
             }
@@ -90,11 +88,11 @@ abstract class EffectValueFunctionPaPm extends WakfuRunningEffect
     }
     
     protected float computeDmgPerMp(final short containerLevel) {
-        return ((WakfuEffect)this.m_genericEffect).getParam(2, containerLevel);
+        return this.m_genericEffect.getParam(2, containerLevel);
     }
     
     protected float computeDmgPerAp(final short containerLevel) {
-        return ((WakfuEffect)this.m_genericEffect).getParam(1, containerLevel);
+        return this.m_genericEffect.getParam(1, containerLevel);
     }
     
     protected abstract void computeElement(final short p0);
@@ -115,7 +113,7 @@ abstract class EffectValueFunctionPaPm extends WakfuRunningEffect
     }
     
     private void executeCost() {
-        final ActionCost actionCost = ActionCost.checkOut((EffectContext<WakfuEffect>)this.m_context, new SpellCost((byte)this.m_remainingAP, (byte)this.m_remainingMP, (byte)0), this.m_caster);
+        final ActionCost actionCost = ActionCost.checkOut(this.m_context, new SpellCost((byte)this.m_remainingAP, (byte)this.m_remainingMP, (byte)0), this.m_caster);
         actionCost.setCaster(this.m_caster);
         actionCost.setRunningEffectStatus(RunningEffectStatus.NEUTRAL);
         actionCost.execute(null, false);

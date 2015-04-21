@@ -39,7 +39,7 @@ class NullFighterState extends FighterState
     
     @Override
     public void setTeamLeader(final boolean teamLeader) {
-        NullFighterState.m_logger.error((Object)String.format("[FIGHT] setTeamLeader sur un fighter absent %d - %s", this.m_fighterId, ExceptionFormatter.currentStackTrace(10)));
+        FighterState.m_logger.error(String.format("[FIGHT] setTeamLeader sur un fighter absent %d - %s", this.m_fighterId, ExceptionFormatter.currentStackTrace(10)));
     }
     
     @Override
@@ -54,12 +54,12 @@ class NullFighterState extends FighterState
     
     @Override
     public void setCurrentControllerId(final Long currentControllerId, final byte teamId) {
-        NullFighterState.m_logger.error((Object)String.format("[FIGHT] setCurrentControllerId sur un fighter absent %d - %s", this.m_fighterId, ExceptionFormatter.currentStackTrace(10)));
+        FighterState.m_logger.error(String.format("[FIGHT] setCurrentControllerId sur un fighter absent %d - %s", this.m_fighterId, ExceptionFormatter.currentStackTrace(10)));
     }
     
     @Override
     boolean setPlayState(final FighterPlayState playState) {
-        NullFighterState.m_logger.error((Object)String.format("[FIGHT] setPlayState sur un fighter absent %d - %s", this.m_fighterId, ExceptionFormatter.currentStackTrace(10)));
+        FighterState.m_logger.error(String.format("[FIGHT] setPlayState sur un fighter absent %d - %s", this.m_fighterId, ExceptionFormatter.currentStackTrace(10)));
         return false;
     }
     

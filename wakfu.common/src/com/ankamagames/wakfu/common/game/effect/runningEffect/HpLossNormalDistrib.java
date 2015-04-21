@@ -11,7 +11,6 @@ import org.apache.commons.pool.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
-import cern.jet.random.engine.*;
 import cern.jet.random.engine.MersenneTwister;
 
 public final class HpLossNormalDistrib extends HPLoss
@@ -47,7 +46,7 @@ public final class HpLossNormalDistrib extends HPLoss
             re = new HpLossNormalDistrib();
             re.m_pool = null;
             re.m_isStatic = false;
-            HpLossNormalDistrib.m_logger.error((Object)("Erreur lors d'un checkOut sur un HpLossNormalDistrib : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HpLossNormalDistrib : " + e.getMessage());
         }
         re.m_staticElement = this.m_staticElement;
         return re;
@@ -58,14 +57,14 @@ public final class HpLossNormalDistrib extends HPLoss
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() != 4) {
+        if (this.m_genericEffect.getParamsCount() != 4) {
             return;
         }
         final short containerLevel = this.getContainerLevel();
-        final int mean = ((WakfuEffect)this.m_genericEffect).getParam(0, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int variance = ((WakfuEffect)this.m_genericEffect).getParam(1, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int min = ((WakfuEffect)this.m_genericEffect).getParam(2, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-        final int max = ((WakfuEffect)this.m_genericEffect).getParam(3, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int mean = this.m_genericEffect.getParam(0, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int variance = this.m_genericEffect.getParam(1, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int min = this.m_genericEffect.getParam(2, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        final int max = this.m_genericEffect.getParam(3, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         final double value = HpLossNormalDistrib.RANDOM.nextDouble(mean, variance);
         this.m_value = (int)MathHelper.clamp(value, min, max);
         this.computeModificator(this.defaultCondition());

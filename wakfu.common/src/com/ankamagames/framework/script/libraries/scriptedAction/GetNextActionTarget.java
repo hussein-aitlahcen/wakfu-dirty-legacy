@@ -30,7 +30,8 @@ final class GetNextActionTarget extends ActionGroupFunction
         return GetNextActionTarget.RESULTS;
     }
     
-    public void run(final int paramCount) throws LuaException {
+    @Override
+	public void run(final int paramCount) throws LuaException {
         final int type = this.getParamInt(0);
         final int id = this.getParamInt(1);
         final Action action = this.m_actionGroup.getActionByTypeAndId(type, id);

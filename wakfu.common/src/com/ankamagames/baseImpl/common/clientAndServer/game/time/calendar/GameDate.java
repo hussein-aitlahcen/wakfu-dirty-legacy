@@ -537,10 +537,10 @@ public class GameDate implements GameDateConst
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GameDate.class);
+        m_logger = Logger.getLogger(GameDate.class);
         DEFAULT_TZ = TimeZone.getTimeZone("UTC");
         CALENDAR = new GregorianCalendar(GameDate.DEFAULT_TZ);
-        GameDate.m_logger.info((Object)("GameDate initialized. Timezone : " + GameDate.CALENDAR.getTimeZone()));
+        GameDate.m_logger.info("GameDate initialized. Timezone : " + GameDate.CALENDAR.getTimeZone());
         NULL_DATE = fromLong(0L);
     }
 }

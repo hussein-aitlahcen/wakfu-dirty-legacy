@@ -35,7 +35,7 @@ public abstract class StackInventory<C extends InventoryContent, R> extends Inve
             return false;
         }
         if (item.getQuantity() <= 0) {
-            StackInventory.m_logger.warn((Object)("Impossile d'ajouter un item avec un quantit\u00e9e de " + item.getQuantity()));
+            StackInventory.m_logger.warn("Impossile d'ajouter un item avec un quantit\u00e9e de " + item.getQuantity());
             return false;
         }
         if (this.m_stacking) {
@@ -289,6 +289,6 @@ public abstract class StackInventory<C extends InventoryContent, R> extends Inve
     }
     
     static {
-        m_logger = Logger.getLogger((Class)StackInventory.class);
+        m_logger = Logger.getLogger(StackInventory.class);
     }
 }

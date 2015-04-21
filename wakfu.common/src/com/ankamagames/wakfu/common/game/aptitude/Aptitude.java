@@ -138,7 +138,7 @@ public class Aptitude implements InventoryContent, WakfuEffectContainer, FieldPr
     
     public List<WakfuEffect> getEffectsForLevel(final short level) {
         if (level < 0 || level > this.m_referenceAptitude.getMaxLevel()) {
-            Aptitude.m_logger.error((Object)("Pas d'effets d\u00e9finis pour l'aptitude " + this.m_referenceAptitude + " au level " + level));
+            Aptitude.m_logger.error("Pas d'effets d\u00e9finis pour l'aptitude " + this.m_referenceAptitude + " au level " + level);
             return Collections.emptyList();
         }
         final List<WakfuEffect> effects = this.m_referenceAptitude.getEffects();
@@ -213,7 +213,7 @@ public class Aptitude implements InventoryContent, WakfuEffectContainer, FieldPr
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Aptitude.class);
+        m_logger = Logger.getLogger(Aptitude.class);
         EMPTY_EFFECT_ITERATOR = new EmptyIterator<WakfuEffect>();
     }
 }

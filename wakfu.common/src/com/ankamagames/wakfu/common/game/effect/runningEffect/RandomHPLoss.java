@@ -1,11 +1,11 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class RandomHPLoss extends WakfuRunningEffect
@@ -38,7 +38,7 @@ public class RandomHPLoss extends WakfuRunningEffect
         catch (Exception e) {
             re = new RandomHPLoss();
             re.m_pool = null;
-            RandomHPLoss.m_logger.error((Object)("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage());
         }
         re.m_element = this.m_element;
         return re;
@@ -51,11 +51,11 @@ public class RandomHPLoss extends WakfuRunningEffect
     
     @Override
     protected void executeOverride(final RunningEffect linkedRE, final boolean trigger) {
-        final HPLoss hpLoss = HPLoss.checkOut((EffectContext<WakfuEffect>)this.m_context, this.getElement(), HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
+        final HPLoss hpLoss = HPLoss.checkOut(this.m_context, this.getElement(), HPLoss.ComputeMode.CLASSIC, this.m_value, this.m_target);
         hpLoss.setTargetCell(this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ());
         hpLoss.setCaster(this.m_caster);
-        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).checkFlags(1L), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
-        (hpLoss).setGenericEffect((WakfuEffect)this.m_genericEffect);
+        hpLoss.computeModificator(hpLoss.defaultCondition(), this.m_genericEffect != null && this.m_genericEffect.checkFlags(1L), this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
+        (hpLoss).setGenericEffect(this.m_genericEffect);
         hpLoss.forceInstant();
         hpLoss.askForExecution();
         this.setNotified(true);
@@ -63,8 +63,8 @@ public class RandomHPLoss extends WakfuRunningEffect
     
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
-        final int min = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM);
-        final int max = ((WakfuEffect)this.m_genericEffect).getParam(1, this.getContainerLevel(), RoundingMethod.RANDOM);
+        final int min = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.RANDOM);
+        final int max = this.m_genericEffect.getParam(1, this.getContainerLevel(), RoundingMethod.RANDOM);
         this.m_value = MathHelper.random(min, max);
     }
     

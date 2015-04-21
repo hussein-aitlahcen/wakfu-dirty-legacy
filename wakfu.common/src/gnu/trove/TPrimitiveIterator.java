@@ -11,7 +11,8 @@ abstract class TPrimitiveIterator extends TIterator
         this._hash = hash;
     }
     
-    protected final int nextIndex() {
+    @Override
+	protected final int nextIndex() {
         if (this._expectedSize != this._hash.size()) {
             throw new ConcurrentModificationException();
         }

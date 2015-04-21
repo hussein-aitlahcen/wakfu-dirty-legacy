@@ -121,6 +121,6 @@ public abstract class AbstractDungeonLadder
     }
     
     static {
-        AbstractDungeonLadder.m_logger = Logger.getLogger((Class)AbstractDungeonLadder.class);
+        AbstractDungeonLadder.m_logger = Logger.getLogger(AbstractDungeonLadder.class);
     }
 }

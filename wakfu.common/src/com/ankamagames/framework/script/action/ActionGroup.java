@@ -20,7 +20,8 @@ public interface ActionGroup extends ActionEventListener
     
     void runAction(Action p0, boolean p1);
     
-    void onActionFinished(Action p0);
+    @Override
+	void onActionFinished(Action p0);
     
     void kill();
     

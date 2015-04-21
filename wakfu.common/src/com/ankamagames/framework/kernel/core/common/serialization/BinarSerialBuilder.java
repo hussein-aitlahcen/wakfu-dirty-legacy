@@ -94,7 +94,7 @@ public class BinarSerialBuilder
                         ++partNumber;
                     }
                     else {
-                        BinarSerialBuilder.m_logger.error((Object)("Impossible d'ajouter une part non r\u00e9f\u00e9renc\u00e9e : " + part2.getClass().getName()));
+                        BinarSerialBuilder.m_logger.error("Impossible d'ajouter une part non r\u00e9f\u00e9renc\u00e9e : " + part2.getClass().getName());
                     }
                     partBuffer.flip();
                     finalSerial.put(partBuffer);
@@ -121,7 +121,7 @@ public class BinarSerialBuilder
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinarSerialBuilder.class);
+        m_logger = Logger.getLogger(BinarSerialBuilder.class);
         m_instance = new BinarSerialBuilder();
     }
 }

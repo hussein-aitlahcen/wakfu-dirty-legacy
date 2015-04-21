@@ -2,10 +2,14 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -35,7 +39,7 @@ public final class ActiveSupportSpellGain extends SeveralSpellsGain
             re = new ActiveSupportSpellGain();
             re.m_pool = null;
             re.m_isStatic = false;
-            ActiveSupportSpellGain.m_logger.error((Object)("Erreur lors d'un checkOut sur un PassiveSpellGain : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un PassiveSpellGain : " + e.getMessage());
         }
         return re;
     }
@@ -43,7 +47,7 @@ public final class ActiveSupportSpellGain extends SeveralSpellsGain
     @Override
     public void effectiveComputeValue(final RunningEffect triggerRE) {
         if (this.m_genericEffect != null) {
-            this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+            this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

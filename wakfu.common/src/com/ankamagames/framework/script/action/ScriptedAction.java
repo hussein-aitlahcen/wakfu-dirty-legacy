@@ -60,9 +60,10 @@ public class ScriptedAction extends TimedAction implements LuaScriptEventListene
         this.m_contextVariables = contextVariables;
     }
     
-    public long onRun() {
+    @Override
+	public long onRun() {
         if (this.m_actionExectuted) {
-            ScriptedAction.m_logger.error((Object)("Interruption d'une boucle infinie dans une action de script actionId=" + this.getActionId() + " scriptId=" + this.getScriptFileId()));
+            Action.m_logger.error("Interruption d'une boucle infinie dans une action de script actionId=" + this.getActionId() + " scriptId=" + this.getScriptFileId());
             return 0L;
         }
         if (this.m_scriptFileId != 0 && this.m_scriptFileId != -1) {
@@ -80,7 +81,7 @@ public class ScriptedAction extends TimedAction implements LuaScriptEventListene
                 }
             }
             catch (AssertionError e) {
-                ScriptedAction.m_logger.error((Object)"ERREUR CRITIQUE DANS UN SCRIPT", (Throwable)e);
+                Action.m_logger.error("ERREUR CRITIQUE DANS UN SCRIPT", e);
             }
         }
         this.m_waitingEndScript = -1;
@@ -91,7 +92,7 @@ public class ScriptedAction extends TimedAction implements LuaScriptEventListene
     @Override
     public void onLuaScriptFinished(final LuaScript script) {
         if (this.m_waitingEndScript != script.getId() && this.m_waitingEndScript != -1) {
-            ScriptedAction.m_logger.error((Object)("on tente de finir une action de script(" + this.m_waitingEndScript + ") demand\u00e9 par la fin d'un autre script(" + script.getId() + ")"));
+            Action.m_logger.error("on tente de finir une action de script(" + this.m_waitingEndScript + ") demand\u00e9 par la fin d'un autre script(" + script.getId() + ")");
         }
         script.removeLuaScriptEventListener(this);
         final LuaValue executionTime = this.m_readValues.get("execution_Time");

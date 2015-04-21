@@ -1,11 +1,10 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
-import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -30,7 +29,7 @@ public class VirtualArmor extends WakfuRunningEffect
             result.m_pool = VirtualArmor.m_staticPool;
         }
         catch (Exception e) {
-            VirtualArmor.m_logger.warn((Object)("Erreur lors de newInstance sur un " + this.getClass().getSimpleName()));
+            RunningEffect.m_logger.warn("Erreur lors de newInstance sur un " + this.getClass().getSimpleName());
             result = new VirtualArmor();
             result.m_pool = null;
             result.m_isStatic = false;
@@ -42,20 +41,20 @@ public class VirtualArmor extends WakfuRunningEffect
     
     private void initialiseArmor() {
         final short level = this.getContainerLevel();
-        this.m_armorLeft = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_armorLeft = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (this.m_caster == null) {
             return;
         }
         if (this.m_caster.hasCharacteristic(FighterCharacteristicType.VIRTUAL_ARMOR_BONUS)) {
             this.m_armorLeft += this.m_caster.getCharacteristicValue(FighterCharacteristicType.VIRTUAL_ARMOR_BONUS);
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() <= 1) {
+        if (this.m_genericEffect.getParamsCount() <= 1) {
             return;
         }
         if (!this.m_caster.hasCharacteristic(FighterCharacteristicType.HP)) {
             return;
         }
-        final int percentType = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM);
+        final int percentType = this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM);
         if (this.isMaxValuePercentType(percentType)) {
             this.m_armorLeft = this.m_caster.getCharacteristic(FighterCharacteristicType.HP).max() * this.m_armorLeft / 100;
         }
@@ -86,8 +85,8 @@ public class VirtualArmor extends WakfuRunningEffect
             this.m_armorLeft = ((VirtualArmor)this.getParent()).getArmorLeft();
         }
         this.m_percentToAbsorb = 100;
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 3) {
-            this.m_percentToAbsorb = ((WakfuEffect)this.m_genericEffect).getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 3) {
+            this.m_percentToAbsorb = this.m_genericEffect.getParam(2, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     

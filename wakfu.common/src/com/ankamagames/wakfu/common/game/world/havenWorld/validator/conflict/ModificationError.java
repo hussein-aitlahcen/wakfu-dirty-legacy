@@ -17,6 +17,6 @@ public class ModificationError extends ConstructionError
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ModificationError.class);
+        m_logger = Logger.getLogger(ModificationError.class);
     }
 }

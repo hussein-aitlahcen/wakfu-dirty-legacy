@@ -52,10 +52,10 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
             bOk = (this).add(merchantItem);
         }
         catch (InventoryException e) {
-            AbstractMerchantInventory.m_logger.error((Object)"Item can not be added to the merchant bag", (Throwable)e);
+            AbstractMerchantInventory.m_logger.error("Item can not be added to the merchant bag", e);
         }
         catch (Exception e2) {
-            AbstractMerchantInventory.m_logger.error((Object)"Item can not be added to the merchant bag", (Throwable)e2);
+            AbstractMerchantInventory.m_logger.error("Item can not be added to the merchant bag", e2);
         }
         if (bOk) {
             return merchantItem;
@@ -76,10 +76,10 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
             bOk = (this).insertAt(merchantItem, pos);
         }
         catch (InventoryException e) {
-            AbstractMerchantInventory.m_logger.error((Object)"Erreur lors de l'ajout de L'item au sac marchant!", (Throwable)e);
+            AbstractMerchantInventory.m_logger.error("Erreur lors de l'ajout de L'item au sac marchant!", e);
         }
         catch (Exception e2) {
-            AbstractMerchantInventory.m_logger.error((Object)"Erreur lors de l'ajout de L'item au sac marchant!", (Throwable)e2);
+            AbstractMerchantInventory.m_logger.error("Erreur lors de l'ajout de L'item au sac marchant!", e2);
         }
         if (bOk) {
             return merchantItem;
@@ -104,11 +104,11 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
         transaction.setError((byte)1);
         final AbstractMerchantInventoryItem merchantItem = (this).getWithUniqueId(itemUid);
         if (merchantItem == null) {
-            AbstractMerchantInventory.m_logger.error((Object)("Impossible de r\u00e9cup\u00e9rer l'item " + itemUid));
+            AbstractMerchantInventory.m_logger.error("Impossible de r\u00e9cup\u00e9rer l'item " + itemUid);
             return transaction;
         }
         if (this.isLocked()) {
-            AbstractMerchantInventory.m_logger.error((Object)"Requ\u00eate d'achat sur un inventaire marchand verouill\u00e9");
+            AbstractMerchantInventory.m_logger.error("Requ\u00eate d'achat sur un inventaire marchand verouill\u00e9");
             transaction.setError((byte)3);
             return transaction;
         }
@@ -119,19 +119,19 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
         final short currentQuantity = merchantItem.getQuantity();
         final long price = merchantItem.getPrice() * quantity;
         if (price > 2147483647L || price < 0L) {
-            AbstractMerchantInventory.m_logger.error((Object)("[BROCANTE] Tentative d'achat d'un objet en brocante invalide : prix total incoh\u00e9rent (d\u00e9passement de capacit\u00e9 ou n\u00e9gatif) [price=" + price + ']'));
+            AbstractMerchantInventory.m_logger.error("[BROCANTE] Tentative d'achat d'un objet en brocante invalide : prix total incoh\u00e9rent (d\u00e9passement de capacit\u00e9 ou n\u00e9gatif) [price=" + price + ']');
             return transaction;
         }
         final int playerCash = clientWallet.getAmountOfCash();
         final short packQuantity = merchantItem.getPackType().qty;
         if (currentQuantity < quantity * packQuantity || playerCash < price || packQuantity < 0) {
-            AbstractMerchantInventory.m_logger.error((Object)("[BROCANTE] Quantit\u00e9 insuffisante(" + quantity + '/' + currentQuantity + ") " + "ou le joueur n'a pas les moyens(" + playerCash + '/' + price + ") " + "ou les constantes sont invalides packSize=" + packQuantity));
+            AbstractMerchantInventory.m_logger.error("[BROCANTE] Quantit\u00e9 insuffisante(" + quantity + '/' + currentQuantity + ") " + "ou le joueur n'a pas les moyens(" + playerCash + '/' + price + ") " + "ou les constantes sont invalides packSize=" + packQuantity);
             return transaction;
         }
         final Item obtainedItem = merchantItem.getItem().getCopy(Item.getItemComposer().getUidGenerator().getNextUID(), false);
         obtainedItem.setQuantity((short)(quantity * packQuantity));
         if (!buyer.canStockItem(obtainedItem)) {
-            AbstractMerchantInventory.m_logger.warn((Object)("[BROCANTE] Impossible d'acheter : Les inventaires du joueur ne peuvent acceuillir l'objet de type " + obtainedItem.getReferenceId()));
+            AbstractMerchantInventory.m_logger.warn("[BROCANTE] Impossible d'acheter : Les inventaires du joueur ne peuvent acceuillir l'objet de type " + obtainedItem.getReferenceId());
             obtainedItem.release();
             transaction.setError((byte)2);
             return transaction;
@@ -180,7 +180,7 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
             this.notifyObservers(InventoryItemModifiedEvent.checkOutPriceEvent(this, item, this.getPosition(item.getUniqueId())));
         }
         else {
-            AbstractMerchantInventory.m_logger.error((Object)("Impossible de d\u00e9finir le prix sur un objet qui ne fait pas partie de l'inventaire: " + item.getUniqueId()));
+            AbstractMerchantInventory.m_logger.error("Impossible de d\u00e9finir le prix sur un objet qui ne fait pas partie de l'inventaire: " + item.getUniqueId());
         }
     }
     
@@ -191,48 +191,48 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
             this.notifyObservers(InventoryItemModifiedEvent.checkOutPackSizeEvent(this, item, this.getPosition(item.getUniqueId())));
         }
         else {
-            AbstractMerchantInventory.m_logger.error((Object)("Impossible de d\u00e9finir le prix sur un objet qui ne fait pas partie de l'inventaire: " + item.getUniqueId()));
+            AbstractMerchantInventory.m_logger.error("Impossible de d\u00e9finir le prix sur un objet qui ne fait pas partie de l'inventaire: " + item.getUniqueId());
         }
     }
     
     @Override
     public boolean fromRaw(final RawMerchantItemInventory raw) {
         if (this.m_uid != raw.uid) {
-            AbstractMerchantInventory.m_logger.warn((Object)("Mauvais uid \u00e0 la d\u00e9s\u00e9rialisation: attendu=" + this.m_uid + ", trouv\u00e9=" + raw.uid));
+            AbstractMerchantInventory.m_logger.warn("Mauvais uid \u00e0 la d\u00e9s\u00e9rialisation: attendu=" + this.m_uid + ", trouv\u00e9=" + raw.uid);
         }
         if (this.m_requiredItemType.ordinal() != (raw.requiredItemType & 0xFF)) {
-            AbstractMerchantInventory.m_logger.warn((Object)("Mauvais type d'item requis \u00e0 la d\u00e9s\u00e9rialisation: attendu=" + this.m_requiredItemType + ", trouv\u00e9=" + raw.requiredItemType));
+            AbstractMerchantInventory.m_logger.warn("Mauvais type d'item requis \u00e0 la d\u00e9s\u00e9rialisation: attendu=" + this.m_requiredItemType + ", trouv\u00e9=" + raw.requiredItemType);
         }
         if (this.getMaximumSize() != raw.nSlots) {
-            AbstractMerchantInventory.m_logger.warn((Object)("Mauvais nombre de slots la d\u00e9s\u00e9rialisation: attendu=" + this.getMaximumSize() + ", trouv\u00e9=" + raw.nSlots));
+            AbstractMerchantInventory.m_logger.warn("Mauvais nombre de slots la d\u00e9s\u00e9rialisation: attendu=" + this.getMaximumSize() + ", trouv\u00e9=" + raw.nSlots);
         }
         if (this.m_maximumPack != raw.maxPackSize) {
-            AbstractMerchantInventory.m_logger.warn((Object)("Mauvaise packMax \u00e0 la d\u00e9s\u00e9rialisation: attendu=" + this.m_maximumPack + ", trouv\u00e9=" + raw.maxPackSize));
+            AbstractMerchantInventory.m_logger.warn("Mauvaise packMax \u00e0 la d\u00e9s\u00e9rialisation: attendu=" + this.m_maximumPack + ", trouv\u00e9=" + raw.maxPackSize);
         }
         this.m_shortAd = raw.shortAd;
         this.setLocked(raw.locked);
         this.destroyAll();
         boolean ok = true;
         for (final RawMerchantItemInventory.Content rawContent : raw.contents) {
-            final AbstractMerchantInventoryItem item = (AbstractMerchantInventoryItem)this.m_contentProvider.unSerializeContent(rawContent.merchantItem);
+            final AbstractMerchantInventoryItem item = this.m_contentProvider.unSerializeContent(rawContent.merchantItem);
             if (item != null) {
                 try {
                     if (!(this).addAt(item, rawContent.position)) {
                         ok = false;
-                        AbstractMerchantInventory.m_logger.error((Object)("L'item (" + item + ")ne peut \u00eatre ajout\u00e9 \u00e0 l'inventaire, slot : " + rawContent.position));
+                        AbstractMerchantInventory.m_logger.error("L'item (" + item + ")ne peut \u00eatre ajout\u00e9 \u00e0 l'inventaire, slot : " + rawContent.position);
                     }
                 }
                 catch (InventoryCapacityReachedException e) {
                     ok = false;
-                    AbstractMerchantInventory.m_logger.error((Object)e);
+                    AbstractMerchantInventory.m_logger.error(e);
                 }
                 catch (ContentAlreadyPresentException e2) {
                     ok = false;
-                    AbstractMerchantInventory.m_logger.error((Object)e2);
+                    AbstractMerchantInventory.m_logger.error(e2);
                 }
                 catch (PositionAlreadyUsedException e3) {
                     ok = false;
-                    AbstractMerchantInventory.m_logger.error((Object)e3);
+                    AbstractMerchantInventory.m_logger.error(e3);
                 }
                 if (ok) {
                     continue;
@@ -241,7 +241,7 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
                 item.release();
             }
             else {
-                AbstractMerchantInventory.m_logger.error((Object)("D\u00e9s\u00e9rialisation d'un MerchantItem null \u00e0 la position " + rawContent.position));
+                AbstractMerchantInventory.m_logger.error("D\u00e9s\u00e9rialisation d'un MerchantItem null \u00e0 la position " + rawContent.position);
                 ok = false;
             }
         }
@@ -257,7 +257,7 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
             final short pos = it.value();
             final AbstractMerchantInventoryItem item = (this).getFromPosition(pos);
             if (item == null) {
-                AbstractMerchantInventory.m_logger.error((Object)("Incoh\u00e9rence d'Inventory, l'item $" + it.key() + " est r\u00e9f\u00e9renc\u00e9 mais n'est pas pr\u00e9sent dans le tableau"), (Throwable)new Exception());
+                AbstractMerchantInventory.m_logger.error("Incoh\u00e9rence d'Inventory, l'item $" + it.key() + " est r\u00e9f\u00e9renc\u00e9 mais n'est pas pr\u00e9sent dans le tableau", new Exception());
             }
             else {
                 if (!item.shouldBeSerialized()) {
@@ -267,7 +267,7 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
                 content.position = pos;
                 final boolean ok = item.toRaw(content.merchantItem);
                 if (!ok) {
-                    AbstractMerchantInventory.m_logger.error((Object)("Impossible de convertir l'item \u00e0 la position " + pos + " sous forme d\u00e9s\u00e9rialis\u00e9e brute"));
+                    AbstractMerchantInventory.m_logger.error("Impossible de convertir l'item \u00e0 la position " + pos + " sous forme d\u00e9s\u00e9rialis\u00e9e brute");
                     return false;
                 }
                 raw.contents.add(content);
@@ -288,7 +288,7 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
     
     public void addMerchantEventListener(final MerchantInventoryEventListener<? extends MerchantClient> listener) {
         if (this.m_merchantEventListeners.contains(listener)) {
-            AbstractMerchantInventory.m_logger.error((Object)"Tentative d'ajout multiple du m\u00eame listener d'evenement sur un MerchantInventory");
+            AbstractMerchantInventory.m_logger.error("Tentative d'ajout multiple du m\u00eame listener d'evenement sur un MerchantInventory");
             return;
         }
         this.m_merchantEventListeners.add(listener);
@@ -310,6 +310,6 @@ public abstract class AbstractMerchantInventory extends ContiguousArrayInventory
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AbstractMerchantInventory.class);
+        m_logger = Logger.getLogger(AbstractMerchantInventory.class);
     }
 }

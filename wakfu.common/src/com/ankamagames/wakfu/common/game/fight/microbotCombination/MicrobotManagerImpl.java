@@ -6,7 +6,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.fight.*;
 import org.jetbrains.annotations.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 
 public class MicrobotManagerImpl implements MicrobotManager
@@ -43,7 +42,7 @@ public class MicrobotManagerImpl implements MicrobotManager
         if (!this.m_microbotsPerOwner.containsKey(ownerId)) {
             final EffectUser owner = microbot.getOwner();
             if (owner == null) {
-                MicrobotManagerImpl.m_logger.error((Object)("Unable to create microbot for null owner. OriginalControllerId : " + ownerId));
+                MicrobotManagerImpl.m_logger.error("Unable to create microbot for null owner. OriginalControllerId : " + ownerId);
                 return;
             }
             int maximumSpaceBetweenMicrobots;
@@ -80,21 +79,21 @@ public class MicrobotManagerImpl implements MicrobotManager
     
     private boolean checkMicrobotValidity(final AbstractFakeFighterEffectArea microbot) {
         if (microbot == null) {
-            MicrobotManagerImpl.m_logger.error((Object)"Trying to handle a 'null' microbot", (Throwable)new RuntimeException());
+            MicrobotManagerImpl.m_logger.error("Trying to handle a 'null' microbot", new RuntimeException());
             return false;
         }
         if (microbot.getUserDefinedId() != 4) {
-            MicrobotManagerImpl.m_logger.error((Object)("Trying to handle a microbot wich is not a microbot (UserdefineID = " + microbot.getUserDefinedId() + ")"), (Throwable)new RuntimeException());
+            MicrobotManagerImpl.m_logger.error("Trying to handle a microbot wich is not a microbot (UserdefineID = " + microbot.getUserDefinedId() + ")", new RuntimeException());
             return false;
         }
         if (microbot.getOriginalControllerId() == 0L) {
-            MicrobotManagerImpl.m_logger.error((Object)("Trying to handle a microbot without owner (ownerId=0) : " + microbot), (Throwable)new RuntimeException());
+            MicrobotManagerImpl.m_logger.error("Trying to handle a microbot without owner (ownerId=0) : " + microbot, new RuntimeException());
             return false;
         }
         return true;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)MicrobotManagerImpl.class);
+        m_logger = Logger.getLogger(MicrobotManagerImpl.class);
     }
 }

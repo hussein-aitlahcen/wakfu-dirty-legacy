@@ -5,7 +5,7 @@ import com.ankamagames.wakfu.common.rawData.*;
 import com.ankamagames.wakfu.common.game.personalSpace.*;
 import com.ankamagames.wakfu.common.game.personalSpace.room.content.*;
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.*;
-import java.util.*;
+
 import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.wakfu.common.constants.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.compressedCellData.*;
@@ -56,7 +56,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
             this.m_rights.toRaw(raw.permissions);
         }
         catch (Exception e) {
-            AbstractDimensionalBag.m_logger.error((Object)("Erreur \u00e0 la serialisation des permissions" + this), (Throwable)e);
+            PersonalSpace.m_logger.error("Erreur \u00e0 la serialisation des permissions" + this, e);
         }
         return true;
     }
@@ -103,7 +103,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
             this.fromRawPermissions(raw.permissions);
         }
         catch (Exception e) {
-            AbstractDimensionalBag.m_logger.error((Object)("Exception \u00e0 la d\u00e9-serialisation des permissions du Havre-sac du joueur " + this.m_ownerId), (Throwable)e);
+            PersonalSpace.m_logger.error("Exception \u00e0 la d\u00e9-serialisation des permissions du Havre-sac du joueur " + this.m_ownerId, e);
         }
         return true;
     }
@@ -120,7 +120,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
             final GemControlledRoom left = (GemControlledRoom)this.m_personalSpaceLayout.getRoomFromUnit(rx, ry);
             final GemControlledRoom right = (GemControlledRoom)this.m_personalSpaceLayout.getRoomFromUnit(rx + 6, ry);
             if (left == null || right == null) {
-                AbstractDimensionalBag.m_logger.error((Object)"Probl\u00e8me de r\u00e9cup\u00e9ration des salles.");
+                PersonalSpace.m_logger.error("Probl\u00e8me de r\u00e9cup\u00e9ration des salles.");
                 return false;
             }
             if (left.getGem(true) != null && right.getGem(true) != null) {
@@ -133,7 +133,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
             final GemControlledRoom top = (GemControlledRoom)this.m_personalSpaceLayout.getRoomFromUnit(rx, ry);
             final GemControlledRoom bottom = (GemControlledRoom)this.m_personalSpaceLayout.getRoomFromUnit(rx, ry + 6);
             if (top == null || bottom == null) {
-                AbstractDimensionalBag.m_logger.error((Object)"Probl\u00e8me de r\u00e9cup\u00e9ration des salles.");
+                PersonalSpace.m_logger.error("Probl\u00e8me de r\u00e9cup\u00e9ration des salles.");
                 return false;
             }
             if (top.getGem(true) != null && bottom.getGem(true) != null) {
@@ -163,7 +163,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
     public void updateTopology(final TopologyMapInstance mapInstance) {
         final TopologyMap topologyMap = mapInstance.getTopologyMap();
         if (topologyMap == null) {
-            AbstractDimensionalBag.m_logger.error((Object)"Topology null !!! (ne devrait pas arriver)");
+            PersonalSpace.m_logger.error("Topology null !!! (ne devrait pas arriver)");
             return;
         }
         for (int y = 0; y < 18; ++y) {
@@ -174,7 +174,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
         for (final Room room : this.m_personalSpaceLayout) {
             for (final RoomContent content : room.getContents()) {
                 if (!topologyMap.isInMap(content.getWorldCellX(), content.getWorldCellY())) {
-                    AbstractDimensionalBag.m_logger.error((Object)("\u00c9l\u00e9ment dans le sac dimensionnel plac\u00e9 au mauvais endroit " + content + " (" + content.getWorldCellX() + ";" + content.getWorldCellY() + ") de type=" + content.getContentType()));
+                    PersonalSpace.m_logger.error("\u00c9l\u00e9ment dans le sac dimensionnel plac\u00e9 au mauvais endroit " + content + " (" + content.getWorldCellX() + ";" + content.getWorldCellY() + ") de type=" + content.getContentType());
                 }
                 else {
                     mapInstance.setBlocked(content.getWorldCellX(), content.getWorldCellY(), content.getWorldCellAltitude(), content.isBlockingMovements());
@@ -291,7 +291,7 @@ public abstract class AbstractDimensionalBag extends PersonalSpace
             return environmentData;
         }
         catch (CompressedDataException e) {
-            AbstractDimensionalBag.m_logger.error((Object)"Exception pendant l'update des types de sol du havre-sac ", (Throwable)e);
+            PersonalSpace.m_logger.error("Exception pendant l'update des types de sol du havre-sac ", e);
             return null;
         }
     }

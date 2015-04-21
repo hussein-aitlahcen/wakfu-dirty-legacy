@@ -1,8 +1,6 @@
 package com.ankamagames.wakfu.client.core.contentInitializer;
 
-import com.ankamagames.baseImpl.graphics.core.contentLoader.*;
 import org.apache.log4j.*;
-import com.ankamagames.baseImpl.graphics.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
 import com.ankamagames.wakfu.common.game.protector.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
@@ -13,9 +11,8 @@ public class ProtectorEcosystemProtectionLoader implements ContentInitializer
     protected static Logger m_logger;
     
     @Override
-    public void init(final AbstractGameClientInstance clientInstance) throws Exception {
+    public void init() throws Exception {
         this.loadFromStorage();
-        clientInstance.fireContentInitializerDone(this);
     }
     
     public void loadFromStorage() throws Exception {
@@ -48,6 +45,6 @@ public class ProtectorEcosystemProtectionLoader implements ContentInitializer
     }
     
     static {
-        ProtectorEcosystemProtectionLoader.m_logger = Logger.getLogger((Class)ProtectorEcosystemProtectionLoader.class);
+        ProtectorEcosystemProtectionLoader.m_logger = Logger.getLogger(ProtectorEcosystemProtectionLoader.class);
     }
 }

@@ -8,7 +8,6 @@ import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import java.nio.*;
 import com.ankamagames.framework.kernel.utils.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import java.util.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timeevents.*;
@@ -111,7 +110,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
                 if (RunningEffect.this.m_context != null && RunningEffect.this.m_context.getEffectManager() != null) {
                     RunningEffect.this.m_genericEffect = RunningEffect.this.m_context.getEffectManager().getEffect(genericEffectId);
                     if (RunningEffect.this.m_genericEffect == null) {
-                        m_logger.error((Object)("Impossible de d\u00e9s\u00e9rialiser un WakfuRunningEffect : generic effet inconnu : " + genericEffectId));
+                        m_logger.error("Impossible de d\u00e9s\u00e9rialiser un WakfuRunningEffect : generic effet inconnu : " + genericEffectId);
                     }
                 }
                 RunningEffect.this.m_targetCell.set(buffer.getInt(), buffer.getInt(), buffer.getShort());
@@ -135,7 +134,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
                     if (RunningEffect.this.m_caster == null) {}
                 }
                 else {
-                    m_logger.error((Object)("pas de contexte, impossible de r\u00e9cuperer la cible type de RE : " + RunningEffect.this.m_id));
+                    m_logger.error("pas de contexte, impossible de r\u00e9cuperer la cible type de RE : " + RunningEffect.this.m_id);
                 }
             }
         };
@@ -243,7 +242,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
     }
     
     public void setContext(final EffectContext context) {
-        this.m_context = (EffectContext<FX>)context;
+        this.m_context = context;
     }
     
     public EffectContext getContext() {
@@ -272,11 +271,11 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
     @Override
     public void release() {
         if (this.m_referenceCount > 0) {
-            RunningEffect.m_logger.error((Object)("On essaye de release un RunningEffect encore r\u00e9f\u00e9renc\u00e9 refCount=" + this.m_referenceCount + " id=" + this.m_id));
+            RunningEffect.m_logger.error("On essaye de release un RunningEffect encore r\u00e9f\u00e9renc\u00e9 refCount=" + this.m_referenceCount + " id=" + this.m_id);
             return;
         }
         if (this.m_isPooled && this.isReleased()) {
-            RunningEffect.m_logger.error((Object)("Double release sur un " + this.getClass().getSimpleName() + " hashCode : " + this.hashCode() + " : " + ExceptionFormatter.currentStackTrace()));
+            RunningEffect.m_logger.error("Double release sur un " + this.getClass().getSimpleName() + " hashCode : " + this.hashCode() + " : " + ExceptionFormatter.currentStackTrace());
             this.onCheckIn();
             return;
         }
@@ -296,7 +295,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
             this.m_pool.returnObject(this);
         }
         catch (Exception e) {
-            RunningEffect.m_logger.error((Object)("Exception dans le release de " + this.getClass().toString() + " normalement impossible"));
+            RunningEffect.m_logger.error("Exception dans le release de " + this.getClass().toString() + " normalement impossible");
         }
         this.m_pool = null;
     }
@@ -332,13 +331,13 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
                 }
                 if (reOnCellOnly.isValueComputationEnabled()) {
                     if (reOnCellOnly.useTarget() && this.m_target == null) {
-                        RunningEffect.m_logger.warn((Object)(" on veut calculer un effet qui a besoin d'une cible, sans cible : " + this.actionAndGenericEffectIdString()));
+                        RunningEffect.m_logger.warn(" on veut calculer un effet qui a besoin d'une cible, sans cible : " + this.actionAndGenericEffectIdString());
                     }
                     if (reOnCellOnly.useCaster() && this.m_caster == null) {
-                        RunningEffect.m_logger.warn((Object)("on veut calculer un effet qui a besoin d'un caster, sans caster : " + this.actionAndGenericEffectIdString()));
+                        RunningEffect.m_logger.warn("on veut calculer un effet qui a besoin d'un caster, sans caster : " + this.actionAndGenericEffectIdString());
                     }
                     if (reOnCellOnly.useTargetCell() && this.m_targetCell == null) {
-                        RunningEffect.m_logger.warn((Object)("on veut calculer un effet qui a besoin d'une cellule cible, sans cellule cible : " + this.actionAndGenericEffectIdString()));
+                        RunningEffect.m_logger.warn("on veut calculer un effet qui a besoin d'une cellule cible, sans cellule cible : " + this.actionAndGenericEffectIdString());
                     }
                     reOnCellOnly.computeValue(null);
                 }
@@ -382,7 +381,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
         this.m_genericEffect = genericEffect;
         this.m_effectContainer = container;
         this.m_caster = caster;
-        this.m_context = (EffectContext<FX>)context;
+        this.m_context = context;
         this.m_target = target;
         this.setTargetCell(targetCellX, targetCellY, targetCellZ);
         if (this.m_params != null) {
@@ -755,7 +754,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
                     errorLog.append(", Sort a l'origine ").append(this.getContext().getSpellCaster().getSpellId());
                 }
                 errorLog.append(", historique de trigger ").append(TriggerLoopWatcher.INSTANCE);
-                RunningEffect.m_logger.error((Object)errorLog.toString(), (Throwable)new NullPointerException("erreur generee pour etude de stack"));
+                RunningEffect.m_logger.error(errorLog.toString(), new NullPointerException("erreur generee pour etude de stack"));
             }
             return false;
         }
@@ -777,10 +776,10 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
                 }
                 if (this.isValueComputationEnabled() && re.isValueComputationEnabled()) {
                     if (this.useCaster() && re.getCaster() == null) {
-                        RunningEffect.m_logger.warn((Object)("on veut calculer un effet qui a besoin d'un caster, sans caster " + this.getId() + ((this.m_genericEffect != null) ? (" generic effect " + this.m_genericEffect.getEffectId() + "action " + this.m_genericEffect.getActionId()) : "")));
+                        RunningEffect.m_logger.warn("on veut calculer un effet qui a besoin d'un caster, sans caster " + this.getId() + ((this.m_genericEffect != null) ? (" generic effect " + this.m_genericEffect.getEffectId() + "action " + this.m_genericEffect.getActionId()) : ""));
                     }
                     if (this.useTargetCell() && re.getTargetCell() == null) {
-                        RunningEffect.m_logger.warn((Object)("on veut calculer un effet qui a besoin d'une cellule cible, sans cellule cible" + this.getId() + ((this.m_genericEffect != null) ? (" generic effect" + this.m_genericEffect.getEffectId() + " action " + this.m_genericEffect.getActionId()) : "")));
+                        RunningEffect.m_logger.warn("on veut calculer un effet qui a besoin d'une cellule cible, sans cellule cible" + this.getId() + ((this.m_genericEffect != null) ? (" generic effect" + this.m_genericEffect.getEffectId() + " action " + this.m_genericEffect.getActionId()) : ""));
                     }
                     re.computeValue(null);
                 }
@@ -894,13 +893,13 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
         }
         if ((re.useTarget() && re.getTarget() == null) || (re.useCaster() && re.getCaster() == null) || (re.getTarget() != null && re.getTarget().isOutOfPlay() && !this.canBeExecutedOnKO()) || (re.useTargetCell() && re.getTargetCell() == null)) {
             if (re.useTarget() && re.getTarget() == null) {
-                RunningEffect.m_logger.error((Object)("on veut executer un effet qui a besoin d'une cible, sans cible (action=" + re.actionAndGenericEffectIdString() + ")"));
+                RunningEffect.m_logger.error("on veut executer un effet qui a besoin d'une cible, sans cible (action=" + re.actionAndGenericEffectIdString() + ")");
             }
             if (re.useCaster() && re.getCaster() == null) {
-                RunningEffect.m_logger.error((Object)("on veut executer un effet qui a besoin d'un caster, sans caster\t(action = " + re.actionAndGenericEffectIdString() + ")"));
+                RunningEffect.m_logger.error("on veut executer un effet qui a besoin d'un caster, sans caster\t(action = " + re.actionAndGenericEffectIdString() + ")");
             }
             if (re.useTargetCell() && re.getTargetCell() == null) {
-                RunningEffect.m_logger.error((Object)("on veut executer un effet qui a besoin d'une cellule cible, sans cellule cible (action=" + re.actionAndGenericEffectIdString() + ")"));
+                RunningEffect.m_logger.error("on veut executer un effet qui a besoin d'une cellule cible, sans cellule cible (action=" + re.actionAndGenericEffectIdString() + ")");
             }
             re.release();
             return;
@@ -919,7 +918,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
             }
         }
         catch (Exception e) {
-            RunningEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
         }
         TriggerLoopWatcher.INSTANCE.endCurrentTrigger();
         if (isRoot) {
@@ -1049,7 +1048,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
             }
         }
         catch (Exception e) {
-            RunningEffect.m_logger.error((Object)"Exception catch\u00e9e : ", (Throwable)e);
+            RunningEffect.m_logger.error("Exception catch\u00e9e : ", e);
         }
     }
     
@@ -1134,7 +1133,7 @@ public abstract class RunningEffect<FX extends Effect, EC extends EffectContaine
     protected abstract boolean canBeExecutedOnKO();
     
     static {
-        m_logger = Logger.getLogger((Class)RunningEffect.class);
+        m_logger = Logger.getLogger(RunningEffect.class);
         RunningEffect.uid = 0L;
         RunningEffect.m_UIDGenerator = null;
         RunningEffect.m_useResult = false;

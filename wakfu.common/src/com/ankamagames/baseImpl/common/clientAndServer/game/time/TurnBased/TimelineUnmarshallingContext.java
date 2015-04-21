@@ -20,7 +20,7 @@ public class TimelineUnmarshallingContext
         if (effectContext == null || fighterSortingStrategy == null) {
             throw new IllegalArgumentException("aucun argument du constructeur de " + this.getClass().getSimpleName() + " ne doit \u00eatre null");
         }
-        this.m_effectContext = (EffectContext<?>)effectContext;
+        this.m_effectContext = effectContext;
         this.m_fighterSortingStrategy = fighterSortingStrategy;
     }
     
@@ -35,7 +35,7 @@ public class TimelineUnmarshallingContext
         }
         final Iterator<? extends EffectUser> iteu = this.m_effectContext.getTargetInformationProvider().getAllPossibleTargets();
         while (iteu.hasNext()) {
-            final EffectUser effectUser = (EffectUser)iteu.next();
+            final EffectUser effectUser = iteu.next();
             if (effectUser.getRunningEffectManager() == null) {
                 continue;
             }

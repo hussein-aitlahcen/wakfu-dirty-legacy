@@ -60,6 +60,6 @@ public class ElementDef implements IElementDef
     }
     
     static {
-        m_logger = Logger.getLogger((Class)ElementDef.class);
+        m_logger = Logger.getLogger(ElementDef.class);
     }
 }

@@ -21,7 +21,7 @@ public abstract class JavaFunctionsLibrary
                 if (function != null) {
                     assert function.getName() != null;
                     L.pushString(function.getName());
-                    L.pushJavaFunction((JavaFunction)function);
+                    L.pushJavaFunction(function);
                     L.setTable(-3);
                 }
             }
@@ -47,6 +47,6 @@ public abstract class JavaFunctionsLibrary
     public abstract JavaFunctionEx[] createGlobalFunctions(final LuaState p0);
     
     static {
-        m_logger = Logger.getLogger((Class)JavaFunctionsLibrary.class);
+        m_logger = Logger.getLogger(JavaFunctionsLibrary.class);
     }
 }

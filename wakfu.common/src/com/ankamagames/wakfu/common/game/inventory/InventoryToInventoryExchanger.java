@@ -19,7 +19,7 @@ public class InventoryToInventoryExchanger extends AbstractInventoryContentExcha
         if (item.getQuantity() > movedQuantity && movedQuantity != -1) {
             final Item itemToReplace = targetInventory.getFromPosition(targetPosition);
             if (itemToReplace == item) {
-                InventoryToInventoryExchanger.m_logger.warn((Object)"on veut d\u00e9placer un item o\u00f9 il est d\u00e9ja ! ");
+                AbstractInventoryContentExchanger.m_logger.warn("on veut d\u00e9placer un item o\u00f9 il est d\u00e9ja ! ");
                 return 1;
             }
             if (itemToReplace != null) {
@@ -43,13 +43,13 @@ public class InventoryToInventoryExchanger extends AbstractInventoryContentExcha
             }
             else {
                 splittedItem.setQuantity(movedQuantity);
-                if (targetInventory.getContentChecker().canAddItem((Inventory<Item>)targetInventory, splittedItem) >= 0) {
+                if (targetInventory.getContentChecker().canAddItem(targetInventory, splittedItem) >= 0) {
                     sourceInventory.updateQuantity(item.getUniqueId(), (short)(-movedQuantity));
                     try {
                         targetInventory.addAt(splittedItem, targetPosition);
                     }
                     catch (Exception e) {
-                        InventoryToInventoryExchanger.m_logger.error((Object)"Impossible d'ajouter l'objet a la position donn\u00e9", (Throwable)e);
+                        AbstractInventoryContentExchanger.m_logger.error("Impossible d'ajouter l'objet a la position donn\u00e9", e);
                     }
                     return 0;
                 }
@@ -59,23 +59,23 @@ public class InventoryToInventoryExchanger extends AbstractInventoryContentExcha
         else {
             final Item itemToReplace = targetInventory.getFromPosition(targetPosition);
             if (itemToReplace == item) {
-                InventoryToInventoryExchanger.m_logger.warn((Object)"on veut d\u00e9placer un item o\u00f9 il est d\u00e9ja ! ");
+                AbstractInventoryContentExchanger.m_logger.warn("on veut d\u00e9placer un item o\u00f9 il est d\u00e9ja ! ");
                 return 1;
             }
             if (itemToReplace == null) {
-                if (sourceInventory.getContentChecker().canRemoveItem((Inventory<Item>)sourceInventory, item) >= 0 && targetInventory.getContentChecker().canAddItem((Inventory<Item>)targetInventory, item) >= 0 && sourceInventory.remove(item)) {
+                if (sourceInventory.getContentChecker().canRemoveItem(sourceInventory, item) >= 0 && targetInventory.getContentChecker().canAddItem(targetInventory, item) >= 0 && sourceInventory.remove(item)) {
                     try {
                         targetInventory.addAt(item, targetPosition);
                     }
                     catch (Exception e) {
-                        InventoryToInventoryExchanger.m_logger.error((Object)"Impossible d'ajouter l'objet a la position donn\u00e9", (Throwable)e);
+                        AbstractInventoryContentExchanger.m_logger.error("Impossible d'ajouter l'objet a la position donn\u00e9", e);
                     }
                     return 0;
                 }
                 return 1;
             }
             else if (!itemToReplace.canStackWith(item)) {
-                if (targetInventory.getContentChecker().canReplaceItem((Inventory<Item>)targetInventory, itemToReplace, item) < 0 || sourceInventory.getContentChecker().canReplaceItem((Inventory<Item>)sourceInventory, item, itemToReplace) < 0) {
+                if (targetInventory.getContentChecker().canReplaceItem(targetInventory, itemToReplace, item) < 0 || sourceInventory.getContentChecker().canReplaceItem(sourceInventory, item, itemToReplace) < 0) {
                     return 1;
                 }
                 final short initialPosition = sourceInventory.getPosition(item.getUniqueId());
@@ -85,15 +85,15 @@ public class InventoryToInventoryExchanger extends AbstractInventoryContentExcha
                     sourceInventory.addAt(itemToReplace, initialPosition);
                 }
                 catch (Exception e2) {
-                    InventoryToInventoryExchanger.m_logger.error((Object)("Erreur lors de l ajout de l'objet a la position" + initialPosition + " dans "), (Throwable)e2);
+                    AbstractInventoryContentExchanger.m_logger.error("Erreur lors de l ajout de l'objet a la position" + initialPosition + " dans ", e2);
                 }
                 try {
                     targetInventory.addAt(item, targetPosition);
                 }
                 catch (Exception e2) {
-                    InventoryToInventoryExchanger.m_logger.error((Object)("Erreur lors de l ajout de l'objet a la position" + targetPosition + " dans "), (Throwable)e2);
+                    AbstractInventoryContentExchanger.m_logger.error("Erreur lors de l ajout de l'objet a la position" + targetPosition + " dans ", e2);
                 }
-                if (sourceInventory.getContentChecker().checkCriterion((Inventory<Item>)sourceInventory, player, context)) {
+                if (sourceInventory.getContentChecker().checkCriterion(sourceInventory, player, context)) {
                     return 0;
                 }
                 sourceInventory.remove(itemToReplace);
@@ -102,13 +102,13 @@ public class InventoryToInventoryExchanger extends AbstractInventoryContentExcha
                     sourceInventory.addAt(item, initialPosition);
                 }
                 catch (Exception e2) {
-                    InventoryToInventoryExchanger.m_logger.error((Object)("Erreur lors de l ajout de l'objet a la position" + initialPosition + " dans "), (Throwable)e2);
+                    AbstractInventoryContentExchanger.m_logger.error("Erreur lors de l ajout de l'objet a la position" + initialPosition + " dans ", e2);
                 }
                 try {
                     targetInventory.addAt(itemToReplace, targetPosition);
                 }
                 catch (Exception e2) {
-                    InventoryToInventoryExchanger.m_logger.error((Object)("Erreur lors de l ajout de l'objet a la position" + targetPosition + " dans "), (Throwable)e2);
+                    AbstractInventoryContentExchanger.m_logger.error("Erreur lors de l ajout de l'objet a la position" + targetPosition + " dans ", e2);
                 }
                 return 1;
             }

@@ -89,7 +89,7 @@ public final class PathFindResult implements Iterable<int[]>
         else {
             this.m_data = null;
             this.m_pathFound = false;
-            PathFindResult.m_logger.error((Object)("PathFindResult s\u00e9rialis\u00e9 de longueur louche : " + serialized.length + " @ " + ExceptionFormatter.currentStackTrace()));
+            PathFindResult.m_logger.error("PathFindResult s\u00e9rialis\u00e9 de longueur louche : " + serialized.length + " @ " + ExceptionFormatter.currentStackTrace());
         }
     }
     
@@ -238,7 +238,7 @@ public final class PathFindResult implements Iterable<int[]>
     public static ObjectPair<PathFindResult, Integer> fusionPaths(final int[] startingPosition, @NotNull final PathFindResult firstPath, @NotNull final PathFindResult secondPath) {
         final int[] junction = secondPath.getFirstStep();
         if (junction == null) {
-            PathFindResult.m_logger.error((Object)("Le point de d\u00e9part du 2e chemin est null lors d'une fusion de chemin: firstPath=" + firstPath + ", secondPath=" + secondPath));
+            PathFindResult.m_logger.error("Le point de d\u00e9part du 2e chemin est null lors d'une fusion de chemin: firstPath=" + firstPath + ", secondPath=" + secondPath);
             return null;
         }
         int startIndex = -1;
@@ -259,11 +259,11 @@ public final class PathFindResult implements Iterable<int[]>
             }
         }
         if (startIndex == -1) {
-            PathFindResult.m_logger.error((Object)("La position de d\u00e9part " + startingPosition[0] + ':' + startingPosition[1] + ':' + startingPosition[2] + " n'a pas \u00e9t\u00e9 trouv\u00e9e sur le premier chemin. (path: " + firstPath + ')'));
+            PathFindResult.m_logger.error("La position de d\u00e9part " + startingPosition[0] + ':' + startingPosition[1] + ':' + startingPosition[2] + " n'a pas \u00e9t\u00e9 trouv\u00e9e sur le premier chemin. (path: " + firstPath + ')');
             return null;
         }
         if (junctionIndex == -1) {
-            PathFindResult.m_logger.error((Object)("Le point de jonction " + junction[0] + ':' + junction[1] + ':' + junction[2] + " n'a pas \u00e9t\u00e9 trouv\u00e9 sur le premier chemin. (path: " + firstPath + ')'));
+            PathFindResult.m_logger.error("Le point de jonction " + junction[0] + ':' + junction[1] + ':' + junction[2] + " n'a pas \u00e9t\u00e9 trouv\u00e9 sur le premier chemin. (path: " + firstPath + ')');
             return null;
         }
         int j = 0;
@@ -325,7 +325,7 @@ public final class PathFindResult implements Iterable<int[]>
     
     static {
         EMPTY = new PathFindResult();
-        m_logger = Logger.getLogger((Class)PathFindResult.class);
+        m_logger = Logger.getLogger(PathFindResult.class);
         PREVIOUS_POINT = new Vector3();
         PREVIOUS_VECTOR = new Vector3();
         CURRENT_POINT = new Vector3();

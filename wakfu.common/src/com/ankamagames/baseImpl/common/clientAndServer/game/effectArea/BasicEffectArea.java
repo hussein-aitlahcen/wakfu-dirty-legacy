@@ -79,7 +79,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
             this.setOwner(this.m_context.getEffectUserInformationProvider().getEffectUserFromId(id));
         }
         else {
-            BasicEffectArea.m_logger.error((Object)"contexte non initialis\u00e9");
+            BasicEffectArea.m_logger.error("contexte non initialis\u00e9");
         }
     }
     
@@ -189,7 +189,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
                 this.m_pool.returnObject(this);
             }
             catch (Exception e) {
-                BasicEffectArea.m_logger.error((Object)"impossible");
+                BasicEffectArea.m_logger.error("impossible");
             }
             this.m_pool = null;
         }
@@ -422,7 +422,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
     
     public boolean contains(final int x, final int y, final short z) {
         if (this.m_area == null) {
-            BasicEffectArea.m_logger.error((Object)"m_area est null");
+            BasicEffectArea.m_logger.error("m_area est null");
             return false;
         }
         if (this.m_zone != null) {
@@ -547,7 +547,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
                         this.m_listener.onEffectAreaPreExecution(this, triggerer);
                     }
                     catch (Exception e) {
-                        BasicEffectArea.m_logger.error((Object)"Exception levee", (Throwable)e);
+                        BasicEffectArea.m_logger.error("Exception levee", e);
                     }
                 }
                 final long[] targets = this.determineApplicationTargetCells(triggerer);
@@ -559,7 +559,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
                             this.execute(PositionValue.getXFromLong(target), PositionValue.getYFromLong(target), PositionValue.getZFromLong(target), triggeringRE);
                         }
                         catch (Exception e2) {
-                            BasicEffectArea.m_logger.error((Object)"Exception levee lors de l'execution des effets d'une zone", (Throwable)e2);
+                            BasicEffectArea.m_logger.error("Exception levee lors de l'execution des effets d'une zone", e2);
                         }
                     }
                 }
@@ -570,7 +570,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
                     this.m_listener.onEffectAreaExecuted(this);
                 }
                 catch (Exception e) {
-                    BasicEffectArea.m_logger.error((Object)"Exception levee", (Throwable)e);
+                    BasicEffectArea.m_logger.error("Exception levee", e);
                 }
             }
             return true;
@@ -590,7 +590,7 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
     
     public float getParams(final int paramNum) {
         if (this.m_params == null || paramNum >= this.m_params.length) {
-            BasicEffectArea.m_logger.error((Object)("appel d'un param\u00e8tre inexistant : " + paramNum));
+            BasicEffectArea.m_logger.error("appel d'un param\u00e8tre inexistant : " + paramNum);
             return -1.0f;
         }
         return this.m_params[paramNum];
@@ -811,6 +811,6 @@ public abstract class BasicEffectArea<FX extends Effect, P extends BasicEffectAr
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BasicEffectArea.class);
+        m_logger = Logger.getLogger(BasicEffectArea.class);
     }
 }

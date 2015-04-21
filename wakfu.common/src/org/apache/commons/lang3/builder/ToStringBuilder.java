@@ -317,7 +317,8 @@ public class ToStringBuilder implements Builder<String>
         return this.style;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         if (this.getObject() == null) {
             this.getStringBuffer().append(this.getStyle().getNullText());
         }
@@ -327,7 +328,8 @@ public class ToStringBuilder implements Builder<String>
         return this.getStringBuffer().toString();
     }
     
-    public String build() {
+    @Override
+	public String build() {
         return this.toString();
     }
     

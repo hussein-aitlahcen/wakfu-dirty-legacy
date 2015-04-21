@@ -1,12 +1,16 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -58,7 +62,7 @@ public final class CopyCharacMax extends WakfuRunningEffect
         catch (Exception e) {
             wre = new CopyCharacMax();
             wre.m_pool = null;
-            CopyCharacMax.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacDebuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacDebuff : " + e.getMessage());
         }
         return wre;
     }
@@ -71,7 +75,7 @@ public final class CopyCharacMax extends WakfuRunningEffect
         }
         final FighterCharacteristicType charac = FighterCharacteristicType.getCharacteristicTypeFromId(this.m_characId);
         if (charac == null) {
-            CopyCharacMax.m_logger.error((Object)("Id de Charac inconnu " + this.m_characId));
+            RunningEffect.m_logger.error("Id de Charac inconnu " + this.m_characId);
         }
         if (this.m_caster == null || this.m_target == null || charac == null || !this.m_caster.hasCharacteristic(charac) || !this.m_target.hasCharacteristic(charac)) {
             this.setNotified(true);
@@ -94,7 +98,7 @@ public final class CopyCharacMax extends WakfuRunningEffect
         this.m_value = 0;
         final FighterCharacteristicType charac = FighterCharacteristicType.getCharacteristicTypeFromId(this.m_characId);
         if (charac == null) {
-            CopyCharacMax.m_logger.error((Object)("Id de Charac inconnu " + this.m_characId));
+            RunningEffect.m_logger.error("Id de Charac inconnu " + this.m_characId);
             return;
         }
         if (this.m_caster == null || this.m_target == null || !this.m_caster.hasCharacteristic(charac) || !this.m_target.hasCharacteristic(charac)) {
@@ -111,24 +115,24 @@ public final class CopyCharacMax extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        final int paramsCount = ((WakfuEffect)this.m_genericEffect).getParamsCount();
+        final int paramsCount = this.m_genericEffect.getParamsCount();
         if (paramsCount < 1) {
             return;
         }
         final short containerLevel = this.getContainerLevel();
-        this.m_characId = (byte)((WakfuEffect)this.m_genericEffect).getParam(0, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_characId = (byte)this.m_genericEffect.getParam(0, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (paramsCount < 2) {
             return;
         }
-        this.m_targetCopyCaster = (((WakfuEffect)this.m_genericEffect).getParam(1, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_targetCopyCaster = (this.m_genericEffect.getParam(1, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
         if (paramsCount < 3) {
             return;
         }
-        this.m_characPercent = ((WakfuEffect)this.m_genericEffect).getParam(2, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_characPercent = this.m_genericEffect.getParam(2, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL);
         if (paramsCount < 4) {
             return;
         }
-        this.m_addCharacBoost = (((WakfuEffect)this.m_genericEffect).getParam(3, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
+        this.m_addCharacBoost = (this.m_genericEffect.getParam(3, containerLevel, RoundingMethod.LIKE_PREVIOUS_LEVEL) == 1);
     }
     
     @Override

@@ -44,6 +44,6 @@ public class Wallet
     }
     
     static {
-        m_logger = Logger.getLogger((Class)Wallet.class);
+        m_logger = Logger.getLogger(Wallet.class);
     }
 }

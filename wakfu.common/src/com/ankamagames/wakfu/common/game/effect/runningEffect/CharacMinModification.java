@@ -4,7 +4,9 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -40,7 +42,7 @@ public final class CharacMinModification extends WakfuRunningEffect
             re = new CharacMinModification();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacMinModification.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacMinModification : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacMinModification : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -51,7 +53,7 @@ public final class CharacMinModification extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        this.m_value = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
     }
     
     @Override

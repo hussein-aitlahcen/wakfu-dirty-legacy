@@ -7,8 +7,6 @@ import com.ankamagames.framework.kernel.core.maths.*;
 import java.util.*;
 import org.jetbrains.annotations.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 
 public abstract class BasicEffectAreaManager implements Poolable
 {
@@ -39,11 +37,11 @@ public abstract class BasicEffectAreaManager implements Poolable
                 this.m_pool.returnObject(this);
             }
             catch (Exception e) {
-                BasicEffectAreaManager.m_logger.error((Object)"impossible");
+                BasicEffectAreaManager.m_logger.error("impossible");
             }
         }
         else {
-            BasicEffectAreaManager.m_logger.error((Object)("Double release de " + this.getClass().toString()));
+            BasicEffectAreaManager.m_logger.error("Double release de " + this.getClass().toString());
         }
         this.onCheckIn();
     }
@@ -66,11 +64,11 @@ public abstract class BasicEffectAreaManager implements Poolable
     }
     
     public Collection<BasicEffectArea> getEffectAreaList() {
-        return (Collection<BasicEffectArea>)this.m_effectAreaList.values();
+        return this.m_effectAreaList.values();
     }
     
     public Collection<BasicEffectArea> getTargetableEffectArea() {
-        final Collection<BasicEffectArea> allAreas = (Collection<BasicEffectArea>)this.m_activeEffectArea.values();
+        final Collection<BasicEffectArea> allAreas = this.m_activeEffectArea.values();
         final Collection<BasicEffectArea> res = new ArrayList<BasicEffectArea>();
         for (final BasicEffectArea area : allAreas) {
             if (area.isCanBeTargeted()) {
@@ -137,7 +135,7 @@ public abstract class BasicEffectAreaManager implements Poolable
     }
     
     public Collection<BasicEffectArea> getActiveEffectAreas() {
-        return (Collection<BasicEffectArea>)this.m_activeEffectArea.values();
+        return this.m_activeEffectArea.values();
     }
     
     public BasicEffectArea getEffectAreaWithId(final long id) {
@@ -283,6 +281,6 @@ public abstract class BasicEffectAreaManager implements Poolable
     public abstract BasicEffectArea instanceNewAreaFromBaseId(final long p0);
     
     static {
-        m_logger = Logger.getLogger((Class)BasicEffectAreaManager.class);
+        m_logger = Logger.getLogger(BasicEffectAreaManager.class);
     }
 }

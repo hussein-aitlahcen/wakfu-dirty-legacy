@@ -26,7 +26,7 @@ public class CannonLink implements Dropable
             //criter = CriteriaCompiler.compileBoolean(criteria);
         }
         catch (Exception e) {
-            CannonLink.m_logger.error((Object)("Impossible de compiler le crit\u00e8re " + criteria + " sur le cannonlink " + id), (Throwable)e);
+            CannonLink.m_logger.error("Impossible de compiler le crit\u00e8re " + criteria + " sur le cannonlink " + id, e);
         }
         this.m_criterion = criter;
         this.m_dropWeight = dropWeight;
@@ -75,6 +75,6 @@ public class CannonLink implements Dropable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)CannonLink.class);
+        m_logger = Logger.getLogger(CannonLink.class);
     }
 }

@@ -1,6 +1,5 @@
 package com.ankamagames.wakfu.common.configuration;
 
-import java.io.*;
 import org.apache.commons.lang3.*;
 import gnu.trove.*;
 import java.util.*;

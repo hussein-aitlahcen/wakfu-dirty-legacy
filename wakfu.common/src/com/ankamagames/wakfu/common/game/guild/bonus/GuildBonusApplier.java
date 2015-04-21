@@ -6,7 +6,6 @@ import com.ankamagames.wakfu.common.datas.guild.*;
 import com.ankamagames.wakfu.common.game.guild.*;
 import com.ankamagames.wakfu.common.game.guild.definition.*;
 import com.ankamagames.wakfu.common.game.time.calendar.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.*;
 import com.ankamagames.wakfu.common.game.guild.bonus.effect.*;
 
 public abstract class GuildBonusApplier implements GuildListener
@@ -67,7 +66,7 @@ public abstract class GuildBonusApplier implements GuildListener
                 break;
             }
             default: {
-                GuildBonusApplier.m_logger.warn((Object)("type d'effet non trait\u00e9 " + b.getEffect().getType()));
+                GuildBonusApplier.m_logger.warn("type d'effet non trait\u00e9 " + b.getEffect().getType());
                 break;
             }
         }
@@ -116,7 +115,7 @@ public abstract class GuildBonusApplier implements GuildListener
                 this.setPointsEarnedFactorToDefault();
             }
             default: {
-                GuildBonusApplier.m_logger.warn((Object)("type d'effet non trait\u00e9 " + b.getEffect().getType()));
+                GuildBonusApplier.m_logger.warn("type d'effet non trait\u00e9 " + b.getEffect().getType());
             }
         }
     }
@@ -194,6 +193,6 @@ public abstract class GuildBonusApplier implements GuildListener
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildBonusApplier.class);
+        m_logger = Logger.getLogger(GuildBonusApplier.class);
     }
 }

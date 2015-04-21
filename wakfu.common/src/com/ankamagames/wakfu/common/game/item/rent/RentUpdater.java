@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.item.rent;
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.common.datas.*;
 import com.ankamagames.wakfu.common.game.item.*;
-import java.util.*;
 
 public final class RentUpdater
 {
@@ -21,7 +20,7 @@ public final class RentUpdater
                 break;
             }
             default: {
-                RentUpdater.m_logger.error((Object)("Type de location inconnu pour la mise \u00e0 jour " + type));
+                RentUpdater.m_logger.error("Type de location inconnu pour la mise \u00e0 jour " + type);
                 break;
             }
         }
@@ -50,6 +49,6 @@ public final class RentUpdater
     }
     
     static {
-        m_logger = Logger.getLogger((Class)RentUpdater.class);
+        m_logger = Logger.getLogger(RentUpdater.class);
     }
 }

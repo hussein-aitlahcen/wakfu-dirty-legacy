@@ -17,6 +17,8 @@ import com.akfu.world.game.time.WakfuCalendar
 import com.ankamagames.wakfu.common.game.nation.NationManager
 import com.ankamagames.wakfu.common.game.nation.Nation
 import com.akfu.world.game.nation.GameNationHandlersFactory
+import com.akfu.world.game.content.ContentLoader
+import com.ankamagames.framework.fileFormat.io.binaryStorage2.BinaryDocumentManager
 
 object WorldService {
   
@@ -39,6 +41,8 @@ object WorldService {
     NationManager.INSTANCE registerNation(Nation createNation(Nation SUFOKIA))
     NationManager.INSTANCE registerNation(Nation createNation(Nation BONTA))
     NationManager.INSTANCE registerNation(Nation createNation(Nation BRAKMAR))
+    BinaryDocumentManager.getInstance setPath("@res/bdata/%s.jar!/%s.bin")
+    ContentLoader initialize()
     
     system = ActorSystem create("world-system")
     listener = system actorOf(Props(classOf[WorldListener], BIND_PORT), "listener")

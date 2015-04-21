@@ -16,8 +16,8 @@ public class AdminUtils
     public static final Comparator<Right> RIGHT_COMPARATOR;
     
     public static AdminRightsGroup getAdminGroup(final Optional<Admin> admin, final int serverId) {
-        final Optional<Right> right = (admin.isPresent() ? ((Admin)admin.get()).getRight(serverId) : Optional.absent());
-        return right.isPresent() ? ((Right)right.get()).getRight() : AdminRightsGroup.NONE;
+        final Optional<Right> right = (admin.isPresent() ? admin.get().getRight(serverId) : Optional.absent());
+        return right.isPresent() ? right.get().getRight() : AdminRightsGroup.NONE;
     }
     
     public static byte[] serialize(final Admin admin) {

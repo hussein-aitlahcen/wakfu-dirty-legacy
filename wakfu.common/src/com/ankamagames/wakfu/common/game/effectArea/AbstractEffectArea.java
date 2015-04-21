@@ -2,7 +2,9 @@ package com.ankamagames.wakfu.common.game.effectArea;
 
 import com.ankamagames.framework.external.*;
 import com.ankamagames.framework.ai.targetfinder.aoe.*;
+
 import org.jetbrains.annotations.*;
+
 import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.characteristics.*;
@@ -10,7 +12,9 @@ import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.timeevents.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import java.util.*;
+
 import com.ankamagames.framework.ai.dataProvider.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.Breed.*;
@@ -18,7 +22,9 @@ import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.datas.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 
 public abstract class AbstractEffectArea extends BasicEffectArea<WakfuEffect, EffectAreaParameters> implements WakfuEffectContainer, Parameterized, CriterionUser
@@ -43,7 +49,7 @@ public abstract class AbstractEffectArea extends BasicEffectArea<WakfuEffect, Ef
     
     private void validateParamsLength(final float[] params) {
         if (!this.getParametersListSet().mapValueCount((params == null) ? 0 : params.length)) {
-            AbstractEffectArea.m_logger.error((Object)"effectArea poss\u00e9dant un mauvais nombre de param\u00e8tres");
+            BasicEffectArea.m_logger.error("effectArea poss\u00e9dant un mauvais nombre de param\u00e8tres");
         }
     }
     

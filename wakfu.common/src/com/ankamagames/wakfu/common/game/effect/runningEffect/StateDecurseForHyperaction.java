@@ -2,8 +2,8 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class StateDecurseForHyperaction extends StateDecurse
@@ -19,7 +19,7 @@ public final class StateDecurseForHyperaction extends StateDecurse
         }
         catch (Exception e) {
             obj = new StateDecurseForHyperaction();
-            StateDecurseForHyperaction.m_logger.error((Object)("Erreur lors d'un checkOut sur un objet de type StateDecurseForHyperaction : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un objet de type StateDecurseForHyperaction : " + e.getMessage());
         }
         return obj;
     }
@@ -32,7 +32,7 @@ public final class StateDecurseForHyperaction extends StateDecurse
                 this.m_isCheckedOut = false;
             }
             catch (Exception e) {
-                StateDecurseForHyperaction.m_logger.error((Object)"Exception lors du retour au pool", (Throwable)e);
+                RunningEffect.m_logger.error("Exception lors du retour au pool", e);
             }
         }
         else {
@@ -51,7 +51,7 @@ public final class StateDecurseForHyperaction extends StateDecurse
             re = new StateDecurseForHyperaction();
             re.m_pool = null;
             re.m_isStatic = false;
-            StateDecurseForHyperaction.m_logger.error((Object)("Erreur lors d'un checkOut sur un StateDecurse : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un StateDecurse : " + e.getMessage());
         }
         return re;
     }

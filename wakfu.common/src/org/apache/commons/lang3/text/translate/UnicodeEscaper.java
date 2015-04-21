@@ -35,7 +35,8 @@ public class UnicodeEscaper extends CodePointTranslator
         return new UnicodeEscaper(codepointLow, codepointHigh, true);
     }
     
-    public boolean translate(final int codepoint, final Writer out) throws IOException {
+    @Override
+	public boolean translate(final int codepoint, final Writer out) throws IOException {
         if (this.between) {
             if (codepoint < this.below || codepoint > this.above) {
                 return false;

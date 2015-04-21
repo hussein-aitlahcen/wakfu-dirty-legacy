@@ -24,18 +24,18 @@ public abstract class NationActionRequestFactory
         final byte requestType = buffer.get();
         final NationActionRequest request = NationActionRequestType.createRequestFromOrdinal(requestType);
         if (request == null) {
-            NationActionRequestFactory.m_logger.error((Object)("Impossible de d\u00e9coder une NactionActionRequest : type inconnu : " + requestType));
+            NationActionRequestFactory.m_logger.error("Impossible de d\u00e9coder une NactionActionRequest : type inconnu : " + requestType);
             return null;
         }
         request.setNationId(buffer.getInt());
         if (request.unserialize(buffer)) {
             return request;
         }
-        NationActionRequestFactory.m_logger.error((Object)("Erreur \u00e0 la d\u00e9s\u00e9rialisation d'une requ\u00eate de type " + requestType));
+        NationActionRequestFactory.m_logger.error("Erreur \u00e0 la d\u00e9s\u00e9rialisation d'une requ\u00eate de type " + requestType);
         return null;
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationActionRequestFactory.class);
+        m_logger = Logger.getLogger(NationActionRequestFactory.class);
     }
 }

@@ -3,16 +3,14 @@ package com.ankamagames.wakfu.common.game.hero;
 import org.apache.log4j.*;
 import com.ankamagames.framework.kernel.core.maths.*;
 import com.ankamagames.wakfu.common.datas.*;
-import gnu.trove.*;
 import com.ankamagames.wakfu.common.game.item.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.inventory.*;
 
 public class HeroUtils
 {
     private static final Logger m_logger;
     
     public boolean canInviteHeroOrCompanion(final long ownerId) {
-        HeroUtils.m_logger.error((Object)new Exception("Can't check with common, try with client or server HeroUtils"));
+        HeroUtils.m_logger.error(new Exception("Can't check with common, try with client or server HeroUtils"));
         return false;
     }
     
@@ -37,7 +35,7 @@ public class HeroUtils
     }
     
     public static <T extends BasicCharacterInfo> T getHeroWithBagUid(final long ownerId, final long bagUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final T hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -54,7 +52,7 @@ public class HeroUtils
     }
     
     public static <T extends BasicCharacterInfo> T getHeroWithItemUidInBags(final long ownerId, final long itemUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final T hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -71,7 +69,7 @@ public class HeroUtils
     }
     
     public static <T extends BasicCharacterInfo> T getHeroWithItemInEquipment(final long ownerId, final long itemUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final T hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero.getEquipmentInventory().containsUniqueId(itemUid)) {
                 return hero;
@@ -81,7 +79,7 @@ public class HeroUtils
     }
     
     public static <T extends BasicCharacterInfo> T getHeroWithItemUidFromBagsOrEquipment(final long ownerId, final long itemUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final T hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -102,7 +100,7 @@ public class HeroUtils
     }
     
     public static Item getItemFromHero(final long ownerId, final long itemUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final BasicCharacterInfo hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -119,7 +117,7 @@ public class HeroUtils
     }
     
     public static Item getItemFromHeroEquipment(final long ownerId, final long itemUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final BasicCharacterInfo hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -144,7 +142,7 @@ public class HeroUtils
     }
     
     public static AbstractBag getBagFromHero(final long ownerId, final long bagUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final BasicCharacterInfo hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -161,7 +159,7 @@ public class HeroUtils
     }
     
     public static AbstractBag getBagFromHeroItem(final long ownerId, final long itemUid) {
-        for (final long characterId : (Iterable<Long>)HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
+        for (final long characterId : HeroesManager.INSTANCE.getHeroesInParty(ownerId)) {
             final BasicCharacterInfo hero = HeroesManager.INSTANCE.getHero(characterId);
             if (hero == null) {
                 continue;
@@ -178,6 +176,6 @@ public class HeroUtils
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HeroUtils.class);
+        m_logger = Logger.getLogger(HeroUtils.class);
     }
 }

@@ -88,7 +88,7 @@ public class NationGovernmentNominationConfirmationResult extends NationActionRe
     public void execute() {
         final Nation nation = this.getConcernedNation();
         if (nation == null) {
-            NationGovernmentNominationConfirmationResult.m_logger.error((Object)("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas"));
+            NationGovernmentNominationConfirmationResult.m_logger.error("Impossible d'ex\u00e9cuter l'action " + this + " : la nation " + this.m_nationId + " n'existe pas");
             return;
         }
         nation.requestGovernmentNominationResult(this);
@@ -162,7 +162,7 @@ public class NationGovernmentNominationConfirmationResult extends NationActionRe
         NationGovernmentNominationConfirmationResult.CRITERION_FAIL = 3;
         NationGovernmentNominationConfirmationResult.PDC_FAIL = 4;
         NationGovernmentNominationConfirmationResult.FORBIDDEN_BY_REVOKE = 5;
-        m_logger = Logger.getLogger((Class)NationGovernmentNominationConfirmationResult.class);
+        m_logger = Logger.getLogger(NationGovernmentNominationConfirmationResult.class);
         FACTORY = new NationActionRequestFactory() {
             @Override
             public NationActionRequest createNew() {

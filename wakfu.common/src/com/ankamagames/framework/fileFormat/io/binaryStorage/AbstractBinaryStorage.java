@@ -42,7 +42,7 @@ public abstract class AbstractBinaryStorage extends Thread
             return (BinaryStorageOperation)this.m_operationsPool.borrowObject();
         }
         catch (Exception e) {
-            AbstractBinaryStorage.m_logger.error((Object)"Exception lev\u00e9e lors d'un checkOut d'op\u00e9ration", (Throwable)e);
+            AbstractBinaryStorage.m_logger.error("Exception lev\u00e9e lors d'un checkOut d'op\u00e9ration", e);
             return null;
         }
     }
@@ -52,7 +52,7 @@ public abstract class AbstractBinaryStorage extends Thread
             this.m_operationsPool.returnObject(binaryStorageOperation);
         }
         catch (Exception e) {
-            AbstractBinaryStorage.m_logger.error((Object)"Exception lev\u00e9e lors du retour au pool d'un process", (Throwable)e);
+            AbstractBinaryStorage.m_logger.error("Exception lev\u00e9e lors du retour au pool d'un process", e);
         }
     }
     
@@ -133,7 +133,7 @@ public abstract class AbstractBinaryStorage extends Thread
     
     @Override
     public void run() {
-        AbstractBinaryStorage.m_logger.info((Object)("BinaryStorage started " + this));
+        AbstractBinaryStorage.m_logger.info("BinaryStorage started " + this);
         int nbtotal = 0;
         int nbsave = 0;
         int nbdestroy = 0;
@@ -177,18 +177,18 @@ public abstract class AbstractBinaryStorage extends Thread
                     this.m_sleepingCond.await();
                 }
                 catch (InterruptedException e) {
-                    AbstractBinaryStorage.m_logger.warn((Object)"Interrupt", (Throwable)e);
+                    AbstractBinaryStorage.m_logger.warn("Interrupt", e);
                 }
                 finally {
                     this.m_sleepingLock.unlock();
                 }
             }
         }
-        AbstractBinaryStorage.m_logger.info((Object)("BinaryStorage stopped : " + nbtotal + " operations, " + nbsave + " saved, " + nbdestroy + " destroyed"));
+        AbstractBinaryStorage.m_logger.info("BinaryStorage stopped : " + nbtotal + " operations, " + nbsave + " saved, " + nbdestroy + " destroyed");
     }
     
     static {
-        m_logger = Logger.getLogger((Class)BinaryStorage.class);
+        m_logger = Logger.getLogger(BinaryStorage.class);
         DEFAULT_ID_INDEX_HASHCODE = "id".hashCode();
     }
     

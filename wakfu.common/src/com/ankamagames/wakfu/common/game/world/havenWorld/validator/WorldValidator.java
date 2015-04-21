@@ -17,13 +17,13 @@ public class WorldValidator extends ModificationValidator<HavenWorldDataProvider
     
     public boolean validate() {
         this.removeAllErrors();
-        final ArrayList<ConstructionError> errors = validate((HavenWorldDataProvider)this.m_dataProvider);
+        final ArrayList<ConstructionError> errors = validate(this.m_dataProvider);
         return errors.isEmpty();
     }
     
     public boolean validateRecurs() {
         this.removeAllErrors();
-        final HavenWorldDataProvider havenWorldProvider = new HavenWorldDataProvider((HavenWorldDataProvider)this.m_dataProvider);
+        final HavenWorldDataProvider havenWorldProvider = new HavenWorldDataProvider(this.m_dataProvider);
         boolean changed = true;
         while (changed) {
             final ArrayList<ConstructionError> errors = validate(havenWorldProvider);
@@ -66,6 +66,6 @@ public class WorldValidator extends ModificationValidator<HavenWorldDataProvider
     }
     
     static {
-        m_logger = Logger.getLogger((Class)WorldValidator.class);
+        m_logger = Logger.getLogger(WorldValidator.class);
     }
 }

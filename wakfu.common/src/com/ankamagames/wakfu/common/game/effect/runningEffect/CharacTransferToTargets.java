@@ -3,12 +3,15 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.ai.targetfinder.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import java.util.*;
+
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -59,7 +62,7 @@ public final class CharacTransferToTargets extends WakfuRunningEffect
             re = new CharacTransferToTargets();
             re.m_pool = null;
             re.m_isStatic = false;
-            CharacTransferToTargets.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacTransferToTargets : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacTransferToTargets : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         re.m_buffReferenceEffect = this.m_buffReferenceEffect;
@@ -74,11 +77,11 @@ public final class CharacTransferToTargets extends WakfuRunningEffect
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() == 0) {
+        if (this.m_genericEffect.getParamsCount() == 0) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParamsCount() >= 1) {
-            this.m_percentToTransfer = ((WakfuEffect)this.m_genericEffect).getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
+        if (this.m_genericEffect.getParamsCount() >= 1) {
+            this.m_percentToTransfer = this.m_genericEffect.getParam(0, this.getContainerLevel(), RoundingMethod.LIKE_PREVIOUS_LEVEL);
         }
     }
     
@@ -88,7 +91,7 @@ public final class CharacTransferToTargets extends WakfuRunningEffect
         if (this.m_caster == null || !this.m_caster.hasCharacteristic(this.m_charac)) {
             return;
         }
-        final List<List<EffectUser>> potentialTargets = this.determineTargets((WakfuEffect)this.m_genericEffect, this.m_caster, (EffectContext<WakfuEffect>)this.m_context, this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ());
+        final List<List<EffectUser>> potentialTargets = this.determineTargets(this.m_genericEffect, this.m_caster, this.m_context, this.m_targetCell.getX(), this.m_targetCell.getY(), this.m_targetCell.getZ());
         final List<EffectUser> potentialTargetList = new ArrayList<EffectUser>();
         for (int i = 0, n = potentialTargets.size(); i < n; ++i) {
             final List<EffectUser> effectUsers = potentialTargets.get(i);
@@ -139,7 +142,7 @@ public final class CharacTransferToTargets extends WakfuRunningEffect
         }
         else {
             if (!(refRE instanceof CharacGain)) {
-                CharacTransferToTargets.m_logger.error((Object)("Type d'effet non g\u00e9r\u00e9 " + refRE));
+                RunningEffect.m_logger.error("Type d'effet non g\u00e9r\u00e9 " + refRE);
                 return;
             }
             characBuff = new CharacGain(this.m_charac);

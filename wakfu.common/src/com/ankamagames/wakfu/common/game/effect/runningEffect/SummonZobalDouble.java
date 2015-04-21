@@ -3,11 +3,12 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.*;
 import com.ankamagames.wakfu.common.datas.specific.*;
 import com.ankamagames.wakfu.common.game.effect.runningEffect.util.summonDouble.spellsFinder.*;
+
 import org.jetbrains.annotations.*;
-import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
-import com.ankamagames.framework.external.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public final class SummonZobalDouble extends SummonDouble
@@ -28,7 +29,7 @@ public final class SummonZobalDouble extends SummonDouble
             re = new SummonZobalDouble();
             re.m_pool = null;
             re.m_isStatic = false;
-            SummonZobalDouble.m_logger.error((Object)("Erreur lors d'un checkOut sur un SummonZobalDouble : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un SummonZobalDouble : " + e.getMessage());
         }
         return re;
     }

@@ -42,7 +42,7 @@ class GuildPointsChange implements GuildChange
             }
         }
         catch (GuildException e) {
-            GuildPointsChange.m_logger.error((Object)"Impossible de retirer le membre", (Throwable)e);
+            GuildPointsChange.m_logger.error("Impossible de retirer le membre", e);
         }
     }
     
@@ -57,6 +57,6 @@ class GuildPointsChange implements GuildChange
     }
     
     static {
-        m_logger = Logger.getLogger((Class)GuildPointsChange.class);
+        m_logger = Logger.getLogger(GuildPointsChange.class);
     }
 }

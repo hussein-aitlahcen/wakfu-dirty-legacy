@@ -22,14 +22,14 @@ public class HMIChangeSkinPartOtherAction extends HMIAction
             if (array != null && array.length >= 1) {
                 this.m_appearanceId = array[0].intern();
                 final int offset = 1 + this.tryGetWeight(array);
-                this.m_partsToChange = (String[])(allParts ? null : getPartsToChange(array, offset));
+                this.m_partsToChange = allParts ? null : getPartsToChange(array, offset);
                 return true;
             }
-            HMIChangeSkinPartOtherAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut au moins 2 : AppearanceId;parts...., ou un seul, mais avec un ! \u00e0 la fin) : " + parameters));
+            HMIChangeSkinPartOtherAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", pas assez de param\u00e8tres (il en faut au moins 2 : AppearanceId;parts...., ou un seul, mais avec un ! \u00e0 la fin) : " + parameters);
             return false;
         }
         catch (NumberFormatException e) {
-            HMIChangeSkinPartOtherAction.m_logger.error((Object)("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters));
+            HMIChangeSkinPartOtherAction.m_logger.error("Impossible d'initialiser un " + this.getClass().getName() + ", mauvaise saisi des param\u00e8tres  : " + parameters);
             return false;
         }
     }
@@ -74,6 +74,6 @@ public class HMIChangeSkinPartOtherAction extends HMIAction
     }
     
     static {
-        m_logger = Logger.getLogger((Class)HMIParticleSystemAction.class);
+        m_logger = Logger.getLogger(HMIParticleSystemAction.class);
     }
 }

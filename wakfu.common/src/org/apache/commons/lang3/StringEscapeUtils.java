@@ -67,17 +67,17 @@ public class StringEscapeUtils
     }
     
     static {
-        ESCAPE_JAVA = new LookupTranslator((CharSequence[][])new String[][] { { "\"", "\\\"" }, { "\\", "\\\\" } }).with(new LookupTranslator((CharSequence[][])EntityArrays.JAVA_CTRL_CHARS_ESCAPE())).with(UnicodeEscaper.outsideOf(32, 127));
-        ESCAPE_ECMASCRIPT = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])new String[][] { { "'", "\\'" }, { "\"", "\\\"" }, { "\\", "\\\\" }, { "/", "\\/" } }), new LookupTranslator((CharSequence[][])EntityArrays.JAVA_CTRL_CHARS_ESCAPE()), UnicodeEscaper.outsideOf(32, 127) });
-        ESCAPE_XML = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])EntityArrays.BASIC_ESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.APOS_ESCAPE()) });
-        ESCAPE_HTML3 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])EntityArrays.BASIC_ESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.ISO8859_1_ESCAPE()) });
-        ESCAPE_HTML4 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])EntityArrays.BASIC_ESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.ISO8859_1_ESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.HTML40_EXTENDED_ESCAPE()) });
+        ESCAPE_JAVA = new LookupTranslator(new String[][] { { "\"", "\\\"" }, { "\\", "\\\\" } }).with(new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_ESCAPE())).with(UnicodeEscaper.outsideOf(32, 127));
+        ESCAPE_ECMASCRIPT = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(new String[][] { { "'", "\\'" }, { "\"", "\\\"" }, { "\\", "\\\\" }, { "/", "\\/" } }), new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_ESCAPE()), UnicodeEscaper.outsideOf(32, 127) });
+        ESCAPE_XML = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(EntityArrays.BASIC_ESCAPE()), new LookupTranslator(EntityArrays.APOS_ESCAPE()) });
+        ESCAPE_HTML3 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(EntityArrays.BASIC_ESCAPE()), new LookupTranslator(EntityArrays.ISO8859_1_ESCAPE()) });
+        ESCAPE_HTML4 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(EntityArrays.BASIC_ESCAPE()), new LookupTranslator(EntityArrays.ISO8859_1_ESCAPE()), new LookupTranslator(EntityArrays.HTML40_EXTENDED_ESCAPE()) });
         ESCAPE_CSV = new CsvEscaper();
-        UNESCAPE_JAVA = new AggregateTranslator(new CharSequenceTranslator[] { new OctalUnescaper(), new UnicodeUnescaper(), new LookupTranslator((CharSequence[][])EntityArrays.JAVA_CTRL_CHARS_UNESCAPE()), new LookupTranslator((CharSequence[][])new String[][] { { "\\\\", "\\" }, { "\\\"", "\"" }, { "\\'", "'" }, { "\\", "" } }) });
+        UNESCAPE_JAVA = new AggregateTranslator(new CharSequenceTranslator[] { new OctalUnescaper(), new UnicodeUnescaper(), new LookupTranslator(EntityArrays.JAVA_CTRL_CHARS_UNESCAPE()), new LookupTranslator(new String[][] { { "\\\\", "\\" }, { "\\\"", "\"" }, { "\\'", "'" }, { "\\", "" } }) });
         UNESCAPE_ECMASCRIPT = StringEscapeUtils.UNESCAPE_JAVA;
-        UNESCAPE_HTML3 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])EntityArrays.BASIC_UNESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.ISO8859_1_UNESCAPE()), new NumericEntityUnescaper(new NumericEntityUnescaper.OPTION[0]) });
-        UNESCAPE_HTML4 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])EntityArrays.BASIC_UNESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.ISO8859_1_UNESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.HTML40_EXTENDED_UNESCAPE()), new NumericEntityUnescaper(new NumericEntityUnescaper.OPTION[0]) });
-        UNESCAPE_XML = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator((CharSequence[][])EntityArrays.BASIC_UNESCAPE()), new LookupTranslator((CharSequence[][])EntityArrays.APOS_UNESCAPE()), new NumericEntityUnescaper(new NumericEntityUnescaper.OPTION[0]) });
+        UNESCAPE_HTML3 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(EntityArrays.BASIC_UNESCAPE()), new LookupTranslator(EntityArrays.ISO8859_1_UNESCAPE()), new NumericEntityUnescaper(new NumericEntityUnescaper.OPTION[0]) });
+        UNESCAPE_HTML4 = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(EntityArrays.BASIC_UNESCAPE()), new LookupTranslator(EntityArrays.ISO8859_1_UNESCAPE()), new LookupTranslator(EntityArrays.HTML40_EXTENDED_UNESCAPE()), new NumericEntityUnescaper(new NumericEntityUnescaper.OPTION[0]) });
+        UNESCAPE_XML = new AggregateTranslator(new CharSequenceTranslator[] { new LookupTranslator(EntityArrays.BASIC_UNESCAPE()), new LookupTranslator(EntityArrays.APOS_UNESCAPE()), new NumericEntityUnescaper(new NumericEntityUnescaper.OPTION[0]) });
         UNESCAPE_CSV = new CsvUnescaper();
     }
     
@@ -88,7 +88,8 @@ public class StringEscapeUtils
         private static final String CSV_QUOTE_STR;
         private static final char[] CSV_SEARCH_CHARS;
         
-        public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+        @Override
+		public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
             if (index != 0) {
                 throw new IllegalStateException("CsvEscaper should never reach the [1] index");
             }
@@ -116,7 +117,8 @@ public class StringEscapeUtils
         private static final String CSV_QUOTE_STR;
         private static final char[] CSV_SEARCH_CHARS;
         
-        public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
+        @Override
+		public int translate(final CharSequence input, final int index, final Writer out) throws IOException {
             if (index != 0) {
                 throw new IllegalStateException("CsvUnescaper should never reach the [1] index");
             }

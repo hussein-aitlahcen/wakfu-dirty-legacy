@@ -3,7 +3,6 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
@@ -56,7 +55,7 @@ public class SetTrap extends SetEffectArea
             this.m_area.initCharac(FighterCharacteristicType.MELEE_DMG, this.m_caster);
             this.m_area.initCharac(FighterCharacteristicType.RANGED_DMG, this.m_caster);
         }
-        else if (((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 11) {
+        else if (this.m_effectContainer.getContainerType() == 11) {
             final AbstractSpellLevel spellContainer = (AbstractSpellLevel)this.m_effectContainer;
             final byte trapElementId = spellContainer.getSpell().getElementId();
             final Elements element = Elements.getElementFromId(trapElementId);

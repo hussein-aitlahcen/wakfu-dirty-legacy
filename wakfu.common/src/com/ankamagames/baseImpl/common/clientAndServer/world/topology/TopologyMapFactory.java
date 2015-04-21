@@ -39,13 +39,13 @@ public class TopologyMapFactory
                 return new TopologyMapDi();
             }
             default: {
-                TopologyMapFactory.m_logger.error((Object)("Type de map inconnu " + method));
+                TopologyMapFactory.m_logger.error("Type de map inconnu " + method);
                 return null;
             }
         }
     }
     
     static {
-        m_logger = Logger.getLogger((Class)TopologyMapFactory.class);
+        m_logger = Logger.getLogger(TopologyMapFactory.class);
     }
 }

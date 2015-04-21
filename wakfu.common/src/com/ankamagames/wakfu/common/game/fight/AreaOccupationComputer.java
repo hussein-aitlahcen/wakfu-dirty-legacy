@@ -9,7 +9,6 @@ import com.ankamagames.framework.kernel.core.maths.*;
 import java.util.*;
 import com.ankamagames.wakfu.common.game.effectArea.*;
 import com.ankamagames.framework.ai.targetfinder.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 
 public final class AreaOccupationComputer
 {
@@ -99,7 +98,7 @@ public final class AreaOccupationComputer
             }
         }
         catch (Exception e) {
-            AreaOccupationComputer.m_logger.error((Object)"Exception levee", (Throwable)e);
+            AreaOccupationComputer.m_logger.error("Exception levee", e);
         }
         finally {
             if (moverCurrentPosition != moverStartCell) {
@@ -143,7 +142,7 @@ public final class AreaOccupationComputer
         }
         catch (Exception e) {
             res = false;
-            AreaOccupationComputer.m_logger.error((Object)"Exception levee", (Throwable)e);
+            AreaOccupationComputer.m_logger.error("Exception levee", e);
         }
         this.m_mover.setPosition(currentPos);
         return res;
@@ -384,7 +383,7 @@ public final class AreaOccupationComputer
             }
         }
         catch (Exception e) {
-            AreaOccupationComputer.m_logger.error((Object)"Exception lev\u00e9e ", (Throwable)e);
+            AreaOccupationComputer.m_logger.error("Exception lev\u00e9e ", e);
         }
         finally {
             this.m_mover.setPosition(currentPos);
@@ -400,6 +399,6 @@ public final class AreaOccupationComputer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)AreaOccupationComputer.class);
+        m_logger = Logger.getLogger(AreaOccupationComputer.class);
     }
 }

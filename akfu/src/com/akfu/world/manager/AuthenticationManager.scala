@@ -19,7 +19,6 @@ final class Token(val value: String) {
   def isDead = timer isDone
 }
 
-
 object AuthenticationManager {
   final val TOKEN_DURATION = 5000
   
@@ -31,8 +30,8 @@ object AuthenticationManager {
   def addToken(token: String) = tokens(token) = new Token(token)
   
   def generateGameToken(client: WorldClient) {
-    client.self ! RemoveFrame(GameAuthenticationFrame)
-    client.self ! AddFrame(CharacterSelectionFrame)
+    client.removeFrame(GameAuthenticationFrame)
+    client.addFrame(CharacterSelectionFrame)
     client.self ! new AuthentificationTokenResultMessage("salut")
   }
     
@@ -53,7 +52,7 @@ object AuthenticationManager {
       return
     }
         
-    client.self ! AddFrame(GameAuthenticationFrame)
+    client.addFrame(GameAuthenticationFrame)
     
     log info "world valid token, auth success"
     

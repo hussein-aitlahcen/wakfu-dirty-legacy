@@ -22,7 +22,7 @@ public class NationSerializer
                 totalSize += nationPart.serializedSize();
             }
             else {
-                NationSerializer.m_logger.error((Object)("Erreur lors de la r\u00e9cup\u00e9ration de la NationPart correspondant \u00e0 " + part + " de la forme " + serializationType));
+                NationSerializer.m_logger.error("Erreur lors de la r\u00e9cup\u00e9ration de la NationPart correspondant \u00e0 " + part + " de la forme " + serializationType);
             }
         }
         final ByteBuffer buffer = ByteBuffer.allocate(totalSize);
@@ -33,7 +33,7 @@ public class NationSerializer
                 nationPart2.serialize(buffer);
             }
             else {
-                NationSerializer.m_logger.error((Object)("Erreur lors de la r\u00e9cup\u00e9ration de la NationPart correspondant \u00e0 " + nationPart2 + " de la forme " + serializationType));
+                NationSerializer.m_logger.error("Erreur lors de la r\u00e9cup\u00e9ration de la NationPart correspondant \u00e0 " + nationPart2 + " de la forme " + serializationType);
             }
         }
         return buffer.array();
@@ -43,7 +43,7 @@ public class NationSerializer
         final ByteBuffer buffer = ByteBuffer.wrap(data);
         final int serializationNumber = buffer.get() & 0xFF;
         if (serializationNumber < 0 || serializationNumber >= NationSerializationType.values().length) {
-            NationSerializer.m_logger.error((Object)("Num\u00e9ro de part invalide : " + serializationNumber));
+            NationSerializer.m_logger.error("Num\u00e9ro de part invalide : " + serializationNumber);
             return;
         }
         final NationSerializationType serializationType = NationSerializationType.values()[serializationNumber];
@@ -54,7 +54,7 @@ public class NationSerializer
                 nationPart.fireDataChanged();
             }
             else {
-                NationSerializer.m_logger.error((Object)("Impossible de trouver la NationPart correspondant \u00e0 " + part));
+                NationSerializer.m_logger.error("Impossible de trouver la NationPart correspondant \u00e0 " + part);
             }
         }
     }
@@ -72,6 +72,6 @@ public class NationSerializer
     }
     
     static {
-        m_logger = Logger.getLogger((Class)NationSerializer.class);
+        m_logger = Logger.getLogger(NationSerializer.class);
     }
 }

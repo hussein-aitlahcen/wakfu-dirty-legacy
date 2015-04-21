@@ -63,11 +63,11 @@ public class PlayerCharacterXp implements PlayerCharacterLevelable
     @Override
     public XpModification setXp(long xp) {
         if (!this.getXpTable().isXpValid(xp)) {
-            PlayerCharacterXp.m_logger.error((Object)("Valeur d'exp\u00e9rience non valide : " + xp));
+            PlayerCharacterXp.m_logger.error("Valeur d'exp\u00e9rience non valide : " + xp);
             return XpModification.NONE;
         }
         if (xp > this.getMaxXpConsideringCap()) {
-            PlayerCharacterXp.m_logger.error((Object)"On essaye d'ajouter plus d'xp que ce que le cap permet", (Throwable)new Exception());
+            PlayerCharacterXp.m_logger.error("On essaye d'ajouter plus d'xp que ce que le cap permet", new Exception());
             xp = this.getMaxXpConsideringCap();
         }
         if (this.getCurrentXp() == xp) {
@@ -100,11 +100,11 @@ public class PlayerCharacterXp implements PlayerCharacterLevelable
     @Override
     public XpModification setPlayerCharacterLevel(short level) {
         if (!this.getXpTable().isLevelValid(level)) {
-            PlayerCharacterXp.m_logger.error((Object)("Valeur de niveau non valide : " + level));
+            PlayerCharacterXp.m_logger.error("Valeur de niveau non valide : " + level);
             return XpModification.NONE;
         }
         if (level > this.getMaxLevelConsideringCap()) {
-            PlayerCharacterXp.m_logger.error((Object)("Valeur de niveau non valide : sup\u00e9rieure au cap ! : " + level), (Throwable)new Exception());
+            PlayerCharacterXp.m_logger.error("Valeur de niveau non valide : sup\u00e9rieure au cap ! : " + level, new Exception());
             level = this.getMaxLevelConsideringCap();
         }
         if (this.getLevel() == level) {
@@ -115,6 +115,6 @@ public class PlayerCharacterXp implements PlayerCharacterLevelable
     }
     
     static {
-        m_logger = Logger.getLogger((Class)PlayerCharacterXp.class);
+        m_logger = Logger.getLogger(PlayerCharacterXp.class);
     }
 }

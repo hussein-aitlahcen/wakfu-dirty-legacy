@@ -70,7 +70,7 @@ public class CandidateInfo extends AbstractGovernmentInfo
         final byte[] slogan = StringUtils.toUTF8(this.m_slogan);
         buffer.putShort((short)slogan.length);
         buffer.put(slogan);
-        buffer.putShort((short)(serializeBallots ? this.m_ballotCount : 0));
+        buffer.putShort(serializeBallots ? this.m_ballotCount : 0);
         buffer.putShort(this.m_breedId);
         buffer.put(this.m_sex);
         buffer.put((byte)(this.m_withDraw ? 1 : 0));

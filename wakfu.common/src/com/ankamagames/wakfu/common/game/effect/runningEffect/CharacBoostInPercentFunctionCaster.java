@@ -2,11 +2,15 @@ package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.wakfu.common.game.fighter.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
+
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 
@@ -93,7 +97,7 @@ public class CharacBoostInPercentFunctionCaster extends WakfuRunningEffect
             re = new CharacBoostInPercentFunctionCaster();
             re.m_isStatic = false;
             re.m_pool = null;
-            CharacBoostInPercentFunctionCaster.m_logger.error((Object)("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un CharacBuff : " + e.getMessage());
         }
         re.m_charac = this.m_charac;
         return re;
@@ -136,14 +140,14 @@ public class CharacBoostInPercentFunctionCaster extends WakfuRunningEffect
             return;
         }
         final short level = this.getContainerLevel();
-        final int percent = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.RANDOM);
-        if (((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.RANDOM) == 0) {
+        final int percent = this.m_genericEffect.getParam(0, level, RoundingMethod.RANDOM);
+        if (this.m_genericEffect.getParam(1, level, RoundingMethod.RANDOM) == 0) {
             this.m_addCurrentValue = false;
         }
         else {
             this.m_addCurrentValue = true;
         }
-        if (((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.RANDOM) == 0) {
+        if (this.m_genericEffect.getParam(2, level, RoundingMethod.RANDOM) == 0) {
             this.m_substractCurrentValue = false;
         }
         else {

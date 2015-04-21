@@ -20,7 +20,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.wakfu.common.constants.*;
 import com.ankamagames.wakfu.common.game.fighter.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.characteristic.*;
 import com.ankamagames.wakfu.common.game.effect.genericEffect.*;
 import com.ankamagames.wakfu.common.game.spell.*;
 import com.ankamagames.wakfu.common.game.effect.*;
@@ -28,7 +27,6 @@ import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.wakfu.common.game.fight.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
-import com.ankamagames.baseImpl.common.clientAndServer.game.trigger.*;
 
 public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, WakfuEffectContainer>
 {
@@ -81,7 +79,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             public int expectedSize() {
                 if (WakfuRunningEffect.this.m_endTime == null) {
                     WakfuRunningEffect.this.m_endTime = RelativeFightTime.never();
-                    WakfuRunningEffect.m_logger.error((Object)((WakfuRunningEffect.this).getGenericEffect().getActionId() + " : m_endtime null, th\u00e9oriquement impossible"));
+                    RunningEffect.m_logger.error((WakfuRunningEffect.this).getGenericEffect().getActionId() + " : m_endtime null, th\u00e9oriquement impossible");
                 }
                 final int n = 2;
                 final RelativeFightTime endTime = WakfuRunningEffect.this.m_endTime;
@@ -92,8 +90,8 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             @Override
             public void serialize(final ByteBuffer buffer) {
                 if (WakfuRunningEffect.this.m_effectContainer != null) {
-                    buffer.putInt(((WakfuEffectContainer)WakfuRunningEffect.this.m_effectContainer).getContainerType());
-                    buffer.putLong(((WakfuEffectContainer)WakfuRunningEffect.this.m_effectContainer).getEffectContainerId());
+                    buffer.putInt(WakfuRunningEffect.this.m_effectContainer.getContainerType());
+                    buffer.putLong(WakfuRunningEffect.this.m_effectContainer.getEffectContainerId());
                 }
                 else {
                     buffer.putInt(0);
@@ -126,7 +124,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                             containerFound = WakfuRunningEffect.this.createStateContainer(id);
                         }
                         if (!containerFound) {
-                            WakfuRunningEffect.m_logger.error((Object)("Impossible de cr\u00e9er un \u00e9tat en tant que container d'un effet, id unique du container : " + id));
+                            RunningEffect.m_logger.error("Impossible de cr\u00e9er un \u00e9tat en tant que container d'un effet, id unique du container : " + id);
                             break;
                         }
                         break;
@@ -138,11 +136,11 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                                 (WakfuRunningEffect.this).setEffectContainer(area);
                             }
                             else {
-                                WakfuRunningEffect.m_logger.error((Object)("Area inexistante " + id + " sur le contexte de type " + WakfuRunningEffect.this.m_context.getContextType()));
+                                RunningEffect.m_logger.error("Area inexistante " + id + " sur le contexte de type " + WakfuRunningEffect.this.m_context.getContextType());
                             }
                             break;
                         }
-                        WakfuRunningEffect.m_logger.error((Object)"contexte non ou mal initialis\u00e9");
+                        RunningEffect.m_logger.error("contexte non ou mal initialis\u00e9");
                         break;
                     }
                     case 12: {
@@ -151,12 +149,12 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                             (WakfuRunningEffect.this).setEffectContainer(defaultItem);
                             break;
                         }
-                        WakfuRunningEffect.m_logger.error((Object)("item par d\u00e9faut inconnu, referenceId = " + id));
+                        RunningEffect.m_logger.error("item par d\u00e9faut inconnu, referenceId = " + id);
                         break;
                     }
                     case 14:
                     case 31: {
-                        WakfuRunningEffect.m_logger.error((Object)"On ne devrait pas s\u00e9rialiser les effets des set ou de sac");
+                        RunningEffect.m_logger.error("On ne devrait pas s\u00e9rialiser les effets des set ou de sac");
                         break;
                     }
                     case 17: {
@@ -166,7 +164,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                         final BasicCharacterInfo caster = (BasicCharacterInfo)WakfuRunningEffect.this.m_caster;
                         final AptitudeInventory aptitudeInventory = caster.getAptitudeInventory();
                         if (aptitudeInventory == null) {
-                            WakfuRunningEffect.m_logger.error((Object)("[WRE] On re\u00e7oit un effet (id=" + WakfuRunningEffect.this.getId() + ") d'aptitude serialis\u00e9 mais le caster n'a pas d'inventaire d'aptitude (inutile au serveur d'IA) caster : " + WakfuRunningEffect.this.m_caster));
+                            RunningEffect.m_logger.error("[WRE] On re\u00e7oit un effet (id=" + WakfuRunningEffect.this.getId() + ") d'aptitude serialis\u00e9 mais le caster n'a pas d'inventaire d'aptitude (inutile au serveur d'IA) caster : " + WakfuRunningEffect.this.m_caster);
                             return;
                         }
                         if (aptitudeInventory == EmptyAptitudeInventory.INSTANCE) {
@@ -174,11 +172,11 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                         }
                         final List<Aptitude> aptitudeList = aptitudeInventory.getAllWithReferenceId((int)id);
                         if (aptitudeList == null || aptitudeList.isEmpty()) {
-                            WakfuRunningEffect.m_logger.error((Object)"[WRE] On ne connait pas l'aptitude qui contient l'effet deserialise");
+                            RunningEffect.m_logger.error("[WRE] On ne connait pas l'aptitude qui contient l'effet deserialise");
                             return;
                         }
                         if (aptitudeList.size() > 1) {
-                            WakfuRunningEffect.m_logger.error((Object)"[WRE] On recupere plusieurs aptitudes pour un meme id de reference, ce n'est pas logique, on ne peut pas donner de container a notre effet");
+                            RunningEffect.m_logger.error("[WRE] On recupere plusieurs aptitudes pour un meme id de reference, ce n'est pas logique, on ne peut pas donner de container a notre effet");
                             return;
                         }
                         (WakfuRunningEffect.this).setEffectContainer(aptitudeList.get(0));
@@ -288,7 +286,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     }
     
     public boolean hasProperty(final RunningEffectPropertyType property) {
-        return this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).hasProperty(property);
+        return this.m_genericEffect != null && this.m_genericEffect.hasProperty(property);
     }
     
     public void forceImmediateNotifyExecution(final RunningEffect triggerRE, final boolean trigger) {
@@ -317,7 +315,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     private boolean doNotNotify() {
         final WakfuEffectExecutionParameters params = (WakfuEffectExecutionParameters)this.getParams();
-        return (params != null && params.isDoNotNotify()) || (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).doNotNotify());
+        return (params != null && params.isDoNotNotify()) || (this.m_genericEffect != null && this.m_genericEffect.doNotNotify());
     }
     
     public void setNotified(final boolean alreadyNotify) {
@@ -367,7 +365,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                 listener.valueComputed(this);
             }
             catch (Exception e) {
-                WakfuRunningEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+                RunningEffect.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -404,7 +402,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                 listener.onAfterExecution(this);
             }
             catch (Exception e) {
-                WakfuRunningEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+                RunningEffect.m_logger.error("Exception levee", e);
             }
         }
     }
@@ -415,7 +413,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             this.executeOverride(triggerRE, trigger);
         }
         catch (Exception e) {
-            WakfuRunningEffect.m_logger.error((Object)("Exception lors de l'execution d'un effet " + ((this.m_genericEffect != null) ? ((WakfuEffect)this.m_genericEffect).getEffectId() : this.getId())), (Throwable)e);
+            RunningEffect.m_logger.error("Exception lors de l'execution d'un effet " + ((this.m_genericEffect != null) ? this.m_genericEffect.getEffectId() : this.getId()), e);
         }
         this.m_executed = true;
         if (!this.m_notified) {
@@ -423,7 +421,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                 this.notifyExecution(triggerRE, trigger);
             }
             catch (Exception e) {
-                WakfuRunningEffect.m_logger.error((Object)"Exception levee lors de la notification de l'execution", (Throwable)e);
+                RunningEffect.m_logger.error("Exception levee lors de la notification de l'execution", e);
             }
         }
         this.m_notified = false;
@@ -434,7 +432,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     @Override
     public boolean dontTriggerAnything() {
-        return super.dontTriggerAnything() || (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).hasProperty(RunningEffectPropertyType.DONT_TRIGGER_ANYTHING_LEVEL_1));
+        return super.dontTriggerAnything() || (this.m_genericEffect != null && this.m_genericEffect.hasProperty(RunningEffectPropertyType.DONT_TRIGGER_ANYTHING_LEVEL_1));
     }
     
     @Override
@@ -468,7 +466,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                     break;
                 }
                 default: {
-                    WakfuRunningEffect.m_logger.error((Object)("Pas de type de trigger global correspondant " + triggerType));
+                    RunningEffect.m_logger.error("Pas de type de trigger global correspondant " + triggerType);
                     return somethingWasTriggered;
                 }
             }
@@ -479,7 +477,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             }
         }
         catch (Exception e) {
-            WakfuRunningEffect.m_logger.error((Object)"Exception catch\u00e9e : ", (Throwable)e);
+            RunningEffect.m_logger.error("Exception catch\u00e9e : ", e);
         }
         return somethingWasTriggered;
     }
@@ -489,11 +487,11 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
         if (linkedRE == null || this.m_genericEffect == null) {
             return this.m_target;
         }
-        final TriggerTargetType triggerTargetType = ((WakfuEffect)this.m_genericEffect).getTriggerTargetType();
+        final TriggerTargetType triggerTargetType = this.m_genericEffect.getTriggerTargetType();
         try {
             switch (triggerTargetType) {
                 case NONE: {
-                    WakfuRunningEffect.m_logger.error((Object)("Pas de type de cibles sp\u00e9cifi\u00e9e pour un effet d\u00e9clench\u00e9, on retrourne la cible originale, id : " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+                    RunningEffect.m_logger.error("Pas de type de cibles sp\u00e9cifi\u00e9e pour un effet d\u00e9clench\u00e9, on retrourne la cible originale, id : " + this.m_genericEffect.getEffectId());
                     return this.m_target;
                 }
                 case EFFECT_ORIGINAL_TARGET: {
@@ -512,13 +510,13 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                     return linkedRE.getTarget();
                 }
                 default: {
-                    WakfuRunningEffect.m_logger.error((Object)("Type de cible d'effet declench\u00e9 inconnue " + triggerTargetType));
+                    RunningEffect.m_logger.error("Type de cible d'effet declench\u00e9 inconnue " + triggerTargetType);
                     return this.m_target;
                 }
             }
         }
         catch (Exception e) {
-            WakfuRunningEffect.m_logger.error((Object)("Erreur lors de la r\u00e9cup\u00e9ration du triggering target sur l'effet " + ((WakfuEffect)this.m_genericEffect).getEffectId()), (Throwable)e);
+            RunningEffect.m_logger.error("Erreur lors de la r\u00e9cup\u00e9ration du triggering target sur l'effet " + this.m_genericEffect.getEffectId(), e);
             return null;
         }
     }
@@ -528,14 +526,14 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
         if (this.m_genericEffect == null || linkedRE == null) {
             return this.m_caster;
         }
-        final TriggerCasterType casterType = ((WakfuEffect)this.m_genericEffect).getTriggerCasterType();
+        final TriggerCasterType casterType = this.m_genericEffect.getTriggerCasterType();
         if (casterType == null) {
             return this.m_caster;
         }
         try {
             switch (casterType) {
                 case NONE: {
-                    WakfuRunningEffect.m_logger.error((Object)("Pas de type de caster sp\u00e9cifi\u00e9 pour un effet d\u00e9clench\u00e9, on retourne la cible originale, id : " + ((WakfuEffect)this.m_genericEffect).getEffectId()));
+                    RunningEffect.m_logger.error("Pas de type de caster sp\u00e9cifi\u00e9 pour un effet d\u00e9clench\u00e9, on retourne la cible originale, id : " + this.m_genericEffect.getEffectId());
                     return this.m_caster;
                 }
                 case EFFECT_ORIGINAL_CASTER: {
@@ -554,13 +552,13 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
                     return linkedRE.getTarget();
                 }
                 default: {
-                    WakfuRunningEffect.m_logger.error((Object)("Type de cible d'effet declench\u00e9 inconnue " + casterType));
+                    RunningEffect.m_logger.error("Type de cible d'effet declench\u00e9 inconnue " + casterType);
                     return this.m_caster;
                 }
             }
         }
         catch (Exception e) {
-            WakfuRunningEffect.m_logger.error((Object)("Erreur lors de la r\u00e9cup\u00e9ration du triggering caster sur l'effet " + ((WakfuEffect)this.m_genericEffect).getEffectId()), (Throwable)e);
+            RunningEffect.m_logger.error("Erreur lors de la r\u00e9cup\u00e9ration du triggering caster sur l'effet " + this.m_genericEffect.getEffectId(), e);
             return null;
         }
     }
@@ -589,10 +587,10 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     protected Long getIdOfFighterToToAttachTo() {
         if (this.m_genericEffect != null) {
-            if (((WakfuEffect)this.m_genericEffect).isDurationInCasterTurn() && this.m_caster != null) {
+            if (this.m_genericEffect.isDurationInCasterTurn() && this.m_caster != null) {
                 return this.m_caster.getId();
             }
-            if (((WakfuEffect)this.m_genericEffect).isDurationInTargetTurn() && this.m_target != null) {
+            if (this.m_genericEffect.isDurationInTargetTurn() && this.m_target != null) {
                 return this.m_target.getId();
             }
         }
@@ -613,7 +611,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
         if (this.m_genericEffect == null) {
             return;
         }
-        if (((WakfuEffect)this.m_genericEffect).getEffectType() != 2) {
+        if (this.m_genericEffect.getEffectType() != 2) {
             return;
         }
         if (this.m_context.getTimeline() == null) {
@@ -628,7 +626,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     private boolean canAttachToTimeline() {
         if (this.getIdOfFighterToToAttachTo() == null) {
-            WakfuRunningEffect.m_logger.error((Object)("[DESIGN EFFECT] Pas de point d'attache dans la timeline (#" + this.getUniqueId() + ' ' + this.actionAndGenericEffectIdString() + ')'));
+            RunningEffect.m_logger.error("[DESIGN EFFECT] Pas de point d'attache dans la timeline (#" + this.getUniqueId() + ' ' + this.actionAndGenericEffectIdString() + ')');
             return false;
         }
         return true;
@@ -636,7 +634,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     @Override
     public void pushRunningEffectDurationTimeEventInTimeline() {
-        if (this.m_genericEffect == null || ((WakfuEffect)this.m_genericEffect).getEffectType() != 2 || this.m_context.getTimeline() == null) {
+        if (this.m_genericEffect == null || this.m_genericEffect.getEffectType() != 2 || this.m_context.getTimeline() == null) {
             return;
         }
         final WakfuFightEffect effect = (WakfuFightEffect)this.m_genericEffect;
@@ -681,7 +679,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     }
     
     public long getRemainingTimeInMs() {
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getEffectType() == 1 && this.m_remainingTimeInMs < 0L) {
+        if (this.m_genericEffect != null && this.m_genericEffect.getEffectType() == 1 && this.m_remainingTimeInMs < 0L) {
             this.m_remainingTimeInMs = ((WakfuWorldEffect) (this).getGenericEffect()).getDurationInMs(this.getContainerLevel());
         }
         return this.m_remainingTimeInMs;
@@ -700,7 +698,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             return true;
         }
         if (this.m_genericEffect != null) {
-            switch (((WakfuEffect)this.m_genericEffect).getEffectType()) {
+            switch (this.m_genericEffect.getEffectType()) {
                 case 2: {
                     final WakfuFightEffect effect = (WakfuFightEffect)this.m_genericEffect;
                     final RelativeFightTimeInterval effectDuration = effect.getDuration(this.getContainerLevel());
@@ -728,7 +726,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             return false;
         }
         final short effectContainerLevel = this.getContainerLevel();
-        switch (((WakfuEffect)this.m_genericEffect).getEffectType()) {
+        switch (this.m_genericEffect.getEffectType()) {
             case 2: {
                 final WakfuFightEffect effect = (WakfuFightEffect)this.m_genericEffect;
                 final RelativeFightTimeInterval effectDuration = effect.getDuration(effectContainerLevel);
@@ -749,14 +747,15 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     @Override
     public boolean hasExecutionDelay() {
-        return this.m_genericEffect != null && this.m_effectContainer != null && ((WakfuEffect)this.m_genericEffect).getEffectType() == 2 && !((WakfuFightEffect)this.m_genericEffect).getDelay(this.getContainerLevel()).isImmediate();
+        return this.m_genericEffect != null && this.m_effectContainer != null && this.m_genericEffect.getEffectType() == 2 && !((WakfuFightEffect)this.m_genericEffect).getDelay(this.getContainerLevel()).isImmediate();
     }
     
     public Elements getElement() {
         return null;
     }
     
-    public void addTriggersToExecute() {
+    @Override
+	public void addTriggersToExecute() {
         Elements element = this.getElement();
         if (element == null) {
             element = this.getSpellElement();
@@ -792,7 +791,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     @Override
     public boolean canBeExecuted() {
-        if (this.m_genericEffect != null && !((WakfuEffect)this.m_genericEffect).isUsableInWorld() && !this.canBeExecutedOnKO() && this.m_target != null && this.m_target.isOffPlay()) {
+        if (this.m_genericEffect != null && !this.m_genericEffect.isUsableInWorld() && !this.canBeExecutedOnKO() && this.m_target != null && this.m_target.isOffPlay()) {
             return false;
         }
         if (this.checkIsNotValidTargetProperty()) {
@@ -817,7 +816,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
         final short level = this.getContainerLevel();
         boolean roll = true;
         if (this.getParams() == null || !((WakfuEffectExecutionParameters)this.getParams()).disableProbabilityComputation()) {
-            roll = (DiceRoll.roll(100) <= ValueRounder.randomRound(((WakfuEffect)this.m_genericEffect).getExecutionProbability(level)));
+            roll = (DiceRoll.roll(100) <= ValueRounder.randomRound(this.m_genericEffect.getExecutionProbability(level)));
         }
         return roll;
     }
@@ -832,8 +831,8 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     private boolean isValidForContainerLevel() {
         final short level = this.getContainerLevel();
-        final int minLevel = ((WakfuEffect)this.m_genericEffect).getContainerMinLevel();
-        final int maxLevel = ((WakfuEffect)this.m_genericEffect).getContainerMaxLevel();
+        final int minLevel = this.m_genericEffect.getContainerMinLevel();
+        final int maxLevel = this.m_genericEffect.getContainerMaxLevel();
         return level >= minLevel && level <= maxLevel;
     }
     
@@ -852,7 +851,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             return false;
         }
         final short level = this.getContainerLevel();
-        return DiceRoll.roll(100) <= ValueRounder.randomRound(((WakfuEffect)this.m_genericEffect).getExecutionProbability(level));
+        return DiceRoll.roll(100) <= ValueRounder.randomRound(this.m_genericEffect.getExecutionProbability(level));
     }
     
     boolean checkConditions(final RunningEffect linkedRE) {
@@ -861,10 +860,10 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
         this.m_triggeringEffectForCriterion = linkedRE;
         boolean valid;
         try {
-            valid = (((WakfuEffect)this.m_genericEffect).getConditions() == null || ((WakfuEffect)this.m_genericEffect).getConditions().isValid(caster, (target == null) ? this.m_targetCell : target, this, this.m_context));
+            valid = (this.m_genericEffect.getConditions() == null || this.m_genericEffect.getConditions().isValid(caster, (target == null) ? this.m_targetCell : target, this, this.m_context));
         }
         catch (Exception e) {
-            WakfuRunningEffect.m_logger.error((Object)"Exception levee", (Throwable)e);
+            RunningEffect.m_logger.error("Exception levee", e);
             valid = false;
         }
         finally {
@@ -959,7 +958,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             }
             final State state = ((StateRunningEffect)re).getState();
             if (state == null) {
-                WakfuRunningEffect.m_logger.error((Object)("Un StateRunningEffect avec un etat inexistant ??? re.getId() = " + re.getId()));
+                RunningEffect.m_logger.error("Un StateRunningEffect avec un etat inexistant ??? re.getId() = " + re.getId());
             }
             else {
                 if (state.getUniqueId() == stateId) {
@@ -991,7 +990,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
             return re != null && re.getValue() == this.getValue() && (re.getTargetCell() == null || re.getTargetCell().equals(this.getTargetCell())) && re.getCaster() == this.getCaster() && re.getEffectContainer() == (this).getEffectContainer() && re.getGenericEffect() == this.getGenericEffect() && re.getEndTime() == this.getEndTime() && re.getId() == this.getId() && re.mustBeExecutedNow() == this.mustBeExecutedNow();
         }
         catch (Exception e) {
-            WakfuRunningEffect.m_logger.warn((Object)ExceptionFormatter.toString(e));
+            RunningEffect.m_logger.warn(ExceptionFormatter.toString(e));
             return false;
         }
     }
@@ -1016,8 +1015,8 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     
     @Override
     protected void initialiseExecutionCount() {
-        if (this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).getMaximumExecutions() >= 0) {
-            this.m_maxExecutionCount = (int)(((WakfuEffect)this.m_genericEffect).getMaximumExecutions() + this.getContainerLevel() * ((WakfuEffect)this.m_genericEffect).getMaxExecutionIncr());
+        if (this.m_genericEffect != null && this.m_genericEffect.getMaximumExecutions() >= 0) {
+            this.m_maxExecutionCount = (int)(this.m_genericEffect.getMaximumExecutions() + this.getContainerLevel() * this.m_genericEffect.getMaxExecutionIncr());
         }
         else {
             this.m_maxExecutionCount = -1;
@@ -1025,27 +1024,27 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     }
     
     public boolean isProtectorBuff() {
-        return this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 19;
+        return this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 19;
     }
     
     public boolean isAptitudeEffect() {
-        return this.m_effectContainer != null && (((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 17 || ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 36);
+        return this.m_effectContainer != null && (this.m_effectContainer.getContainerType() == 17 || this.m_effectContainer.getContainerType() == 36);
     }
     
     public boolean isPassiveSpellEffect() {
-        return this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 25;
+        return this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 25;
     }
     
     public boolean isGuildEffect() {
-        return this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 32;
+        return this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 32;
     }
     
     public boolean isHavenWorldEffect() {
-        return this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 28;
+        return this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 28;
     }
     
     public boolean isAntiAddictionEffect() {
-        return this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 34;
+        return this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 34;
     }
     
     public boolean comeFromTransmigrableState() {
@@ -1053,7 +1052,7 @@ public abstract class WakfuRunningEffect extends RunningEffect<WakfuEffect, Wakf
     }
     
     public boolean isGlobalTriggerListener() {
-        return this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isGlobalTriggerListener();
+        return this.m_genericEffect != null && this.m_genericEffect.isGlobalTriggerListener();
     }
     
     protected RunningEffect getTriggeringEffect(final RunningEffect triggerRE) {

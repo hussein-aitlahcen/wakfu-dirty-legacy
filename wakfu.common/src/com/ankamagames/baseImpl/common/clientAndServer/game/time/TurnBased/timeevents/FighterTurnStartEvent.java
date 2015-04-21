@@ -2,7 +2,6 @@ package com.ankamagames.baseImpl.common.clientAndServer.game.time.TurnBased.time
 
 import org.apache.log4j.*;
 import com.ankamagames.framework.kernel.core.common.*;
-import org.apache.commons.pool.*;
 
 public class FighterTurnStartEvent extends FighterTurnEvent implements Releasable
 {
@@ -21,7 +20,7 @@ public class FighterTurnStartEvent extends FighterTurnEvent implements Releasabl
             event.m_pool = FighterTurnStartEvent.m_staticPool;
         }
         catch (Exception e) {
-            FighterTurnStartEvent.m_logger.warn((Object)("Erreur au checkOut d'un " + FighterTurnStartEvent.class.getSimpleName()));
+            FighterTurnStartEvent.m_logger.warn("Erreur au checkOut d'un " + FighterTurnStartEvent.class.getSimpleName());
             event = new FighterTurnStartEvent();
         }
         event.setFighterId(fighterId);
@@ -35,12 +34,12 @@ public class FighterTurnStartEvent extends FighterTurnEvent implements Releasabl
                 this.m_pool.returnObject(this);
             }
             catch (Exception e) {
-                FighterTurnStartEvent.m_logger.warn((Object)("Erreur au release d'un " + FighterTurnStartEvent.class.getSimpleName()));
+                FighterTurnStartEvent.m_logger.warn("Erreur au release d'un " + FighterTurnStartEvent.class.getSimpleName());
             }
             this.m_pool = null;
         }
         else {
-            FighterTurnStartEvent.m_logger.error((Object)("Double release de " + this.getClass().toString()));
+            FighterTurnStartEvent.m_logger.error("Double release de " + this.getClass().toString());
         }
     }
     
@@ -51,6 +50,6 @@ public class FighterTurnStartEvent extends FighterTurnEvent implements Releasabl
                 return new FighterTurnStartEvent();
             }
         });
-        FighterTurnStartEvent.m_logger = Logger.getLogger((Class)FighterTurnStartEvent.class);
+        FighterTurnStartEvent.m_logger = Logger.getLogger(FighterTurnStartEvent.class);
     }
 }

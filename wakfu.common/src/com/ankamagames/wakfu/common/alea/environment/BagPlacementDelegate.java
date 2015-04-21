@@ -68,7 +68,7 @@ public abstract class BagPlacementDelegate
     protected abstract void duplicate(final BagPlacementDelegate p0);
     
     static {
-        m_logger = Logger.getLogger((Class)BagPlacementDelegate.class);
+        m_logger = Logger.getLogger(BagPlacementDelegate.class);
     }
     
     public static final class InWorld extends BagPlacementDelegate

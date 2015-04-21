@@ -42,18 +42,20 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         this.addAll(collection);
     }
     
-    public boolean add(final E obj) {
+    @Override
+	public boolean add(final E obj) {
         final int index = this.insertionIndex(obj);
         if (index < 0) {
             return false;
         }
         final Object old = this._set[index];
         this._set[index] = obj;
-        this.postInsertHook(old == THashSet.FREE);
+        this.postInsertHook(old == TObjectHash.FREE);
         return true;
     }
     
-    public boolean equals(final Object other) {
+    @Override
+	public boolean equals(final Object other) {
         if (!(other instanceof Set)) {
             return false;
         }
@@ -61,19 +63,21 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return that.size() == this.size() && this.containsAll(that);
     }
     
-    public int hashCode() {
+    @Override
+	public int hashCode() {
         final HashProcedure p = new HashProcedure();
         this.forEach(p);
         return p.getHashCode();
     }
     
-    protected void rehash(final int newCapacity) {
+    @Override
+	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final Object[] oldSet = this._set;
-        Arrays.fill(this._set = new Object[newCapacity], THashSet.FREE);
+        Arrays.fill(this._set = new Object[newCapacity], TObjectHash.FREE);
         int i = oldCapacity;
         while (i-- > 0) {
-            if (oldSet[i] != THashSet.FREE && oldSet[i] != THashSet.REMOVED) {
+            if (oldSet[i] != TObjectHash.FREE && oldSet[i] != TObjectHash.REMOVED) {
                 final E o = (E)oldSet[i];
                 final int index = this.insertionIndex(o);
                 if (index < 0) {
@@ -84,13 +88,15 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         }
     }
     
-    public Object[] toArray() {
+    @Override
+	public Object[] toArray() {
         final Object[] result = new Object[this.size()];
         this.forEach(new ToObjectArrayProcedure<E>((E[])result));
         return result;
     }
     
-    public <T> T[] toArray(T[] a) {
+    @Override
+	public <T> T[] toArray(T[] a) {
         final int size = this.size();
         if (a.length < size) {
             a = (T[])Array.newInstance(a.getClass().getComponentType(), size);
@@ -102,12 +108,14 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return a;
     }
     
-    public void clear() {
+    @Override
+	public void clear() {
         super.clear();
-        Arrays.fill(this._set, 0, this._set.length, THashSet.FREE);
+        Arrays.fill(this._set, 0, this._set.length, TObjectHash.FREE);
     }
     
-    public boolean remove(final Object obj) {
+    @Override
+	public boolean remove(final Object obj) {
         final int index = this.index((E)obj);
         if (index >= 0) {
             this.removeAt(index);
@@ -116,11 +124,13 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return false;
     }
     
-    public Iterator<E> iterator() {
+    @Override
+	public Iterator<E> iterator() {
         return new TObjectHashIterator<E>(this);
     }
     
-    public boolean containsAll(final Collection<?> collection) {
+    @Override
+	public boolean containsAll(final Collection<?> collection) {
         final Iterator i = collection.iterator();
         while (i.hasNext()) {
             if (!this.contains(i.next())) {
@@ -130,7 +140,8 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return true;
     }
     
-    public boolean addAll(final Collection<? extends E> collection) {
+    @Override
+	public boolean addAll(final Collection<? extends E> collection) {
         boolean changed = false;
         int size = collection.size();
         this.ensureCapacity(size);
@@ -143,7 +154,8 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return changed;
     }
     
-    public boolean removeAll(final Collection<?> collection) {
+    @Override
+	public boolean removeAll(final Collection<?> collection) {
         boolean changed = false;
         int size = collection.size();
         final Iterator it = collection.iterator();
@@ -155,7 +167,8 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return changed;
     }
     
-    public boolean retainAll(final Collection<?> collection) {
+    @Override
+	public boolean retainAll(final Collection<?> collection) {
         boolean changed = false;
         int size = this.size();
         final Iterator it = this.iterator();
@@ -168,12 +181,14 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return changed;
     }
     
-    public String toString() {
+    @Override
+	public String toString() {
         final StringBuilder buf = new StringBuilder("{");
         this.forEach(new TObjectProcedure() {
             private boolean first = true;
             
-            public boolean execute(final Object value) {
+            @Override
+			public boolean execute(final Object value) {
                 if (this.first) {
                     this.first = false;
                 }
@@ -188,7 +203,8 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         return buf.toString();
     }
     
-    public void writeExternal(final ObjectOutput out) throws IOException {
+    @Override
+	public void writeExternal(final ObjectOutput out) throws IOException {
         out.writeByte(1);
         super.writeExternal(out);
         out.writeInt(this._size);
@@ -198,7 +214,8 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
         }
     }
     
-    public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
+    @Override
+	public void readExternal(final ObjectInput in) throws IOException, ClassNotFoundException {
         final byte version = in.readByte();
         if (version != 0) {
             super.readExternal(in);
@@ -224,7 +241,8 @@ public class THashSet<E> extends TObjectHash<E> implements Set<E>, Iterable<E>, 
             return this.h;
         }
         
-        public final boolean execute(final E key) {
+        @Override
+		public final boolean execute(final E key) {
             this.h += THashSet.this._hashingStrategy.computeHashCode(key);
             return true;
         }

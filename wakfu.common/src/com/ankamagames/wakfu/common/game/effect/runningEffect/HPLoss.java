@@ -1,9 +1,13 @@
 package com.ankamagames.wakfu.common.game.effect.runningEffect;
 
 import com.ankamagames.framework.kernel.core.common.serialization.*;
+
 import java.nio.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
+
 import java.util.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.runningEffect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.part.*;
@@ -18,6 +22,7 @@ import com.ankamagames.wakfu.common.game.item.*;
 import com.ankamagames.framework.external.*;
 import com.ankamagames.wakfu.common.game.effect.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
@@ -90,7 +95,7 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
             re = new HPLoss(element, mode);
             re.m_pool = null;
             re.m_isStatic = false;
-            HPLoss.m_logger.error((Object)("Erreur lors d'un checkOut sur un HPLoss : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un checkOut sur un HPLoss : " + e.getMessage());
         }
         re.initializeHPLoss(context, element, mode, hpLost, target);
         return re;
@@ -121,7 +126,7 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
         catch (Exception e) {
             re = new HPLoss();
             re.m_pool = null;
-            HPLoss.m_logger.error((Object)("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage()));
+            RunningEffect.m_logger.error("Erreur lors d'un newInstance sur un HPLoss : " + e.getMessage());
         }
         this.copyParams(re);
         return re;
@@ -209,7 +214,7 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
             this.dmgAbsorb();
             rebound = this.computeRebound();
         }
-        if (this.isValueComputationEnabled() && this.m_target != null && this.m_caster != null && (this.m_genericEffect == null || !((WakfuEffect)this.m_genericEffect).hasProperty(RunningEffectPropertyType.DONT_USE_BLOCK))) {
+        if (this.isValueComputationEnabled() && this.m_target != null && this.m_caster != null && (this.m_genericEffect == null || !this.m_genericEffect.hasProperty(RunningEffectPropertyType.DONT_USE_BLOCK))) {
             final AbstractCharacteristic blockCharac = this.m_target.getCharacteristic(FighterCharacteristicType.BLOCK);
             if (blockCharac != null) {
                 final int blockValue = blockCharac.value();
@@ -304,7 +309,7 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
             final int absorbValue = ValueRounder.randomRound(this.m_value * absorbRate / 100.0f);
             if (absorbValue > 0) {
                 if (this.m_target != null && this.m_caster != this.m_target) {
-                    final WakfuRunningEffect hpgain = HPGain.checkOut((EffectContext<WakfuEffect>)this.m_context, this.getElement());
+                    final WakfuRunningEffect hpgain = HPGain.checkOut(this.m_context, this.getElement());
                     hpgain.setExecutionStatus((byte)4);
                     hpgain.forceValue(absorbValue);
                     (hpgain).setGenericEffect((this).getGenericEffect());
@@ -335,7 +340,7 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
     private void executeRebound(final int rebound) {
         if (this.m_caster != null && this.m_caster != this.m_target) {
             final HPLoss reboundRE = (HPLoss)this.newParameterizedInstance();
-            if (((WakfuEffect)this.m_genericEffect).notifyInChat()) {
+            if (this.m_genericEffect.notifyInChat()) {
                 (reboundRE).setGenericEffect(DefaultFightInstantEffectWithChatNotif.getInstance());
             }
             else {
@@ -477,27 +482,27 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
         this.defaultCondition();
         final short level = this.getContainerLevel();
         if (this.m_genericEffect != null) {
-            switch (((WakfuEffect)this.m_genericEffect).getParamsCount()) {
+            switch (this.m_genericEffect.getParamsCount()) {
                 case 1: {
-                    this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+                    this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
                     break;
                 }
                 case 2: {
-                    this.m_value = ((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
-                    this.m_condition = ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+                    this.m_value = this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+                    this.m_condition = this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
                     break;
                 }
                 case 3: {
-                    this.m_value = DiceRoll.roll(((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+                    this.m_value = DiceRoll.roll(this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
                     break;
                 }
                 case 4: {
-                    this.m_value = DiceRoll.roll(((WakfuEffect)this.m_genericEffect).getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), ((WakfuEffect)this.m_genericEffect).getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), ((WakfuEffect)this.m_genericEffect).getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
-                    this.m_condition = ((WakfuEffect)this.m_genericEffect).getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
+                    this.m_value = DiceRoll.roll(this.m_genericEffect.getParam(0, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), this.m_genericEffect.getParam(1, level, RoundingMethod.LIKE_PREVIOUS_LEVEL), this.m_genericEffect.getParam(2, level, RoundingMethod.LIKE_PREVIOUS_LEVEL));
+                    this.m_condition = this.m_genericEffect.getParam(3, level, RoundingMethod.LIKE_PREVIOUS_LEVEL);
                     break;
                 }
                 default: {
-                    HPLoss.m_logger.error((Object)("Nombre de param\u00e8tres incorrect dans un HPLoss : " + ((WakfuEffect)this.m_genericEffect).getParamsCount()));
+                    RunningEffect.m_logger.error("Nombre de param\u00e8tres incorrect dans un HPLoss : " + this.m_genericEffect.getParamsCount());
                     this.m_value = 0;
                     break;
                 }
@@ -515,15 +520,15 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
     }
     
     public void computeModificator(final int conditions) {
-        this.computeModificator(conditions, this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).checkFlags(1L), this.m_genericEffect != null && ((WakfuEffect)this.m_genericEffect).isAffectedByLocalisation());
+        this.computeModificator(conditions, this.m_genericEffect != null && this.m_genericEffect.checkFlags(1L), this.m_genericEffect != null && this.m_genericEffect.isAffectedByLocalisation());
     }
     
     public void computeModificator(final int conditions, final boolean critical, final boolean localised) {
         Item weapon = null;
-        if (this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 12) {
+        if (this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 12) {
             weapon = (Item)this.m_effectContainer;
         }
-        final HpLossComputer computer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_staticElement, (WakfuEffect)this.m_genericEffect);
+        final HpLossComputer computer = new HpLossComputerImpl(this.m_caster, this.m_target, this.m_staticElement, this.m_genericEffect);
         computer.setValue(this.m_value);
         computer.setConditions(conditions);
         computer.setAffectedByLocalisation(localised);
@@ -559,7 +564,7 @@ public class HPLoss extends WakfuRunningEffect implements ArmorLossProvider
     @Override
     public Elements getElement() {
         Elements elements = this.m_staticElement;
-        if (this.m_effectContainer != null && ((WakfuEffectContainer)this.m_effectContainer).getContainerType() == 12 && this.m_target != null) {
+        if (this.m_effectContainer != null && this.m_effectContainer.getContainerType() == 12 && this.m_target != null) {
             byte maxValue = 0;
             byte value = this.m_target.getPropertyValue(ItemPropertyType.CHANGE_DAMAGE_ELEMENT_PHYSICAL);
             if (value > maxValue) {

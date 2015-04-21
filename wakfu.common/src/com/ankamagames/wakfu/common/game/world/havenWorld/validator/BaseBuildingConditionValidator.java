@@ -26,28 +26,28 @@ public abstract class BaseBuildingConditionValidator extends ModificationValidat
     protected abstract void validateMaxQuantity(final AbstractBuildingStruct p0);
     
     private void validateResources(final AbstractBuildingStruct info) {
-        final int missingResources = BuildingValidationHelper.getMissingResources(info, (HavenWorldDataProvider)this.m_dataProvider);
+        final int missingResources = BuildingValidationHelper.getMissingResources(info, this.m_dataProvider);
         if (missingResources > 0) {
             this.addError(new MissingResources(new BuildingItem(info), missingResources));
         }
     }
     
     private void validateKama(final AbstractBuildingStruct info) {
-        final long missingKamas = BuildingValidationHelper.getMissingKamas(info, (HavenWorldDataProvider)this.m_dataProvider);
+        final long missingKamas = BuildingValidationHelper.getMissingKamas(info, this.m_dataProvider);
         if (missingKamas > 0L) {
             this.addError(new MissingKama(new BuildingItem(info), missingKamas));
         }
     }
     
     private void validateWorkers(final AbstractBuildingStruct info) {
-        final int missingWorkers = BuildingValidationHelper.getMissingWorkers(info, (HavenWorldDataProvider)this.m_dataProvider);
+        final int missingWorkers = BuildingValidationHelper.getMissingWorkers(info, this.m_dataProvider);
         if (missingWorkers > 0) {
             this.addError(new MissingWorker(new BuildingItem(info), missingWorkers));
         }
     }
     
     private void validateConditions(final AbstractBuildingStruct info) {
-        final MissingBuildingCountComputer2 computer = BuildingValidationHelper.checkConditions(info, (HavenWorldDataProvider)this.m_dataProvider);
+        final MissingBuildingCountComputer2 computer = BuildingValidationHelper.checkConditions(info, this.m_dataProvider);
         computer.forEachMissingEntry(new TIntIntProcedure() {
             @Override
             public boolean execute(final int buildingType, final int quantity) {

@@ -3,6 +3,7 @@ package com.ankamagames.wakfu.common.game.effectArea;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effect.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.effectArea.*;
 import com.ankamagames.framework.kernel.core.common.*;
+
 import org.apache.commons.pool.*;
 
 public class EffectAreaManager extends BasicEffectAreaManager
@@ -16,7 +17,7 @@ public class EffectAreaManager extends BasicEffectAreaManager
             manager.setPool(EffectAreaManager.m_staticpool);
         }
         catch (Exception e) {
-            EffectAreaManager.m_logger.error((Object)("Erreur lors d'un checkOut sur un message de type EffectAreaManager : " + e.getMessage()));
+            BasicEffectAreaManager.m_logger.error("Erreur lors d'un checkOut sur un message de type EffectAreaManager : " + e.getMessage());
             manager = new EffectAreaManager();
             manager.setPool(null);
             manager.onCheckOut();
@@ -30,7 +31,7 @@ public class EffectAreaManager extends BasicEffectAreaManager
     public BasicEffectArea instanceNewAreaFromBaseId(final long id) {
         final BasicEffectArea model = StaticEffectAreaManager.getInstance().getAreaFromId(id);
         if (model == null) {
-            EffectAreaManager.m_logger.error((Object)("pas de modele de zone d'effet d'id " + id));
+            BasicEffectAreaManager.m_logger.error("pas de modele de zone d'effet d'id " + id);
             return null;
         }
         return model.instanceAnother(null);
