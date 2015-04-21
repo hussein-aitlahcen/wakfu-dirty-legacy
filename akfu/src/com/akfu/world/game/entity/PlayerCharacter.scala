@@ -32,9 +32,7 @@ class PlayerCharacter(character: CharacterInfo) extends AbstractPlayerCharacter 
   setPosition(character instanceX, character instanceY, MathHelper.ensureShort(character instanceZ))
   setId(character id)
   setNation(Nation SUFOKIA)
-  setInstanceId( MathHelper.ensureShort(character instanceId))
-  setHavenWorldId(66)
-  setType(0)
+  setInstanceId(MathHelper.ensureShort(character instanceId))
   
   setOwnerId(character accountId)
   setBreed(AvatarBreed getBreedFromId(character breed))
@@ -42,6 +40,17 @@ class PlayerCharacter(character: CharacterInfo) extends AbstractPlayerCharacter 
   initializeSerializer()
   
   m_log info "character initialized"
+  
+  def save() {
+    character save internalSave
+  }
+  
+  private def internalSave() {    
+    character.instanceX = getWorldCellX
+    character.instanceY = getWorldCellY
+    character.instanceZ = getWorldCellAltitude
+    character.instanceId = getInstanceId
+  }
           
   override def initializeSerializer() {
     super.initializeSerializer()

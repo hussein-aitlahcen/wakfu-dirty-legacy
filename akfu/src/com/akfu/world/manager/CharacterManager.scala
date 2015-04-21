@@ -17,6 +17,8 @@ import com.akfu.common.network.protocol.message.game.serverToClient.CharacterEnt
 import org.slf4j.LoggerFactory
 import com.akfu.common.network.protocol.message.game.serverToClient.CharacterUpdateMessage
 import com.akfu.common.network.protocol.message.game.serverToClient.ClientCharacterUpdateMessage
+import com.akfu.world.network.protocol.frame.CharacterSelectionFrame
+import com.akfu.world.network.protocol.frame.WorldMapFrame
 
 object CharacterManager {
   
@@ -32,13 +34,19 @@ object CharacterManager {
     processSelection(client, new PlayerCharacter(character get))    
   }
   
-  private def processSelection(client: WorldClient, character: PlayerCharacter) {    
+  private def processSelection(client: WorldClient, character: PlayerCharacter) {   
+    
+    client.removeFrame(CharacterSelectionFrame)
+    client.addFrame(WorldMapFrame)
+    
     client setCharacter character    
     sendCharacterSelectionResult(client, CharacterSelectionResultEnum SUCCESS)
+    
+    NationManager sendNationSynchronization(client)
+    
     sendCharacterInformation(client, character)
-    sendClientCharacterUpdate(client, character)
     sendCharacterEnterWorld(client, character)
-    //sendCharacterEnterPartition(client, character)
+    sendCharacterEnterPartition(client, character)
   }
   
   def createCharacter(client: WorldClient, 

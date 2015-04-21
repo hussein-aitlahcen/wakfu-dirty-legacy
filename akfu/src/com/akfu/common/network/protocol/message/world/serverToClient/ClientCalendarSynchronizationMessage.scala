@@ -10,6 +10,6 @@ final class ClientCalendarSynchronizationMessage extends WakfuServerMessage {
   def getOpCode() = OpCode.SMSG_CALENDAR_SYNC
   
   override def internalSerialize(out: ByteBuf) {
-    out writeLong WakfuCalendar.getSynchronizationTime
+    out writeLong 1429618339180L
   }
 }

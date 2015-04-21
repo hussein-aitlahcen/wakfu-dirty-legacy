@@ -65,7 +65,7 @@ object AuthenticationManager {
     
     client.self ! new ClientIpMessage("127.0.0.1")
     
-    //CalendarManager sendCalendarSynchronization client
+    CalendarManager sendCalendarSynchronization client
     SystemConfigurationManager sendClientSystemConfiguration client
     CompanionManager sendCompanionList client
     CompanionManager sendFreeCompanionId client    

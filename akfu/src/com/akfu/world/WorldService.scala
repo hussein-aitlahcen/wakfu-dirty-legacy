@@ -14,6 +14,9 @@ import com.ankamagames.framework.kernel.core.common.message.scheduler.process.Sc
 import com.ankamagames.baseImpl.common.clientAndServer.game.time.calendar.GameCalendar
 import com.ankamagames.framework.kernel.core.common.message.scheduler.process.ProcessScheduler
 import com.akfu.world.game.time.WakfuCalendar
+import com.ankamagames.wakfu.common.game.nation.NationManager
+import com.ankamagames.wakfu.common.game.nation.Nation
+import com.akfu.world.game.nation.GameNationHandlersFactory
 
 object WorldService {
   
@@ -30,7 +33,12 @@ object WorldService {
   
   def initialize { 
     
-    AvatarBreedConstants initBreeds
+    AvatarBreedConstants initBreeds()
+    Nation setHandlersFactory(GameNationHandlersFactory)
+    NationManager.INSTANCE registerNation(Nation createNation(Nation AMAKNA))
+    NationManager.INSTANCE registerNation(Nation createNation(Nation SUFOKIA))
+    NationManager.INSTANCE registerNation(Nation createNation(Nation BONTA))
+    NationManager.INSTANCE registerNation(Nation createNation(Nation BRAKMAR))
     
     system = ActorSystem create("world-system")
     listener = system actorOf(Props(classOf[WorldListener], BIND_PORT), "listener")

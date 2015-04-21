@@ -29,8 +29,6 @@ object MessageBuilder {
     var constructor: () => WakfuClientMessage = messageByOpCode.getOrElse(typeId, null)
     if(constructor == null)
       return null
-    val message = constructor()
-    message deserialize in
-    message    
+    constructor()
   }
 }

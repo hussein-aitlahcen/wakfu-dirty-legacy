@@ -75,20 +75,23 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
       log.info("WakfuClient::receive unhandled message : " + message)
   }
   
+  def addFrame(frame: FrameBase[TClient, WakfuClientMessage]) = self ! AddFrame(frame)
+  def removeFrame(frame: FrameBase[TClient, WakfuClientMessage]) = self ! RemoveFrame(frame)
+  
   def disconnect() = {
     log.info("kicked")
     disconnectReason = ClientDisconnected.REASON_KICKED
     self ! Close
   }
   
-  def send(message: WakfuServerMessage) {
+  private def send(message: WakfuServerMessage) {
     message.serialize(out)
     // TODO: set cache 
     connection ! Write(ByteString.fromArray(out.array, 0, out.writerIndex))
     out.resetWriterIndex()
   }
   
-  def read() {
+  private def read() {
     
     if(size == -1 && in.readableBytes() < 2) {
       return
@@ -116,8 +119,11 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     in.markReaderIndex()
     
     val message = MessageBuilder build(typeId, in)
-    if(message != null)
+    if(message != null) {
+      message.size = size - 5
+      message deserialize in
       m_frameMgr ! ProcessMessage(message)
+    }
       
     in.resetReaderIndex()
     in.readerIndex(in.readerIndex() + size - 5)

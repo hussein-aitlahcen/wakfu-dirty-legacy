@@ -584,11 +584,14 @@ public class TopologyMapManager
     public static void main(final String[] args) {
         try {
         	BasicConfigurator.configure();
-            final int worldId = 332;
-            TopologyMapManager.m_pathURL = "jar:file:/E:/Steam/SteamApps/common/Wakfu_/game/contents/maps/tplg/%d.jar!/";
-            loadMap(332, (short)0, (short)0);
-            final TopologyMapInstance map = addTopologyMapInstance(332, (short)0, (short)0, (short)0);
-            System.out.println(TopologyMapManager.getWalkableCellPathData(map, 0, 10, (short) 0));
+            TopologyMapManager.setPath("jar:file:D:/Color/wakfu/game/contents/maps/tplg/%d.jar!/");
+            loadMap(131, (short)0, (short)0);
+            addTopologyMapInstance(131, (short)0,(short) 0, (short)0);
+        	TopologyMapInstanceSet set = new TopologyMapInstanceSet();
+        	getTopologyMapInstances(131, (short) 0, 0, 0, 9, set);
+        	System.out.println(set.getHeight());
+            final TopologyMapInstance map = addTopologyMapInstance(131, (short)0, (short)0, (short)0);
+            System.out.println(map.isCellBlocked(17, 17));
         }
         catch (IOException e) {
             TopologyMapManager.m_logger.error((Object)"", (Throwable)e);

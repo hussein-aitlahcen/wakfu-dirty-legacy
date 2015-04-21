@@ -16,15 +16,23 @@ import java.util.ArrayList
 final class WorldInfo(id: Int, version: String, playerCount: Int, playerLimit: Int, locked: Boolean, config: SystemConfiguration) {
   final def serialize(out: ByteBuf) {
     out writeInt id
-    val versionData = version.getBytes
-    out writeInt versionData.length
-    out writeBytes versionData
+    
+    out writeInt 7
+    writeVersion(out, version)
     out writeInt config.serializeForDispatch.length
     out writeBytes config.serializeForDispatch
     out writeInt playerCount
     out writeInt playerLimit
     out writeBoolean locked
   }
+  
+  def writeVersion(out: ByteBuf, version: String) {
+    out writeByte 1
+    out writeShort 42
+    out writeByte 1
+    out writeByte "-1".length
+    out writeBytes "-1".getBytes
+  }  
 }
 
 final class ProxyInfo(id: Int, name: String, community: Int, address: String, ports: List[Int], order: Byte) {

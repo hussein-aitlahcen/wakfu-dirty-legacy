@@ -20,22 +20,24 @@ import com.akfu.common.network.protocol.message.serverToClient.ClientDispatchAut
 import com.akfu.auth.manager.AuthenticationManager
 import com.akfu.world.WorldService
 import com.akfu.world.AddToken
+import com.akfu.common.concurrent.AtomicWorker
+import com.akfu.common.concurrent.WorkerTask
 
-sealed trait WorkerProcess
-final case class AuthConnected(client: AuthClient) extends WorkerProcess
-final case class AuthDisconnected(client: AuthClient) extends WorkerProcess
-final case class Authentication(client: AuthClient, account: String, password: String) extends WorkerProcess
-final case class ProxiesRequest(client: AuthClient) extends WorkerProcess
-final case class AuthTokenRequest(client: AuthClient, serverId: Int) extends WorkerProcess
+final case class AuthConnected(client: AuthClient) extends WorkerTask
+final case class AuthDisconnected(client: AuthClient) extends WorkerTask
+final case class Authentication(client: AuthClient, account: String, password: String) extends WorkerTask
+final case class ProxiesRequest(client: AuthClient) extends WorkerTask
+final case class AuthTokenRequest(client: AuthClient, serverId: Int) extends WorkerTask
 
-final class AuthWorker extends Actor with ActorLogging {
+final class AuthWorker extends AtomicWorker {
   
-  def receive = {
+  override def receive = {
     case AuthConnected(client) =>                         connected(client)
     case AuthDisconnected(client) =>                      disconnected(client)
     case Authentication(client, account, password) =>     AuthenticationManager login(client, account, password)
     case ProxiesRequest(client) =>                        proxiesRequest(client) 
     case AuthTokenRequest(client, serverId) =>            authTokenRequest(client, serverId)
+    case unhandled: Any => super.receive(unhandled)
   }
   
   def connected(client: AuthClient) {
@@ -69,7 +71,7 @@ final class AuthWorker extends Actor with ActorLogging {
         new ProxyInfo(1, "Test", Community.FR.code, "127.0.0.1", List(WorldService BIND_PORT), 0))
         
     val worlds = List(
-        new WorldInfo(1, "", 100, 100, false, config))
+        new WorldInfo(1, "1.42.1", 100, 100, false, config))
     
     client.self ! new ClientProxiesResultMessage(proxies, worlds)
   }

@@ -48,24 +48,26 @@ sealed class Account(
 @Alias("player")
 sealed class CharacterInfo(
     val accountId: Long,
-    val name: String,
-    val breed: Int,
-    val sex: Int,
-    val skinColor: Int,
-    val hairColor: Int,
-    val pupilColor: Int,
-    val skinFactor: Int,
-    val hairFactor: Int,
-    val clothIndex: Int,
-    val faceIndex: Int,
-    val level: Int,
-    val experience: Long,
-    val title: Int,
-    val instanceX: Int,
-    val instanceY: Int,
-    val instanceZ: Int,
-    val direction: Int,
-    val instanceId: Int) extends EntityWithGeneratedID[Long] { 
+    var name: String,
+    var breed: Int,
+    var sex: Int,
+    var skinColor: Int,
+    var hairColor: Int,
+    var pupilColor: Int,
+    var skinFactor: Int,
+    var hairFactor: Int,
+    var clothIndex: Int,
+    var faceIndex: Int,
+    var level: Int,
+    var experience: Long,
+    var title: Int,
+    var instanceX: Int,
+    var instanceY: Int,
+    var instanceZ: Int,
+    var direction: Int,
+    var instanceId: Int) extends EntityWithGeneratedID[Long] { 
+  
+  def save(process: () => Unit) = transactional { process() }  
 }
 
 class CharacterIdGenerator 

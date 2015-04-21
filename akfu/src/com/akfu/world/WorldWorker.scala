@@ -10,34 +10,42 @@ import com.akfu.common.network.RemoveFrame
 import com.akfu.common.network.protocol.message.world.clientToServer.CharacterCreationMessage
 import com.akfu.common.network.protocol.message.world.clientToServer.CharacterCreationMessage
 import com.akfu.world.manager.CharacterManager
+import com.akfu.common.concurrent.AtomicWorker
+import com.akfu.common.concurrent.WorkerTask
 
-sealed trait WorkerProcess
-final case class WorldConnected(client: WorldClient) extends WorkerProcess
-final case class WorldDisconnected(client: WorldClient) extends WorkerProcess
-final case class Authenticate(client: WorldClient, token: String) extends WorkerProcess
-final case class AddToken(token: String) extends WorkerProcess
-final case class GameTokenRequest(client: WorldClient) extends WorkerProcess
-final case class CreateCharacter(client: WorldClient, message: CharacterCreationMessage) extends WorkerProcess
-final case class SelectCharacter(client: WorldClient, characterId: Long) extends WorkerProcess
+final case class WorldConnected(client: WorldClient) extends WorkerTask
+final case class WorldDisconnected(client: WorldClient) extends WorkerTask
+final case class Authenticate(client: WorldClient, token: String) extends WorkerTask
+final case class AddToken(token: String) extends WorkerTask
+final case class GameTokenRequest(client: WorldClient) extends WorkerTask
+final case class CreateCharacter(client: WorldClient, message: CharacterCreationMessage) extends WorkerTask
+final case class SelectCharacter(client: WorldClient, characterId: Long) extends WorkerTask
 
-final class WorldWorker extends Actor with ActorLogging {  
+final class WorldWorker extends AtomicWorker {  
   
-  def receive = {
+  override def receive = {
     case WorldConnected(client) =>                         connected(client)
     case WorldDisconnected(client) =>                      disconnected(client)
     case Authenticate(client, token) =>                    authenticate(client, token)
     case AddToken(token) =>                                addToken(token)
     case GameTokenRequest(client) =>                       gameTokenRequest(client)
     case CreateCharacter(client, message) =>               characterCreation(client, message)
-    case SelectCharacter(client, characterId) =>           characterSelection(client, characterId)
-  }  
-    
+    case SelectCharacter(client, characterId) =>           characterSelection(client, characterId)   
+    case unhandled: Any => super.receive(unhandled)
+  }    
+  
   def connected(client: WorldClient) {
     log info "world client connected"
   }
   
   def disconnected(client: WorldClient) {
-    log info "world client disconnected"     
+    log info "world client disconnected" 
+    if(client.getAccount != null) {
+      // TODO: set offline n shits
+      if(client.getCharacter != null) {
+        client getCharacter() save()
+      }
+    }
   }  
   
   def authenticate(client: WorldClient, token: String) {

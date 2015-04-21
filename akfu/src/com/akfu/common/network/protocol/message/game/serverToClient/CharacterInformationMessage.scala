@@ -13,7 +13,7 @@ final class CharacterInformationMessage(character: PlayerCharacter) extends Wakf
     var i = 0
     for(i <- 0 to 19)
       out writeLong(27973262776467742L + i)
-    val data = character.serializeForLocalCharacterInformation()
+    val data = character.serializeForLocalCharacterInformation
     out writeInt data.length
     out writeBytes data
   }
