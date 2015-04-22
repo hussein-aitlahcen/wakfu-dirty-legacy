@@ -2,7 +2,6 @@ package com.ankamagames.wakfu.client.core.effect.manager;
 
 import org.apache.log4j.*;
 import com.ankamagames.wakfu.client.binaryStorage.*;
-import org.jetbrains.annotations.*;
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.*;
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.baseImpl.common.clientAndServer.game.HMIAction.*;
@@ -21,7 +20,6 @@ public class EffectManager extends BaseEffectManager
     protected EffectManager() {
         super();
         this.m_loader = new BinaryLoader<StaticEffectBinaryData>() {
-            @Nullable
             @Override
             public StaticEffectBinaryData createFromId(final int effectId) {
                 try {
@@ -46,13 +44,11 @@ public class EffectManager extends BaseEffectManager
         return EffectManager.INSTANCE;
     }
     
-    @Nullable
-    @Override
     protected final WakfuEffect createEffect(final int effectId) {
         if (effectId <= 0) {
             return null;
         }
-        final StaticEffectBinaryData data = this.m_loader.createFromId(effectId);
+        final StaticEffectBinaryData data = this.m_loader.createFromId(effectId);  
         if (data == null) {
             return null;
         }
@@ -98,9 +94,8 @@ public class EffectManager extends BaseEffectManager
         if (bs.getHmiAction().trim().length() == 0) {
             return;
         }
-        final String[] arr$;
-        final String[] hmis = arr$ = StringUtils.split(bs.getHmiAction(), '~');
-        for (final String hmi : arr$) {
+        final String[] hmis = StringUtils.split(bs.getHmiAction(), '~');
+        for (final String hmi : hmis) {
             final String[] params = hmi.split("\\|", -1);
             if (params.length % 2 != 0) {
                 EffectManager.m_logger.error("HMI error : Nombre de param\u00e8tres d\u00e9cod\u00e9s: " + params.length + " Attendu: 8 [" + bs.getHmiAction() + "]");

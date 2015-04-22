@@ -38,6 +38,7 @@ public class RunningEffectDefinition extends ConstantDefinition<WakfuRunningEffe
     
     public RunningEffectDefinition(final int id, final WakfuRunningEffect object, final Constants<WakfuRunningEffect> constants, final int scriptId, final String decription, final RunningEffectStatus status) {
         super(id, object, constants);
+
         object.setId(id);
         object.setRunningEffectStatus(status);
         object.initialiseParent();

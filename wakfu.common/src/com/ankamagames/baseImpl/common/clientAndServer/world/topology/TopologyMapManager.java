@@ -585,7 +585,7 @@ public class TopologyMapManager
         try {
         	BasicConfigurator.configure();
             TopologyMapManager.setPath("jar:file:D:/Color/wakfu/game/contents/maps/tplg/%d.jar!/");
-            loadMap(131, (short)0, (short)0);
+            loadMap(131, (short)MapConstants.getMapCoordFromCellX(-9), (short)MapConstants.getMapCoordFromCellY(-90));
             addTopologyMapInstance(131, (short)0,(short) 0, (short)0);
         	TopologyMapInstanceSet set = new TopologyMapInstanceSet();
         	getTopologyMapInstances(131, (short) 0, 0, 0, 9, set);
@@ -593,7 +593,7 @@ public class TopologyMapManager
             final TopologyMapInstance map = addTopologyMapInstance(131, (short)0, (short)0, (short)0);
             System.out.println(map.isCellBlocked(17, 17));
         }
-        catch (IOException e) {
+        catch (Exception e) {
             TopologyMapManager.m_logger.error("", e);
         }
     }

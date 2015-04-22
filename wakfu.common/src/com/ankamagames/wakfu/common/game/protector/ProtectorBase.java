@@ -12,7 +12,7 @@ public abstract class ProtectorBase implements DialogSource
     private int m_id;
     private Nation m_nativeNation;
     private Nation m_currentNation;
-    private AbstractTerritory m_territory;
+    private AbstractTerritory<?> m_territory;
     private final ArrayList<ProtectorNationChangedListener> m_listeners;
     
     protected ProtectorBase(final int id) {
@@ -78,11 +78,11 @@ public abstract class ProtectorBase implements DialogSource
     protected void onNationChanged(final Nation currentNation, final Nation previousNation) {
     }
     
-    public AbstractTerritory getTerritory() {
+    public AbstractTerritory<?> getTerritory() {
         return this.m_territory;
     }
     
-    public void setTerritory(final AbstractTerritory territory) {
+    public void setTerritory(final AbstractTerritory<?> territory) {
         if (this.m_territory != null) {
             this.m_territory.setProtector(null);
         }

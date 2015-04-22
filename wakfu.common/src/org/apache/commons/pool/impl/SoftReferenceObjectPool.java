@@ -7,34 +7,28 @@ import java.util.*;
 
 public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPool
 {
-    private List _pool;
+    private List<Object> _pool;
     private PoolableObjectFactory _factory;
     private int _numActive;
     
     public SoftReferenceObjectPool() {
         super();
-        this._pool = null;
-        this._factory = null;
         this._numActive = 0;
-        this._pool = new ArrayList();
+        this._pool = new ArrayList<Object>();
         this._factory = null;
     }
     
     public SoftReferenceObjectPool(final PoolableObjectFactory factory) {
         super();
-        this._pool = null;
-        this._factory = null;
         this._numActive = 0;
-        this._pool = new ArrayList();
+        this._pool = new ArrayList<Object>();
         this._factory = factory;
     }
     
     public SoftReferenceObjectPool(final PoolableObjectFactory factory, final int initSize) throws Exception {
         super();
-        this._pool = null;
-        this._factory = null;
         this._numActive = 0;
-        this._pool = new ArrayList();
+        this._pool = new ArrayList<Object>();
         this._factory = factory;
         if (null != this._factory) {
             for (int i = 0; i < initSize; ++i) {
@@ -48,8 +42,8 @@ public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPoo
     @Override
 	public synchronized Object borrowObject() throws Exception {
         this.assertOpen();
-        Object obj;
-        for (obj = null; null == obj; obj = null) {
+        Object obj = null;
+        while (obj == null) {
             if (this._pool.isEmpty()) {
                 if (null == this._factory) {
                     throw new NoSuchElementException();
@@ -57,7 +51,7 @@ public class SoftReferenceObjectPool extends BaseObjectPool implements ObjectPoo
                 obj = this._factory.makeObject();
             }
             else {
-                final SoftReference ref = (SoftReference) this._pool.remove(this._pool.size() - 1);
+                final SoftReference<Object> ref = (SoftReference<Object>) this._pool.remove(this._pool.size() - 1);
                 obj = ref.get();
             }
             if (null != this._factory && null != obj) {

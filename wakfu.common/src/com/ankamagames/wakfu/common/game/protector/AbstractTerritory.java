@@ -5,7 +5,7 @@ import java.util.*;
 import org.jetbrains.annotations.*;
 import com.ankamagames.wakfu.common.datas.*;
 
-public class AbstractTerritory<TCH extends TerritoryChaosHandler>
+public class AbstractTerritory<TCH extends TerritoryChaosHandler<?>>
 {
     protected static Logger m_logger;
     private int m_id;

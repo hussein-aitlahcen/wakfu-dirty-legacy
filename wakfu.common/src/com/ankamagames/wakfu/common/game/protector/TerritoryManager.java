@@ -7,12 +7,12 @@ public final class TerritoryManager
 {
     public static final TerritoryManager INSTANCE;
     protected static final Logger m_logger;
-    private final TIntObjectHashMap<AbstractTerritory> m_territories;
+    private final TIntObjectHashMap<AbstractTerritory<?>> m_territories;
     private TerritoryFactory m_territoryFactory;
     
     private TerritoryManager() {
         super();
-        this.m_territories = new TIntObjectHashMap<AbstractTerritory>();
+        this.m_territories = new TIntObjectHashMap<AbstractTerritory<?>>();
     }
     
     public TerritoryFactory getTerritoryFactory() {
@@ -23,19 +23,19 @@ public final class TerritoryManager
         this.m_territoryFactory = territoryFactory;
     }
     
-    public AbstractTerritory createTerritory(final int id) {
+    public AbstractTerritory<?> createTerritory(final int id) {
         if (this.m_territoryFactory != null) {
             return this.m_territoryFactory.createTerritory(id);
         }
         return null;
     }
     
-    public boolean registerTerritory(final AbstractTerritory territory) {
+    public boolean registerTerritory(final AbstractTerritory<?> territory) {
         if (territory == null) {
             return false;
         }
         final int id = territory.getId();
-        final AbstractTerritory t = this.m_territories.get(id);
+        final AbstractTerritory<?> t = this.m_territories.get(id);
         if (t != null && t != territory) {
             TerritoryManager.m_logger.error("Tentative d'\u00e9crase de territoire.");
             return false;
@@ -44,11 +44,11 @@ public final class TerritoryManager
         return true;
     }
     
-    public AbstractTerritory getTerritory(final int id) {
+    public AbstractTerritory<?> getTerritory(final int id) {
         return this.m_territories.get(id);
     }
     
-    public TIntObjectHashMap<AbstractTerritory> getTerritories() {
+    public TIntObjectHashMap<AbstractTerritory<?>> getTerritories() {
         return this.m_territories;
     }
     

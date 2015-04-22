@@ -318,7 +318,8 @@ abstract class AbstractPlayerCharacter extends BasicCharacterInfo {
 	        }
 	        
 	        public void updateToSerializedPart() {
-	        }
+	        	// TODO: set movement path
+	        }	        
 	        
            public void onDataChanged() {
 //	            if (this.m_part.currentPath != null) {

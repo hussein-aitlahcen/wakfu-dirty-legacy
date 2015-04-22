@@ -13,7 +13,7 @@ public final class ProtectorBuffManager
     private final TIntObjectHashMap<ProtectorBuffList> m_lists;
     private final TIntObjectHashMap<WakfuStandardEffect> m_effects;
     private final TIntObjectHashMap<ProtectorBuff> m_buffs;
-    private ProtectorBuffFactory m_buffFactory;
+    private ProtectorBuffFactory<ProtectorBuff> m_buffFactory;
     
     private ProtectorBuffManager() {
         super();
@@ -28,7 +28,7 @@ public final class ProtectorBuffManager
         };
     }
     
-    public void setBuffFactory(final ProtectorBuffFactory buffFactory) {
+    public void setBuffFactory(final ProtectorBuffFactory<ProtectorBuff> buffFactory) {
         this.m_buffFactory = buffFactory;
     }
     

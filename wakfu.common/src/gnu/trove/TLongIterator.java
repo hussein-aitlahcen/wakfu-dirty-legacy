@@ -1,6 +1,8 @@
 package gnu.trove;
 
-public class TLongIterator extends TPrimitiveIterator
+import java.util.Iterator;
+
+public class TLongIterator extends TPrimitiveIterator implements Iterator<Long>
 {
     private final TLongHash _hash;
     
@@ -9,7 +11,7 @@ public class TLongIterator extends TPrimitiveIterator
         this._hash = hash;
     }
     
-    public long next() {
+    public Long next() {
         this.moveToNextIndex();
         return this._hash._set[this._index];
     }

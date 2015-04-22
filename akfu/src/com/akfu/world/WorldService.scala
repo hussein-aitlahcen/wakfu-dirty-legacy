@@ -19,6 +19,11 @@ import com.ankamagames.wakfu.common.game.nation.Nation
 import com.akfu.world.game.nation.GameNationHandlersFactory
 import com.akfu.world.game.content.ContentLoader
 import com.ankamagames.framework.fileFormat.io.binaryStorage2.BinaryDocumentManager
+import com.ankamagames.wakfu.common.game.item.ReferenceItemManager
+import com.ankamagames.wakfu.client.core.game.item.ItemTypeManager
+import com.ankamagames.wakfu.client.core.game.item.ItemType
+import com.ankamagames.wakfu.client.core.WakfuConfiguration
+import com.ankamagames.wakfu.client.core.world.WorldInfoManager
 
 object WorldService {
   
@@ -36,21 +41,25 @@ object WorldService {
   def initialize { 
     
     AvatarBreedConstants initBreeds()
+    WakfuConfiguration getInstance() load()
+    WorldInfoManager getInstance() load(WakfuConfiguration getInstance() getString("worldInfoFile"))
+        
     Nation setHandlersFactory(GameNationHandlersFactory)
     NationManager.INSTANCE registerNation(Nation createNation(Nation AMAKNA))
     NationManager.INSTANCE registerNation(Nation createNation(Nation SUFOKIA))
     NationManager.INSTANCE registerNation(Nation createNation(Nation BONTA))
     NationManager.INSTANCE registerNation(Nation createNation(Nation BRAKMAR))
-    BinaryDocumentManager.getInstance setPath("@res/bdata/%s.jar!/%s.bin")
+    
+    BinaryDocumentManager.getInstance setPath(WakfuConfiguration getContentPath("binaryDataFile"))
     ContentLoader initialize()
+    
+    Worker.getInstance start()
+    WakfuCalendar start(1000)
     
     system = ActorSystem create("world-system")
     listener = system actorOf(Props(classOf[WorldListener], BIND_PORT), "listener")
     worker = system actorOf(Props(classOf[WorldWorker]), "worker")
-    Worker.getInstance.start()
-    WakfuCalendar.start(1000)
-  }
-  
+  }  
 }
 
 final class WorldListener(port: Int) extends Actor with ActorLogging {

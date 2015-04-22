@@ -8,7 +8,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
 {
     static final long serialVersionUID = 1L;
     private final TIntObjectProcedure<V> PUT_ALL_PROC;
-    protected transient V[] _values;
+    protected transient Object[] _values;
     
     public TIntObjectHashMap() {
         super();
@@ -90,7 +90,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     @Override
 	protected int setUp(final int initialCapacity) {
         final int capacity = super.setUp(initialCapacity);
-        this._values = (V[]) new Object[capacity];
+        this._values = new Object[capacity];
         return capacity;
     }
     
@@ -102,7 +102,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     public V putIfAbsent(final int key, final V value) {
         final int index = this.insertionIndex(key);
         if (index < 0) {
-            return this._values[-index - 1];
+            return (V)this._values[-index - 1];
         }
         return this.doPut(key, value, index);
     }
@@ -112,7 +112,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
         boolean isNewMapping = true;
         if (index < 0) {
             index = -index - 1;
-            previous = this._values[index];
+            previous = (V)this._values[index];
             isNewMapping = false;
         }
         final byte previousState = this._states[index];
@@ -133,10 +133,10 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
 	protected void rehash(final int newCapacity) {
         final int oldCapacity = this._set.length;
         final int[] oldKeys = this._set;
-        final V[] oldVals = this._values;
+        final Object[] oldVals = this._values;
         final byte[] oldStates = this._states;
         this._set = new int[newCapacity];
-        this._values = (V[]) new Object[newCapacity];
+        this._values = new Object[newCapacity];
         this._states = new byte[newCapacity];
         int i = oldCapacity;
         while (i-- > 0) {
@@ -152,7 +152,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     
     public V get(final int key) {
         final int index = this.index(key);
-        return (index < 0) ? null : this._values[index];
+        return (index < 0) ? null : (V)this._values[index];
     }
     
     @Override
@@ -170,7 +170,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
         V prev = null;
         final int index = this.index(key);
         if (index >= 0) {
-            prev = this._values[index];
+            prev = (V)this._values[index];
             this.removeAt(index);
         }
         return prev;
@@ -200,7 +200,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     
     public Object[] getValues() {
         final Object[] vals = new Object[this.size()];
-        final V[] v = this._values;
+        final Object[] v = this._values;
         final byte[] states = this._states;
         int i = v.length;
         int j = 0;
@@ -214,9 +214,9 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     
     public <T> T[] getValues(T[] a) {
         if (a.length < this._size) {
-            a = (T[])Array.newInstance(a.getClass().getComponentType(), this._size);
+            a = (T[]) Array.newInstance(a.getClass().getComponentType(), this._size);
         }
-        final V[] v = this._values;
+        final Object[] v = this._values;
         final byte[] states = this._states;
         int i = v.length;
         int j = 0;
@@ -261,7 +261,7 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     
     public boolean containsValue(final V val) {
         final byte[] states = this._states;
-        final V[] vals = this._values;
+        final Object[] vals = this._values;
         if (null == val) {
             int i = vals.length;
             while (i-- > 0) {
@@ -291,10 +291,10 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     
     public boolean forEachValue(final TObjectProcedure<V> procedure) {
         final byte[] states = this._states;
-        final V[] values = this._values;
+        final Object[] values = this._values;
         int i = values.length;
         while (i-- > 0) {
-            if (states[i] == 1 && !procedure.execute(values[i])) {
+            if (states[i] == 1 && !procedure.execute((V)values[i])) {
                 return false;
             }
         }
@@ -304,10 +304,10 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     public boolean forEachEntry(final TIntObjectProcedure<V> procedure) {
         final byte[] states = this._states;
         final int[] keys = this._set;
-        final V[] values = this._values;
+        final Object[] values = this._values;
         int i = keys.length;
         while (i-- > 0) {
-            if (states[i] == 1 && !procedure.execute(keys[i], values[i])) {
+            if (states[i] == 1 && !procedure.execute(keys[i], (V)values[i])) {
                 return false;
             }
         }
@@ -318,12 +318,12 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
         boolean modified = false;
         final byte[] states = this._states;
         final int[] keys = this._set;
-        final V[] values = this._values;
+        final Object[] values = this._values;
         this.tempDisableAutoCompaction();
         try {
             int i = keys.length;
             while (i-- > 0) {
-                if (states[i] == 1 && !procedure.execute(keys[i], values[i])) {
+                if (states[i] == 1 && !procedure.execute(keys[i], (V)values[i])) {
                     this.removeAt(i);
                     modified = true;
                 }
@@ -337,11 +337,11 @@ public class TIntObjectHashMap<V> extends TIntHash implements Externalizable
     
     public void transformValues(final TObjectFunction<V, V> function) {
         final byte[] states = this._states;
-        final V[] values = this._values;
+        final Object[] values = this._values;
         int i = values.length;
         while (i-- > 0) {
             if (states[i] == 1) {
-                values[i] = function.execute(values[i]);
+                values[i] = function.execute((V)values[i]);
             }
         }
     }

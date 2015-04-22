@@ -1,9 +1,10 @@
 package com.akfu.world.game.content
 
 import com.ankamagames.wakfu.client.core.contentInitializer._
+import org.slf4j.LoggerFactory
 
 object ContentLoader {
-  
+  val log = LoggerFactory.getLogger(ContentLoader.getClass)
   
   def registerContentInitializer(initializer: ContentInitializer) {
     initializer init

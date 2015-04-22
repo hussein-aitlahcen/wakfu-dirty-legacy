@@ -598,8 +598,10 @@ public final class RunningEffectConstants extends Constants<WakfuRunningEffect>
     }
     
     static {
-        m_instance = new RunningEffectConstants();
+    	System.out.println("static runningeffect loading");
+    	m_instance = new RunningEffectConstants();
         VARIABLE_EFFECT = new RunningEffectDefinition(-1, new VariableEffect(), RunningEffectConstants.m_instance, -1, "Effet Variable", null);
+    	System.out.println("static runningeffect loaded");
         HP_LOSS = new RunningEffectDefinition(1, new HPLoss(Elements.PHYSICAL, HPLoss.ComputeMode.CLASSIC), RunningEffectConstants.m_instance, 1001, "Perte de PdV - non r\u00e9ductible!", RunningEffectStatus.NEGATIVE);
         HP_FIRE_LOSS = new RunningEffectDefinition(2, new HPLoss(Elements.FIRE, HPLoss.ComputeMode.CLASSIC), RunningEffectConstants.m_instance, 1001, "Perte de PdV - Feu", RunningEffectStatus.NEGATIVE);
         HP_EARTH_LOSS = new RunningEffectDefinition(3, new HPLoss(Elements.EARTH, HPLoss.ComputeMode.CLASSIC), RunningEffectConstants.m_instance, 1001, "Perte de PdV - Terre", RunningEffectStatus.NEGATIVE);

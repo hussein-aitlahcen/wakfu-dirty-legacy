@@ -18,7 +18,7 @@ public class TIntObjectIterator<V> extends TPrimitiveIterator
     }
     
     public V value() {
-        return this._map._values[this._index];
+        return (V)this._map._values[this._index];
     }
     
     public V setValue(final V val) {
