@@ -7,30 +7,28 @@ import scala.collection.mutable.HashMap
 import com.akfu.common.concurrent.WorkerTask
 import akka.actor.ActorRef
 import com.ankamagames.wakfu.client.core.game.protector.Territory
+import com.ankamagames.wakfu.common.datas.CriterionUserType
+import com.akfu.world.game.entity.PlayerCharacter
+import akka.routing.Listen
+import akka.routing.Deafen
+import com.akfu.common.concurrent.DeafenMe
+import com.akfu.common.concurrent.ListenMe
+import com.ankamagames.framework.kernel.core.maths.Direction8Path
+import com.ankamagames.baseImpl.common.clientAndServer.game.pathfind.PathFinder
+import com.ankamagames.wakfu.common.game.effect.runningEffect.util.movementEffect.PathComputer
+import com.ankamagames.baseImpl.common.clientAndServer.game.pathfind.PathChecker
+import com.akfu.world.game.entity.AbstractCharacterInfo
 
-final case class AddEntity(entity: BasicCharacterInfo) extends WorkerTask
-final case class RemoveEntity(entity: BasicCharacterInfo) extends WorkerTask
-
-final class TerritoryInstance(uniqueId: Int, territoryModel: Territory) extends AtomicWorker {
-  private var entityById = HashMap[Long, BasicCharacterInfo]()
+final class TerritoryInstance(val territoryModel: Territory) extends AbstractField { 
   
-  override def receive = {
-    case AddEntity(actor) => 
-    case RemoveEntity(actor) =>  
-    case unhandled: Any => super.receive(unhandled)
-  }
+  protected def onCheckEntrance(entity: AbstractCharacterInfo) = territoryModel.containsWorldPosition(entity getWorldCellX, entity getWorldCellY)
   
-  private def onEntityEnter(entity: BasicCharacterInfo) {
-    if(entityById.contains(entity.getId)) return
-    entityById += (entity.getId -> entity)
+  protected def onEntityMove(id: Long, movementPath: Direction8Path): Boolean = {
+    val entity = getEntity(id)
+    if(entity == null) return false
     
-    log info "entity enter in territory => " + territoryModel.getId
-  }
-  
-  private def onEntityLeave(entity: BasicCharacterInfo) {
-    if(!entityById.contains(entity.getId)) return
-    entityById -= entity.getId
-        
-    log info "entity left territory => " + territoryModel.getId
+    
+    
+    return true
   }
 }

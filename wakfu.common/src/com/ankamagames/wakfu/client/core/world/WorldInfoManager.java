@@ -36,6 +36,10 @@ public class WorldInfoManager
         }
     }
     
+    public TShortObjectIterator<WorldInfo> getInfos() {
+    	return m_infos.iterator();
+    }
+    
     public WorldInfo getInfo(final short worldId) {
         return this.m_infos.get(worldId);
     }

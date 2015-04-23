@@ -17,29 +17,36 @@ import com.ankamagames.framework.kernel.core.maths.Direction8
 import com.ankamagames.wakfu.common.datas.CharacterInfoPart
 import com.ankamagames.wakfu.common.datas.CharacterSerializedLocalGuildInfo
 import com.ankamagames.wakfu.common.game.nation.Nation
+import com.ankamagames.wakfu.common.datas.CriterionUserType
 
 class PlayerCharacter(character: CharacterInfo) extends AbstractPlayerCharacter  {
           
-  setSkinColorIndex(MathHelper.ensureByte(character skinColor))
-  setHairColorIndex(MathHelper.ensureByte(character hairColor))
-  setPupilColorIndex(MathHelper.ensureByte(character pupilColor))
-  setSkinColorFactor(MathHelper.ensureByte(character skinFactor))
-  setHairColorFactor(MathHelper.ensureByte(character hairFactor))
-  setClothIndex(MathHelper.ensureByte(character clothIndex))
-  setFaceIndex(MathHelper.ensureByte(character faceIndex))
-  setTitle(MathHelper.ensureShort(character title))
-  setName(character name)
-  setPosition(character instanceX, character instanceY, MathHelper.ensureShort(character instanceZ))
-  setId(character id)
-  setNation(Nation SUFOKIA)
-  setInstanceId(MathHelper.ensureShort(character instanceId))
+  private var clientId: Long = -1
   
+  setSkinColorIndex(MathHelper ensureByte(character skinColor))
+  setHairColorIndex(MathHelper ensureByte(character hairColor))
+  setPupilColorIndex(MathHelper ensureByte(character pupilColor))
+  setSkinColorFactor(MathHelper ensureByte(character skinFactor))
+  setHairColorFactor(MathHelper ensureByte(character hairFactor))
+  setClothIndex(MathHelper ensureByte(character clothIndex))
+  setFaceIndex(MathHelper ensureByte(character faceIndex))
+  setTitle(MathHelper ensureShort(character title))
+  setName(character name)
+  setPosition(character instanceX, character instanceY, MathHelper ensureShort(character instanceZ))
+  setId(character id)
+  setType(CriterionUserType.PLAYER_CHARACTER.ordinal toByte)
+  setNation(Nation SUFOKIA)
+  setInstanceId(MathHelper ensureShort(character instanceId))  
   setOwnerId(character accountId)
   setBreed(AvatarBreed getBreedFromId(character breed))
       
   initializeSerializer()
   
   m_log info "character initialized"
+  
+  def hasClient() = clientId != -1
+  override def getClientId() = clientId
+  def setClientId(id: Long) = clientId = id
   
   def save() {
     character save internalSave
@@ -59,7 +66,7 @@ class PlayerCharacter(character: CharacterInfo) extends AbstractPlayerCharacter 
   def initialize() = ???  
   def addKamas(x$1: Int): Int = ???  
   def defaultBreed(): com.ankamagames.wakfu.common.datas.Breed.Breed = AvatarBreed.COMMON
-  def defaultCharacterType(): Byte = -1
+  def defaultCharacterType(): Byte = CriterionUserType.PLAYER_CHARACTER.ordinal.toByte
   def getBreedManager() = null
   def getControlled(x$1: Long) = this
   def getControlled() = Collections.emptyList()

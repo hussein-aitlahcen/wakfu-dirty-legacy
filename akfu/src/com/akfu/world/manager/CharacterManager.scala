@@ -19,10 +19,23 @@ import com.akfu.common.network.protocol.message.game.serverToClient.CharacterUpd
 import com.akfu.common.network.protocol.message.game.serverToClient.ClientCharacterUpdateMessage
 import com.akfu.world.network.protocol.frame.CharacterSelectionFrame
 import com.akfu.world.network.protocol.frame.WorldMapFrame
+import com.akfu.world.game.entity.PlayerCharacter
+import scala.collection.mutable.Map
 
 object CharacterManager {
   
-  val log = LoggerFactory.getLogger(CharacterManager.getClass)
+  private val log = LoggerFactory.getLogger(CharacterManager.getClass)
+  private val characterById = Map[Long, PlayerCharacter]()
+  
+  def processDisconnection(character: PlayerCharacter) {
+    characterById -= character.getId
+  }
+  
+  def processConnection(character: PlayerCharacter) {
+    
+    
+    characterById += (character.getId -> character)
+  }
   
   def selectCharacter(client: WorldClient, characterId: Long) {
     val character = DatabaseManager getCharacter(characterId)
@@ -33,20 +46,22 @@ object CharacterManager {
     
     processSelection(client, new PlayerCharacter(character get))    
   }
-  
+      
   private def processSelection(client: WorldClient, character: PlayerCharacter) {   
     
     client.removeFrame(CharacterSelectionFrame)
-    client.addFrame(WorldMapFrame)
+    client.addFrame(WorldMapFrame)    
+    client setCharacter character  
     
-    client setCharacter character    
-    sendCharacterSelectionResult(client, CharacterSelectionResultEnum SUCCESS)
-    
-    NationManager sendNationSynchronization(client)
-    
+    client.beginCache
+    sendCharacterSelectionResult(client, CharacterSelectionResultEnum SUCCESS)    
+    NationManager sendNationSynchronization(client)    
     sendCharacterInformation(client, character)
     sendCharacterEnterWorld(client, character)
     sendCharacterEnterPartition(client, character)
+    client.endCache
+    
+    processConnection(character)
   }
   
   def createCharacter(client: WorldClient, 

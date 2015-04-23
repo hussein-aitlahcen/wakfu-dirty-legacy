@@ -44,6 +44,8 @@ final class WorldWorker extends AtomicWorker {
       // TODO: set offline n shits
       if(client.getCharacter != null) {
         client getCharacter() save()
+        
+        CharacterManager processDisconnection(client getCharacter)
       }
     }
   }  

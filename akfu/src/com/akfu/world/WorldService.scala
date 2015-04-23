@@ -24,6 +24,10 @@ import com.ankamagames.wakfu.client.core.game.item.ItemTypeManager
 import com.ankamagames.wakfu.client.core.game.item.ItemType
 import com.ankamagames.wakfu.client.core.WakfuConfiguration
 import com.ankamagames.wakfu.client.core.world.WorldInfoManager
+import com.ankamagames.framework.kernel.core.common.MonitoredPool
+import com.ankamagames.framework.kernel.core.common.ObjectFactory
+import com.ankamagames.framework.kernel.core.common.Poolable
+import com.akfu.world.manager.WorldManager
 
 object WorldService {
   
@@ -40,6 +44,9 @@ object WorldService {
   
   def initialize { 
     
+    Worker.getInstance start()
+    WakfuCalendar start(1000)
+    
     AvatarBreedConstants initBreeds()
     WakfuConfiguration getInstance() load()
     WorldInfoManager getInstance() load(WakfuConfiguration getInstance() getString("worldInfoFile"))
@@ -52,17 +59,18 @@ object WorldService {
     
     BinaryDocumentManager.getInstance setPath(WakfuConfiguration getContentPath("binaryDataFile"))
     ContentLoader initialize()
-    
-    Worker.getInstance start()
-    WakfuCalendar start(1000)
-    
+        
     system = ActorSystem create("world-system")
     listener = system actorOf(Props(classOf[WorldListener], BIND_PORT), "listener")
     worker = system actorOf(Props(classOf[WorldWorker]), "worker")
+    
+    WorldManager initialize system
   }  
 }
 
 final class WorldListener(port: Int) extends Actor with ActorLogging {
+  
+  private var clientNextId = 1
   
   override def preStart() = {    
     import context.system
@@ -74,7 +82,8 @@ final class WorldListener(port: Int) extends Actor with ActorLogging {
       log.info(s"WorldService bound on $address")
       
     case Connected(remote, local) =>
+      clientNextId += 1
       val connection = sender()
-      connection ! Register(context.actorOf(Props(classOf[WorldClient], sender)))
+      connection ! Register(context.actorOf(Props(new WorldClient(connection)), "client_" + clientNextId))
   }
 }

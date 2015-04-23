@@ -9,13 +9,13 @@ import com.akfu.common.network.protocol.message.game.clientToServer.ActorPathReq
 import com.ankamagames.baseImpl.common.clientAndServer.world.topology.TopologyMapManager
 import com.ankamagames.wakfu.common.game.map.MapHandler
 import com.akfu.common.concurrent.ExecuteInContext
-import com.akfu.world.manager.MapManager
+import com.akfu.world.manager.MovementManager
 
 object WorldMapFrame extends FrameBase[WorldClient, WakfuClientMessage] {    
   @FrameHandler(opCode = OpCode CMSG_ACTOR_PATH_REQUEST)  
   def handleClientGameTokenRequest(client: WorldClient, message: ActorPathRequestMessage) {
     log info s"path request = " + message.path
     
-    client.getWorker ! ExecuteInContext(() => MapManager actorMovementRequest(client, message path))
+    MovementManager movementRequest(client, message path)
   }  
 }

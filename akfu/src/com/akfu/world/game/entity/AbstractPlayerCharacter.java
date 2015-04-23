@@ -21,7 +21,7 @@ import com.ankamagames.wakfu.common.game.wakfu.WakfuGauge;
 import com.ankamagames.wakfu.common.game.xp.BonusPointCharacteristics;
 import com.ankamagames.wakfu.common.rawData.RawStateRunningEffects;
 
-abstract class AbstractPlayerCharacter extends BasicCharacterInfo {
+abstract class AbstractPlayerCharacter extends AbstractCharacterInfo {
 
 	protected final Logger m_log = LoggerFactory.getLogger(AbstractPlayerCharacter.class);
     protected final PlayerCharacterSerializer m_serializer;
@@ -36,7 +36,7 @@ abstract class AbstractPlayerCharacter extends BasicCharacterInfo {
     protected int m_nationId;
     protected long m_experience;
     protected int m_havenWorldId;
-    //protected BonusPointCharacteristics m_bonusPointCharacteristics;
+    protected BonusPointCharacteristics m_bonusPointCharacteristics;
     protected WakfuGauge m_wakfuGauge;
     public boolean m_initialized;
     protected RawStateRunningEffects m_stateREToUnserializeAtInit;
@@ -52,7 +52,7 @@ abstract class AbstractPlayerCharacter extends BasicCharacterInfo {
     	m_accountInformationHandler.setAntiAddictionLevel(AntiAddictionLevel.UN_ACTIVATED);
     	m_skillCharacteristics = new SkillCharacteristicsForPlayer();
     	m_wakfuGauge = new WakfuGauge();
-    	//m_bonusPointCharacteristics = BonusPointCharacteristics.checkOut();
+    	m_bonusPointCharacteristics = BonusPointCharacteristics.checkOut();
     }
     
     public void setHavenWorldId(int id) {

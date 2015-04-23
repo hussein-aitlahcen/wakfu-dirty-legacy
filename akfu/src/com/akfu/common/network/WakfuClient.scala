@@ -11,6 +11,7 @@ import com.akfu.common.network.protocol.MessageBuilder
 import akka.util.CompactByteString
 import akka.actor.TypedActor.PreStart
 import com.akfu.common.database.Account
+import com.akfu.common.concurrent.AtomicWorker
 
 object ClientDisconnected {
   final val OP_CODE = -1
@@ -22,16 +23,20 @@ final class ClientDisconnected(reason: Int) extends WakfuClientMessage {
   def this() = this(ClientDisconnected.REASON_DISCONNECTED)
   def getOpCode() = -1
 }
-  
+
+final case object CacheOutput
+final case object FlushOutput
+
 abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     connection: ActorRef, 
     startFrames: List[FrameBase[TClient, WakfuClientMessage]]) 
-    extends Actor with ActorLogging {
+    extends AtomicWorker {
      
   private val m_frameMgr = context.actorOf(Props(classOf[FrameManager[TClient, WakfuClientMessage]], this, startFrames))
   private var size: Short = -1;
   private var typeId: Short = -1;
   private var disconnectReason: Int = ClientDisconnected.REASON_DISCONNECTED
+  private var cachedOutput = false
   
   private val in = ByteBufAllocator.DEFAULT.directBuffer()
   private val out = ByteBufAllocator.DEFAULT.heapBuffer()
@@ -48,7 +53,14 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   // dead when connection closed
   context watch connection
   
-  def receive = {
+  override def receive = {
+    
+    case CacheOutput =>
+      cachedOutput = true
+    
+    case FlushOutput =>
+      cachedOutput = false
+      flush()
     
     case Received(data) =>  
       in.writeBytes(data.asByteBuffer)   
@@ -71,10 +83,11 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
     case message @ (Closed | PeerClosed | Aborted | ErrorClosed(_)) =>
       m_frameMgr ! ProcessMessage(new ClientDisconnected(disconnectReason))
                   
-    case message: Any =>      
-      log.info("WakfuClient::receive unhandled message : " + message)
+    case unhandled: Any => super.receive(unhandled)
   }
   
+  def beginCache() = self ! CacheOutput
+  def endCache() = self ! FlushOutput
   def addFrame(frame: FrameBase[TClient, WakfuClientMessage]) = self ! AddFrame(frame)
   def removeFrame(frame: FrameBase[TClient, WakfuClientMessage]) = self ! RemoveFrame(frame)
   
@@ -85,8 +98,12 @@ abstract class WakfuClient[TClient <: WakfuClient[TClient]](
   }
   
   private def send(message: WakfuServerMessage) {
-    message.serialize(out)
-    // TODO: set cache 
+    message.serialize(out)    
+    if(!cachedOutput)
+      flush()
+  }
+  
+  private def flush() {    
     connection ! Write(ByteString.fromArray(out.array, 0, out.writerIndex))
     out.resetWriterIndex()
   }
