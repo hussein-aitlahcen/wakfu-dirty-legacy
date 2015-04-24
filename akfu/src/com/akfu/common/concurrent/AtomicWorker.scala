@@ -19,6 +19,8 @@ abstract class AtomicWorker extends Actor with ActorLogging with Listeners {
     case DeafenMe => sender ! Deafen(self)
     case unhandled: Any => log info "unhandled message : actor=" + getClass.getName + " message=" + unhandled
   }  
+  
+  def fireEvent(message: WorkerTask) = self ! message
     
   private def executeInContext(task: (ActorRef) => Unit) {
     try {

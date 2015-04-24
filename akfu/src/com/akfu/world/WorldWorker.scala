@@ -12,6 +12,10 @@ import com.akfu.common.network.protocol.message.world.clientToServer.CharacterCr
 import com.akfu.world.manager.CharacterManager
 import com.akfu.common.concurrent.AtomicWorker
 import com.akfu.common.concurrent.WorkerTask
+import com.akfu.common.network.protocol.message.chat.clientToServer.UserVicinityContentMessage
+import com.akfu.common.network.protocol.message.chat.clientToServer.UserVicinityContentMessage
+import com.akfu.common.network.protocol.message.chat.clientToServer.UserContentMessage
+import com.akfu.world.manager.ChatManager
 
 final case class WorldConnected(client: WorldClient) extends WorkerTask
 final case class WorldDisconnected(client: WorldClient) extends WorkerTask
@@ -20,6 +24,7 @@ final case class AddToken(token: String) extends WorkerTask
 final case class GameTokenRequest(client: WorldClient) extends WorkerTask
 final case class CreateCharacter(client: WorldClient, message: CharacterCreationMessage) extends WorkerTask
 final case class SelectCharacter(client: WorldClient, characterId: Long) extends WorkerTask
+final case class ChatMessage(client: WorldClient, message: UserContentMessage)
 
 final class WorldWorker extends AtomicWorker {  
   
@@ -30,7 +35,8 @@ final class WorldWorker extends AtomicWorker {
     case AddToken(token) =>                                addToken(token)
     case GameTokenRequest(client) =>                       gameTokenRequest(client)
     case CreateCharacter(client, message) =>               characterCreation(client, message)
-    case SelectCharacter(client, characterId) =>           characterSelection(client, characterId)   
+    case SelectCharacter(client, characterId) =>           characterSelection(client, characterId) 
+    case ChatMessage(client, message) =>                   chat(client, message)
     case unhandled: Any => super.receive(unhandled)
   }    
   
@@ -49,6 +55,11 @@ final class WorldWorker extends AtomicWorker {
       }
     }
   }  
+  
+  def chat(client: WorldClient, message: UserContentMessage) {
+    log info "chat message " + message.content
+    ChatManager chatRequest(client, message)
+  }
   
   def authenticate(client: WorldClient, token: String) {
     AuthenticationManager login(client, token)

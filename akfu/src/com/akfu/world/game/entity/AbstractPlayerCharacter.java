@@ -5,10 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import com.akfu.common.util.ByteArray;
 import com.akfu.world.game.nation.PlayerCharacterComportment;
+import com.ankamagames.framework.kernel.core.maths.Direction8Path;
 import com.ankamagames.wakfu.common.account.WakfuAccountInformationHandler;
 import com.ankamagames.wakfu.common.account.antiAddiction.AntiAddictionLevel;
 import com.ankamagames.wakfu.common.account.subscription.SubscriptionLevel;
 import com.ankamagames.wakfu.common.datas.*;
+import com.ankamagames.wakfu.common.datas.CharacterSerializedCurrentMovementPath.CurrentPath;
 import com.ankamagames.wakfu.common.game.characteristics.skill.SkillCharacteristics;
 import com.ankamagames.wakfu.common.game.characteristics.skill.SkillCharacteristicsForPlayer;
 import com.ankamagames.wakfu.common.game.fighter.FighterCharacteristicManager;
@@ -36,6 +38,7 @@ abstract class AbstractPlayerCharacter extends AbstractCharacterInfo {
     protected int m_nationId;
     protected long m_experience;
     protected int m_havenWorldId;
+    protected Direction8Path m_currentPath;
     protected BonusPointCharacteristics m_bonusPointCharacteristics;
     protected WakfuGauge m_wakfuGauge;
     public boolean m_initialized;
@@ -53,6 +56,14 @@ abstract class AbstractPlayerCharacter extends AbstractCharacterInfo {
     	m_skillCharacteristics = new SkillCharacteristicsForPlayer();
     	m_wakfuGauge = new WakfuGauge();
     	m_bonusPointCharacteristics = BonusPointCharacteristics.checkOut();
+    }
+    
+    public void setCurrentPath(Direction8Path path) {
+    	m_currentPath = path;
+    }
+    
+    public Direction8Path getCurrentPath() {
+    	return m_currentPath;
     }
     
     public void setHavenWorldId(int id) {
@@ -319,6 +330,10 @@ abstract class AbstractPlayerCharacter extends AbstractCharacterInfo {
 	        
 	        public void updateToSerializedPart() {
 	        	// TODO: set movement path
+	        	if(m_currentPath != null) {
+	        		m_part.currentPath = new CurrentPath();
+	        		m_part.currentPath.encodedPath = m_currentPath.encode();
+	        	}
 	        }	        
 	        
            public void onDataChanged() {

@@ -5,6 +5,7 @@ import com.ankamagames.framework.kernel.core.maths.Direction8Path
 import com.ankamagames.wakfu.common.datas.BasicCharacterInfo
 import org.slf4j.LoggerFactory
 import com.akfu.world.game.territory.MoveEntity
+import com.akfu.world.game.entity.AbstractCharacterInfo
 
 object MovementManager {
   
@@ -15,7 +16,7 @@ object MovementManager {
     moveActor(client getCharacter, path)
   }
   
-  def moveActor(actor: BasicCharacterInfo, path: Direction8Path) {
-    WorldManager.getById(actor getInstanceId) ! MoveEntity(actor.getId, path)
+  def moveActor(entity: AbstractCharacterInfo, path: Direction8Path) {
+    WorldManager.getById(entity getInstanceId) ! MoveEntity(entity, path)
   }
 }

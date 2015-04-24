@@ -7,6 +7,6 @@ import com.akfu.common.concurrent.DeafenMe
 trait ClientDispatcher {
   self : Actor with ActorHelper =>
     
-    def addClientListener(id: Long) = getClientRef(id) ! ListenMe
-    def removeClientListener(id: Long) = getClientRef(id) ! DeafenMe
+    def addClientListener(id: Long) = if(id != -1) getClientRef(id) ! ListenMe
+    def removeClientListener(id: Long) = if(id != -1) getClientRef(id) ! DeafenMe
 }

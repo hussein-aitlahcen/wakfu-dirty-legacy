@@ -34,13 +34,15 @@ class PlayerCharacter(character: CharacterInfo) extends AbstractPlayerCharacter 
   setName(character name)
   setPosition(character instanceX, character instanceY, MathHelper ensureShort(character instanceZ))
   setId(character id)
-  setType(CriterionUserType.PLAYER_CHARACTER.ordinal toByte)
+  setType(CriterionUserType.CHARACTER.ordinal toByte)
   setNation(Nation SUFOKIA)
   setInstanceId(MathHelper ensureShort(character instanceId))  
   setOwnerId(character accountId)
   setBreed(AvatarBreed getBreedFromId(character breed))
       
   initializeSerializer()
+  
+  m_log info "character type=" + getType
   
   m_log info "character initialized"
   

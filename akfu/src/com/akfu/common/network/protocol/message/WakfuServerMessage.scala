@@ -7,8 +7,7 @@ abstract class WakfuServerMessage() extends WakfuMessage() {
   
   def getOpCode() : Int
   
-  def internalSerialize(out: ByteBuf) {
-    
+  def internalSerialize(out: ByteBuf) {    
   }
   
   final def serialize(out: ByteBuf) {

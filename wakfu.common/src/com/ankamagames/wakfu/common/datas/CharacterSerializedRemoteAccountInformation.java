@@ -74,6 +74,7 @@ public class CharacterSerializedRemoteAccountInformation extends CharacterSerial
         else {
             buffer.putShort((short)0);
         }
+        buffer.putInt(0); // TODO: heroSubscriptionLevel
         return true;
     }
     
@@ -89,7 +90,7 @@ public class CharacterSerializedRemoteAccountInformation extends CharacterSerial
         }
         else {
             this.additionalRights = null;
-        }
+        }        
         return true;
     }
     
@@ -110,6 +111,7 @@ public class CharacterSerializedRemoteAccountInformation extends CharacterSerial
         size += 4;
         size += 2;
         size += ((this.additionalRights != null) ? (this.additionalRights.length * 4) : 0);
+        size += 4;
         return size;
     }
     

@@ -7,7 +7,7 @@ import com.akfu.world.network.protocol.frame.DisconnectionFrame
 import com.akfu.common.network.protocol.MessageBuilder
 import com.akfu.world.game.entity.PlayerCharacter
 
-final class WorldClient(connection: ActorRef) extends WakfuClient[WorldClient](
+final class WorldClient(connection: ActorRef, id: Long) extends WakfuClient[WorldClient](
     connection, 
     List(AuthenticationFrame, DisconnectionFrame)) {
       
@@ -16,6 +16,8 @@ final class WorldClient(connection: ActorRef) extends WakfuClient[WorldClient](
   def getCharacter() = currentCharacter
   def setCharacter(character: PlayerCharacter) = currentCharacter = character
     
+  setId(id)
   setWorker(WorldService getWorker)
+  
   getWorker ! WorldConnected(this)
 }

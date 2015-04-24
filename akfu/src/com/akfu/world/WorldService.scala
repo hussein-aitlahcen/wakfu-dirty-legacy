@@ -84,6 +84,6 @@ final class WorldListener(port: Int) extends Actor with ActorLogging {
     case Connected(remote, local) =>
       clientNextId += 1
       val connection = sender()
-      connection ! Register(context.actorOf(Props(new WorldClient(connection)), "client_" + clientNextId))
+      connection ! Register(context.actorOf(Props(new WorldClient(connection, clientNextId)), "client_" + clientNextId))
   }
 }

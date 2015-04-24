@@ -21,6 +21,9 @@ import com.akfu.world.network.protocol.frame.CharacterSelectionFrame
 import com.akfu.world.network.protocol.frame.WorldMapFrame
 import com.akfu.world.game.entity.PlayerCharacter
 import scala.collection.mutable.Map
+import com.akfu.world.game.territory.AddEntity
+import com.akfu.world.game.territory.AddEntity
+import com.akfu.world.network.protocol.frame.ChatFrame
 
 object CharacterManager {
   
@@ -31,10 +34,12 @@ object CharacterManager {
     characterById -= character.getId
   }
   
-  def processConnection(character: PlayerCharacter) {
-    
-    
+  def processConnection(character: PlayerCharacter) {   
     characterById += (character.getId -> character)
+  }
+  
+  def transfertToWorld(character: PlayerCharacter) {
+    WorldManager.getById(character getInstanceId) ! AddEntity(character)
   }
   
   def selectCharacter(client: WorldClient, characterId: Long) {
@@ -43,7 +48,7 @@ object CharacterManager {
       sendCharacterSelectionResult(client, CharacterSelectionResultEnum ERROR)
       return 
     }   
-    
+        
     processSelection(client, new PlayerCharacter(character get))    
   }
       
@@ -51,7 +56,9 @@ object CharacterManager {
     
     client.removeFrame(CharacterSelectionFrame)
     client.addFrame(WorldMapFrame)    
+    client.addFrame(ChatFrame)
     client setCharacter character  
+    character setClientId client.getId
     
     client.beginCache
     sendCharacterSelectionResult(client, CharacterSelectionResultEnum SUCCESS)    
@@ -62,6 +69,7 @@ object CharacterManager {
     client.endCache
     
     processConnection(character)
+    transfertToWorld(character)
   }
   
   def createCharacter(client: WorldClient, 

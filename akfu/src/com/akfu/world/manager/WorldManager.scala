@@ -18,8 +18,7 @@ object WorldManager {
     while(iterator hasNext()) {
       iterator advance()
       createInstance(system, iterator value)
-    }
-    
+    }    
   }
   
   def createInstance(system: ActorSystem, worldInfo: WorldInfo) {

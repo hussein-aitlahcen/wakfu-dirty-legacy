@@ -11,6 +11,7 @@ object OpCode {
   final val CMSG_CHARACTER_CREATION = 2053
   final val CMSG_CHARACTER_SELECTION = 2049
   final val CMSG_ACTOR_PATH_REQUEST = 4113
+  final val CMSG_USER_VICINITY_MESSAGE = 3153
   
   final val SMSG_CLIENT_IP = 110
   final val SMSG_DISPATCH_AUTH_RESULT = 1027
@@ -36,4 +37,9 @@ object OpCode {
   final val SMSG_CLIENT_NATION_SYNC = 20000
   final val SMSG_FRIEND_LIST = 3144
   final val SMSG_IGNORE_LIST = 3146
+  final val SMSG_ACTOR_SPAWN = 4102
+  final val SMSG_ACTOR_DESPAWN = 4104
+  final val SMSG_ACTOR_MOVE_TO = 4127
+  final val SMSG_ACTOR_PATH_UPDATE = 4114
+  final val SMSG_VICINITY_MESSAGE = 3152
 }
