@@ -36,3 +36,5 @@ local.properties
 .texlipse
 .cache
 /target/
+
+.class
