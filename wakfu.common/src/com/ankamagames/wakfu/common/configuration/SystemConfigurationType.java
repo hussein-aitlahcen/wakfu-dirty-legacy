@@ -16,7 +16,7 @@ public enum SystemConfigurationType
     PLAYER_LEVEL_CAP(7, "playerLevelCap", "-1", true, ValueType.NUMBER), 
     AUTHORIZED_CHARACTER_CLASS(8, "authorizedCharacterClass", "", true, ValueType.NUMBERLIST), 
     WORLD_INSTANCES_FORBIDDEN(9, "worldInstances.forbidden", "", true, ValueType.NUMBERLIST), 
-    KROSMOZ_GAMES_ENABLE(10, "krosmozGames.enable", "true", true, ValueType.BOOLEAN), 
+    //KROSMOZ_GAMES_ENABLE(10, "krosmozGames.enable", "true", true, ValueType.BOOLEAN), // TODO: obsolete 1.42.1
     SHOP_INGAME_INTERACTIONS_ENABLE(11, "shopInGameInteractions.enable", "false", true, ValueType.BOOLEAN), 
     CONTACT_MODERATOR_ENABLE(12, "contactModerator.enable", "true", true, ValueType.BOOLEAN), 
     DISPLAY_SUBSCRIPTION_END_POPUP(13, "display.subscription.end.popup.enable", "true", true, ValueType.BOOLEAN), 
@@ -81,7 +81,8 @@ public enum SystemConfigurationType
     VERSION_CHECK(500, "version.check", "true", false, ValueType.BOOLEAN), 
     PROXY_LIST(600, "proxy.list", "proxies.json", false, ValueType.STRING), 
     ADMIN_LIST(601, "admin.list", "admins.json", false, ValueType.STRING), 
-    HEROES_FORCE_ADD_TO_PARTY(602, "heroes.forceAddToParty", "false", true, ValueType.BOOLEAN);
+    HEROES_FORCE_ADD_TO_PARTY(602, "heroes.forceAddToParty", "false", true, ValueType.BOOLEAN),
+    COMPANIES_ENABLED(603, "companies.enabled", "false", true, ValueType.BOOLEAN);
     
     private static final TShortObjectHashMap<SystemConfigurationType> BY_IDS;
     private static final HashMap<String, SystemConfigurationType> BY_KEYS;

@@ -100,7 +100,8 @@ public enum AdminRightsEnum implements AdminRight
     DEBUG_WORLD_EDITOR(157, new short[0]), 
     CAN_ANSWER_TO_PLAYER_REQUEST(158, new short[0]), 
     PASS_THROUGH_BAG_LOCK(159, new short[0]), 
-    PASS_THROUGH_CONNECTION_QUEUE(160, new short[0]);
+    PASS_THROUGH_CONNECTION_QUEUE(160, new short[0]),
+    UNKNOW_VERSION_1_42_1(161, new short[0]);
     
     private final short m_id;
     private final TShortHashSet m_moderationCommandProtocolIds;

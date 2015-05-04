@@ -1,12 +1,17 @@
 package com.ankamagames.baseImpl.common.clientAndServer.account;
 
 import org.apache.log4j.*;
+
 import com.ankamagames.baseImpl.common.clientAndServer.utils.*;
 import com.ankamagames.framework.kernel.core.common.serialization.*;
 import com.ankamagames.baseImpl.common.clientAndServer.account.admin.*;
+
 import java.nio.*;
+
 import com.ankamagames.framework.kernel.utils.*;
 import com.ankamagames.framework.kernel.core.maths.*;
+import com.google.common.base.Charsets;
+
 import java.util.*;
 
 public class AccountInformations extends BinarSerial
@@ -40,48 +45,53 @@ public class AccountInformations extends BinarSerial
         this.m_adminRights = new int[AdminRightHelper.getMaskArraySize()];
         this.m_listeners = new ArrayList<AccountInformationsListener>();
         this.PUBLIC_INFORMATIONS = new BinarSerialPart() {
-            @Override
-            public void serialize(final ByteBuffer buffer) {
-                buffer.putLong(AccountInformations.this.m_account_id);
-                buffer.putInt(AccountInformations.this.m_subscriptionLevel);
-                buffer.putInt(AccountInformations.this.m_antiAddictionLevel);
-                buffer.putLong(AccountInformations.this.m_accountExpirationDate);
-                for (final int right : AccountInformations.this.m_adminRights) {
-                    buffer.putInt(right);
-                }
-                final byte[] nickName = StringUtils.toUTF8(AccountInformations.this.m_accountNickName);
-                buffer.put((byte)nickName.length);
-                buffer.put(nickName);
-                buffer.putInt(AccountInformations.this.m_accountCommunity.getId());
-                AccountInformations.this.m_accountData.serialize(buffer);
-            }
-            
-            @Override
-            public void unserialize(final ByteBuffer buffer, final int version) {
-                AccountInformations.this.m_account_id = buffer.getLong();
-                AccountInformations.this.m_subscriptionLevel = buffer.getInt();
-                AccountInformations.this.m_antiAddictionLevel = buffer.getInt();
-                AccountInformations.this.m_accountExpirationDate = buffer.getLong();
-                for (int i = 0; i < AdminRightHelper.getMaskArraySize(); ++i) {
-                    AccountInformations.this.m_adminRights[i] = buffer.getInt();
-                }
-                final byte[] nickName = new byte[buffer.get() & 0xFF];
-                buffer.get(nickName);
-                AccountInformations.this.m_accountNickName = StringUtils.fromUTF8(nickName);
-                AccountInformations.this.m_accountCommunity = Community.getFromId(buffer.getInt());
-                AccountInformations.this.m_accountData.unserialize(buffer);
-            }
-            
-            @Override
-            public int expectedSize() {
-                int size = 0;
-                size += 24 + 4 * AdminRightHelper.getMaskArraySize();
-                final byte[] nickName = StringUtils.toUTF8(AccountInformations.this.m_accountNickName);
-                size += 1 + nickName.length;
-                size += 4;
-                size += AccountInformations.this.m_accountData.serializedSize();
-                return size;
-            }
+        	  @Override
+              public void serialize(final ByteBuffer buffer) {
+                  buffer.putLong(AccountInformations.this.m_account_id);
+                  buffer.putInt(AccountInformations.this.m_subscriptionLevel);
+                  buffer.putInt(AccountInformations.this.m_antiAddictionLevel);
+                  buffer.put((byte)0); // TODO: UNKNOW
+                  buffer.putLong(AccountInformations.this.m_accountExpirationDate);
+                  buffer.putInt(0); // TODO: HEROES SUBSCRIPTION COUNT
+                  // for x => writeInt(x key) writeLong(x value)
+                  
+                  for (final int right : AccountInformations.this.m_adminRights) {
+                      buffer.putInt(right);
+                  }
+                  
+                  final byte[] nickName = AccountInformations.this.m_accountNickName.getBytes(Charsets.UTF_8);
+                  buffer.put((byte)nickName.length);
+                  buffer.put(nickName);
+                  buffer.putInt(AccountInformations.this.m_accountCommunity.getId());
+                  AccountInformations.this.m_accountData.serialize(buffer);
+              }
+              
+              @Override
+              public void unserialize(final ByteBuffer buffer, final int version) {
+                  AccountInformations.this.m_account_id = buffer.getLong();
+                  AccountInformations.this.m_subscriptionLevel = buffer.getInt();
+                  AccountInformations.this.m_antiAddictionLevel = buffer.getInt();
+                  AccountInformations.this.m_accountExpirationDate = buffer.getLong();
+                  for (int i = 0; i < AdminRightHelper.getMaskArraySize(); ++i) {
+                      AccountInformations.this.m_adminRights[i] = buffer.getInt();
+                  }
+                  final byte[] nickName = new byte[buffer.get() & 0xFF];
+                  buffer.get(nickName);
+                  AccountInformations.this.m_accountNickName = new String(nickName);
+                  AccountInformations.this.m_accountCommunity = Community.getFromId(buffer.getInt());
+                  AccountInformations.this.m_accountData.unserialize(buffer);
+              }
+              
+              @Override
+              public int expectedSize() {
+                  int size = 0;
+                  size += 32 + 12 * AdminRightHelper.getMaskArraySize();
+                  final byte[] nickName = AccountInformations.this.m_accountNickName.getBytes();
+                  size += 1 + nickName.length;
+                  size += 4;
+                  size += AccountInformations.this.m_accountData.serializedSize();
+                  return size;
+              }
         };
         this.PRIVATE_INFORMATIONS = new BinarSerialPart() {
             @Override
